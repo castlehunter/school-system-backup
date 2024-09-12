@@ -1,0 +1,22 @@
+/* Page.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.topSection {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+}

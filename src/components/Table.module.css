@@ -1,0 +1,37 @@
+.table {
+  width: 100%;
+  border-collapse: collapse; /* 合并边框 */
+  overflow: hidden;
+}
+
+.table th {
+  font-weight: 600;
+  background-color: #7b809a;
+  color: #fff;
+  text-align: left;
+  padding: 1.2rem;
+}
+
+tr th:first-child {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+tr th:last-child {
+  border-radius: 0rem 0.5rem 0.5rem 0;
+}
+
+.table td {
+  text-align: left;
+  padding: 1.2rem;
+  border-bottom: 0.1rem solid rgb(214, 214, 214);
+}
+
+.table tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+@media (max-width: 991px) {
+  .table {
+    overflow-x: auto;
+  }
+}

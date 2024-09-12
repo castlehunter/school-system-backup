@@ -1,0 +1,29 @@
+.layout {
+  display: flex;
+  width: 100vw;
+}
+
+section {
+  overflow-x: hidden;
+  margin: 2rem 5rem 2rem 3rem;
+  flex: 1;
+}
+
+.topContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+
+  /* margin-bottom: 1rem; */
+}
+
+.breadcrumb {
+  height: 5rem;
+  display: flex;
+  align-items: center;
+}
+
+.mainContent {
+  flex: 1;
+}

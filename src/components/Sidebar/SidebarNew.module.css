@@ -1,0 +1,82 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 12vw;
+  background-color: #4f4f52;
+  font-size: 1.4rem;
+  border-radius: 1.2rem;
+  margin: 2rem 0rem 2rem 5rem;
+}
+
+.sidebar::after {
+  content: "";
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5rem;
+  background-color: #1d1d1d;
+  border-radius: 0 0 1.2rem 1.2rem;
+}
+
+.logoLink {
+  text-decoration: none;
+}
+
+.logoContainer {
+  border-radius: 1.2rem 1.2rem 0 0;
+  height: auto;
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #1d1d1d;
+}
+
+.logoImage {
+  width: 3rem;
+  height: auto;
+}
+
+.logoText {
+  /* font-weight: bold; */
+  font-size: 1.8rem;
+  padding-left: 2rem;
+  color: #ffffff;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.subMenuTitle {
+  color: #c0c0c0;
+  padding: 0.5rem 1.5rem;
+  background-color: #2b2a2f;
+  cursor: pointer;
+  line-height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 0.1rem solid rgba(221, 221, 221, 0.3); /* 轻微的边框 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 简化阴影效果 */
+}
+
+.menuContent {
+  display: flex;
+  flex-direction: column;
+  line-height: 3rem;
+}
+
+.menuItem {
+  display: block;
+  padding: 0.2rem 1.5rem;
+  color: #dfdfdf;
+  text-decoration: none;
+}
+
+.menuItem:hover {
+  color: #ffffff;
+  /* background-color: #4abad6; */
+  background-color: #e91f63;
+}

@@ -1,0 +1,51 @@
+.btn {
+  color: #ffffff;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-size: 1.6rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #e53371;
+  width: auto;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn:active {
+  opacity: 0.8;
+}
+
+.rose {
+  background-color: #e53371;
+}
+
+.rose:hover {
+  background-color: #dd2466;
+}
+
+.rose:active {
+  background-color: #e63673; /* 点击背景色 */
+}
+
+.outline {
+  background-color: transparent;
+  border: 1px solid #e53371;
+  color: #e53371;
+}
+
+.outline {
+  background-color: transparent;
+  border: 1px solid #e53371;
+  color: #e53371;
+}
+
+.outline:hover {
+  background-color: #fce4e8;
+}
+
+.outline:active {
+  background-color: #f8cdd2;
+}

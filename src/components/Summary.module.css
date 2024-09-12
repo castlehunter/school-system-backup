@@ -1,0 +1,28 @@
+h1 {
+  margin-bottom: 1.2rem;
+}
+
+h2 {
+  margin-top: 4rem;
+  margin-bottom: 1.5rem;
+}
+.navigationLinks {
+  margin-top: 2rem;
+}
+
+.navigationLinks ul {
+  list-style: none;
+  padding: 0;
+}
+
+.navigationLinks li {
+  margin-bottom: 1rem;
+}
+
+.quickLink {
+  color: #7b809a;
+}
+.announcements,
+.userInfo {
+  margin-top: 3rem;
+}

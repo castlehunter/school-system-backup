@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+.navigationBar {
+  display: flex;
+  height: 12vh;
+  width: 100vw;
+  gap: 20px;
+  font-size: 1rem;
+
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: -0.38px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 60px 10px 60px;
+}
+
+.logo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: auto;
+  height: 100%;
+}
+
+.logoText {
+  font-weight: bold;
+  font-size: 2rem;
+
+  margin-left: 2rem;
+  color: #61dbfb;
+}

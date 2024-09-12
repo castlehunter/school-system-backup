@@ -1,0 +1,10 @@
+.path {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  font-weight: 400;
+}
+
+.slash {
+  margin: 0 0.5rem;
+}
