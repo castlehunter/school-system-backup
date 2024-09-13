@@ -5,11 +5,15 @@ import Footer from "../components/Footer/Footer";
 import Button from "../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import formStyles from "../components/Form/Form.module.css";
+import supabase from "../config/supabaseClient";
 
 function HomePage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  //show supabase client
+  console.log(supabase);
 
   const handleLogin = async (event) => {
     event.preventDefault();
