@@ -1,20 +1,26 @@
+/* Form.module.css */
+
 /* ================== */
-/* FORM */
+/* FORM ITEMS */
 /* ================== */
 .formItem {
   margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 
 .formLabel {
   text-align: left;
   color: #7b809a;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
 }
 
 .formInput,
+.formSelect,
 .formText {
-  padding: 0;
+  padding: 0.5rem;
   border-radius: 0.4rem;
   height: 3rem;
   box-sizing: border-box;
@@ -22,7 +28,28 @@
 
 .formInput {
   border: 0.1rem solid #ccc;
+  transition: border-color 0.3s;
+}
+
+.formInput:focus {
+  border-color: #e91f63;
+  outline: none;
+}
+
+.formSelect {
+  border: 0.1rem solid #ccc;
+  width: 30%;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.formText {
+  color: #333;
+  background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
   padding: 0 1rem;
+  border: 0.1rem solid #ddd;
 }
 
 .formActions {
@@ -30,4 +57,12 @@
   justify-content: center;
   gap: 20px;
   margin-top: 30px;
+}
+
+.formFull {
+  width: 100%;
+}
+
+.formHalf {
+  width: 50%;
 }

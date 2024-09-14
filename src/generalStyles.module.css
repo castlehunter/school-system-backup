@@ -37,10 +37,9 @@
   background-color: #fff;
   padding: 3rem;
 
-  /* 添加四个边的边框 */
-  border: 1px solid rgba(0, 0, 0, 0.1); /* 默认边框 */
-  border-right: 1px solid rgba(192, 192, 192, 0.5); /* 更明显的底边 */
-  border-bottom: 1px solid rgba(131, 131, 131, 0.5); /* 更明显的底边 */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(192, 192, 192, 0.5);
+  border-bottom: 1px solid rgba(131, 131, 131, 0.5);
 }
 
 .containerHeader {

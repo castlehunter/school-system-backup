@@ -11,6 +11,7 @@ function NewStudent() {
     studentNo: "",
     firstName: "",
     lastName: "",
+    sex: "",
     dob: "",
     telephone: "",
     mobile: "",
@@ -99,6 +100,7 @@ function NewStudent() {
           formData={formData}
           handleChange={handleChange}
           isEdit={true}
+          formWidth={styles.formHalf}
         />
         <div className={styles.formActions}>
           <Button classType="submit">Add</Button>

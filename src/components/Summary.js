@@ -28,7 +28,7 @@ function Summary() {
           </li>
           <li>
             <Link to="/teacher/teacher-list" className={generalStyles.link}>
-              View Client List
+              View Teacher List
             </Link>
           </li>
         </ul>

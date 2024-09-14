@@ -5,7 +5,7 @@ import formStyles from "../Form/Form.module.css";
 import Loader from "../Loader";
 import EditContainerLayout from "../Layout/EditContainerLayout";
 import ProfileForm from "../Form/ProfileForm";
-
+import OtherForm from "../Form/OtherForm";
 function StudentProfile() {
   const [studentInfo, setStudentInfo] = useState({
     studentNo: "",
@@ -51,13 +51,14 @@ function StudentProfile() {
             studentNo: foundStudent.studentNo,
             firstName: foundStudent.fname,
             lastName: foundStudent.lname,
-            program: foundStudent.program,
-            dob: foundStudent.dob,
             sex: foundStudent.sex,
+            dob: foundStudent.dob,
             telephone: foundStudent.telephone,
             mobile: foundStudent.mobile,
             email: foundStudent.email,
             address: foundStudent.address,
+            program: foundStudent.program,
+            course: foundStudent.course,
           });
         } else {
           throw new Error("Student not found");
@@ -196,6 +197,7 @@ function StudentProfile() {
               formData={studentInfo}
               handleChange={handleChange}
               isEdit={isEditBasic}
+              formWidth={formStyles.formFull}
             />
           </form>
         </div>
@@ -203,7 +205,7 @@ function StudentProfile() {
 
       {/* ---------- Program ----------- */}
       <div className={styles.programCourseLayout}>
-        {/* <EditContainerLayout
+        <EditContainerLayout
           title="Program"
           isEdit={isEditProgram}
           onClickEdit={isEditProgram ? handleSubmitProgram : handleEditProgram}
@@ -211,17 +213,17 @@ function StudentProfile() {
         >
           <div className={styles.detail}>
             <form className={styles.form} onSubmit={handleSubmitProgram}>
-              <ProfileForm
+              <OtherForm
                 formArr={studentInfo.program}
                 handleChange={handleChange}
                 isEdit={isEditProgram}
               />
             </form>
           </div>
-        </EditContainerLayout> */}
+        </EditContainerLayout>
 
         {/* -------------- Course ------------- */}
-        {/* <EditContainerLayout
+        <EditContainerLayout
           title="Course"
           isEdit={isEditProgram}
           onClickEdit={isEditCourse ? handleSubmitCourse : handleEditCourse}
@@ -230,9 +232,9 @@ function StudentProfile() {
           <div className={styles.detail}>
             <form className={styles.form} onSubmit={handleSubmitCourse}></form>
           </div>
-        </EditContainerLayout> */}
+        </EditContainerLayout>
       </div>
-      {/* <EditContainerLayout
+      <EditContainerLayout
         title="Additional Information"
         isEdit={isEditAdditional}
         onClickEdit={
@@ -241,15 +243,12 @@ function StudentProfile() {
         onClickCancel={handleCancelAdditional}
       >
         <div className={styles.detail}>
-          <form className={styles.form} onSubmit={handleSubmitAdditional}>
-            <ProfileForm
-              formData={studentInfo}
-              handleChange={handleChange}
-              isEdit={isEditAdditional}
-            />
-          </form>
+          <form
+            className={styles.form}
+            onSubmit={handleSubmitAdditional}
+          ></form>
         </div>
-      </EditContainerLayout> */}
+      </EditContainerLayout>
     </div>
   );
 }
