@@ -9,7 +9,10 @@
     "mobile": "555-1264",
     "email": "lucasharris@example.com",
     "address": "2828 Cedar St",
-    "program": "Computer Science",
+    "program": [
+      { "code": "CS", "name": "Computer Science" },
+      { "code": "ECO", "name": "Economics" }
+    ],
     "courses": [
       { "id": "CMP101", "name": "Data Structures" },
       { "id": "CMP102", "name": "Algorithms" }
@@ -25,7 +28,7 @@
     "mobile": "555-1265",
     "email": "emilyparker@example.com",
     "address": "2929 Spruce St",
-    "program": "Mathematics",
+    "program": [{ "code": "MATH", "name": "Mathematics" }],
     "courses": [
       { "id": "MTH201", "name": "Calculus I" },
       { "id": "MTH202", "name": "Linear Algebra" }
@@ -41,7 +44,7 @@
     "mobile": "555-1266",
     "email": "olivermorris@example.com",
     "address": "3030 Birch St",
-    "program": "Physics",
+    "program": [{ "code": "PHYS", "name": "Physics" }],
     "courses": [
       { "id": "PHY301", "name": "Quantum Mechanics" },
       { "id": "PHY302", "name": "Electrodynamics" }
@@ -57,7 +60,7 @@
     "mobile": "555-1267",
     "email": "sophiaclark@example.com",
     "address": "3131 Maple St",
-    "program": "Biology",
+    "program": [{ "code": "BIO", "name": "Biology" }],
     "courses": [
       { "id": "BIO401", "name": "Genetics" },
       { "id": "BIO402", "name": "Cell Biology" }
@@ -73,7 +76,7 @@
     "mobile": "555-1268",
     "email": "aidendavis@example.com",
     "address": "3232 Oak St",
-    "program": "Chemistry",
+    "program": [{ "code": "CHEM", "name": "Chemistry" }],
     "courses": [
       { "id": "CHE501", "name": "Organic Chemistry" },
       { "id": "CHE502", "name": "Inorganic Chemistry" }
@@ -89,7 +92,7 @@
     "mobile": "555-1269",
     "email": "miawilson@example.com",
     "address": "3333 Willow St",
-    "program": "Engineering",
+    "program": [{ "code": "ENG", "name": "Engineering" }],
     "courses": [
       { "id": "ENG601", "name": "Thermodynamics" },
       { "id": "ENG602", "name": "Fluid Mechanics" }
@@ -105,7 +108,7 @@
     "mobile": "555-1270",
     "email": "ethanbrown@example.com",
     "address": "3434 Pine St",
-    "program": "English",
+    "program": [{ "code": "ENG", "name": "English" }],
     "courses": [
       { "id": "ENG701", "name": "Creative Writing" },
       { "id": "ENG702", "name": "Literature" }
@@ -121,7 +124,7 @@
     "mobile": "555-1271",
     "email": "harpertaylor@example.com",
     "address": "3535 Cedar St",
-    "program": "Political Science",
+    "program": [{ "code": "POL", "name": "Political Science" }],
     "courses": [
       { "id": "POL801", "name": "Comparative Politics" },
       { "id": "POL802", "name": "International Relations" }
@@ -137,7 +140,7 @@
     "mobile": "555-1272",
     "email": "avawilson@example.com",
     "address": "3636 Maple St",
-    "program": "Sociology",
+    "program": [{ "code": "SOC", "name": "Sociology" }],
     "courses": [
       { "id": "SOC901", "name": "Social Theory" },
       { "id": "SOC902", "name": "Research Methods" }
@@ -153,7 +156,7 @@
     "mobile": "555-1273",
     "email": "jamesmartinez@example.com",
     "address": "3737 Birch St",
-    "program": "History",
+    "program": [{ "code": "HIST", "name": "History" }],
     "courses": [
       { "id": "HIS901", "name": "World History" },
       { "id": "HIS902", "name": "American History" }
@@ -169,7 +172,7 @@
     "mobile": "555-1274",
     "email": "lilymoore@example.com",
     "address": "3838 Willow St",
-    "program": "Mathematics",
+    "program": [{ "code": "MATH", "name": "Mathematics" }],
     "courses": [
       { "id": "MTH201", "name": "Calculus I" },
       { "id": "MTH203", "name": "Calculus II" }
@@ -185,7 +188,7 @@
     "mobile": "555-1275",
     "email": "oliverharris@example.com",
     "address": "3939 Oak St",
-    "program": "Computer Science",
+    "program": [{ "code": "CS", "name": "Computer Science" }],
     "courses": [
       { "id": "CMP101", "name": "Data Structures" },
       { "id": "CMP104", "name": "Database Systems" }
@@ -201,7 +204,7 @@
     "mobile": "555-1276",
     "email": "charlottelee@example.com",
     "address": "4040 Spruce St",
-    "program": "Art",
+    "program": [{ "code": "ART", "name": "Art" }],
     "courses": [
       { "id": "ART901", "name": "Drawing" },
       { "id": "ART902", "name": "Painting" }

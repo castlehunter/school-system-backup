@@ -9,5 +9,3 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
-/* TEST PULL REQUEST */

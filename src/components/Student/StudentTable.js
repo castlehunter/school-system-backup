@@ -23,13 +23,13 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
           <th>Student No.</th>
           <th>First Name</th>
           <th>Last Name</th>
-          <th>Program</th> {/* Added Program column */}
+          <th>Program</th>
           <th>Sex</th>
           <th>Dob</th>
-          <th>Email</th> {/* Added Telephone column */}
-          <th>Telephone</th> {/* Added Mobile column */}
+          <th>Email</th>
+          <th>Telephone</th>
           <th>Mobile</th>
-          <th>Address</th> {/* Added Address column */}
+          <th>Address</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -44,13 +44,22 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
               <td>{student.studentNo}</td>
               <td>{student.fname}</td>
               <td>{student.lname}</td>
-              <td>{student.program}</td>
+              <td>
+                {/* Render each program in a list */}
+                {Array.isArray(student.program) ? (
+                  student.program.map((prog, i) => (
+                    <div key={i}>{prog.name}</div>
+                  ))
+                ) : (
+                  <div>{student.program}</div>
+                )}
+              </td>
               <td>{student.sex}</td>
               <td>{formatDate(student.dob)}</td>
               <td>{student.email}</td>
-              <td>{student.telephone}</td> {/* Added Telephone data */}
-              <td>{student.mobile}</td> {/* Added Mobile data */}
-              <td>{student.address}</td> {/* Added Address data */}
+              <td>{student.telephone}</td>
+              <td>{student.mobile}</td>
+              <td>{student.address}</td>
               <td>
                 <Link
                   to={`/student/${student.studentNo}`}

@@ -35,7 +35,7 @@ function StudentList() {
           studentNo: student.studentNo,
           fname: student.fname,
           lname: student.lname,
-          program: student.program, // Include program
+          program: student.program,
           sex: student.sex,
           dob: student.dob,
           telephone: student.telephone,

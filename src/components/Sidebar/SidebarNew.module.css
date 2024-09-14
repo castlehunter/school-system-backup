@@ -4,8 +4,8 @@
   width: 12vw;
   background-color: #4f4f52;
   font-size: 1.4rem;
-  border-radius: 1.2rem;
-  margin: 2rem 0rem 2rem 5rem;
+  border-radius: 1rem;
+  margin-right: 1.5rem;
 }
 
 .sidebar::after {
