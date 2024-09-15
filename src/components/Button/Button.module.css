@@ -18,7 +18,11 @@
   opacity: 0.8;
 }
 
-.rose {
+.small {
+  padding: 0.6rem 1.2rem;
+  font-size: 1.2rem;
+}
+/* .rose {
   background-color: #e53371;
 }
 
@@ -27,13 +31,7 @@
 }
 
 .rose:active {
-  background-color: #e63673; /* 点击背景色 */
-}
-
-.outline {
-  background-color: transparent;
-  border: 1px solid #e53371;
-  color: #e53371;
+  background-color: #e63673;
 }
 
 .outline {
@@ -48,4 +46,4 @@
 
 .outline:active {
   background-color: #f8cdd2;
-}
+} */

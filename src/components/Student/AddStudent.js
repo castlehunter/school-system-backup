@@ -6,7 +6,7 @@ import ContainerLayout from "../Layout/Container";
 import ProfileForm from "../Form/ProfileForm";
 import styles from "../Form/Form.module.css";
 
-function NewStudent() {
+function AddStudent() {
   const [formData, setFormData] = useState({
     studentNo: "",
     firstName: "",
@@ -114,4 +114,4 @@ function NewStudent() {
   );
 }
 
-export default NewStudent;
+export default AddStudent;

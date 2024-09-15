@@ -11,18 +11,24 @@ function EditContainerLayout({
   return (
     <div className={generalStyles.container}>
       <div className={generalStyles.containerHeader}>
-        <div className={generalStyles.primaryHeading}>{title}</div>
+        <div className={generalStyles.secondaryHeading}>{title}</div>
         <div>
           {isEdit ? (
             <>
-              <Button onClick={onClickConfirm}>Confirm</Button>
+              <Button onClick={onClickConfirm} size="small">
+                Confirm
+              </Button>
               <span style={{ marginLeft: "1rem" }}>
                 {" "}
-                <Button onClick={onClickCancel}>Cancel</Button>
+                <Button onClick={onClickCancel} size="small">
+                  Cancel
+                </Button>
               </span>
             </>
           ) : (
-            <Button onClick={onClickEdit}>Edit</Button>
+            <Button onClick={onClickEdit} size="small">
+              Edit
+            </Button>
           )}
         </div>
       </div>

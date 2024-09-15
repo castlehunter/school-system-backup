@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "./Summary.module.css";
+import styles from "./Overview.module.css";
 import generalStyles from "../generalStyles.module.css";
 import ContainerLayout from "./Layout/Container";
 
-function Summary() {
+function Overview() {
   return (
     <ContainerLayout title="Welcome to the School Management System Dashboard!">
       <p>
@@ -47,4 +47,4 @@ function Summary() {
   );
 }
 
-export default Summary;
+export default Overview;

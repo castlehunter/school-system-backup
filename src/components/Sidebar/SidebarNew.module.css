@@ -48,35 +48,48 @@
   flex-direction: column;
 }
 
-.subMenuTitle {
+.menuTitle {
   color: #c0c0c0;
   padding: 0.5rem 1.5rem;
   background-color: #2b2a2f;
   cursor: pointer;
-  line-height: 3rem;
+  /* line-height: 3rem; */
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  border-bottom: 0.1rem solid rgba(221, 221, 221, 0.3); /* 轻微的边框 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 简化阴影效果 */
+  border-bottom: 0.1rem solid rgba(221, 221, 221, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .menuContent {
   display: flex;
   flex-direction: column;
-  line-height: 3rem;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.menuContent.open {
+  max-height: 10rem;
+  opacity: 1;
 }
 
 .menuItem {
+  line-height: 3rem;
   display: block;
   padding: 0.2rem 1.5rem;
   color: #dfdfdf;
   text-decoration: none;
 }
 
-.menuItem:hover {
+.menuItem:hover:not(.current) {
   color: #ffffff;
-  /* background-color: #4abad6; */
-  background-color: #e91f63;
+  background-color: #818181cb;
+}
+
+.menuItem:active, /* 针对鼠标点击 */
+.menuItem.current {
+  background-color: #e91f63; /* 激活状态背景色 */
 }

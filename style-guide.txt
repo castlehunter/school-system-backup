@@ -5,7 +5,7 @@
 main section margin: 3rem (main section is the section to the right of the sidebar)
 sidebar margin(except right): 3rem
 
-......padding .........
+......padding.........
 main section padding : 3rem;
 main section border-radius: 1.2rem;
 sidebar border-radius: 1.2rem;
@@ -74,7 +74,7 @@ submenu title
   background-color: #2b2a2f;
 
 
----------- main section -------------
+..........main section..........
 page background-color: #f2f5fa;
 main section background-color: #fff;
 
@@ -89,3 +89,6 @@ sidebar item hover background:  #e91f63
                   BUTTONS
 ==============================================
   border-radius: 0.5rem;
+  button font-size: 1.4rem(general style)
+  regular button padding: 0.8rem 2rem;
+  small button padding: 0.5rem 1rem;

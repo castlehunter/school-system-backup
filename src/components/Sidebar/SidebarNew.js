@@ -1,29 +1,28 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from "./SidebarNew.module.css";
 import logo from "../../assets/logo.png";
+import { Link } from "react-router-dom";
 
 function SidebarNew() {
   const PlusIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 448 512"
-      style={{ width: "1.6rem", height: "1.6rem", fill: "#fff" }}
+      style={{ width: "1.2rem", height: "1.2rem", fill: "#fff" }}
     >
       <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32v144H48c-17.7 0-32 14.3-32 32s14.3 32 32 32h144v144c0 17.7 14.3 32 32 32s32-14.3 32-32V288h144c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
     </svg>
   );
-
   const MinusIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 448 512"
-      style={{ width: "1.6rem", height: "1.6rem", fill: "#fff" }}
+      style={{ width: "1.2rem", height: "1.2rem", fill: "#fff" }}
     >
       <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
     </svg>
   );
-
   const CircleIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +53,6 @@ function SidebarNew() {
       <path d="M3 13h8V3H3v10zm10 8h8V3h-8v18zm-10 0h8v-6H3v6z" />
     </svg>
   );
-
   const StudentIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +67,6 @@ function SidebarNew() {
       <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
     </svg>
   );
-
   const CourseIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +81,6 @@ function SidebarNew() {
       <path d="M21 3H3c-1.1 0-2 .9-2 2v14a2 2 0 002 2h18a2 2 0 002-2V5a2 2 0 00-2-2zM3 19V5h18v14H3zm4-6h2v2H7v-2zm-4 0h2v2H3v-2zm16 0h2v2h-2v-2zm-8 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-8-4h2v2H7V9zm-4 0h2v2H3V9zm16 0h2v2h-2V9zm-8 0h2v2h-2V9zm4 0h2v2h-2V9z" />
     </svg>
   );
-
   const TeacherIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +95,6 @@ function SidebarNew() {
       <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
     </svg>
   );
-
   const EnrollmentIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -124,10 +119,12 @@ function SidebarNew() {
   });
 
   function toggleMenu(menuName) {
-    setOpenMenus((prevState) => ({
-      ...prevState,
-      [menuName]: !prevState[menuName],
-    }));
+    setOpenMenus((prevState) => {
+      console.log("Previous State:", prevState);
+      const newState = { ...prevState, [menuName]: !prevState[menuName] };
+      console.log("New State:", newState);
+      return newState;
+    });
   }
 
   return (
@@ -139,129 +136,205 @@ function SidebarNew() {
         </div>
       </Link>
 
-      {/* Dashboard */}
       <div className={styles.menu}>
+        {/* Dashboard */}
         <div className={styles.subMenu}>
           <div
-            className={styles.subMenuTitle}
+            className={styles.menuTitle}
             onClick={() => toggleMenu("dashboard")}
           >
             <div>
               {DashboardIcon}
               <span>Dashboard</span>
             </div>
-            {openMenus["dashboard"] ? <>{MinusIcon}</> : <>{PlusIcon}</>}
+            {openMenus["dashboard"] ? MinusIcon : PlusIcon}
           </div>
-          {openMenus["dashboard"] && (
-            <div className={styles.menuContent}>
-              <Link to="/dashboard/summary" className={styles.menuItem}>
-                {CircleIcon}Overview
-              </Link>
-              <Link to="/dashboard/report" className={styles.menuItem}>
-                {CircleIcon} Report
-              </Link>
-            </div>
-          )}
+          <div
+            className={`${styles.menuContent} ${
+              openMenus["dashboard"] ? styles.open : ""
+            }`}
+          >
+            <NavLink
+              to="/dashboard/overview"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.menuItem} ${styles.current}`
+                  : styles.menuItem
+              }
+            >
+              {CircleIcon} Overview
+            </NavLink>
+            <NavLink
+              to="/dashboard/report"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.menuItem} ${styles.current}`
+                  : styles.menuItem
+              }
+            >
+              {CircleIcon} Report
+            </NavLink>
+          </div>
         </div>
 
-        {/* Student*/}
+        {/* Student */}
         <div className={styles.subMenu}>
           <div
-            className={styles.subMenuTitle}
+            className={styles.menuTitle}
             onClick={() => toggleMenu("student")}
           >
             <div>
               {StudentIcon}
               <span>Students</span>
             </div>
-            {openMenus["student"] ? <>{MinusIcon}</> : <>{PlusIcon}</>}
+            {openMenus["student"] ? MinusIcon : PlusIcon}
           </div>
-          {openMenus["student"] && (
-            <div className={styles.menuContent}>
-              <Link to="/student/student-list" className={styles.menuItem}>
-                {CircleIcon}Student List
-              </Link>
-              <Link to="/student/new-student" className={styles.menuItem}>
-                {CircleIcon}New Student
-              </Link>
-            </div>
-          )}
+          <div
+            className={`${styles.menuContent} ${
+              openMenus["student"] ? styles.open : ""
+            }`}
+          >
+            <NavLink
+              to="/student/student-list"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.menuItem} ${styles.current}`
+                  : styles.menuItem
+              }
+            >
+              {CircleIcon} Student List
+            </NavLink>
+            <NavLink
+              to="/student/add-student"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.menuItem} ${styles.current}`
+                  : styles.menuItem
+              }
+            >
+              {CircleIcon} Add Student
+            </NavLink>
+          </div>
         </div>
 
         {/* Course */}
         <div className={styles.subMenu}>
           <div
-            className={styles.subMenuTitle}
+            className={styles.menuTitle}
             onClick={() => toggleMenu("course")}
           >
-            {" "}
             <div>
               {CourseIcon}
               <span>Courses</span>
             </div>
-            {openMenus["course"] ? <>{MinusIcon}</> : <>{PlusIcon}</>}
+            {openMenus["course"] ? MinusIcon : PlusIcon}
           </div>
-          {openMenus["course"] && (
-            <div className={styles.menuContent}>
-              <Link to="/course/course-list" className={styles.menuItem}>
-                {CircleIcon} Course List
-              </Link>
-              <Link to="/course/new-course" className={styles.menuItem}>
-                {CircleIcon} New Course
-              </Link>
-            </div>
-          )}
+          <div
+            className={`${styles.menuContent} ${
+              openMenus["course"] ? styles.open : ""
+            }`}
+          >
+            <NavLink
+              to="/course/course-list"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.menuItem} ${styles.current}`
+                  : styles.menuItem
+              }
+            >
+              {CircleIcon} Course List
+            </NavLink>
+            <NavLink
+              to="/course/new-course"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.menuItem} ${styles.current}`
+                  : styles.menuItem
+              }
+            >
+              {CircleIcon} New Course
+            </NavLink>
+          </div>
         </div>
 
         {/* Teacher */}
         <div className={styles.subMenu}>
           <div
-            className={styles.subMenuTitle}
+            className={styles.menuTitle}
             onClick={() => toggleMenu("teacher")}
           >
             <div>
               {TeacherIcon}
               <span>Teachers</span>
             </div>
-            {openMenus["teacher"] ? <>{MinusIcon}</> : <>{PlusIcon}</>}
+            {openMenus["teacher"] ? MinusIcon : PlusIcon}
           </div>
-          {openMenus["teacher"] && (
-            <div className={styles.menuContent}>
-              <Link to="/teacher/teacher-list" className={styles.menuItem}>
-                {CircleIcon} Teacher List
-              </Link>
-              <Link to="/teacher/new-teacher" className={styles.menuItem}>
-                {CircleIcon} New Teacher
-              </Link>
-            </div>
-          )}
+          <div
+            className={`${styles.menuContent} ${
+              openMenus["teacher"] ? styles.open : ""
+            }`}
+          >
+            <NavLink
+              to="/teacher/teacher-list"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.menuItem} ${styles.current}`
+                  : styles.menuItem
+              }
+            >
+              {CircleIcon} Teacher List
+            </NavLink>
+            <NavLink
+              to="/teacher/new-teacher"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.menuItem} ${styles.current}`
+                  : styles.menuItem
+              }
+            >
+              {CircleIcon} New Teacher
+            </NavLink>
+          </div>
         </div>
 
-        {/* Enrollment  */}
+        {/* Enrollment */}
         <div className={styles.subMenu}>
           <div
-            className={styles.subMenuTitle}
+            className={styles.menuTitle}
             onClick={() => toggleMenu("enrollment")}
           >
             <div>
               {EnrollmentIcon}
               <span>Enrollment</span>
             </div>
-            {openMenus["enrollment"] ? <>{MinusIcon}</> : <>{PlusIcon}</>}
+            {openMenus["enrollment"] ? MinusIcon : PlusIcon}
           </div>
-          {openMenus["enrollment"] && (
-            <div className={styles.menuContent}>
-              <Link
-                to="/enrollment/enrollment-list"
-                className={styles.menuItem}
-              >
-                {CircleIcon}Enrollment List
-              </Link>
-              <Link to="/enrollment/new-enrollment" className={styles.menuItem}>
-                {CircleIcon}New Enrollment
-              </Link>
-            </div>
-          )}
+          <div
+            className={`${styles.menuContent} ${
+              openMenus["enrollment"] ? styles.open : ""
+            }`}
+          >
+            <NavLink
+              to="/enrollment/enrollment-list"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.menuItem} ${styles.current}`
+                  : styles.menuItem
+              }
+            >
+              {CircleIcon} Enrollment List
+            </NavLink>
+            <NavLink
+              to="/enrollment/new-enrollment"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.menuItem} ${styles.current}`
+                  : styles.menuItem
+              }
+            >
+              {CircleIcon} New Enrollment
+            </NavLink>
+          </div>
         </div>
       </div>
     </div>

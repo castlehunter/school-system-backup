@@ -7,11 +7,10 @@ import EditContainerLayout from "../Layout/EditContainerLayout";
 import ProfileForm from "../Form/ProfileForm";
 import OtherForm from "../Form/OtherForm";
 function StudentProfile() {
-  const [studentInfo, setStudentInfo] = useState({
+  const [basicInfo, setBasicInfo] = useState({
     studentNo: "",
     firstName: "",
     lastName: "",
-    program: [],
     dob: "",
     sex: "",
     telephone: "",
@@ -19,6 +18,8 @@ function StudentProfile() {
     email: "",
     address: "",
   });
+  const [program, setProgram] = useState([]);
+  const [course, setCourse] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isEditBasic, setIsEditBasic] = useState(false);
@@ -47,7 +48,7 @@ function StudentProfile() {
         );
 
         if (foundStudent) {
-          setStudentInfo({
+          setBasicInfo({
             studentNo: foundStudent.studentNo,
             firstName: foundStudent.fname,
             lastName: foundStudent.lname,
@@ -57,9 +58,9 @@ function StudentProfile() {
             mobile: foundStudent.mobile,
             email: foundStudent.email,
             address: foundStudent.address,
-            program: foundStudent.program,
-            course: foundStudent.course,
           });
+          setProgram(foundStudent.program);
+          setCourse(foundStudent.course);
         } else {
           throw new Error("Student not found");
         }
@@ -77,7 +78,7 @@ function StudentProfile() {
   function handleChange(e) {
     const { name, value } = e.target;
 
-    setStudentInfo((prevInfo) => ({
+    setBasicInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
     }));
@@ -94,7 +95,7 @@ function StudentProfile() {
   async function handleSubmitBasic(e) {
     e.preventDefault();
 
-    const { telephone, mobile, email } = studentInfo;
+    const { telephone, mobile, email } = basicInfo;
 
     if (!telephone || !email) {
       alert("Fields cannot be blank!");
@@ -113,11 +114,11 @@ function StudentProfile() {
 
     try {
       const response = await fetch(
-        `http://localhost:3900/api/student/${studentInfo.studentNo}`,
+        `http://localhost:3900/api/student/${basicInfo.studentNo}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(studentInfo),
+          body: JSON.stringify(basicInfo),
         }
       );
 
@@ -130,7 +131,7 @@ function StudentProfile() {
       setError(error.message);
     }
 
-    navigate(`/dashboard/staff/edit-confirmed/${studentInfo.studentNo}`);
+    navigate(`/dashboard/staff/edit-confirmed/${basicInfo.studentNo}`);
   }
 
   async function handleSubmitProgram(e) {}
@@ -194,7 +195,7 @@ function StudentProfile() {
           />
           <form className={styles.form} onSubmit={handleSubmitBasic}>
             <ProfileForm
-              formData={studentInfo}
+              formData={basicInfo}
               handleChange={handleChange}
               isEdit={isEditBasic}
               formWidth={formStyles.formFull}
@@ -214,7 +215,7 @@ function StudentProfile() {
           <div className={styles.detail}>
             <form className={styles.form} onSubmit={handleSubmitProgram}>
               <OtherForm
-                formArr={studentInfo.program}
+                formArr={program}
                 handleChange={handleChange}
                 isEdit={isEditProgram}
               />
@@ -230,7 +231,14 @@ function StudentProfile() {
           onClickCancel={handleCancelCourse}
         >
           <div className={styles.detail}>
-            <form className={styles.form} onSubmit={handleSubmitCourse}></form>
+            <form className={styles.form} onSubmit={handleSubmitCourse}>
+              {" "}
+              <OtherForm
+                formArr={course}
+                handleChange={handleChange}
+                isEdit={isEditProgram}
+              />
+            </form>
           </div>
         </EditContainerLayout>
       </div>

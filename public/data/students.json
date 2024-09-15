@@ -13,7 +13,7 @@
       { "code": "CS", "name": "Computer Science" },
       { "code": "ECO", "name": "Economics" }
     ],
-    "courses": [
+    "course": [
       { "id": "CMP101", "name": "Data Structures" },
       { "id": "CMP102", "name": "Algorithms" }
     ]
@@ -29,7 +29,7 @@
     "email": "emilyparker@example.com",
     "address": "2929 Spruce St",
     "program": [{ "code": "MATH", "name": "Mathematics" }],
-    "courses": [
+    "course": [
       { "id": "MTH201", "name": "Calculus I" },
       { "id": "MTH202", "name": "Linear Algebra" }
     ]
@@ -45,7 +45,7 @@
     "email": "olivermorris@example.com",
     "address": "3030 Birch St",
     "program": [{ "code": "PHYS", "name": "Physics" }],
-    "courses": [
+    "course": [
       { "id": "PHY301", "name": "Quantum Mechanics" },
       { "id": "PHY302", "name": "Electrodynamics" }
     ]
@@ -61,7 +61,7 @@
     "email": "sophiaclark@example.com",
     "address": "3131 Maple St",
     "program": [{ "code": "BIO", "name": "Biology" }],
-    "courses": [
+    "course": [
       { "id": "BIO401", "name": "Genetics" },
       { "id": "BIO402", "name": "Cell Biology" }
     ]
@@ -77,7 +77,7 @@
     "email": "aidendavis@example.com",
     "address": "3232 Oak St",
     "program": [{ "code": "CHEM", "name": "Chemistry" }],
-    "courses": [
+    "course": [
       { "id": "CHE501", "name": "Organic Chemistry" },
       { "id": "CHE502", "name": "Inorganic Chemistry" }
     ]
@@ -93,7 +93,7 @@
     "email": "miawilson@example.com",
     "address": "3333 Willow St",
     "program": [{ "code": "ENG", "name": "Engineering" }],
-    "courses": [
+    "course": [
       { "id": "ENG601", "name": "Thermodynamics" },
       { "id": "ENG602", "name": "Fluid Mechanics" }
     ]
@@ -109,7 +109,7 @@
     "email": "ethanbrown@example.com",
     "address": "3434 Pine St",
     "program": [{ "code": "ENG", "name": "English" }],
-    "courses": [
+    "course": [
       { "id": "ENG701", "name": "Creative Writing" },
       { "id": "ENG702", "name": "Literature" }
     ]
@@ -125,7 +125,7 @@
     "email": "harpertaylor@example.com",
     "address": "3535 Cedar St",
     "program": [{ "code": "POL", "name": "Political Science" }],
-    "courses": [
+    "course": [
       { "id": "POL801", "name": "Comparative Politics" },
       { "id": "POL802", "name": "International Relations" }
     ]
@@ -141,7 +141,7 @@
     "email": "avawilson@example.com",
     "address": "3636 Maple St",
     "program": [{ "code": "SOC", "name": "Sociology" }],
-    "courses": [
+    "course": [
       { "id": "SOC901", "name": "Social Theory" },
       { "id": "SOC902", "name": "Research Methods" }
     ]
@@ -157,7 +157,7 @@
     "email": "jamesmartinez@example.com",
     "address": "3737 Birch St",
     "program": [{ "code": "HIST", "name": "History" }],
-    "courses": [
+    "course": [
       { "id": "HIS901", "name": "World History" },
       { "id": "HIS902", "name": "American History" }
     ]
@@ -173,7 +173,7 @@
     "email": "lilymoore@example.com",
     "address": "3838 Willow St",
     "program": [{ "code": "MATH", "name": "Mathematics" }],
-    "courses": [
+    "course": [
       { "id": "MTH201", "name": "Calculus I" },
       { "id": "MTH203", "name": "Calculus II" }
     ]
@@ -189,7 +189,7 @@
     "email": "oliverharris@example.com",
     "address": "3939 Oak St",
     "program": [{ "code": "CS", "name": "Computer Science" }],
-    "courses": [
+    "course": [
       { "id": "CMP101", "name": "Data Structures" },
       { "id": "CMP104", "name": "Database Systems" }
     ]
@@ -205,7 +205,7 @@
     "email": "charlottelee@example.com",
     "address": "4040 Spruce St",
     "program": [{ "code": "ART", "name": "Art" }],
-    "courses": [
+    "course": [
       { "id": "ART901", "name": "Drawing" },
       { "id": "ART902", "name": "Painting" }
     ]
