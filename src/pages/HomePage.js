@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import generalStyles from "../generalStyles.module.css";
 import styles from "./HomePage.module.css";
 import PageNav from "../components/PageNav";
 import Footer from "../components/Footer/Footer";
@@ -6,6 +7,7 @@ import Button from "../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import formStyles from "../components/Form/Form.module.css";
 import supabase from "../config/supabaseClient";
+import { Link } from "react-router-dom";
 
 function HomePage() {
   const [username, setUsername] = useState("");
@@ -47,7 +49,7 @@ function HomePage() {
 
   return (
     <main className={styles.homepage}>
-      <PageNav bgColor="#000" />
+      <div className={styles.bg}></div>
       <section className={styles.loginSection}>
         <form className={styles.loginForm} onSubmit={handleLogin}>
           <div className={formStyles.formItem}>
@@ -75,11 +77,17 @@ function HomePage() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+          </div>{" "}
+          <div className={formStyles.formItem}>
+            <Button colorType="rose">Login</Button>
           </div>
-          <Button colorType="rose">Login</Button>
+          <div className={formStyles.formItem}>
+            <Link className={generalStyles.link} style={{ color: "white" }}>
+              Forgot password?
+            </Link>
+          </div>
         </form>
       </section>
-      <Footer />
     </main>
   );
 }

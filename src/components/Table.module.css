@@ -1,6 +1,6 @@
 .table {
   width: 100%;
-  border-collapse: collapse; /* 合并边框 */
+  border-collapse: collapse;
   overflow: hidden;
 }
 

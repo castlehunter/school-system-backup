@@ -4,7 +4,7 @@
 /* FORM ITEMS */
 /* ================== */
 .formItem {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -14,7 +14,6 @@
   text-align: left;
   color: #7b809a;
   font-weight: 500;
-  margin-bottom: 0.25rem;
 }
 
 .formInput,

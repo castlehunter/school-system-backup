@@ -11,7 +11,7 @@
 .link:active {
   color: #e91f63;
   text-decoration: underline;
-  text-underline-offset: 0.2rem;
+  text-underline-offset: 0.4rem;
 }
 .noStyleLink {
   color: inherit;
@@ -39,7 +39,7 @@
 
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-right: 1px solid rgba(192, 192, 192, 0.5);
-  border-bottom: 1px solid rgba(131, 131, 131, 0.5);
+  border-bottom: 1px solid rgba(177, 177, 177, 0.5);
 }
 
 .containerHeader {
