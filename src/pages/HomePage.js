@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 function HomePage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loginAs, setLoginAs] = useState("");
   const navigate = useNavigate();
 
   //show supabase client
@@ -50,14 +51,32 @@ function HomePage() {
   return (
     <main className={styles.homepage}>
       <div className={styles.bg}></div>
+
       <section className={styles.loginSection}>
+        <div className={styles.welcome}>logo logo Welcome Back!</div>
         <form className={styles.loginForm} onSubmit={handleLogin}>
-          <div className={formStyles.formItem}>
-            <label className={formStyles.formLabel} htmlFor="username">
+          <div className={styles.loginFormItem}>
+            <label className={styles.loginFormLabel} htmlFor="loginAs">
+              Login As
+            </label>
+            <select
+              className={styles.loginFormInput}
+              value={loginAs}
+              onChange={(e) => setLoginAs(e.target.value)}
+              required
+            >
+              <option value="Administrator">Administrator</option>
+              <option value="Advisor">Advisor</option>
+              <option value="Student">Student</option>
+            </select>
+          </div>
+
+          <div className={styles.loginFormItem}>
+            <label className={styles.loginFormLabel} htmlFor="username">
               Username:
             </label>
             <input
-              className={formStyles.formInput}
+              className={styles.loginFormInput}
               type="text"
               id="username"
               value={username}
@@ -65,26 +84,29 @@ function HomePage() {
               required
             />
           </div>
-          <div className={formStyles.formItem}>
-            <label className={formStyles.formLabel} htmlFor="password">
+          <div className={styles.loginFormItem}>
+            <label className={styles.loginFormLabel} htmlFor="password">
               Password:
             </label>
             <input
-              className={formStyles.formInput}
+              className={styles.loginFormInput}
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-          </div>{" "}
-          <div className={formStyles.formItem}>
-            <Button colorType="rose">Login</Button>
           </div>
-          <div className={formStyles.formItem}>
-            <Link className={generalStyles.link} style={{ color: "white" }}>
-              Forgot password?
-            </Link>
+          <div className={`${styles.loginFormItem} ${styles.loginHint}`}>
+            <div className={styles.rememberMe}>
+              <input type="checkbox" />
+              <span>Remember me</span>
+            </div>
+            <Link className={generalStyles.link}>Forgot password</Link>
+          </div>
+
+          <div className={styles.loginFormItem}>
+            <Button colorType="rose">Login</Button>
           </div>
         </form>
       </section>
