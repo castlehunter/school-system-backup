@@ -1,17 +1,15 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import styles from "./Page.module.css";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import Layout from "../components/Layout/Layout";
+import { Outlet } from "react-router-dom";
 
-function Dashboard() {
+function CommonPage() {
   return (
     <Layout breadcrumb={<Breadcrumb />}>
-      <div className={styles.mainSection}>
+      <div>
         <Outlet />
       </div>
     </Layout>
   );
 }
 
-export default Dashboard;
+export default CommonPage;
