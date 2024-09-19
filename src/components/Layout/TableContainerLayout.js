@@ -1,25 +1,23 @@
 import React from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "./TableContainerLayout.module.css";
-import Pagination from "../Pagination/Pagination";
-import Button from "../Button/Button";
+import Pagination from "../Pagination/Pagination"; // Make sure Pagination is imported
 
 function TableContainerLayout({
   children,
   title,
   rowsPerPage,
-  totalPages,
-  currPage,
-  onPageChange,
+  totalPages, // New prop for total pages
+  currPage, // New prop for current page
+  onPageChange, // New prop for handling page changes
   onRowsPerPageChange,
 }) {
   return (
     <div className={generalStyles.container}>
       <div className={generalStyles.containerHeader}>
-        <div className={generalStyles.primaryHeading}>{title}</div>
-        {/* <div className={styles.addnew}>
-          <Button>Add Student</Button>
-        </div> */}
+        <div className={generalStyles.primaryHeading}>
+          {title} {/* You can add filter/search functionalities here */}
+        </div>
         <div className={styles.entriesPerPage}>
           <span>Showing</span>
           <select value={rowsPerPage} onChange={onRowsPerPageChange}>
@@ -34,6 +32,8 @@ function TableContainerLayout({
         </div>
       </div>
       <div>{children}</div>
+
+      {/* Add Pagination at the bottom */}
       <Pagination
         totalPages={totalPages}
         currPage={currPage}

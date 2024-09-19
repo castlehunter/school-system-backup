@@ -45,13 +45,13 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
               <td>{student.fname}</td>
               <td>{student.lname}</td>
               <td>
-                {/* Render each program in a list */}
+                {/* Render program name directly if it's not an array */}
                 {Array.isArray(student.program) ? (
                   student.program.map((prog, i) => (
                     <div key={i}>{prog.name}</div>
                   ))
                 ) : (
-                  <div>{student.program}</div>
+                  <div>{student.program.name}</div>
                 )}
               </td>
               <td>{student.sex}</td>

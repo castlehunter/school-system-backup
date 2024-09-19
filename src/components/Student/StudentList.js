@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import StudentTable from "./StudentTable";
 import TableContainerLayout from "../../components/Layout/TableContainerLayout";
+
 function StudentList() {
   const [studentData, setStudentData] = useState([]);
   const [error, setError] = useState(null);
@@ -59,7 +60,6 @@ function StudentList() {
   if (error) {
     return <div>Error: {error}</div>;
   }
-
   return (
     <TableContainerLayout
       title="All Students"

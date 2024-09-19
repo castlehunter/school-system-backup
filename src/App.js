@@ -1,56 +1,131 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import AddStudent from "./components/Student/AddStudent";
 import StudentList from "./components/Student/StudentList";
 import StudentConfirmed from "./components/Student/StudentConfirm";
 import StudentProfile from "./components/Student/StudentProfile";
 import Overview from "./components/Overview";
-import Report from "./components/Report";
+import AccountSetting from "./components/AccountSetting";
 import CourseList from "./components/Course/CourseList";
 import NewCourse from "./components/Course/NewCourse";
 import CourseEdit from "./components/Course/CourseEdit";
 import CourseConfirm from "./components/Course/CourseConfirm";
 import CommonPage from "./pages/CommonPage";
+import ProgramList from "./components/Program/ProgramList";
+import MyCourses from "./components/MyCourses/MyCourses";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage />,
+  },
+  {
+    path: "dashboard",
+    element: <CommonPage />,
+    children: [
+      {
+        index: true,
+        element: <Overview />,
+      },
+      {
+        path: "overview",
+        element: <Overview />,
+      },
+      {
+        path: "account-setting",
+        element: <AccountSetting />,
+      },
+    ],
+  },
+  {
+    path: "my-courses",
+    element: <CommonPage />,
+    children: [
+      {
+        index: true,
+        element: <MyCourses />,
+      },
+      {
+        path: "my-course-list",
+        element: <MyCourses />,
+      },
+    ],
+  },
+  {
+    path: "student",
+    element: <CommonPage />,
+    children: [
+      {
+        index: true,
+        element: <StudentList />,
+      },
+      {
+        path: "student-list",
+        element: <StudentList />,
+      },
+      {
+        path: ":studentNo",
+        element: <StudentProfile />,
+      },
+      {
+        path: "add-student",
+        element: <AddStudent />,
+      },
+      {
+        path: "confirmed/:studentNo",
+        element: <StudentConfirmed type="new" />,
+      },
+      {
+        path: "confirmed/:studentNo",
+        element: <StudentConfirmed type="edit" />,
+      },
+    ],
+  },
+  {
+    path: "program",
+    element: <CommonPage />,
+    children: [
+      {
+        index: true,
+        element: <ProgramList />,
+      },
+      {
+        path: "program-list",
+        element: <ProgramList />,
+      },
+    ],
+  },
+  {
+    path: "course",
+    element: <CommonPage />,
+    children: [
+      {
+        index: true,
+        element: <CourseList />,
+      },
+      {
+        path: "course-list",
+        element: <CourseList />,
+      },
+      {
+        path: "add-course",
+        element: <NewCourse />,
+      },
+      {
+        path: "course-edit/:courseId",
+        element: <CourseEdit />,
+      },
+      {
+        path: "edit-confirmed/:branchNo",
+        element: <CourseConfirm type="edit" />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="dashboard" element={<CommonPage />}>
-          <Route index element={<Overview />} />
-          <Route path="overview" element={<Overview />} />
-          <Route path="report" element={<Report />} />
-        </Route>
-        <Route path="student" element={<CommonPage />}>
-          <Route index element={<StudentList />} />
-          <Route path="student-list" element={<StudentList />} />
-          <Route path=":studentNo" element={<StudentProfile />} />
-          <Route path="add-student" element={<AddStudent />} />
-          <Route
-            path="confirmed/:studentNo"
-            element={<StudentConfirmed type="new" />}
-          />
-          <Route
-            path="confirmed/:studentNo"
-            element={<StudentConfirmed type="edit" />}
-          />
-        </Route>
-
-        <Route path="course" element={<CommonPage />}>
-          <Route index element={<CourseList />} />
-          <Route path="course-list" element={<CourseList />} />
-          <Route path="add-course" element={<NewCourse />} />
-          <Route path="course-edit/:courseId" element={<CourseEdit />} />
-          <Route
-            path="edit-confirmed/:branchNo"
-            element={<CourseConfirm type="edit" />}
-          />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

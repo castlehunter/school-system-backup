@@ -1,10 +1,24 @@
+svg {
+  text-align: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: #fff;
+  margin-right: 1rem;
+}
+
+/* =============================== */
+/* Sidebar */
+/* =============================== */
+.sidebarWrapper {
+  /* background-color: #4f4f52; */
+}
 .sidebar {
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   width: 12vw;
   background-color: #4f4f52;
   font-size: 1.4rem;
-  border-radius: 1rem;
   margin-right: 2rem;
 }
 
@@ -38,9 +52,9 @@
 
 .logoText {
   /* font-weight: bold; */
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   padding-left: 2rem;
-  color: #ffffff;
+  color: #c0c0c0;
 }
 
 .menu {
@@ -50,16 +64,19 @@
 
 .menuTitle {
   color: #c0c0c0;
-  padding: 0.5rem 1.5rem;
-  background-color: #2b2a2f;
+  padding: 0.5rem 2rem;
+  background-color: #3b3b3b;
   cursor: pointer;
-  /* line-height: 3rem; */
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   border-bottom: 0.1rem solid rgba(221, 221, 221, 0.3);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.menuText {
+  display: flex;
+  align-items: center;
 }
 
 .menuContent {
@@ -77,9 +94,9 @@
 }
 
 .menuItem {
-  line-height: 3rem;
+  line-height: 3.5rem;
   display: block;
-  padding: 0.2rem 1.5rem;
+  padding: 0.2rem 2rem;
   color: #dfdfdf;
   text-decoration: none;
 }
@@ -92,4 +109,73 @@
 .menuItem:active, /* 针对鼠标点击 */
 .menuItem.current {
   background-color: #e91f63; /* 激活状态背景色 */
+}
+
+/* ====================== */
+/* Search */
+/* ====================== */
+.searchContainer {
+  margin: 1rem 1rem;
+  background-color: #1d1d1d;
+}
+
+.searchContainer {
+  position: relative;
+}
+
+.searchbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchInput {
+  background-color: #2c2c2c;
+  border: none;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  color: white;
+}
+
+.searchInput::placeholder {
+  color: #a0a0a0;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  border: 0.1rem solid rgb(131, 131, 131);
+  border-top: 0;
+  background: #464646;
+  padding: 1rem 0;
+  z-index: 1000;
+}
+
+.dropdownItem {
+  display: block;
+  padding: 8px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.dropdownItem:hover {
+  background: #000000;
+}
+
+.searchBarIconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #646464;
+  width: 4rem;
+  /* height: 3rem;  */
+}
+
+.searchBarIcon {
+  display: block;
+  margin: 0 auto;
+  width: 2rem;
+  height: 2rem;
 }

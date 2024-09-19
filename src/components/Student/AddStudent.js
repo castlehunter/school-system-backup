@@ -94,7 +94,7 @@ function AddStudent() {
   }
 
   return (
-    <ContainerLayout title="Add a new student">
+    <ContainerLayout title="Add Students">
       <form className={styles.form} onSubmit={handleSubmit}>
         <ProfileForm
           formData={formData}
