@@ -1,6 +1,6 @@
 import generalStyles from "../../generalStyles.module.css";
 import Button from "../Button/Button";
-function EditContainerLayout({
+function EditContainer({
   children,
   title,
   isEdit,
@@ -37,4 +37,4 @@ function EditContainerLayout({
   );
 }
 
-export default EditContainerLayout;
+export default EditContainer;

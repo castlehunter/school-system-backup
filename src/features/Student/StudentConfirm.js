@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Button from "../Button/Button";
-import Loader from "../Loader";
+import Button from "../../ui/Button/Button";
+import Loader from "../../ui/Loader";
 
 function StudentConfirmed({ type }) {
   const [studentData, setStudentData] = useState(null);

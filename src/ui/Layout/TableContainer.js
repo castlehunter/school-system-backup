@@ -1,9 +1,9 @@
 import React from "react";
 import generalStyles from "../../generalStyles.module.css";
-import styles from "./TableContainerLayout.module.css";
-import Pagination from "../Pagination/Pagination"; // Make sure Pagination is imported
+import styles from "./TableContainer.module.css";
+import Pagination from "../../components/Pagination/Pagination";
 
-function TableContainerLayout({
+function TableContainer({
   children,
   title,
   rowsPerPage,
@@ -43,4 +43,4 @@ function TableContainerLayout({
   );
 }
 
-export default TableContainerLayout;
+export default TableContainer;

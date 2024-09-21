@@ -88,15 +88,6 @@ function SidebarNew() {
     enrollment: true,
   });
 
-  function toggleMenu(menuName) {
-    setOpenMenus((prevState) => {
-      console.log("Previous State:", prevState);
-      const newState = { ...prevState, [menuName]: !prevState[menuName] };
-      console.log("New State:", newState);
-      return newState;
-    });
-  }
-
   const [searchBarIcon, setSearchBarIcon] = useState(SearchIcon);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -130,6 +121,15 @@ function SidebarNew() {
     );
 
     setSearchResults(filteredResults);
+  }
+
+  function toggleMenu(menuName) {
+    setOpenMenus((prevState) => {
+      console.log("Previous State:", prevState);
+      const newState = { ...prevState, [menuName]: !prevState[menuName] };
+      console.log("New State:", newState);
+      return newState;
+    });
   }
 
   return (
@@ -221,7 +221,7 @@ function SidebarNew() {
           >
             <div className={styles.menuText}>
               {StudentIcon}
-              My Courses - for teacher/student
+              My Courses - displayed to teacher/student only
             </div>
             {openMenus["mycourses"] ? MinusIcon : PlusIcon}
           </div>
@@ -260,7 +260,7 @@ function SidebarNew() {
           >
             <div className={styles.menuText}>
               {StudentIcon}
-              Students-for advisor, admin
+              Students-displayed to admin/advisor
             </div>
             {openMenus["student"] ? MinusIcon : PlusIcon}
           </div>
@@ -335,7 +335,9 @@ function SidebarNew() {
             className={styles.menuTitle}
             onClick={() => toggleMenu("course")}
           >
-            <div className={styles.menuText}>{CourseIcon}Courses</div>
+            <div className={styles.menuText}>
+              {CourseIcon}Courses - displayed to...
+            </div>
             {openMenus["course"] ? MinusIcon : PlusIcon}
           </div>
           <div

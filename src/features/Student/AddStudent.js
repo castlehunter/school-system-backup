@@ -1,10 +1,10 @@
 // NewStudent.js
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../Button/Button";
-import ContainerLayout from "../Layout/Container";
-import ProfileForm from "../Form/ProfileForm";
-import styles from "../Form/Form.module.css";
+import Button from "../../ui/Button/Button";
+import Container from "../../ui/Layout/Container";
+import ProfileForm from "../../components/Form/ProfileForm";
+import styles from "../../components/Form/Form.module.css";
 
 function AddStudent() {
   const [formData, setFormData] = useState({
@@ -94,7 +94,7 @@ function AddStudent() {
   }
 
   return (
-    <ContainerLayout title="Add Students">
+    <Container title="Add Students">
       <form className={styles.form} onSubmit={handleSubmit}>
         <ProfileForm
           formData={formData}
@@ -110,7 +110,7 @@ function AddStudent() {
         </div>
       </form>
       {error && <div>Error: {error}</div>}
-    </ContainerLayout>
+    </Container>
   );
 }
 

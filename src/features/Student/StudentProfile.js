@@ -1,11 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import styles from "./StudentProfile.module.css";
-import formStyles from "../Form/Form.module.css";
-import Loader from "../Loader";
-import EditContainerLayout from "../Layout/EditContainerLayout";
-import ProfileForm from "../Form/ProfileForm";
-import OtherForm from "../Form/OtherForm";
+import formStyles from "../../components/Form/Form.module.css";
+import Loader from "../../ui/Loader";
+import EditContainer from "../../ui/Layout/EditContainer";
+import ProfileForm from "../../components/Form/ProfileForm";
+import OtherForm from "../../components/Form/OtherForm";
+
 function StudentProfile() {
   const [basicInfo, setBasicInfo] = useState({
     studentNo: "",
@@ -180,7 +181,7 @@ function StudentProfile() {
 
   return (
     <div className={styles.studentPofileLayout}>
-      <EditContainerLayout
+      <EditContainer
         title="Basic Information"
         isEdit={isEditBasic}
         onClickEdit={handleEditBasic}
@@ -202,11 +203,11 @@ function StudentProfile() {
             />
           </form>
         </div>
-      </EditContainerLayout>
+      </EditContainer>
 
       {/* ---------- Program ----------- */}
       <div className={styles.programCourseLayout}>
-        <EditContainerLayout
+        <EditContainer
           title="Program"
           isEdit={isEditProgram}
           onClickEdit={isEditProgram ? handleSubmitProgram : handleEditProgram}
@@ -221,10 +222,10 @@ function StudentProfile() {
               />
             </form>
           </div>
-        </EditContainerLayout>
+        </EditContainer>
 
         {/* -------------- Course ------------- */}
-        <EditContainerLayout
+        <EditContainer
           title="Course"
           isEdit={isEditProgram}
           onClickEdit={isEditCourse ? handleSubmitCourse : handleEditCourse}
@@ -240,9 +241,9 @@ function StudentProfile() {
               />
             </form>
           </div>
-        </EditContainerLayout>
+        </EditContainer>
       </div>
-      <EditContainerLayout
+      <EditContainer
         title="Additional Information"
         isEdit={isEditAdditional}
         onClickEdit={
@@ -256,7 +257,7 @@ function StudentProfile() {
             onSubmit={handleSubmitAdditional}
           ></form>
         </div>
-      </EditContainerLayout>
+      </EditContainer>
     </div>
   );
 }

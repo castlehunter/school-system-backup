@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import styles from "../Student/StudentProfile.module.css";
 import { useNavigate } from "react-router-dom";
-import Button from "../Button/Button";
+import Button from "../../ui/Button/Button";
 
-function NewCourse() {
+function AddCourse() {
   const [CourseId, setCourseId] = useState("");
   const [courseName, setCourseName] = useState("");
   const [city, setCity] = useState("");
@@ -12,23 +12,6 @@ function NewCourse() {
   const [existingBranchNos, setExistingBranchNos] = useState([]);
 
   const navigate = useNavigate();
-  useEffect(() => {
-    async function fetchExistingBranchno() {
-      try {
-        const res = await fetch(
-          "http://localhost:3900/api/branch/existing-branchno"
-        );
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await res.json();
-        setExistingBranchNos(data);
-      } catch (error) {
-        setError(error.message);
-      }
-    }
-    fetchExistingBranchno();
-  }, []);
 
   function generateBranchno() {
     let number = 8;
@@ -159,4 +142,4 @@ function NewCourse() {
   );
 }
 
-export default NewCourse;
+export default AddCourse;

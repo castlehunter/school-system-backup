@@ -1,5 +1,5 @@
 import styles from "./Layout.module.css";
-import SidebarNew from "../Sidebar/SidebarNew";
+import SidebarNew from "../../components/Sidebar/SidebarNew";
 
 function Layout({ children, breadcrumb }) {
   const settingIcon = (

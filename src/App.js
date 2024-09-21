@@ -1,19 +1,19 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import AddStudent from "./components/Student/AddStudent";
-import StudentList from "./components/Student/StudentList";
-import StudentConfirmed from "./components/Student/StudentConfirm";
-import StudentProfile from "./components/Student/StudentProfile";
-import Overview from "./components/Overview";
-import AccountSetting from "./components/AccountSetting";
-import CourseList from "./components/Course/CourseList";
-import NewCourse from "./components/Course/NewCourse";
-import CourseEdit from "./components/Course/CourseEdit";
-import CourseConfirm from "./components/Course/CourseConfirm";
+import AddStudent from "./features/Student/AddStudent";
+import StudentList from "./features/Student/StudentList";
+import { studentListLoader } from "./services/apiStudent";
+import StudentConfirmed from "./features/Student/StudentConfirm";
+import StudentProfile from "./features/Student/StudentProfile";
+import Overview from "./features/Dashboard/Overview";
+import AccountSetting from "./features/Dashboard/AccountSetting";
+import CourseList from "./features/Course/CourseList";
+import AddCourse from "./features/Course/AddCourse";
+import CourseEdit from "./features/Course/CourseEdit";
+import CourseConfirm from "./features/Course/CourseConfirm";
 import CommonPage from "./pages/CommonPage";
-import ProgramList from "./components/Program/ProgramList";
-import MyCourses from "./components/MyCourses/MyCourses";
+import MyCourses from "./features/MyCourses/MyCourses";
 
 const router = createBrowserRouter([
   {
@@ -59,10 +59,12 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <StudentList />,
+        loader: studentListLoader,
       },
       {
         path: "student-list",
         element: <StudentList />,
+        loader: studentListLoader,
       },
       {
         path: ":studentNo",
@@ -82,20 +84,20 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "program",
-    element: <CommonPage />,
-    children: [
-      {
-        index: true,
-        element: <ProgramList />,
-      },
-      {
-        path: "program-list",
-        element: <ProgramList />,
-      },
-    ],
-  },
+  // {
+  //   path: "program",
+  //   element: <CommonPage />,
+  //   children: [
+  //     {
+  //       index: true,
+  //       element: <ProgramList />,
+  //     },
+  //     {
+  //       path: "program-list",
+  //       element: <ProgramList />,
+  //     },
+  //   ],
+  // },
   {
     path: "course",
     element: <CommonPage />,
@@ -110,7 +112,7 @@ const router = createBrowserRouter([
       },
       {
         path: "add-course",
-        element: <NewCourse />,
+        element: <AddCourse />,
       },
       {
         path: "course-edit/:courseId",

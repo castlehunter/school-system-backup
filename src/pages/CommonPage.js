@@ -1,5 +1,5 @@
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
-import Layout from "../components/Layout/Layout";
+import Layout from "../ui/Layout/Layout";
 import { Outlet } from "react-router-dom";
 
 function CommonPage() {

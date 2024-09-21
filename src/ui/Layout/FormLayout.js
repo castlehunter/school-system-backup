@@ -1,6 +1,6 @@
 import React from "react";
 import generalStyles from "../../generalStyles.module.css";
-import styles from "./TableContainerLayout.module.css";
+import styles from "./TableContainer.module.css";
 
 function FormLayout({ children, title }) {
   return (

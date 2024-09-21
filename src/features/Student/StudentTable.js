@@ -1,8 +1,8 @@
 import React from "react";
 import generalStyles from "../../generalStyles.module.css";
-import styles from "../Table.module.css";
+import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
-import Loader from "../Loader";
+import Loader from "../../ui/Loader";
 
 function formatDate(dateString) {
   const date = new Date(dateString);

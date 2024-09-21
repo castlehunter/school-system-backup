@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import ProgramTable from "./ProgramTable";
-import TableContainerLayout from "../../components/Layout/TableContainerLayout";
+import ProgramTable from "./ProgramTable.js";
+import TableContainer from "../../components/Layout/TableContainer";
 import supabase from "../../config/supabaseClient.js";
 
 function ProgramList() {
@@ -45,7 +45,7 @@ function ProgramList() {
   }
 
   return (
-    <TableContainerLayout
+    <TableContainer
       title="All Programs"
       rowsPerPage={rowsPerPage}
       totalPages={totalPages}
@@ -59,7 +59,7 @@ function ProgramList() {
         currPage={currPage}
         isLoading={isLoading}
       />
-    </TableContainerLayout>
+    </TableContainer>
   );
 }
 

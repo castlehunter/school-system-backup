@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Overview.module.css";
-import generalStyles from "../generalStyles.module.css";
-import ContainerLayout from "./Layout/Container";
+import generalStyles from "../../generalStyles.module.css";
+import Container from "../../ui/Layout/Container";
 
 function Overview() {
   return (
-    <ContainerLayout title="Welcome to the School Management System Dashboard!">
+    <Container title="Welcome to the School Management System Dashboard!">
       <p>
         This is your central hub for managing students, teachers, and classes.
         Navigate through the menu to access various features and tools to
@@ -43,7 +43,7 @@ function Overview() {
         <h2 className={generalStyles.secondaryHeading}>User Information</h2>
         <p>Logged in as: John Doe</p>
       </div>
-    </ContainerLayout>
+    </Container>
   );
 }
 

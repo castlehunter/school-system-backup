@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import TableContainerLayout from "../Layout/TableContainerLayout";
+import TableContainer from "../../ui/Layout/TableContainer";
 import CourseTable from "./CourseTable";
+
 function CourseList() {
   const [courseData, setCourseData] = useState([]);
   const [error, setError] = useState(null);
@@ -13,38 +14,6 @@ function CourseList() {
     setCurrPage(page);
   }
 
-  // useEffect(() => {
-  //   async function fetchStaffData() {
-  //     try {
-  //       setIsLoading(true);
-  //       setError("");
-  //       const response = await fetch(
-  //         "http://localhost:3900/api/branch/branch-list"
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch branch list");
-  //       }
-  //       const data = await response.json();
-
-  //       const transformedData = data.map((branch) => ({
-  //         branchNo: branch[0],
-  //         street: branch[1],
-  //         city: branch[2],
-  //         postcode: branch[3],
-  //       }));
-
-  //       setBranchData(transformedData);
-  //     } catch (error) {
-  //       console.error("Error fetching staff list:", error);
-  //       setError(error.message);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   }
-
-  //   fetchStaffData();
-  // }, []);
-
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -54,7 +23,7 @@ function CourseList() {
   }
 
   return (
-    <TableContainerLayout
+    <TableContainer
       title="All Students"
       rowsPerPage={rowsPerPage}
       totalPages={totalPages}
@@ -68,7 +37,7 @@ function CourseList() {
         currPage={currPage}
         isLoading={isLoading}
       />
-    </TableContainerLayout>
+    </TableContainer>
   );
 }
 

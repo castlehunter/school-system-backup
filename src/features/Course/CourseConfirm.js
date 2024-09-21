@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import styles from "../Student/StudentProfile.module.css";
-import Button from "../Button/Button";
+import Button from "../../ui/Button/Button";
 
 function CourseConfirm({ type }) {
   const [branchData, setBranchData] = useState(null);
@@ -61,7 +60,6 @@ function CourseConfirm({ type }) {
         <p>City: {branchData.city}</p>
         <p>Postal Code: {branchData.postcode}</p>
       </div>
-
       <Button onClick={() => navigate("/dashboard/branch/branch-list")}>
         Go to branch list
       </Button>

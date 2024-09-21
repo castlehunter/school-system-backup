@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import styles from "../Student/StudentProfile.module.css";
-import Button from "../Button/Button";
+import Button from "../../ui/Button/Button";
 
 function CourseEdit() {
   const [street, setStreet] = useState("");

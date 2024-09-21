@@ -1,7 +1,4 @@
 import React from "react";
-import styles from "../Table.module.css";
-import { Link } from "react-router-dom";
-import Loader from "../Loader";
 
 function CourseTable({ courseData, rowsPerPage, currPage, isLoading }) {
   // const currData = courseData.slice(
