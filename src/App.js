@@ -27,7 +27,7 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path: "/dashboard",
+        path: "dashboard",
         element: <Outlet />,
         children: [
           { index: true, element: <Overview /> },
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/student",
+        path: "student",
         element: <Outlet />,
         children: [
           { index: true, element: <StudentList /> },
@@ -49,12 +49,12 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/my-courses",
+        path: "my-courses",
         element: <MyCourses />,
         children: [{ path: "overview", element: <MyCourses /> }],
       },
       {
-        path: "/Course",
+        path: "Course",
         element: <Outlet />,
         children: [
           { index: true, element: <CourseList /> },
@@ -64,11 +64,11 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/Teacher",
+        path: "Teacher",
         element: <TeacherList />,
       },
       {
-        path: "/Enrollment",
+        path: "Enrollment",
         element: <AddEnrollment />,
       },
       {
