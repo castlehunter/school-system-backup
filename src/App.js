@@ -25,6 +25,7 @@ const router = createBrowserRouter([
   },
   {
     element: <AppLayout />,
+    errorElement: <Error />,
     children: [
       {
         path: "dashboard",
@@ -39,12 +40,13 @@ const router = createBrowserRouter([
         path: "student",
         element: <Outlet />,
         children: [
-          { index: true, element: <StudentList /> },
+          { index: true, element: <StudentList />, loader: studentListLoader },
           {
             path: "student-list",
             element: <StudentList />,
             loader: studentListLoader,
           },
+          { path: ":studentNo", element: <StudentProfile /> },
           { path: "add-student", element: <AddStudent /> },
         ],
       },
