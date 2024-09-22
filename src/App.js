@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import AddStudent from "./features/Student/AddStudent";
 import StudentList from "./features/Student/StudentList";
@@ -12,115 +12,68 @@ import CourseList from "./features/Course/CourseList";
 import AddCourse from "./features/Course/AddCourse";
 import CourseEdit from "./features/Course/CourseEdit";
 import CourseConfirm from "./features/Course/CourseConfirm";
-import CommonPage from "./pages/CommonPage";
+import AppLayout from "./ui/Layout/AppLayout.js";
 import MyCourses from "./features/MyCourses/MyCourses";
-
+import TeacherList from "./features/Teacher/TeacherList.js";
+import AddEnrollment from "./features/Enrollment/AddEnrollment.js";
+import Error from "./ui/Error.js";
+import NOTFOUND from "./ui/NOTFOUND.js";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage />,
   },
   {
-    path: "dashboard",
-    element: <CommonPage />,
+    element: <AppLayout />,
     children: [
       {
-        index: true,
-        element: <Overview />,
+        path: "/dashboard",
+        element: <Outlet />,
+        children: [
+          { index: true, element: <Overview /> },
+          { path: "overview", element: <Overview /> },
+          { path: "account-setting", element: <AccountSetting /> },
+        ],
       },
       {
-        path: "overview",
-        element: <Overview />,
+        path: "/student",
+        element: <Outlet />,
+        children: [
+          { index: true, element: <StudentList /> },
+          {
+            path: "student-list",
+            element: <StudentList />,
+            loader: studentListLoader,
+          },
+          { path: "add-student", element: <AddStudent /> },
+        ],
       },
       {
-        path: "account-setting",
-        element: <AccountSetting />,
-      },
-    ],
-  },
-  {
-    path: "my-courses",
-    element: <CommonPage />,
-    children: [
-      {
-        index: true,
+        path: "/my-courses",
         element: <MyCourses />,
+        children: [{ path: "overview", element: <MyCourses /> }],
       },
       {
-        path: "my-course-list",
-        element: <MyCourses />,
-      },
-    ],
-  },
-  {
-    path: "student",
-    element: <CommonPage />,
-    children: [
-      {
-        index: true,
-        element: <StudentList />,
-        loader: studentListLoader,
+        path: "/Course",
+        element: <Outlet />,
+        children: [
+          { index: true, element: <CourseList /> },
+
+          { path: "course-list", element: <CourseList /> },
+          { path: "add-course", element: <AddCourse /> },
+        ],
       },
       {
-        path: "student-list",
-        element: <StudentList />,
-        loader: studentListLoader,
+        path: "/Teacher",
+        element: <TeacherList />,
       },
       {
-        path: ":studentNo",
-        element: <StudentProfile />,
+        path: "/Enrollment",
+        element: <AddEnrollment />,
       },
       {
-        path: "add-student",
-        element: <AddStudent />,
-      },
-      {
-        path: "confirmed/:studentNo",
-        element: <StudentConfirmed type="new" />,
-      },
-      {
-        path: "confirmed/:studentNo",
-        element: <StudentConfirmed type="edit" />,
-      },
-    ],
-  },
-  // {
-  //   path: "program",
-  //   element: <CommonPage />,
-  //   children: [
-  //     {
-  //       index: true,
-  //       element: <ProgramList />,
-  //     },
-  //     {
-  //       path: "program-list",
-  //       element: <ProgramList />,
-  //     },
-  //   ],
-  // },
-  {
-    path: "course",
-    element: <CommonPage />,
-    children: [
-      {
-        index: true,
-        element: <CourseList />,
-      },
-      {
-        path: "course-list",
-        element: <CourseList />,
-      },
-      {
-        path: "add-course",
-        element: <AddCourse />,
-      },
-      {
-        path: "course-edit/:courseId",
-        element: <CourseEdit />,
-      },
-      {
-        path: "edit-confirmed/:branchNo",
-        element: <CourseConfirm type="edit" />,
+        path: "*",
+        element: <NOTFOUND />,
       },
     ],
   },

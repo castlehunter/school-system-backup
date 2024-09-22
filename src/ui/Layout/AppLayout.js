@@ -1,8 +1,8 @@
-import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
-import Layout from "../ui/Layout/Layout";
+import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import Layout from "./Layout";
 import { Outlet } from "react-router-dom";
 
-function CommonPage() {
+function AppLayout() {
   return (
     <Layout breadcrumb={<Breadcrumb />}>
       <div>
@@ -12,4 +12,4 @@ function CommonPage() {
   );
 }
 
-export default CommonPage;
+export default AppLayout;
