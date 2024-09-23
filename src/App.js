@@ -3,7 +3,6 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import AddStudent from "./features/Student/AddStudent";
 import StudentList from "./features/Student/StudentList";
-import { studentListLoader } from "./services/apiStudent";
 import StudentConfirmed from "./features/Student/StudentConfirm";
 import StudentProfile from "./features/Student/StudentProfile";
 import Overview from "./features/Dashboard/Overview";
@@ -18,6 +17,9 @@ import TeacherList from "./features/Teacher/TeacherList.js";
 import AddEnrollment from "./features/Enrollment/AddEnrollment.js";
 import Error from "./ui/Error.js";
 import NOTFOUND from "./ui/NOTFOUND.js";
+import { getStudents } from "./services/apiStudent.js";
+import { getTeachers } from "./services/apiTeacher.js";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,11 +42,11 @@ const router = createBrowserRouter([
         path: "student",
         element: <Outlet />,
         children: [
-          { index: true, element: <StudentList />, loader: studentListLoader },
+          { index: true, element: <StudentList />, loader: getStudents },
           {
             path: "student-list",
             element: <StudentList />,
-            loader: studentListLoader,
+            loader: getStudents,
           },
           { path: ":studentNo", element: <StudentProfile /> },
           { path: "add-student", element: <AddStudent /> },
@@ -67,14 +69,15 @@ const router = createBrowserRouter([
       },
       {
         path: "teacher",
-        element: <TeacherList />,
+        element: <Outlet />,
         children: [
+          { index: true, element: <TeacherList />, loader: getTeachers },
           {
             path: "teacher-list",
-            element: <TeacherList />
-          
-          }
-        ]
+            element: <TeacherList />,
+            loader: getTeachers,
+          },
+        ],
       },
       {
         path: "Enrollment",

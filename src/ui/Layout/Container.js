@@ -1,4 +1,6 @@
 import generalStyles from "../../generalStyles.module.css";
+
+// This container is a genearl container (without edit button)
 function ContainerLayout({ children, title }) {
   return (
     <div className={generalStyles.container}>

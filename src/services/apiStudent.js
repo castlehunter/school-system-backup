@@ -1,7 +1,7 @@
 import supabase from "../config/supabaseClient";
 
 // This code is for testing only. Uncomment to see the effect of the student list page.
-export async function studentListLoader() {
+export async function getStudents() {
   try {
     const response = await fetch("/data/students.json");
     if (!response.ok) {
@@ -18,7 +18,7 @@ export async function studentListLoader() {
 }
 
 // Supabase example
-// export async function studentListLoaderSupabaseExample() {
+// export async function supabaseExample() {
 //   try {
 //     const { data, error } = await supabase.from("students").select("*");
 
