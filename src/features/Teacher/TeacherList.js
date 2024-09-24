@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import TableContainer from "../../ui/Layout/TableContainer";
 import { useLoaderData } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
+//import { SupabaseAuthClient } from "@supabase/supabase-js/dist/module/lib/SupabaseAuthClient";
 
   const supabaseUrl = "https://llcccnztkkxlkzblokbt.supabase.co";
 const supabaseKey =
