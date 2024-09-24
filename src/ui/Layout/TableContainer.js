@@ -33,7 +33,6 @@ function TableContainer({
       </div>
       <div>{children}</div>
 
-      {/* Add Pagination at the bottom */}
       <Pagination
         totalPages={totalPages}
         currPage={currPage}
