@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import StudentTable from "./StudentTable";
 import TableContainer from "../../ui/Layout/TableContainer";
-import { useLoaderData } from "react-router-dom";
+import Loader from "../../ui/Loader";
+import { useLoaderData, useNavigation } from "react-router-dom";
 function StudentList() {
   const studentData = useLoaderData() || [];
-  const [isLoading, setIsLoading] = useState(false);
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
   const [currPage, setCurrPage] = useState(1);
+
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const totalPages = Math.ceil(studentData.length / rowsPerPage);
 
@@ -27,12 +30,15 @@ function StudentList() {
       onPageChange={handlePageChange}
       onRowsPerPageChange={handleRowsPerPageChange}
     >
-      <StudentTable
-        studentData={studentData}
-        rowsPerPage={rowsPerPage}
-        currPage={currPage}
-        isLoading={isLoading}
-      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <StudentTable
+          studentData={studentData}
+          rowsPerPage={rowsPerPage}
+          currPage={currPage}
+        />
+      )}
     </TableContainer>
   );
 }

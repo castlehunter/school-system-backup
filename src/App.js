@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import AddStudent from "./features/Student/AddStudent";
 import StudentList from "./features/Student/StudentList";
 import StudentConfirmed from "./features/Student/StudentConfirm";
-import StudentProfile from "./features/Student/StudentProfile";
+import Profile from "./features/Profile/Profile.js";
 import Overview from "./features/Dashboard/Overview";
 import AccountSetting from "./features/Dashboard/AccountSetting";
 import CourseList from "./features/Course/CourseList";
@@ -19,6 +19,7 @@ import Error from "./ui/Error.js";
 import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
 import { getTeachers } from "./services/apiTeacher.js";
+import { getTeacher } from "./services/apiTeacher.js";
 
 const router = createBrowserRouter([
   {
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
             element: <StudentList />,
             loader: getStudents,
           },
-          { path: ":studentNo", element: <StudentProfile /> },
+          { path: ":No", element: <Profile /> },
           { path: "add-student", element: <AddStudent /> },
         ],
       },
@@ -76,6 +77,11 @@ const router = createBrowserRouter([
             path: "teacher-list",
             element: <TeacherList />,
             loader: getTeachers,
+          },
+          {
+            path: ":ID",
+            element: <Profile type="Teacher" />,
+            loader: getTeacher,
           },
         ],
       },

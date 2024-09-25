@@ -24,7 +24,7 @@ function CourseList() {
 
   return (
     <TableContainer
-      title="All Students"
+      title="All Courses"
       rowsPerPage={rowsPerPage}
       totalPages={totalPages}
       currPage={currPage}
@@ -32,7 +32,7 @@ function CourseList() {
       onRowsPerPageChange={handleRowsPerPageChange}
     >
       <CourseTable
-        studentData={courseData}
+        data={courseData}
         rowsPerPage={rowsPerPage}
         currPage={currPage}
         isLoading={isLoading}

@@ -22,3 +22,7 @@
   background: linear-gradient(135deg, #14add6 0%, #384295 100%);
   color: #fff;
 }
+
+.searchSort {
+  display: flex;
+}

@@ -1,10 +1,20 @@
+.breadcrumb {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .path {
   list-style: none;
   display: flex;
   padding: 0;
   font-weight: 400;
+  text-transform: capitalize;
 }
 
-.slash {
-  margin: 0 0.5rem;
+.home-icon {
+  width: 3rem;
+  height: 3rem;
+  fill: #333;
+  cursor: pointer;
 }

@@ -1,58 +1,47 @@
 import React from "react";
+import generalStyles from "../../generalStyles.module.css";
+import styles from "../../components/Table.module.css";
+import { Link } from "react-router-dom";
 
-function CourseTable({ courseData, rowsPerPage, currPage, isLoading }) {
-  // const currData = courseData.slice(
-  //   (currPage - 1) * rowsPerPage,
-  //   currPage * rowsPerPage
-  // );
-  // return (
-  //   <section className={styles.staffTableContainer}>
-  //     <header className={styles.tableHeader}>
-  //       <h2 className={styles.tableTitle}>All Courses</h2>
-  //       <div className={styles.entriesPerPage}>
-  //         <span>Showing</span>
-  //         <span className={styles.entriesNumber}>{rowsPerPage}</span>
-  //         <span>per page</span>
-  //       </div>
-  //     </header>
-  //     <table className={styles.staffTable}>
-  //       <thead>
-  //         <tr>
-  //           <th>S/N</th>
-  //           <th>Branch No.</th>
-  //           <th>Street</th>
-  //           <th>City</th>
-  //           <th>Postcode</th>
-  //         </tr>
-  //       </thead>
-  //       {isLoading ? (
-  //         <Loader />
-  //       ) : (
-  //         <tbody>
-  //           {currData.map((branch, index) => (
-  //             <tr key={branch.branchNo}>
-  //               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
-  //               <td>{branch.branchNo}</td>
-  //               <td>{branch.street}</td>
-  //               <td>{branch.city}</td>
-  //               <td>{branch.postcode}</td>
-  //               <td>{branch.sex}</td>
-  //               <td>
-  //                 <Link
-  //                   to={`/dashboard/branch/branch-edit/${branch.branchNo}`}
-  //                   className={styles.editButton}
-  //                 >
-  //                   Edit
-  //                 </Link>
-  //               </td>
-  //             </tr>
-  //           ))}
-  //         </tbody>
-  //       )}
-  //     </table>
-  //   </section>
-  // );
-  return <div>CourseTable</div>;
+function CourseTable({ data, rowsPerPage, currPage, isLoading }) {
+  const currData = data.slice(
+    (currPage - 1) * rowsPerPage,
+    currPage * rowsPerPage
+  );
+
+  return (
+    <table className={styles.table}>
+      <thead>
+        <tr>
+          <th>S/N</th>
+          <th>Course Code</th>
+          <th>Course Name</th>
+          <th>Time</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {currData.map((student, index) => (
+          <tr key={student.studentNo} className={styles.tr}>
+            <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
+            <td>{student.CourseCode}</td>
+            <td>{student.CourseName}</td>
+            <td>{student.Time}</td>
+            <td>{student.Description}</td>
+            <td>
+              <Link
+                to={`/course/${student.studentNo}`}
+                className={generalStyles.link}
+              >
+                view
+              </Link>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 }
 
 export default CourseTable;

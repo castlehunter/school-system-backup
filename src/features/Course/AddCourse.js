@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import styles from "../Student/StudentProfile.module.css";
+import styles from "../Profile/Profile.module.css";
 import { useNavigate } from "react-router-dom";
-import Button from "../../ui/Button/Button";
+import Button from "../../components/Button/Button";
 
 function AddCourse() {
   const [CourseId, setCourseId] = useState("");

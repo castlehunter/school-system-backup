@@ -2,21 +2,23 @@ import React from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "./TableContainer.module.css";
 import Pagination from "../../components/Pagination/Pagination";
-
+import Button from "../../components/Button/Button";
+import Search from "../../components/Search/Search";
 function TableContainer({
   children,
   title,
   rowsPerPage,
-  totalPages, // New prop for total pages
-  currPage, // New prop for current page
-  onPageChange, // New prop for handling page changes
+  totalPages,
+  currPage,
+  onPageChange,
   onRowsPerPageChange,
 }) {
   return (
     <div className={generalStyles.container}>
       <div className={generalStyles.containerHeader}>
         <div className={generalStyles.primaryHeading}>
-          {title} {/* You can add filter/search functionalities here */}
+          <span>{title}</span>
+          <Button>Add</Button>
         </div>
         <div className={styles.entriesPerPage}>
           <span>Showing</span>
@@ -31,6 +33,11 @@ function TableContainer({
           <span>per page</span>
         </div>
       </div>
+      <div className={styles.searchSort}>
+        <button>Sort by xyxy</button>
+        <Search colorType="light" />
+      </div>
+
       <div>{children}</div>
 
       <Pagination
