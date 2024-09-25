@@ -39,21 +39,6 @@ function TeacherList() {
       />
     </TableContainer>
   );
-  // return (
-  //   <ul>
-  //     {teachersData.map((teacher) => (
-  //       <li key={teacher.TeacherID}>
-  //         <h3>
-  //           {teacher.Users.FirstName} {teacher.Users.LastName}
-  //         </h3>
-  //         <p>Email: {teacher.Users.Email}</p>
-  //         <p>Phone: {teacher.Users.PhoneNumber}</p>
-  //         <p>Address: {teacher.Users.HomeAddress}</p>
-  //         <p>Start Date: {teacher.StartDate}</p>
-  //       </li>
-  //     ))}
-  //   </ul>
-  // );
 }
 
 export default TeacherList;
