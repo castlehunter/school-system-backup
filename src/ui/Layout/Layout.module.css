@@ -14,7 +14,7 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  padding: 2rem 2rem;
 
   /* margin-bottom: 1rem; */
 }
@@ -23,6 +23,72 @@ section {
   height: 5rem;
   display: flex;
   align-items: center;
+  font-size: 2rem;
+}
+
+.user-section {
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.announcement {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  width: 5rem;
+  height: 5rem;
+}
+.announcement-icon {
+  width: 3rem;
+  height: 3rem;
+  fill: #333;
+}
+
+.announcement-count {
+  position: absolute;
+  top: 0.1rem;
+  right: -0.3rem;
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 1rem;
+  background-color: rgb(168, 85, 247);
+  border-radius: 9999px;
+  width: 1.8rem;
+  height: 1.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.name {
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 0.75rem;
+}
+
+.identity {
+  text-align: right;
+  font-size: 1.3rem;
+  color: #9ca3af;
+}
+
+.user-avatar {
+  border-radius: 9999px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  vertical-align: middle;
 }
 
 .mainContent {
