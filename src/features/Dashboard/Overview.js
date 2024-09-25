@@ -6,7 +6,10 @@ import Container from "../../ui/Layout/Container";
 
 function Overview() {
   return (
-    <Container title="Welcome to the School Management System Dashboard!">
+    <Container
+      title="Welcome to the School Management System Dashboard!"
+      headingType="primaryHeading"
+    >
       <p>
         This is your central hub for managing students, teachers, and classes.
         Navigate through the menu to access various features and tools to

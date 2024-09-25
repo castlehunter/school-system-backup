@@ -32,13 +32,13 @@ gap: 2rem;
 800 weight
 
 - paragraph text
-1.5 rem
+1.4 rem
 
 - link text
-1.5rem
+1.4rem
 
 - Sidebar text
-1.5rem
+1.4rem
 
 ---------- Font weights ------------
 Default: 400

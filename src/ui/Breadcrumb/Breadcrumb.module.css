@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 1.4rem;
 }
 
 .path {
@@ -13,8 +14,8 @@
 }
 
 .home-icon {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   fill: #333;
   cursor: pointer;
 }

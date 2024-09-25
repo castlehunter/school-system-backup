@@ -7,6 +7,7 @@ import EditContainer from "../../ui/Layout/EditContainer";
 import ProfileForm from "../../components/Form/ProfileForm";
 import OtherForm from "../../components/Form/OtherForm";
 import CourseTable from "../Course/CourseTable";
+import Container from "../../ui/Layout/Container";
 function Profile({ type }) {
   const data = useLoaderData();
   console.log(data); //print the object
@@ -106,8 +107,8 @@ function Profile({ type }) {
   }
 
   return (
-    <div className={styles.ProfileLayout}>
-      <div className={styles.basicInfo}>
+    <div className={styles.profileLayout}>
+      <div className={styles.mainColumn}>
         <EditContainer
           title="Basic Information"
           isEdit={isEditBasic}
@@ -115,53 +116,86 @@ function Profile({ type }) {
           // onClickConfirm={handleSubmitBasic}
           onClickCancel={handleCancelEditBasic}
         >
-          <div className={styles.detail}>
+          <div className={styles.basicInfoDetail}>
             <img
               src="/img/profile/profile.jpg"
               alt="img"
               className={styles.profileImg}
             />
-            <form className={styles.form} onSubmit={handleSubmitBasic}>
-              <ProfileForm
-                type={type}
-                formData={data}
-                handleChange={handleChange}
-                isEdit={isEditBasic}
-                formWidth={formStyles.formFull}
-              />
-            </form>
+            <ProfileForm
+              type={type}
+              formData={data}
+              handleChange={handleChange}
+              isEdit={isEditBasic}
+            />
           </div>
         </EditContainer>
-      </div>
 
-      <div className={styles.course}>
-        <EditContainer
-          title="Courses Enrolled"
-          isEdit={isEditProgram}
-          onClickEdit={isEditCourse ? handleSubmitCourse : handleEditCourse}
-          onClickCancel={handleCancelCourse}
-        >
-          <div>
-            <CourseTable />
-          </div>
-        </EditContainer>
-      </div>
-
-      {/* <EditContainer
-        title="Additional Information"
-        isEdit={isEditAdditional}
-        onClickEdit={
-          isEditAdditional ? handleSubmitAdditional : handleEditAdditional
-        }
-        onClickCancel={handleCancelAdditional}
-      >
-        <div className={styles.detail}>
-          <form
-            className={styles.form}
-            onSubmit={handleSubmitAdditional}
-          ></form>
+        <div className={styles.course}>
+          <EditContainer
+            title="Courses Enrolled"
+            isEdit={isEditProgram}
+            onClickEdit={isEditCourse ? handleSubmitCourse : handleEditCourse}
+            onClickCancel={handleCancelCourse}
+          >
+            <div>{/* <CourseTable /> */}</div>
+          </EditContainer>
         </div>
-      </EditContainer> */}
+
+        <EditContainer
+          title="Additional Information"
+          isEdit={isEditAdditional}
+          onClickEdit={
+            isEditAdditional ? handleSubmitAdditional : handleEditAdditional
+          }
+          onClickCancel={handleCancelAdditional}
+        >
+          <div className={styles.detail}>
+            <form
+              className={styles.form}
+              onSubmit={handleSubmitAdditional}
+            ></form>
+          </div>
+        </EditContainer>
+      </div>
+      <div className={styles.secondaryColumn}>
+        <Container title="Some charts here" headingType="secondaryHeading">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </Container>{" "}
+        <Container title="Remarks" headingType="secondaryHeading">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </Container>{" "}
+        <Container title="Communication" headingType="secondaryHeading">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </Container>{" "}
+        <Container title="Communication" headingType="secondaryHeading">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </Container>
+      </div>
     </div>
   );
 }

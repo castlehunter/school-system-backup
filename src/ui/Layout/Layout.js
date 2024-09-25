@@ -12,7 +12,7 @@ function Layout({ children, breadcrumb }) {
 
       <section>
         {/* The top section */}
-        <div className={styles.topContent}>
+        <div className={styles.header}>
           <div className={styles.breadcrumb}>{breadcrumb}</div>
 
           <div className={styles["user-section"]}>

@@ -115,7 +115,7 @@ function SidebarNew() {
       icon: icons.TeacherIcon,
       subItems: [
         { path: "/teacher/teacher-list", label: "Teacher List" },
-        { path: "/teacher/new-teacher", label: "New Teacher" },
+        { path: "/teacher/add-teacher", label: "Add Teacher" },
       ],
     },
     {
