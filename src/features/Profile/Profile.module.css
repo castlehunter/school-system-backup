@@ -1,15 +1,26 @@
-.studentPofileLayout {
-  /* max-width: 100%; */
-}
-
-.basicInfo {
-  margin-bottom: 2rem;
-}
-.detail {
+.profileLayout {
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 2fr 1fr;
   gap: 2rem;
 }
+
+.mainColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.secondaryColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.basicInfoDetail {
+  display: flex;
+  gap: 4rem;
+}
+
 .profileImg {
   width: 20rem;
   height: 20rem;

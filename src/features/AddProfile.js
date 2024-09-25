@@ -1,12 +1,12 @@
 // NewStudent.js
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button/Button";
-import Container from "../../ui/Layout/Container";
-import ProfileForm from "../../components/Form/ProfileForm";
-import styles from "../../components/Form/Form.module.css";
+import Button from "../components/Button/Button";
+import Container from "../ui/Layout/Container";
+import ProfileForm from "../components/Form/ProfileForm.js";
+import styles from "../components/Form/Form.module.css";
 
-function AddStudent() {
+function AddProfile({ type }) {
   const [error, setError] = useState(null);
   const [existingStudentNos, setExistingStudentNos] = useState([]);
 
@@ -70,7 +70,7 @@ function AddStudent() {
   }
   function handleCancel(e) {
     e.preventDefault();
-    navigate("/student/student-list");
+    navigate(`/${type}/${type}-list`);
   }
 
   function handleChange(e) {
@@ -79,10 +79,10 @@ function AddStudent() {
   }
 
   return (
-    <Container title="Add Students">
+    <Container title={`Add ${type}`} headingType="primaryHeading">
       <form className={styles.form} onSubmit={handleSubmit}>
         <ProfileForm
-          type="Student"
+          type={type}
           handleChange={handleChange}
           isEdit={true}
           formWidth={styles.formHalf}
@@ -99,4 +99,4 @@ function AddStudent() {
   );
 }
 
-export default AddStudent;
+export default AddProfile;

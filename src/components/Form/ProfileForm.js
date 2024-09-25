@@ -2,15 +2,20 @@ import React from "react";
 import styles from "./Form.module.css";
 
 // ProfileForm can be used on profiles for teachers/students
-function ProfileForm({ type, formData, handleChange, isEdit, formWidth }) {
+function ProfileForm({ type, formData = {}, handleChange, isEdit }) {
+  const user = formData.Users || {};
+
   return (
-    <div className={formWidth}>
+    <div className={styles.formLayout}>
       {/* First Row: student/teacher No */}
       <div className={styles.formItem}>
         <label htmlFor="ID" className={styles.formLabel}>
-          {type} No ~need a userfriendly teache ID. column
+          {type} No ~1. need a user-friendly ID. column, 2.this number is auto
+          generated
         </label>
-        <span className={styles.formText}>{`${formData[type + "ID"]}`}</span>
+        <span className={styles.formText}>{`${
+          formData[type + "ID"] || "N/A"
+        }`}</span>
       </div>
 
       {/* Second Row: FirstName, LastName */}
@@ -22,7 +27,7 @@ function ProfileForm({ type, formData, handleChange, isEdit, formWidth }) {
           <InputField
             isEdit={isEdit}
             keyName="FirstName"
-            value={formData.Users.FirstName}
+            value={user.FirstName || ""}
             onChange={handleChange}
           />
         </div>
@@ -33,7 +38,7 @@ function ProfileForm({ type, formData, handleChange, isEdit, formWidth }) {
           <InputField
             isEdit={isEdit}
             keyName="LastName"
-            value={formData.Users.LastName}
+            value={user.LastName || ""}
             onChange={handleChange}
           />
         </div>
@@ -48,7 +53,7 @@ function ProfileForm({ type, formData, handleChange, isEdit, formWidth }) {
           <InputField
             isEdit={isEdit}
             keyName="dob"
-            value={formData.Users.DateOfBirth}
+            value={user.DateOfBirth || ""}
             onChange={handleChange}
           />
         </div>
@@ -59,7 +64,7 @@ function ProfileForm({ type, formData, handleChange, isEdit, formWidth }) {
           <InputField
             isEdit={isEdit}
             keyName="phoneNumber"
-            value={formData.Users.PhoneNumber}
+            value={user.PhoneNumber || ""}
             onChange={handleChange}
           />
         </div>
@@ -73,7 +78,7 @@ function ProfileForm({ type, formData, handleChange, isEdit, formWidth }) {
         <InputField
           isEdit={isEdit}
           keyName="address"
-          value={formData.Users.HomeAddress}
+          value={user.HomeAddress || ""}
           onChange={handleChange}
         />
       </div>
@@ -91,7 +96,7 @@ function InputField({ isEdit, keyName, value, onChange }) {
       className={styles.formInput}
     />
   ) : (
-    <span className={styles.formText}>{value}</span>
+    <span className={styles.formText}>{value || "N/A"}</span>
   );
 }
 

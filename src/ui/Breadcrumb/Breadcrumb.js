@@ -15,7 +15,7 @@ function Breadcrumb() {
           <RiHome3Line className={styles["home-icon"]} />
         </Link>
       </div>
-      <span className={styles.slash}>/</span>
+      <span className={styles.slash}>&nbsp;/&nbsp;</span>
       <nav>
         <ul className={styles.path}>
           {pathnames.map((value, index) => {
@@ -33,7 +33,7 @@ function Breadcrumb() {
                       className={generalStyles.noStyleLink}
                       style={{ textDecoration: "none" }}
                     >
-                      {value}
+                      {value}&nbsp;/&nbsp;
                     </Link>
                   )}
                 </li>

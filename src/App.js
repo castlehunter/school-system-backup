@@ -1,7 +1,7 @@
 import React from "react";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import AddStudent from "./features/Student/AddStudent";
+import AddProfile from "./features/AddProfile.js";
 import StudentList from "./features/Student/StudentList";
 import StudentConfirmed from "./features/Student/StudentConfirm";
 import Profile from "./features/Profile/Profile.js";
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
             loader: getStudents,
           },
           { path: ":No", element: <Profile /> },
-          { path: "add-student", element: <AddStudent /> },
+          { path: "add-student", element: <AddProfile type="student" /> },
         ],
       },
       {
@@ -83,6 +83,7 @@ const router = createBrowserRouter([
             element: <Profile type="Teacher" />,
             loader: getTeacher,
           },
+          { path: "add-teacher", element: <AddProfile type="teacher" /> },
         ],
       },
       {

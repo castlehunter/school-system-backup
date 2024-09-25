@@ -10,12 +10,10 @@ section {
   flex: 1;
 }
 
-.topContent {
+.header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 2rem 2rem;
-
   /* margin-bottom: 1rem; */
 }
 
@@ -23,20 +21,17 @@ section {
   height: 5rem;
   display: flex;
   align-items: center;
-  font-size: 2rem;
 }
 
 .user-section {
   display: flex;
   gap: 2rem;
-  justify-content: flex-end;
   align-items: center;
-  width: 100%;
 }
 
 .announcement {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   position: relative;
   cursor: pointer;
@@ -44,8 +39,8 @@ section {
   height: 5rem;
 }
 .announcement-icon {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   fill: #333;
 }
 

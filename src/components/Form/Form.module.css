@@ -1,5 +1,9 @@
 /* Form.module.css */
 
+.formLayout {
+  width: 100%;
+}
+
 .formRow {
   display: flex;
   justify-content: space-between;

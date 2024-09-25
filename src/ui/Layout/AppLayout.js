@@ -1,4 +1,4 @@
-import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import Layout from "./Layout";
 import { Outlet } from "react-router-dom";
 
