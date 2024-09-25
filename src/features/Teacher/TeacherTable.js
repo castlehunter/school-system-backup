@@ -20,12 +20,12 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
       <thead>
         <tr>
           <th>S/N</th>
-          <th>Teacher No</th>
+          <th>Teacher ID - need a userfriendly teache ID in database.</th>
           <th>First Name</th>
           <th>Last Name</th>
           <th>Date of Birth</th>
           <th>Email</th>
-          <th>Telephone</th>
+          <th>Phone Number</th>
           <th>Address</th>
           <th>Action</th>
         </tr>
@@ -33,9 +33,9 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
 
       <tbody>
         {currData.map((Teacher, index) => (
-          <tr key={data.TeacherNo} className={styles.tr}>
+          <tr key={Teacher.TeacherID} className={styles.tr}>
             <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
-            <td>{Teacher.Users.TeacherNo}</td>
+            <td>{Teacher.TeacherID}</td>
             <td>{Teacher.Users.FirstName}</td>
             <td>{Teacher.Users.LastName}</td>
             <td>{formatDate(Teacher.Users.DateOfBirth)}</td>
@@ -44,7 +44,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
             <td>{Teacher.Users.HomeAddress}</td>
             <td>
               <Link
-                to={`/Teacher/${Teacher.TeacherNo}`}
+                to={`/Teacher/${Teacher.TeacherID}`}
                 className={generalStyles.link}
               >
                 view

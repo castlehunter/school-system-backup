@@ -3,7 +3,7 @@ import generalStyles from "../generalStyles.module.css";
 import styles from "./HomePage.module.css";
 import PageNav from "../components/PageNav";
 import Footer from "../components/Footer/Footer";
-import Button from "../ui/Button/Button";
+import Button from "../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import formStyles from "../components/Form/Form.module.css";
 import supabase from "../config/supabaseClient";

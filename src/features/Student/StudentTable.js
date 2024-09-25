@@ -23,8 +23,6 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
           <th>Student No.</th>
           <th>First Name</th>
           <th>Last Name</th>
-          <th>Program</th>
-          <th>Sex</th>
           <th>Dob</th>
           <th>Email</th>
           <th>Telephone</th>
@@ -44,8 +42,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
               <td>{student.studentNo}</td>
               <td>{student.fname}</td>
               <td>{student.lname}</td>
-              <td>
-                {/* Render program name directly if it's not an array */}
+              {/* <td>
                 {Array.isArray(student.program) ? (
                   student.program.map((prog, i) => (
                     <div key={i}>{prog.name}</div>
@@ -54,7 +51,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
                   <div>{student.program.name}</div>
                 )}
               </td>
-              <td>{student.sex}</td>
+              <td>{student.sex}</td> */}
               <td>{formatDate(student.dob)}</td>
               <td>{student.email}</td>
               <td>{student.telephone}</td>

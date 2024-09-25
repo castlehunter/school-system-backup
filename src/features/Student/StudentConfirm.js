@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Button from "../../ui/Button/Button";
+import Button from "../../components/Button/Button";
 import Loader from "../../ui/Loader";
 
 function StudentConfirmed({ type }) {

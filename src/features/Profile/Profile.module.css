@@ -1,21 +1,14 @@
 .studentPofileLayout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 2rem;
   /* max-width: 100%; */
 }
 
-.programCourseLayout {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 2rem;
+.basicInfo {
+  margin-bottom: 2rem;
 }
-
 .detail {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 10rem;
+  grid-template-columns: 1fr 4fr;
+  gap: 2rem;
 }
 .profileImg {
   width: 20rem;

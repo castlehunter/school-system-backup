@@ -1,5 +1,5 @@
 import generalStyles from "../../generalStyles.module.css";
-import Button from "../Button/Button";
+import Button from "../../components/Button/Button";
 
 //  This container can be used on the container with Edit button on the top right
 function EditContainer({
