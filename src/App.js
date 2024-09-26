@@ -20,9 +20,13 @@ import { getStudents } from "./services/apiStudent.js";
 import { getTeachers } from "./services/apiTeacher.js";
 import { getTeacher } from "./services/apiTeacher.js";
 import { generateUserNo } from "./services/apiUser.js";
-import AddTeacher, { addTeacherAction } from "./features/Teacher/AddTeacher.js";
-import AddStudent from "./features/Student/AddStudent.js";
+import CreateTeacher from "./features/Teacher/CreateTeacher.js";
+import CreateStudent from "./features/Student/CreateStudent.js";
 import CreateUser from "./features/Dashboard/CreateUser.js";
+import { getProgramList } from "./services/apiProgram.js";
+import { getProgram } from "./services/apiProgram.js";
+import ProgramList from "./features/Program/ProgramList.js";
+import ViewProgram from "./features/Program/ViewProgram.js";
 
 const router = createBrowserRouter([
   {
@@ -57,7 +61,7 @@ const router = createBrowserRouter([
             element: <StudentList />,
             loader: getStudents,
           },
-          { path: "add-student", element: <AddStudent /> },
+          { path: "add-student", element: <CreateStudent /> },
         ],
       },
       {
@@ -90,15 +94,27 @@ const router = createBrowserRouter([
             element: <TeacherProfile />,
           },
           {
-            path: "add-teacher",
-            element: <AddTeacher />,
+            path: "create-teacher",
+            element: <CreateTeacher />,
             loader: generateUserNo,
           },
         ],
       },
       {
-        path: "Enrollment",
-        element: <AddEnrollment />,
+        path: "program",
+        element: <Outlet />,
+        children: [
+          {
+            path: "program-list",
+            element: <ProgramList />,
+            loader: getProgramList,
+          },
+          {
+            path: ":ID",
+            element: <ViewProgram type="Program" />,
+            loader: getProgram,
+          },
+        ],
       },
       {
         path: "*",

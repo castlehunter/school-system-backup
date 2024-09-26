@@ -1,8 +1,7 @@
 import React from "react";
 import generalStyles from "../../generalStyles.module.css";
-import styles from "../Table.module.css";
+import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
-import Loader from "../Loader";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -14,9 +13,9 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
-
+  console.log('currData ' + JSON.stringify(currData));
   return (
-    <table className={styles.table}>
+    <table>
       <thead>
         <tr>
           <th>S/N</th>
@@ -24,29 +23,24 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
           <th>Program Name</th>
           <th>Action</th>
         </tr>
-      </thead>
-
-      {isLoading ? (
-        <Loader />
-      ) : (
+      </thead>   
         <tbody>
           {currData.map((program, index) => (
-            <tr key={program.ProgramID} className={styles.tr}>
+            <tr key={program.ProgramNo} className={styles.tr}>
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{program.ProgramCode}</td>
               <td>{program.ProgramName}</td>
               <td>
                 <Link
-                  to={`/program/${program.programCode}`}
+                  to={`/program/${program.programNo}`}
                   className={generalStyles.link}
                 >
-                  view
+                  View
                 </Link>
               </td>
             </tr>
           ))}
         </tbody>
-      )}
     </table>
   );
 }

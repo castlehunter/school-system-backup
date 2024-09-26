@@ -3,10 +3,11 @@ import Button from "../../components/Button/Button";
 import styles from "../../components/Form/Form.module.css";
 import { useLoaderData } from "react-router-dom";
 import Container from "../../ui/Layout/Container";
-function CreateUser({ isEdit = true }) {
+
+function CreateUser({ type = "User", isEdit = true }) {
   const userNo = useLoaderData();
   const [inputData, setInputData] = useState({
-    UserNo: "",
+    UserRole: "Select",
     UserName: "",
     Password: "",
     FirstName: "",
@@ -27,20 +28,43 @@ function CreateUser({ isEdit = true }) {
   function onFormSubmit() {}
 
   return (
-    <Container title="Create User" headingType="primaryHeading">
+    <Container title={`Create ${type}`} headingType="primaryHeading">
       <form className={styles.form} onSubmit={onFormSubmit}>
-        <div className={styles.formItem}>
-          <label htmlFor="UserNo" className={styles.formLabel}>
-            User Number
-          </label>
-          <input
-            type="text"
-            name="UserNo"
-            value={userNo}
-            onChange={handleChange}
-            className={styles.formText}
-            disabled={true}
-          />
+        <div className={styles.formRow}>
+          <div className={styles.formItem}>
+            <label htmlFor="UserNo" className={styles.formLabel}>
+              {type} Number
+            </label>
+            <input
+              type="text"
+              name="UserNo"
+              value={userNo}
+              onChange={handleChange}
+              className={styles.formText}
+              disabled={true}
+            />
+          </div>
+          <div className={styles.formItem}>
+            <label htmlFor="UserRole" className={styles.formLabel}>
+              {type} Role
+            </label>
+            <select
+              name="UserRole"
+              value={inputData.UserRole}
+              onChange={handleChange}
+              className={styles.formInput}
+              disabled={false}
+              required
+            >
+              <option value="Select" disabled>
+                Select
+              </option>
+              <option value="Admin">Admin</option>
+              <option value="Advisor">Advisor</option>
+              <option value="Teacher">Teacher</option>
+              <option value="Student">Student</option>
+            </select>
+          </div>
         </div>
 
         <div className={styles.formRow}>
