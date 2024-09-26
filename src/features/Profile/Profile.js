@@ -8,9 +8,10 @@ import ProfileForm from "../../components/Form/ProfileForm";
 import OtherForm from "../../components/Form/OtherForm";
 import CourseTable from "../Course/CourseTable";
 import Container from "../../ui/Layout/Container";
+
 function Profile({ type }) {
   const data = useLoaderData();
-  console.log(data); //print the object
+  console.log("The data loaded", data); //print the object
   // const [basicInfo, setBasicInfo] = useState({
   //   ID: "",
   //   firstName: "",
@@ -27,7 +28,7 @@ function Profile({ type }) {
   const [isEditCourse, setIsEditCourse] = useState(false);
   const [isEditAdditional, setIsEditAdditional] = useState(false);
 
-  const { ID: urlID } = useParams();
+  // const { ID: urlID } = useParams();
   const navigate = useNavigate();
 
   function handleChange(e) {
