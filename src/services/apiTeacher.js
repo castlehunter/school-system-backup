@@ -44,7 +44,7 @@ export async function getTeacher({ params }) {
       )
     `
     )
-    .eq("TeacherID", ID)
+    .eq("TeacherNo", ID)
     .single();
 
   if (error) {
