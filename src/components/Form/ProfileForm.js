@@ -1,102 +1,113 @@
-import React from "react";
+import React, { useState } from "react";
+import Button from "../Button/Button.js";
 import styles from "./Form.module.css";
 
-// ProfileForm can be used on profiles for teachers/students
-function ProfileForm({ type, formData = {}, handleChange, isEdit }) {
-  const user = formData.Users || {};
+function ProfileForm({ type, isEdit, onFormSubmit, onCancel }) {
+  const [formData, setFormData] = useState({
+    FirstName: "",
+    LastName: "",
+    DateOfBirth: "",
+    PhoneNumber: "",
+    HomeAddress: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Pass form data to parent component (onFormSubmit)
+    onFormSubmit(formData);
+  };
 
   return (
-    <div className={styles.formLayout}>
-      {/* First Row: student/teacher No */}
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.formItem}>
         <label htmlFor="ID" className={styles.formLabel}>
-          {type} No ~1. need a user-friendly ID. column, 2.this number is auto
-          generated
+          {type} No ~user-friendly ID, auto-generated
         </label>
-        <span className={styles.formText}>{`${
-          formData[type + "ID"] || "N/A"
-        }`}</span>
+        <span className={styles.formText}>N/A</span>
       </div>
 
-      {/* Second Row: FirstName, LastName */}
       <div className={styles.formRow}>
         <div className={styles.formItem}>
           <label htmlFor="FirstName" className={styles.formLabel}>
             First Name
           </label>
-          <InputField
-            isEdit={isEdit}
-            keyName="FirstName"
-            value={user.FirstName || ""}
+          <input
+            type="text"
+            name="FirstName"
+            value={formData.FirstName}
             onChange={handleChange}
+            className={styles.formInput}
           />
         </div>
         <div className={styles.formItem}>
           <label htmlFor="LastName" className={styles.formLabel}>
             Last Name
           </label>
-          <InputField
-            isEdit={isEdit}
-            keyName="LastName"
-            value={user.LastName || ""}
+          <input
+            type="text"
+            name="LastName"
+            value={formData.LastName}
             onChange={handleChange}
+            className={styles.formInput}
           />
         </div>
       </div>
 
-      {/* Third Row: dob, phoneNumber */}
       <div className={styles.formRow}>
         <div className={styles.formItem}>
           <label htmlFor="dob" className={styles.formLabel}>
             DOB
           </label>
-          <InputField
-            isEdit={isEdit}
-            keyName="dob"
-            value={user.DateOfBirth || ""}
+          <input
+            type="date"
+            name="DateOfBirth"
+            value={formData.DateOfBirth}
             onChange={handleChange}
+            className={styles.formInput}
           />
         </div>
         <div className={styles.formItem}>
           <label htmlFor="phoneNumber" className={styles.formLabel}>
             Phone Number
           </label>
-          <InputField
-            isEdit={isEdit}
-            keyName="phoneNumber"
-            value={user.PhoneNumber || ""}
+          <input
+            type="text"
+            name="PhoneNumber"
+            value={formData.PhoneNumber}
             onChange={handleChange}
+            className={styles.formInput}
           />
         </div>
       </div>
 
-      {/* Fourth Row: address */}
       <div className={styles.formItem}>
         <label htmlFor="address" className={styles.formLabel}>
           Address
         </label>
-        <InputField
-          isEdit={isEdit}
-          keyName="address"
-          value={user.HomeAddress || ""}
+        <input
+          type="text"
+          name="HomeAddress"
+          value={formData.HomeAddress}
           onChange={handleChange}
+          className={styles.formInput}
         />
       </div>
-    </div>
-  );
-}
 
-function InputField({ isEdit, keyName, value, onChange }) {
-  return isEdit ? (
-    <input
-      type={keyName === "dob" ? "date" : "text"}
-      name={keyName}
-      value={value}
-      onChange={onChange}
-      className={styles.formInput}
-    />
-  ) : (
-    <span className={styles.formText}>{value || "N/A"}</span>
+      <div className={styles.formActions}>
+        <Button classType="submit">Add</Button>
+        <Button classType="cancel" onClick={onCancel}>
+          Cancel
+        </Button>
+      </div>
+    </form>
   );
 }
 

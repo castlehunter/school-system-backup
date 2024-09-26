@@ -1,7 +1,6 @@
 import React from "react";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import AddProfile from "./features/AddProfile.js";
 import StudentList from "./features/Student/StudentList";
 import StudentConfirmed from "./features/Student/StudentConfirm";
 import Profile from "./features/Profile/Profile.js";
@@ -20,6 +19,8 @@ import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
 import { getTeachers } from "./services/apiTeacher.js";
 import { getTeacher } from "./services/apiTeacher.js";
+import AddTeacher, { addTeacherAction } from "./features/Teacher/AddTeacher.js";
+import AddStudent from "./features/Student/AddStudent.js";
 
 const router = createBrowserRouter([
   {
@@ -50,7 +51,7 @@ const router = createBrowserRouter([
             loader: getStudents,
           },
           { path: ":No", element: <Profile /> },
-          { path: "add-student", element: <AddProfile type="student" /> },
+          { path: "add-student", element: <AddStudent /> },
         ],
       },
       {
@@ -79,11 +80,15 @@ const router = createBrowserRouter([
             loader: getTeachers,
           },
           {
-            path: ":ID",
+            path: ":teacherID",
             element: <Profile type="Teacher" />,
             loader: getTeacher,
           },
-          { path: "add-teacher", element: <AddProfile type="teacher" /> },
+          {
+            path: "add-teacher",
+            element: <AddTeacher />,
+            action: addTeacherAction,
+          },
         ],
       },
       {
