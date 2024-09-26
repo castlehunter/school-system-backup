@@ -15,7 +15,6 @@ export async function getTeachers() {
     )
   `);
 
-  console.log(data);
   if (error) {
     console.error(error);
     throw new Error("Failed to load teachers");
@@ -25,7 +24,7 @@ export async function getTeachers() {
 }
 
 export async function getTeacher({ params }) {
-  const { ID } = params;
+  const { teacherID } = params;
 
   const { data, error } = await supabase
     .from("Teachers")
@@ -44,13 +43,33 @@ export async function getTeacher({ params }) {
       )
     `
     )
-    .eq("TeacherNo", ID)
+    .eq("TeacherID", teacherID)
     .single();
 
   if (error) {
     console.error(error);
-    throw new Error("Failed to load teacher");
+    throw new Error("Failed to load teacher!!");
   }
 
   return data;
+}
+
+export async function getExistingTeacherNo() {
+  try {
+    const { data, error } = await supabase
+      .from("Teachers")
+      .select("TeacherNo")
+      .order("TeacherNo", { ascending: false })
+      .limit(1);
+
+    if (error) {
+      console.error(error);
+      throw new Error("Failed to fetch existing TeacherNo!");
+    }
+
+    return data.length > 0 ? data[0].TeacherNo : 0;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Failed to fetch existing TeacherNo!");
+  }
 }
