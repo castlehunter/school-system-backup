@@ -75,7 +75,7 @@ function SidebarNew() {
     students: true,
     courses: true,
     teachers: true,
-    enrollments: true,
+    programs: true,
   });
 
   const menuItems = [
@@ -119,11 +119,11 @@ function SidebarNew() {
       ],
     },
     {
-      title: "Enrollments",
+      title: "Programs",
       icon: icons.EnrollmentIcon,
       subItems: [
-        { path: "/enrollment/enrollment-list", label: "Enrollment List" },
-        { path: "/enrollment/new-enrollment", label: "New Enrollment" },
+        { path: "/program/program-list", label: "Program List" },
+        { path: "/program/new-program", label: "New Program" },
       ],
     },
   ];
