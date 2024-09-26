@@ -84,6 +84,7 @@ function SidebarNew() {
       icon: icons.DashboardIcon,
       subItems: [
         { path: "/dashboard/overview", label: "Overview" },
+        { path: "/dashboard/create-user", label: "Create User" },
         { path: "/dashboard/account-setting", label: "Account Setting" },
       ],
     },

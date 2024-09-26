@@ -24,7 +24,7 @@ export async function getTeachers() {
 }
 
 export async function getTeacher({ params }) {
-  const { teacherID } = params;
+  const { teacherNo } = params;
 
   const { data, error } = await supabase
     .from("Teachers")
@@ -43,9 +43,10 @@ export async function getTeacher({ params }) {
       )
     `
     )
-    .eq("TeacherID", teacherID)
+    .eq("TeacherNo", teacherNo)
     .single();
 
+  console.log("api Data", data);
   if (error) {
     console.error(error);
     throw new Error("Failed to load teacher!!");

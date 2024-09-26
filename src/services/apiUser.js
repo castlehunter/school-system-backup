@@ -20,3 +20,26 @@ export async function getUsers() {
 
   return data;
 }
+
+export async function generateUserNo() {
+  try {
+    const { data, error } = await supabase
+      .from("Users")
+      .select("UserNo")
+      .order("UserNo", { ascending: false })
+      .limit(1);
+
+    if (error) {
+      console.error(error);
+      throw new Error("Failed to fetch existing UserNo!");
+    }
+
+    const newUserNo = data.length > 0 ? data[0].UserNo + 1 : 1;
+
+    console.log("Generated UserNo:", newUserNo);
+    return newUserNo;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Failed to fetch existing UserNo!");
+  }
+}

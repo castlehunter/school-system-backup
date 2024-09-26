@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../Button/Button.js";
 import styles from "./Form.module.css";
 
-function ProfileForm({ type, isEdit, onFormSubmit, onCancel, No }) {
-  const [formData, setFormData] = useState({
+function ProfileForm({
+  type,
+  formData,
+  isEdit,
+  handleChange,
+  onFormSubmit,
+  onCancel,
+}) {
+  const [inputData, setInputData] = useState({
     FirstName: "",
     LastName: "",
     DateOfBirth: "",
@@ -11,34 +18,49 @@ function ProfileForm({ type, isEdit, onFormSubmit, onCancel, No }) {
     HomeAddress: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  useEffect(() => {
+    if (formData && formData.Users) {
+      setInputData({
+        FirstName: formData.Users.FirstName || "",
+        LastName: formData.Users.LastName || "",
+        DateOfBirth: formData.Users.DateOfBirth || "",
+        PhoneNumber: formData.Users.PhoneNumber || "",
+        HomeAddress: formData.Users.HomeAddress || "",
+      });
+    }
+  }, [formData]);
+
+  // Debug
+  // console.log("Form Data is", formData);
 
   return (
     <form className={styles.form} onSubmit={onFormSubmit}>
       <div className={styles.formItem}>
-        <label htmlFor="ID" className={styles.formLabel}>
+        <label htmlFor="No" className={styles.formLabel}>
           {type} No
         </label>
-        <span className={styles.formText}>{No}</span>
+        <input
+          type="text"
+          name="No"
+          value={formData[`${type}No`]}
+          onChange={handleChange}
+          className={styles.formText}
+          disabled={true}
+        />
       </div>
 
       <div className={styles.formRow}>
         <div className={styles.formItem}>
           <label htmlFor="FirstName" className={styles.formLabel}>
-            First Name
+            FirstName
           </label>
           <input
             type="text"
             name="FirstName"
-            value={formData.FirstName}
+            value={inputData.FirstName}
             onChange={handleChange}
-            className={styles.formInput}
+            className={isEdit ? styles.formInput : styles.formText}
+            disabled={!isEdit}
           />
         </div>
         <div className={styles.formItem}>
@@ -48,51 +70,57 @@ function ProfileForm({ type, isEdit, onFormSubmit, onCancel, No }) {
           <input
             type="text"
             name="LastName"
-            value={formData.LastName}
+            value={inputData.LastName}
             onChange={handleChange}
-            className={styles.formInput}
+            className={isEdit ? styles.formInput : styles.formText}
+            disabled={!isEdit}
           />
         </div>
       </div>
 
       <div className={styles.formRow}>
         <div className={styles.formItem}>
-          <label htmlFor="dob" className={styles.formLabel}>
-            DOB
+          <label htmlFor="DateOfBirth" className={styles.formLabel}>
+            DateOfBirth
           </label>
           <input
-            type="date"
+            type="text"
             name="DateOfBirth"
-            value={formData.DateOfBirth}
+            value={inputData.DateOfBirth}
             onChange={handleChange}
-            className={styles.formInput}
+            className={isEdit ? styles.formInput : styles.formText}
+            disabled={!isEdit}
           />
         </div>
         <div className={styles.formItem}>
-          <label htmlFor="phoneNumber" className={styles.formLabel}>
+          <label htmlFor="PhoneNumber" className={styles.formLabel}>
             Phone Number
           </label>
           <input
             type="text"
             name="PhoneNumber"
-            value={formData.PhoneNumber}
+            value={inputData.PhoneNumber}
             onChange={handleChange}
-            className={styles.formInput}
+            className={isEdit ? styles.formInput : styles.formText}
+            disabled={!isEdit}
           />
         </div>
       </div>
 
-      <div className={styles.formItem}>
-        <label htmlFor="address" className={styles.formLabel}>
-          Address
-        </label>
-        <input
-          type="text"
-          name="HomeAddress"
-          value={formData.HomeAddress}
-          onChange={handleChange}
-          className={styles.formInput}
-        />
+      <div className={styles.formRow}>
+        <div className={styles.formItem}>
+          <label htmlFor="HomeAddress" className={styles.formLabel}>
+            Home Address
+          </label>
+          <input
+            type="text"
+            name="HomeAddress"
+            value={inputData.HomeAddress}
+            onChange={handleChange}
+            className={isEdit ? styles.formInput : styles.formText}
+            disabled={!isEdit}
+          />
+        </div>
       </div>
 
       <div className={styles.formActions}>

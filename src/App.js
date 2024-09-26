@@ -3,7 +3,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import StudentList from "./features/Student/StudentList";
 import StudentConfirmed from "./features/Student/StudentConfirm";
-import Profile from "./features/Profile/Profile.js";
+import TeacherProfile from "./features/Teacher/TeacherProfile.js";
 import Overview from "./features/Dashboard/Overview";
 import AccountSetting from "./features/Dashboard/AccountSetting";
 import CourseList from "./features/Course/CourseList";
@@ -19,9 +19,10 @@ import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
 import { getTeachers } from "./services/apiTeacher.js";
 import { getTeacher } from "./services/apiTeacher.js";
-import { getExistingTeacherNo } from "./services/apiTeacher.js";
+import { generateUserNo } from "./services/apiUser.js";
 import AddTeacher, { addTeacherAction } from "./features/Teacher/AddTeacher.js";
 import AddStudent from "./features/Student/AddStudent.js";
+import CreateUser from "./features/Dashboard/CreateUser.js";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Overview /> },
           { path: "overview", element: <Overview /> },
+          {
+            path: "create-user",
+            element: <CreateUser />,
+            loader: generateUserNo,
+          },
           { path: "account-setting", element: <AccountSetting /> },
         ],
       },
@@ -51,7 +57,6 @@ const router = createBrowserRouter([
             element: <StudentList />,
             loader: getStudents,
           },
-          { path: ":No", element: <Profile /> },
           { path: "add-student", element: <AddStudent /> },
         ],
       },
@@ -81,15 +86,13 @@ const router = createBrowserRouter([
             loader: getTeachers,
           },
           {
-            path: ":teacherID",
-            element: <Profile type="Teacher" />,
-            loader: getTeacher,
+            path: ":teacherNo",
+            element: <TeacherProfile />,
           },
           {
             path: "add-teacher",
             element: <AddTeacher />,
-            loader: getExistingTeacherNo,
-            // action: addTeacherAction,
+            loader: generateUserNo,
           },
         ],
       },
