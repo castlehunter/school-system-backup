@@ -20,6 +20,10 @@ import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
 import { getTeachers } from "./services/apiTeacher.js";
 import { getTeacher } from "./services/apiTeacher.js";
+import { getProgramList } from "./services/apiProgram.js";
+import { getProgram } from "./services/apiProgram.js";
+import ProgramList from "./features/Program/ProgramList.js";
+import ViewProgram from "./features/Program/ViewProgram.js";
 
 const router = createBrowserRouter([
   {
@@ -87,8 +91,20 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "Enrollment",
-        element: <AddEnrollment />,
+        path: "program",
+        element: <Outlet />,
+        children: [
+          {
+            path: "program-list",
+            element: <ProgramList />,
+            loader: getProgramList,
+          },
+          {
+            path: ":ID",
+            element: <ViewProgram type="Program" />,
+            loader: getProgram,
+          },
+        ]
       },
       {
         path: "*",
