@@ -43,7 +43,7 @@ export async function getTeacher({ params }) {
       )
     `
     )
-    .eq("TeacherNo", ID)
+    .eq("TeacherID", teacherID)
     .single();
 
   if (error) {
@@ -54,44 +54,22 @@ export async function getTeacher({ params }) {
   return data;
 }
 
-export async function addTeacher(newTeacher) {
+export async function getExistingTeacherNo() {
   try {
-    const { userData, userError } = await supabase
-      .from("Users")
-      .insert([
-        {
-          FirstName: newTeacher.FirstName,
-          LastName: newTeacher.LastName,
-          Email: newTeacher.Email,
-          PhoneNumber: newTeacher.PhoneNumber,
-        },
-      ])
-      .select();
-
-    if (userError) {
-      console.error(userError);
-      throw new Error("Failed creating user");
-    }
-
-    const newUserID = userData[0].UserID;
-
-    const { teacherData, teacherError } = await supabase
+    const { data, error } = await supabase
       .from("Teachers")
-      .insert([
-        {
-          TeacherID: newTeacher.TeacherID,
-          UserID: newUserID,
-        },
-      ]);
+      .select("TeacherNo")
+      .order("TeacherNo", { ascending: false })
+      .limit(1);
 
-    if (teacherError) {
-      console.error(teacherError);
-      throw new Error("Failed creating teacher");
+    if (error) {
+      console.error(error);
+      throw new Error("Failed to fetch existing TeacherNo!");
     }
 
-    return teacherData;
+    return data.length > 0 ? data[0].TeacherNo : 0;
   } catch (err) {
     console.error(err);
-    throw new Error("Failed creating teacher");
+    throw new Error("Failed to fetch existing TeacherNo!");
   }
 }

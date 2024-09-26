@@ -19,6 +19,7 @@ import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
 import { getTeachers } from "./services/apiTeacher.js";
 import { getTeacher } from "./services/apiTeacher.js";
+import { getExistingTeacherNo } from "./services/apiTeacher.js";
 import AddTeacher, { addTeacherAction } from "./features/Teacher/AddTeacher.js";
 import AddStudent from "./features/Student/AddStudent.js";
 
@@ -87,7 +88,8 @@ const router = createBrowserRouter([
           {
             path: "add-teacher",
             element: <AddTeacher />,
-            action: addTeacherAction,
+            loader: getExistingTeacherNo,
+            // action: addTeacherAction,
           },
         ],
       },

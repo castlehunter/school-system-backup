@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "../Button/Button.js";
 import styles from "./Form.module.css";
 
-function ProfileForm({ type, isEdit, onFormSubmit, onCancel }) {
+function ProfileForm({ type, isEdit, onFormSubmit, onCancel, No }) {
   const [formData, setFormData] = useState({
     FirstName: "",
     LastName: "",
@@ -19,19 +19,13 @@ function ProfileForm({ type, isEdit, onFormSubmit, onCancel }) {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Pass form data to parent component (onFormSubmit)
-    onFormSubmit(formData);
-  };
-
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={onFormSubmit}>
       <div className={styles.formItem}>
         <label htmlFor="ID" className={styles.formLabel}>
-          {type} No ~user-friendly ID, auto-generated
+          {type} No
         </label>
-        <span className={styles.formText}>N/A</span>
+        <span className={styles.formText}>{No}</span>
       </div>
 
       <div className={styles.formRow}>
