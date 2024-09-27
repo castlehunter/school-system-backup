@@ -37,7 +37,12 @@ export async function getTeacherById(teacherId) {
         Email,
         HomeAddress,
         DateOfBirth,
-        PhoneNumber
+        PhoneNumber,
+        RoleID,
+        Roles (
+          RoleID,
+          RoleName
+        )
       )
     `
     )
@@ -48,7 +53,7 @@ export async function getTeacherById(teacherId) {
     console.error(error);
     throw new Error("Failed to load teacher!!");
   }
-
+  console.log("teacher by id", data);
   return data;
 }
 

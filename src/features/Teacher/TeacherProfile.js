@@ -113,28 +113,29 @@ function TeacherProfile() {
   return (
     <div className={styles.profileLayout}>
       <div className={styles.mainColumn}>
-        <EditContainer
-          title="Basic Information"
-          isEdit={isEditBasic}
-          onClickEdit={handleEditBasic}
-          // onClickConfirm={handleSubmitBasic}
-          onClickCancel={handleCancelEditBasic}
-        >
-          <div className={styles.basicInfoDetail}>
-            <img
-              src="/img/profile/profile.jpg"
-              alt="img"
-              className={styles.profileImg}
-            />
-            <ProfileForm
-              type="Teacher"
-              formData={data}
-              isEdit={isEditBasic}
-              onFormSubmit={handleSubmitBasic}
-            />
-          </div>
-        </EditContainer>
-
+        <div>
+          <EditContainer
+            title="Basic Information"
+            isEdit={isEditBasic}
+            onClickEdit={handleEditBasic}
+            // onClickConfirm={handleSubmitBasic}
+            onClickCancel={handleCancelEditBasic}
+          >
+            <div className={styles.basicInfoDetail}>
+              <img
+                src="/img/profile/profile.jpg"
+                alt="img"
+                className={styles.profileImg}
+              />
+              <ProfileForm
+                type="Teacher"
+                formData={data}
+                isEdit={isEditBasic}
+                onFormSubmit={handleSubmitBasic}
+              />
+            </div>
+          </EditContainer>
+        </div>
         <div className={styles.course}>
           <EditContainer
             title="Courses Enrolled"

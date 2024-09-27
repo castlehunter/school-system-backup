@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Button from "../../components/Button/Button";
 import styles from "../../components/Form/Form.module.css";
-import { useLoaderData } from "react-router-dom";
 import Container from "../../ui/Layout/Container";
 
 function CreateUser({ type = "User", isEdit = true }) {

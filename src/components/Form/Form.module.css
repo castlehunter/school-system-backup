@@ -19,7 +19,7 @@
 
 .formLabel {
   text-align: left;
-  color: #7b809a;
+  color: #a9aec5;
   font-weight: 500;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .formText {
-  border: 0.1rem transparent solid;
+  border: 0rem transparent solid;
   background-color: transparent;
 }
 

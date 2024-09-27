@@ -4,6 +4,8 @@ import styles from "./Form.module.css";
 
 function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   const [inputData, setInputData] = useState({
+    Role: "",
+    UserName: "",
     FirstName: "",
     LastName: "",
     DateOfBirth: "",
@@ -14,6 +16,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   useEffect(() => {
     if (formData && formData.Users) {
       setInputData({
+        Role: formData.Users.Roles.RoleName || "",
+        UserName: formData.Users.UserName || "",
         FirstName: formData.Users.FirstName || "",
         LastName: formData.Users.LastName || "",
         DateOfBirth: formData.Users.DateOfBirth || "",
@@ -35,19 +39,34 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
 
   return (
     <form className={styles.form} onSubmit={onFormSubmit}>
-      {/* <div className={styles.formItem}>
-        <label htmlFor="ID" className={styles.formLabel}>
-          {type} ID
-        </label>
-        <input
-          type="text"
-          name="No"
-          value={formData[`${type}ID`]}
-          onChange={handleChange}
-          className={styles.formText}
-          disabled={true}
-        />
-      </div> */}
+      <div className={styles.formRow}>
+        <div className={styles.formItem}>
+          <label htmlFor="Role" className={styles.formLabel}>
+            Role
+          </label>
+          <input
+            type="text"
+            name="Role"
+            value={inputData.Role}
+            onChange={handleChange}
+            className={styles.formText}
+            disabled={true}
+          />
+        </div>
+        <div className={styles.formItem}>
+          <label htmlFor="UserName" className={styles.formLabel}>
+            User Name
+          </label>
+          <input
+            type="text"
+            name="UserName"
+            value={inputData.UserName}
+            onChange={handleChange}
+            className={styles.formText}
+            disabled={true}
+          />
+        </div>
+      </div>
 
       <div className={styles.formRow}>
         <div className={styles.formItem}>
