@@ -87,7 +87,11 @@ const routes = [
             element: <Overview />,
             title: "Overview",
           },
-          { path: "my-account", element: <MyAccount />, title: "My Account" },
+          {
+            path: "/dashboard/my-account",
+            element: <MyAccount />,
+            title: "My Account",
+          },
         ],
       },
 
@@ -98,7 +102,11 @@ const routes = [
         icon: icons.MyCoursesIcon,
         children: [
           { index: true, element: <MyCourses />, title: "My Courses" },
-          { path: "my-courses", element: <MyCourses />, title: "My Courses" },
+          {
+            path: "my-courses",
+            element: <MyCourses />,
+            title: "My Courses",
+          },
         ],
       },
       {
@@ -134,7 +142,11 @@ const routes = [
             element: <CourseList />,
             title: "Course List",
           },
-          { path: "new-course", element: <NewCourse />, title: "New Course" },
+          {
+            path: "new-course",
+            element: <NewCourse />,
+            title: "New Course",
+          },
         ],
       },
       {
@@ -159,6 +171,7 @@ const routes = [
             path: "/teacher/:teacherId",
             element: <ViewTeacher />,
             title: "View Teacher",
+            hideInSidebar: true,
           },
         ],
       },
@@ -175,16 +188,17 @@ const routes = [
             title: "Program List",
           },
           {
-            path: "program/program-list",
+            path: "/program/program-list",
             element: <ProgramList />,
             loader: getProgramList,
             title: "Program List",
           },
           {
-            path: "program/:ID",
+            path: "/program/:ID",
             element: <ViewProgram type="Program" />,
             loader: getProgram,
             title: "View Program",
+            hideInSidebar: true,
           },
         ],
       },

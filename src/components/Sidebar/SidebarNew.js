@@ -84,6 +84,7 @@ function SidebarNew() {
               }`}
             >
               {menuObj.children
+                .filter((subItem) => subItem.hideInSidebar !== true)
                 .filter((subItem) => !subItem.index)
                 .map((subItem) => (
                   <NavLink
