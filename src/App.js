@@ -5,7 +5,7 @@ import StudentList from "./features/Student/StudentList";
 import StudentConfirmed from "./features/Student/StudentConfirm";
 import Profile from "./features/Profile/Profile.js";
 import Overview from "./features/Dashboard/Overview";
-import AccountSetting from "./features/Dashboard/AccountSetting";
+import MyAccount from "./features/Dashboard/MyAccount";
 import CourseList from "./features/Course/CourseList";
 import AddCourse from "./features/Course/AddCourse";
 import CourseEdit from "./features/Course/CourseEdit";
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Overview /> },
           { path: "overview", element: <Overview /> },
-          { path: "account-setting", element: <AccountSetting /> },
+          { path: "my-account", element: <MyAccount /> },
         ],
       },
       {
@@ -111,7 +111,7 @@ const router = createBrowserRouter([
             element: <ViewProgram type="Program" />,
             loader: getProgram,
           },
-        ]
+        ],
       },
       {
         path: "*",
