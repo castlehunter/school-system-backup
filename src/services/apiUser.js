@@ -57,7 +57,8 @@ export async function getUserById(userNo) {
         HomeAddress,
         DateOfBirth,
         PhoneNumber,
-        UserNo
+        UserNo,
+        PasswordHash
       `
     )
     .eq("UserNo", userNo)

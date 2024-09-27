@@ -31,7 +31,8 @@
 .avatar {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  align-items: center;
+  gap: 3.5rem;
 }
 
 .avatar img {
@@ -43,17 +44,19 @@
   color: #fff;
   border: none;
   padding: 0.8rem 2rem;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
+  font-weight: 600;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
   background-color: #e53371;
   width: auto;
+  height: 3rem;
 }
 
 .form-row {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   gap: 4rem;
 }
 
