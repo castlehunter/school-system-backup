@@ -46,7 +46,7 @@ const router = createBrowserRouter([
             path: "create-user",
             element: <CreateUser />,
           },
-          { path: "account-setting", element: <AccountSetting /> },
+          { path: "my-account", element: <MyAccount /> },
         ],
       },
       {

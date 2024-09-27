@@ -46,7 +46,7 @@ function SidebarNew() {
       subItems: [
         { path: "/dashboard/overview", label: "Overview" },
         { path: "/dashboard/create-user", label: "Create User" },
-        { path: "/dashboard/account-setting", label: "Account Setting" },
+        { path: "/dashboard/my-account", label: "My Account" },
       ],
     },
     {
