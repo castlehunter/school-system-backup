@@ -73,6 +73,7 @@ export async function getUserById(userNo) {
   return data;
 }
 
+// This is a draft
 export async function createUser(formData) {
   try {
     // 1. Search Role table for role id
