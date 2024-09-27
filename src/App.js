@@ -20,12 +20,12 @@ import { getStudents } from "./services/apiStudent.js";
 import { getTeacherByIds } from "./services/apiTeacher.js";
 import { getTeacherById } from "./services/apiTeacher.js";
 import { generateUserNo } from "./services/apiUser.js";
-
-import NewUser from "./features/Dashboard/NewUser.js";
+import NewUser from "./features/Users/NewUser.js";
 import { getProgramList } from "./services/apiProgram.js";
 import { getProgram } from "./services/apiProgram.js";
 import ProgramList from "./features/Program/ProgramList.js";
 import ViewProgram from "./features/Program/ViewProgram.js";
+import UserList from "./features/Users/UserList.js";
 import {
   RiAddLine,
   RiSubtractLine,
@@ -94,7 +94,25 @@ const routes = [
           },
         ],
       },
-
+      {
+        path: "users",
+        element: <Outlet />,
+        title: "Users",
+        icon: icons.DashboardIcon,
+        children: [
+          { index: true, element: <UserList />, title: "User List" },
+          {
+            path: "/users/user-list",
+            element: <UserList />,
+            title: "User List",
+          },
+          {
+            path: "/users/new-user",
+            element: <NewUser />,
+            title: "New User",
+          },
+        ],
+      },
       {
         path: "my-courses",
         element: <MyCourses />,

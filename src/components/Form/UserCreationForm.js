@@ -1,26 +1,24 @@
-import React, { useState } from 'react';
-import { supabase } from '.../config/supabaseClient.js';
-
-
+import React, { useState } from "react";
+import { supabase } from ".../config/supabaseClient.js";
 
 const UserForm = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    email: '',
+    username: "",
+    password: "",
+    email: "",
     isAdmin: false,
-    address: '',
-    dob: '',
-    phone: '',
-    firstName: '',
-    lastName: ''
+    address: "",
+    dob: "",
+    phone: "",
+    firstName: "",
+    lastName: "",
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -28,7 +26,7 @@ const UserForm = () => {
     e.preventDefault();
     try {
       const { data, error } = await supabase
-        .from('Users') // 'users' is the table name
+        .from("Users") // 'users' is the table name
         .insert([
           {
             UserName: formData.username,
@@ -39,17 +37,17 @@ const UserForm = () => {
             DateOfBirth: formData.dob,
             PhoneNumber: formData.phone,
             FirstName: formData.firstName,
-            lastName: formData.lastName
-          }
+            lastName: formData.lastName,
+          },
         ]);
 
       if (error) {
-        console.error('Error uploading data:', error);
+        console.error("Error uploading data:", error);
       } else {
-        console.log('Data uploaded successfully:', data);
+        console.log("Data uploaded successfully:", data);
       }
     } catch (error) {
-      console.error('Unexpected error:', error);
+      console.error("Unexpected error:", error);
     }
   };
 

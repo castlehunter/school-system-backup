@@ -36,6 +36,7 @@ function SidebarNew() {
 
   const [openMenus, setOpenMenus] = useState({
     dashboard: true,
+    users: true,
     "my courses": true,
     students: true,
     courses: true,
