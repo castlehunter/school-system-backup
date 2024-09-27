@@ -5,7 +5,7 @@ import StudentList from "./features/Student/StudentList";
 import StudentConfirmed from "./features/Student/StudentConfirm";
 import ViewTeacher from "./features/Teacher/ViewTeacher.js";
 import Overview from "./features/Dashboard/Overview";
-import AccountSetting from "./features/Dashboard/AccountSetting";
+import MyAccount from "./features/Dashboard/MyAccount";
 import CourseList from "./features/Course/CourseList";
 import NewCourse from "./features/Course/NewCourse";
 import CourseEdit from "./features/Course/CourseEdit";
@@ -87,14 +87,10 @@ const routes = [
             element: <Overview />,
             title: "Overview",
           },
-          { path: "new-user", element: <NewUser />, title: "New User" },
-          {
-            path: "/dashboard/account-setting",
-            element: <AccountSetting />,
-            title: "Account Setting",
-          },
+          { path: "my-account", element: <MyAccount /> },
         ],
       },
+
       {
         path: "my-courses",
         element: <MyCourses />,
