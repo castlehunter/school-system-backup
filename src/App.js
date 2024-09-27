@@ -17,11 +17,10 @@ import AddEnrollment from "./features/Enrollment/AddEnrollment.js";
 import Error from "./ui/Error.js";
 import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
-import { getTeachers } from "./services/apiTeacher.js";
-import { getTeacher } from "./services/apiTeacher.js";
+import { getTeacherByIds } from "./services/apiTeacher.js";
+import { getTeacherById } from "./services/apiTeacher.js";
 import { generateUserNo } from "./services/apiUser.js";
-import CreateTeacher from "./features/Teacher/CreateTeacher.js";
-import CreateStudent from "./features/Student/CreateStudent.js";
+
 import CreateUser from "./features/Dashboard/CreateUser.js";
 import { getProgramList } from "./services/apiProgram.js";
 import { getProgram } from "./services/apiProgram.js";
@@ -46,7 +45,6 @@ const router = createBrowserRouter([
           {
             path: "create-user",
             element: <CreateUser />,
-            loader: generateUserNo,
           },
           { path: "account-setting", element: <AccountSetting /> },
         ],
@@ -61,7 +59,6 @@ const router = createBrowserRouter([
             element: <StudentList />,
             loader: getStudents,
           },
-          { path: "add-student", element: <CreateStudent /> },
         ],
       },
       {
@@ -83,20 +80,15 @@ const router = createBrowserRouter([
         path: "teacher",
         element: <Outlet />,
         children: [
-          { index: true, element: <TeacherList />, loader: getTeachers },
+          { index: true, element: <TeacherList />, loader: getTeacherByIds },
           {
             path: "teacher-list",
             element: <TeacherList />,
-            loader: getTeachers,
+            loader: getTeacherByIds,
           },
           {
-            path: ":teacherNo",
+            path: ":teacherId",
             element: <TeacherProfile />,
-          },
-          {
-            path: "create-teacher",
-            element: <CreateTeacher />,
-            loader: generateUserNo,
           },
         ],
       },

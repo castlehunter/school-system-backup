@@ -2,14 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "../Button/Button.js";
 import styles from "./Form.module.css";
 
-function ProfileForm({
-  type,
-  formData,
-  isEdit,
-  handleChange,
-  onFormSubmit,
-  onCancel,
-}) {
+function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   const [inputData, setInputData] = useState({
     FirstName: "",
     LastName: "",
@@ -32,22 +25,29 @@ function ProfileForm({
 
   // Debug
   // console.log("Form Data is", formData);
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setInputData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
 
   return (
     <form className={styles.form} onSubmit={onFormSubmit}>
-      <div className={styles.formItem}>
-        <label htmlFor="No" className={styles.formLabel}>
-          {type} No
+      {/* <div className={styles.formItem}>
+        <label htmlFor="ID" className={styles.formLabel}>
+          {type} ID
         </label>
         <input
           type="text"
           name="No"
-          value={formData[`${type}No`]}
+          value={formData[`${type}ID`]}
           onChange={handleChange}
           className={styles.formText}
           disabled={true}
         />
-      </div>
+      </div> */}
 
       <div className={styles.formRow}>
         <div className={styles.formItem}>
@@ -59,8 +59,8 @@ function ProfileForm({
             name="FirstName"
             value={inputData.FirstName}
             onChange={handleChange}
-            className={isEdit ? styles.formInput : styles.formText}
-            disabled={!isEdit}
+            className={styles.formText}
+            disabled
           />
         </div>
         <div className={styles.formItem}>
@@ -72,8 +72,8 @@ function ProfileForm({
             name="LastName"
             value={inputData.LastName}
             onChange={handleChange}
-            className={isEdit ? styles.formInput : styles.formText}
-            disabled={!isEdit}
+            className={styles.formText}
+            disabled
           />
         </div>
       </div>
@@ -121,13 +121,6 @@ function ProfileForm({
             disabled={!isEdit}
           />
         </div>
-      </div>
-
-      <div className={styles.formActions}>
-        <Button classType="submit">Add</Button>
-        <Button classType="cancel" onClick={onCancel}>
-          Cancel
-        </Button>
       </div>
     </form>
   );

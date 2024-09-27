@@ -121,7 +121,7 @@ function SidebarNew() {
       icon: icons.StudentIcon,
       subItems: [
         { path: "/student/student-list", label: "Student List" },
-        { path: "/student/add-student", label: "Add Student" },
+        // { path: "/student/add-student", label: "Add Student" },
       ],
     },
     {
@@ -137,7 +137,7 @@ function SidebarNew() {
       icon: icons.TeacherIcon,
       subItems: [
         { path: "/teacher/teacher-list", label: "Teacher List" },
-        { path: "/teacher/create-teacher", label: "Create Teacher" },
+        // { path: "/teacher/create-teacher", label: "Create Teacher" },
       ],
     },
     {

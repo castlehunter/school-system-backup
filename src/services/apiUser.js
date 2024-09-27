@@ -56,15 +56,17 @@ export async function getUserById(userNo) {
         CreatedAt,
         HomeAddress,
         DateOfBirth,
-        PhoneNumber
+        PhoneNumber,
+        UserNo
       `
     )
-    .eq("id", userNo);
+    .eq("UserNo", userNo)
+    .single();
 
   console.log(data);
   if (error) {
     console.error(error);
-    throw new Error("Failed to load student information");
+    throw new Error("Failed to load user information");
   }
 
   return data;

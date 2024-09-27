@@ -4,14 +4,14 @@ import styles from "../Profile.module.css";
 import formStyles from "../../components/Form/Form.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import ProfileForm from "../../components/Form/ProfileForm";
-import { getTeacher } from "../../services/apiTeacher";
 import Container from "../../ui/Layout/Container";
+import { getTeacherById } from "../../services/apiTeacher";
 
 function TeacherProfile() {
-  const { teacherNo } = useParams();
+  const { teacherId } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isEditBasic, setIsEditBasic] = useState(false);
   const [isEditProgram, setIsEditProgram] = useState(false);
@@ -23,7 +23,7 @@ function TeacherProfile() {
       try {
         setIsLoading(true);
         setError("");
-        const teacherData = await getTeacher({ params: { teacherNo } });
+        const teacherData = await getTeacherById(teacherId);
         setData(teacherData);
       } catch (err) {
         setError(err.message);
@@ -32,7 +32,7 @@ function TeacherProfile() {
       }
     }
     fetchData();
-  }, [teacherNo]);
+  }, [teacherId]);
 
   function handleChange(e) {
     //   const { name, value } = e.target;
@@ -99,7 +99,7 @@ function TeacherProfile() {
   }
 
   function handleCancelEditBasic() {
-    setIsEditBasic(false);
+    setIsEditBasic((prev) => !prev);
   }
 
   function handleCancelCourse() {
@@ -127,10 +127,10 @@ function TeacherProfile() {
               className={styles.profileImg}
             />
             <ProfileForm
-              type="teacher"
+              type="Teacher"
               formData={data}
               isEdit={isEditBasic}
-              handleChange={handleChange}
+              onFormSubmit={handleSubmitBasic}
             />
           </div>
         </EditContainer>

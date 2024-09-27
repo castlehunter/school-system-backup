@@ -5,7 +5,6 @@ import { useLoaderData } from "react-router-dom";
 import Container from "../../ui/Layout/Container";
 
 function CreateUser({ type = "User", isEdit = true }) {
-  const userNo = useLoaderData();
   const [inputData, setInputData] = useState({
     UserRole: "Select",
     UserName: "",
@@ -25,25 +24,26 @@ function CreateUser({ type = "User", isEdit = true }) {
     }));
   }
 
-  function onFormSubmit() {}
+  function handleSubmit() {}
+
+  function handleCancel(e) {
+    e.preventDefault();
+    setInputData(() => ({
+      UserRole: "Select",
+      UserName: "",
+      Password: "",
+      FirstName: "",
+      LastName: "",
+      DateOfBirth: "",
+      PhoneNumber: "",
+      HomeAddress: "",
+    }));
+  }
 
   return (
     <Container title={`Create ${type}`} headingType="primaryHeading">
-      <form className={styles.form} onSubmit={onFormSubmit}>
-        <div className={styles.formRow}>
-          <div className={styles.formItem}>
-            <label htmlFor="UserNo" className={styles.formLabel}>
-              {type} Number
-            </label>
-            <input
-              type="text"
-              name="UserNo"
-              value={userNo}
-              onChange={handleChange}
-              className={styles.formText}
-              disabled={true}
-            />
-          </div>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.formRow} style={{ width: "10vw" }}>
           <div className={styles.formItem}>
             <label htmlFor="UserRole" className={styles.formLabel}>
               {type} Role
@@ -171,8 +171,10 @@ function CreateUser({ type = "User", isEdit = true }) {
         </div>
 
         <div className={styles.formActions}>
-          <Button classType="submit">Add</Button>
-          <Button classType="cancel">Cancel</Button>
+          <Button classType="submit">Create</Button>
+          <Button classType="cancel" onClickBtn={handleCancel}>
+            Clear
+          </Button>
         </div>
       </form>
     </Container>

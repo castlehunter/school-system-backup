@@ -36,7 +36,7 @@
 }
 .formInput {
   border: 0.1rem rgb(224, 224, 224) solid;
-  background-color: #f3f3f3;
+  /* background-color: #f3f3f3; */
 }
 
 .formText {
