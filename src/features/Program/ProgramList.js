@@ -15,6 +15,8 @@ function ProgramList() {
   useEffect(() => {
     async function fetchProgramData() {
       try {
+        setIsLoading(true);
+        setError(false);
         const data = await getProgramList();
 
         setProgramData(data);

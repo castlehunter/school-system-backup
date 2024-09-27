@@ -19,7 +19,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
       <thead>
         <tr>
           <th>S/N</th>
-          <th>Teacher No.</th>
+          <th>Teacher ID</th>
           <th>First Name</th>
           <th>Last Name</th>
           <th>Date of Birth</th>

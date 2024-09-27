@@ -3,7 +3,7 @@ import Button from "../../components/Button/Button";
 import styles from "../../components/Form/Form.module.css";
 import Container from "../../ui/Layout/Container";
 
-function CreateUser({ type = "User", isEdit = true }) {
+function NewUser({ type = "User", isEdit = true }) {
   const [inputData, setInputData] = useState({
     UserRole: "Select",
     UserName: "",
@@ -180,4 +180,4 @@ function CreateUser({ type = "User", isEdit = true }) {
   );
 }
 
-export default CreateUser;
+export default NewUser;

@@ -7,7 +7,7 @@ import ProfileForm from "../../components/Form/ProfileForm";
 import Container from "../../ui/Layout/Container";
 import { getTeacherById } from "../../services/apiTeacher";
 
-function TeacherProfile() {
+function ViewTeacher() {
   const { teacherId } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState({});
@@ -205,4 +205,4 @@ function TeacherProfile() {
   );
 }
 
-export default TeacherProfile;
+export default ViewTeacher;
