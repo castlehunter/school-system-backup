@@ -94,7 +94,7 @@ svg {
 }
 
 .menuContent.open {
-  max-height: 10rem;
+  max-height: 15rem;
   opacity: 1;
 }
 

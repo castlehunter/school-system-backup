@@ -1,6 +1,6 @@
 import supabase from "../config/supabaseClient.js";
 
-export async function getTeachers() {
+export async function getTeacherByIds() {
   const { data, error } = await supabase.from("Teachers").select(`
     *,
     Users (
@@ -23,9 +23,7 @@ export async function getTeachers() {
   return data;
 }
 
-export async function getTeacher({ params }) {
-  const { teacherID } = params;
-
+export async function getTeacherById(teacherId) {
   const { data, error } = await supabase
     .from("Teachers")
     .select(
@@ -39,18 +37,23 @@ export async function getTeacher({ params }) {
         Email,
         HomeAddress,
         DateOfBirth,
-        PhoneNumber
+        PhoneNumber,
+        RoleID,
+        Roles (
+          RoleID,
+          RoleName
+        )
       )
     `
     )
-    .eq("TeacherID", teacherID)
+    .eq("TeacherID", teacherId)
     .single();
 
   if (error) {
     console.error(error);
     throw new Error("Failed to load teacher!!");
   }
-
+  console.log("teacher by id", data);
   return data;
 }
 

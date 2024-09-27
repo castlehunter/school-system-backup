@@ -3,7 +3,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import StudentList from "./features/Student/StudentList";
 import StudentConfirmed from "./features/Student/StudentConfirm";
-import Profile from "./features/Profile/Profile.js";
+import TeacherProfile from "./features/Teacher/TeacherProfile.js";
 import Overview from "./features/Dashboard/Overview";
 import MyAccount from "./features/Dashboard/MyAccount";
 import CourseList from "./features/Course/CourseList";
@@ -17,11 +17,11 @@ import AddEnrollment from "./features/Enrollment/AddEnrollment.js";
 import Error from "./ui/Error.js";
 import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
-import { getTeachers } from "./services/apiTeacher.js";
-import { getTeacher } from "./services/apiTeacher.js";
-import { getExistingTeacherNo } from "./services/apiTeacher.js";
-import AddTeacher, { addTeacherAction } from "./features/Teacher/AddTeacher.js";
-import AddStudent from "./features/Student/AddStudent.js";
+import { getTeacherByIds } from "./services/apiTeacher.js";
+import { getTeacherById } from "./services/apiTeacher.js";
+import { generateUserNo } from "./services/apiUser.js";
+
+import CreateUser from "./features/Dashboard/CreateUser.js";
 import { getProgramList } from "./services/apiProgram.js";
 import { getProgram } from "./services/apiProgram.js";
 import ProgramList from "./features/Program/ProgramList.js";
@@ -42,7 +42,11 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Overview /> },
           { path: "overview", element: <Overview /> },
-          { path: "my-account", element: <MyAccount /> },
+          {
+            path: "create-user",
+            element: <CreateUser />,
+          },
+          { path: "account-setting", element: <AccountSetting /> },
         ],
       },
       {
@@ -55,8 +59,6 @@ const router = createBrowserRouter([
             element: <StudentList />,
             loader: getStudents,
           },
-          { path: ":No", element: <Profile /> },
-          { path: "add-student", element: <AddStudent /> },
         ],
       },
       {
@@ -78,22 +80,15 @@ const router = createBrowserRouter([
         path: "teacher",
         element: <Outlet />,
         children: [
-          { index: true, element: <TeacherList />, loader: getTeachers },
+          { index: true, element: <TeacherList />, loader: getTeacherByIds },
           {
             path: "teacher-list",
             element: <TeacherList />,
-            loader: getTeachers,
+            loader: getTeacherByIds,
           },
           {
-            path: ":teacherID",
-            element: <Profile type="Teacher" />,
-            loader: getTeacher,
-          },
-          {
-            path: "add-teacher",
-            element: <AddTeacher />,
-            loader: getExistingTeacherNo,
-            // action: addTeacherAction,
+            path: ":teacherId",
+            element: <TeacherProfile />,
           },
         ],
       },

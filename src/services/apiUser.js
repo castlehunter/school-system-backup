@@ -21,10 +21,34 @@ export async function getUsers() {
   return data;
 }
 
-export async function getUserById(userNo) {
+export async function generateUserNo() {
+  try {
     const { data, error } = await supabase
       .from("Users")
-      .select(`
+      .select("UserNo")
+      .order("UserNo", { ascending: false })
+      .limit(1);
+
+    if (error) {
+      console.error(error);
+      throw new Error("Failed to fetch existing UserNo!");
+    }
+
+    const newUserNo = data.length > 0 ? data[0].UserNo + 1 : 1;
+
+    console.log("Generated UserNo:", newUserNo);
+    return newUserNo;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Failed to fetch existing UserNo!");
+  }
+}
+
+export async function getUserById(userNo) {
+  const { data, error } = await supabase
+    .from("Users")
+    .select(
+      `
         UserName,
         FirstName,
         LastName,
@@ -32,16 +56,18 @@ export async function getUserById(userNo) {
         CreatedAt,
         HomeAddress,
         DateOfBirth,
-        PhoneNumber
-      `)
-      .eq('id', userNo);
-  
-    console.log(data);
-    if (error) {
-      console.error(error);
-      throw new Error("Failed to load student information");
-    }
-  
-    return data;
+        PhoneNumber,
+        UserNo
+      `
+    )
+    .eq("UserNo", userNo)
+    .single();
+
+  console.log(data);
+  if (error) {
+    console.error(error);
+    throw new Error("Failed to load user information");
   }
-  
+
+  return data;
+}
