@@ -23,21 +23,19 @@ function Breadcrumb() {
             const isLast = index === pathnames.length - 1;
 
             return (
-              <>
-                <li>
-                  {isLast ? (
-                    <span>{value}</span>
-                  ) : (
-                    <Link
-                      to={to}
-                      className={generalStyles.noStyleLink}
-                      style={{ textDecoration: "none" }}
-                    >
-                      {value}&nbsp;/&nbsp;
-                    </Link>
-                  )}
-                </li>
-              </>
+              <li key={to}>
+                {isLast ? (
+                  <span>{value}</span>
+                ) : (
+                  <Link
+                    to={to}
+                    className={generalStyles.noStyleLink}
+                    style={{ textDecoration: "none" }}
+                  >
+                    {value}&nbsp;/&nbsp;
+                  </Link>
+                )}
+              </li>
             );
           })}
         </ul>

@@ -1,7 +1,7 @@
 import styles from "./Layout.module.css";
 import SidebarNew from "../../components/Sidebar/SidebarNew";
 import { RiMegaphoneLine } from "@remixicon/react";
-import avatar from "../../assets/user-avatar.jpg";
+import avatar from "../../assets/user-avatar-header.jpg";
 
 function Layout({ children, breadcrumb }) {
   return (

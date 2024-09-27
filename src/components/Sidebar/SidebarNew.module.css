@@ -3,15 +3,17 @@ svg {
   width: 1.5rem;
   height: 1.5rem;
   fill: #fff;
-  margin-right: 1rem;
+  /* margin-right: 1rem; */
 }
 
 /* =============================== */
 /* Sidebar */
 /* =============================== */
-.sidebarWrapper {
-  /* background-color: #4f4f52; */
+/* .sidebarWrapper {
+  background-color: #4f4f52; 
 }
+*/
+
 .sidebar {
   border-radius: 1rem;
   display: flex;
@@ -60,14 +62,16 @@ svg {
 .menu {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 
 .menuTitle {
   color: #c0c0c0;
-  padding: 0.5rem 2rem;
+  padding: 1rem 2rem;
   background-color: #3b3b3b;
   cursor: pointer;
   display: flex;
+  gap: 1rem;
   justify-content: space-between;
   align-items: center;
   border-bottom: 0.1rem solid rgba(221, 221, 221, 0.3);
@@ -77,6 +81,7 @@ svg {
 .menuText {
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
 
 .menuContent {
@@ -89,24 +94,56 @@ svg {
 }
 
 .menuContent.open {
-  max-height: 10rem;
+  max-height: 15rem;
   opacity: 1;
 }
 
 .menuItem {
   line-height: 3.5rem;
-  display: block;
+  display: flex;
   padding: 0.2rem 2rem;
   color: #dfdfdf;
   text-decoration: none;
+  border-radius: 0.375rem;
+  gap: 1rem;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.menuItem:hover:not(.current) {
+.menuItem:hover:not(.current),
+.logout:hover {
   color: #ffffff;
   background-color: #818181cb;
 }
 
-.menuItem:active, /* 针对鼠标点击 */
+.logout span:hover {
+  color: #ffffff;
+}
+.menuItem:active,
 .menuItem.current {
-  background-color: #e91f63; /* 激活状态背景色 */
+  background-color: #e91f63;
+}
+
+.logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  gap: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 0.375rem;
+  border-top: 0.1rem solid rgba(221, 221, 221, 0.3);
+  margin-top: 5rem;
+}
+
+.logout span {
+  color: #dfdfdf;
+}
+
+.logout svg {
+  width: 1.8rem;
+  height: 1.8rem;
 }

@@ -1,6 +1,5 @@
 /* Form.module.css */
-
-.formLayout {
+.form {
   width: 100%;
 }
 
@@ -20,27 +19,34 @@
 
 .formLabel {
   text-align: left;
-  color: #7b809a;
+  color: #a9aec5;
   font-weight: 500;
 }
 
 .formInput,
-.formSelect,
 .formText {
   padding: 0.5rem;
   border-radius: 0.4rem;
-  height: 3rem;
+  height: 3.5rem;
   box-sizing: border-box;
 }
 
+.formText {
+  padding: 0.5rem 0;
+}
 .formInput {
-  border: 0.1rem solid #ccc;
-  transition: border-color 0.3s;
+  border: 0.1rem rgb(224, 224, 224) solid;
+  /* background-color: #f3f3f3; */
+}
+
+.formText {
+  border: 0rem transparent solid;
+  background-color: transparent;
 }
 
 .formInput:focus {
   border-color: #e91f63;
-  outline: none;
+  /* outline: none; */
 }
 
 .formSelect {
@@ -48,15 +54,6 @@
   /* width: 30%; */
   background-color: #fff;
   cursor: pointer;
-}
-
-.formText {
-  color: #333;
-  background-color: #f9f9f9;
-  display: flex;
-  align-items: center;
-  padding: 0 1rem;
-  border: 0.1rem solid #ddd;
 }
 
 .formActions {

@@ -2,7 +2,6 @@ import React from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
-import Loader from "../../ui/Loader";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -20,7 +19,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
       <thead>
         <tr>
           <th>S/N</th>
-          <th>Teacher ID - need a userfriendly teache ID in database.</th>
+          <th>Teacher ID</th>
           <th>First Name</th>
           <th>Last Name</th>
           <th>Date of Birth</th>
@@ -33,9 +32,9 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
 
       <tbody>
         {currData.map((Teacher, index) => (
-          <tr key={Teacher.TeacherID} className={styles.tr}>
+          <tr key={Teacher.TeacherNo} className={styles.tr}>
             <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
-            <td>{Teacher.TeacherID}</td>
+            <td>{Teacher.TeacherNo}</td>
             <td>{Teacher.Users.FirstName}</td>
             <td>{Teacher.Users.LastName}</td>
             <td>{formatDate(Teacher.Users.DateOfBirth)}</td>
@@ -44,7 +43,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
             <td>{Teacher.Users.HomeAddress}</td>
             <td>
               <Link
-                to={`/Teacher/${Teacher.TeacherID}`}
+                to={`/teacher/${Teacher.TeacherID}`}
                 className={generalStyles.link}
               >
                 view

@@ -1,34 +1,38 @@
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import styles from "./Profile.module.css";
+import styles from "../Profile.module.css";
 import formStyles from "../../components/Form/Form.module.css";
-import Loader from "../../ui/Loader";
 import EditContainer from "../../ui/Layout/EditContainer";
 import ProfileForm from "../../components/Form/ProfileForm";
-import OtherForm from "../../components/Form/OtherForm";
-import CourseTable from "../Course/CourseTable";
 import Container from "../../ui/Layout/Container";
-function Profile({ type }) {
-  const data = useLoaderData();
-  console.log(data); //print the object
-  // const [basicInfo, setBasicInfo] = useState({
-  //   ID: "",
-  //   firstName: "",
-  //   lastName: "",
-  //   dob: "",
-  //   telephone: "",
-  //   email: "",
-  //   address: "",
-  // });
-  // const [course, setCourse] = useState([]);
+import { getTeacherById } from "../../services/apiTeacher";
+
+function ViewTeacher() {
+  const { teacherId } = useParams();
+  const navigate = useNavigate();
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isEditBasic, setIsEditBasic] = useState(false);
   const [isEditProgram, setIsEditProgram] = useState(false);
   const [isEditCourse, setIsEditCourse] = useState(false);
   const [isEditAdditional, setIsEditAdditional] = useState(false);
 
-  const { ID: urlID } = useParams();
-  const navigate = useNavigate();
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        setError("");
+        const teacherData = await getTeacherById(teacherId);
+        setData(teacherData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, [teacherId]);
 
   function handleChange(e) {
     //   const { name, value } = e.target;
@@ -95,7 +99,7 @@ function Profile({ type }) {
   }
 
   function handleCancelEditBasic() {
-    setIsEditBasic(false);
+    setIsEditBasic((prev) => !prev);
   }
 
   function handleCancelCourse() {
@@ -109,28 +113,29 @@ function Profile({ type }) {
   return (
     <div className={styles.profileLayout}>
       <div className={styles.mainColumn}>
-        <EditContainer
-          title="Basic Information"
-          isEdit={isEditBasic}
-          onClickEdit={handleEditBasic}
-          // onClickConfirm={handleSubmitBasic}
-          onClickCancel={handleCancelEditBasic}
-        >
-          <div className={styles.basicInfoDetail}>
-            <img
-              src="/img/profile/profile.jpg"
-              alt="img"
-              className={styles.profileImg}
-            />
-            <ProfileForm
-              type={type}
-              formData={data}
-              handleChange={handleChange}
-              isEdit={isEditBasic}
-            />
-          </div>
-        </EditContainer>
-
+        <div>
+          <EditContainer
+            title="Basic Information"
+            isEdit={isEditBasic}
+            onClickEdit={handleEditBasic}
+            // onClickConfirm={handleSubmitBasic}
+            onClickCancel={handleCancelEditBasic}
+          >
+            <div className={styles.basicInfoDetail}>
+              <img
+                src="/img/profile/profile.jpg"
+                alt="img"
+                className={styles.profileImg}
+              />
+              <ProfileForm
+                type="Teacher"
+                formData={data}
+                isEdit={isEditBasic}
+                onFormSubmit={handleSubmitBasic}
+              />
+            </div>
+          </EditContainer>
+        </div>
         <div className={styles.course}>
           <EditContainer
             title="Courses Enrolled"
@@ -200,4 +205,4 @@ function Profile({ type }) {
   );
 }
 
-export default Profile;
+export default ViewTeacher;

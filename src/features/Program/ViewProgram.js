@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ProgramTable from "./ProgramTable.js";
 import TableContainer from "../../ui/Layout/TableContainer";
-import { getProgramList } from "../../services/apiProgram.js";
+import { getProgram } from "../../services/apiProgram.js";
 
-function ProgramList() {
+function ProgramList({ programId }) {
+    
   const [programData, setProgramData] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -15,9 +16,7 @@ function ProgramList() {
   useEffect(() => {
     async function fetchProgramData() {
       try {
-        setIsLoading(true);
-        setError(false);
-        const data = await getProgramList();
+        const data = await getProgram({ id: programId });
 
         setProgramData(data);
       } catch (error) {
@@ -29,8 +28,7 @@ function ProgramList() {
     }
 
     fetchProgramData();
-  }, []);
-
+  }, [programId]);
   function handlePageChange(page) {
     setCurrPage(page);
   }
@@ -45,19 +43,14 @@ function ProgramList() {
   }
 
   return (
-    <TableContainer
-      title="All Programs"
-      rowsPerPage={rowsPerPage}
-      totalPages={totalPages}
-      currPage={currPage}
-      onPageChange={handlePageChange}
-      onRowsPerPageChange={handleRowsPerPageChange}
-    >
+    <TableContainer>
       <ProgramTable
-        programData={programData}
-        rowsPerPage={rowsPerPage}
+        data={programData}
         currPage={currPage}
-        isLoading={isLoading}
+        rowsPerPage={rowsPerPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleRowsPerPageChange}
       />
     </TableContainer>
   );

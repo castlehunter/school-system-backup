@@ -17,18 +17,18 @@ function EditContainer({
         <div>
           {isEdit ? (
             <>
-              <Button onClick={onClickConfirm} size="small">
+              <Button onClickBtn={onClickConfirm} size="small">
                 Confirm
               </Button>
               <span style={{ marginLeft: "1rem" }}>
                 {" "}
-                <Button onClick={onClickCancel} size="small">
+                <Button onClickBtn={onClickCancel} size="small">
                   Cancel
                 </Button>
               </span>
             </>
           ) : (
-            <Button onClick={onClickEdit} size="small">
+            <Button onClickBtn={onClickEdit} size="small">
               Edit
             </Button>
           )}
