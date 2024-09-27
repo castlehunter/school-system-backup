@@ -87,7 +87,7 @@ const routes = [
             element: <Overview />,
             title: "Overview",
           },
-          { path: "my-account", element: <MyAccount /> },
+          { path: "my-account", element: <MyAccount />, title: "My Account" },
         ],
       },
 
