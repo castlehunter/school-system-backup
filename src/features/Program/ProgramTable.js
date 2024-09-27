@@ -2,18 +2,14 @@ import React from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString();
-}
+import Loader from "../../ui/Loader";
 
 function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
   const currData = programData.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
-  console.log('currData ' + JSON.stringify(currData));
+  console.log("currData " + JSON.stringify(currData));
   return (
     <table>
       <thead>
@@ -23,9 +19,12 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
           <th>Program Name</th>
           <th>Action</th>
         </tr>
-      </thead>   
-        <tbody>
-          {currData.map((program, index) => (
+      </thead>
+      <tbody>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          currData.map((program, index) => (
             <tr key={program.ProgramNo} className={styles.tr}>
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{program.ProgramCode}</td>
@@ -39,8 +38,9 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
                 </Link>
               </td>
             </tr>
-          ))}
-        </tbody>
+          ))
+        )}
+      </tbody>
     </table>
   );
 }

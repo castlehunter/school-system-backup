@@ -119,9 +119,9 @@ svg {
 .logout span:hover {
   color: #ffffff;
 }
-.menuItem:active, /* 针对鼠标点击 */
+.menuItem:active,
 .menuItem.current {
-  background-color: #e91f63; /* 激活状态背景色 */
+  background-color: #e91f63;
 }
 
 .logout {

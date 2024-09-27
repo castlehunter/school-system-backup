@@ -3,27 +3,49 @@ import Button from "../../components/Button/Button";
 import styles from "../../components/Form/Form.module.css";
 import Container from "../../ui/Layout/Container";
 
-function CreateUser({ type = "User", isEdit = true }) {
+function NewUser({ type = "User", isEdit = true }) {
   const [inputData, setInputData] = useState({
-    UserRole: "Select",
     UserName: "",
     Password: "",
-    FirstName: "",
-    LastName: "",
+    UserRole: "Select",
+    Email: "",
+    CreateAt: new Date().toISOString().split("T")[0],
+    IsAdmin: false,
+    SchoolID: "d8d5caa0-5269-4c3c-8adc-f7590ded9eee",
+    HomeAddress: "",
     DateOfBirth: "",
     PhoneNumber: "",
-    HomeAddress: "",
+    FirstName: "",
+    LastName: "",
+    IsLocked: false,
+    FailedPasswordAttempt: 0,
+    IsApproved: true,
+    LastLoginDate: new Date().toISOString().split("T")[0],
   });
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setInputData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+
+    setInputData((prevData) => {
+      let newIsAdmin = prevData.IsAdmin;
+
+      if (name === "UserRole" && value === "Admin") {
+        newIsAdmin = true;
+      } else if (name === "UserRole") {
+        newIsAdmin = false;
+      }
+
+      return {
+        ...prevData,
+        [name]: value,
+        IsAdmin: newIsAdmin,
+      };
+    });
   }
 
-  function handleSubmit() {}
+  function handleSubmit(e) {
+    e.preventDefault();
+  }
 
   function handleCancel(e) {
     e.preventDefault();
@@ -42,7 +64,7 @@ function CreateUser({ type = "User", isEdit = true }) {
   return (
     <Container title={`Create ${type}`} headingType="primaryHeading">
       <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.formRow} style={{ width: "10vw" }}>
+        <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="UserRole" className={styles.formLabel}>
               {type} Role
@@ -64,8 +86,18 @@ function CreateUser({ type = "User", isEdit = true }) {
               <option value="Student">Student</option>
             </select>
           </div>
+          <div className={styles.formItem}>
+            <label htmlFor="IsLocked" className={styles.formLabel}>
+              Locked
+            </label>
+            <input
+              type="checkbox"
+              name="IsLocked"
+              checked={inputData.IsLocked}
+              onChange={handleChange}
+            />
+          </div>{" "}
         </div>
-
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="UserName" className={styles.formLabel}>
@@ -180,4 +212,4 @@ function CreateUser({ type = "User", isEdit = true }) {
   );
 }
 
-export default CreateUser;
+export default NewUser;

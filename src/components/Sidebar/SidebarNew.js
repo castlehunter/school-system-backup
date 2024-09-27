@@ -16,8 +16,12 @@ import {
   RiCalendarTodoLine,
   RiDraftLine,
 } from "@remixicon/react";
+import { useLoaderData } from "react-router-dom";
 
 function SidebarNew() {
+  const routes = useLoaderData();
+  const menuItems = routes[1].children.filter((e) => e.path !== "*");
+
   const icons = {
     PlusIcon: <RiAddLine />,
     MinusIcon: <RiSubtractLine />,
@@ -32,6 +36,7 @@ function SidebarNew() {
 
   const [openMenus, setOpenMenus] = useState({
     dashboard: true,
+    users: true,
     "my courses": true,
     students: true,
     courses: true,
@@ -39,58 +44,9 @@ function SidebarNew() {
     programs: true,
   });
 
-  const menuItems = [
-    {
-      title: "Dashboard",
-      icon: icons.DashboardIcon,
-      subItems: [
-        { path: "/dashboard/overview", label: "Overview" },
-        { path: "/dashboard/create-user", label: "Create User" },
-        { path: "/dashboard/my-account", label: "My Account" },
-      ],
-    },
-    {
-      title: "My Courses",
-      icon: icons.MyCoursesIcon,
-      subItems: [
-        { path: "/my-courses/my-course-list", label: "My Course List" },
-      ],
-    },
-    {
-      title: "Students",
-      icon: icons.StudentIcon,
-      subItems: [
-        { path: "/student/student-list", label: "Student List" },
-        // { path: "/student/add-student", label: "Add Student" },
-      ],
-    },
-    {
-      title: "Courses",
-      icon: icons.CourseIcon,
-      subItems: [
-        { path: "/course/course-list", label: "Course List" },
-        { path: "/course/new-course", label: "Add Course" },
-      ],
-    },
-    {
-      title: "Teachers",
-      icon: icons.TeacherIcon,
-      subItems: [
-        { path: "/teacher/teacher-list", label: "Teacher List" },
-        // { path: "/teacher/create-teacher", label: "Create Teacher" },
-      ],
-    },
-    {
-      title: "Programs",
-      icon: icons.EnrollmentIcon,
-      subItems: [
-        { path: "/program/program-list", label: "Program List" },
-        { path: "/program/new-program", label: "New Program" },
-      ],
-    },
-  ];
-
-  const searchItems = menuItems.flatMap((item) => item.subItems);
+  const searchItems = menuItems
+    .flatMap((item) => item.children)
+    .filter((e) => !e.index);
 
   function toggleMenu(menuName) {
     setOpenMenus((prevState) => ({
@@ -107,50 +63,50 @@ function SidebarNew() {
           <span className={styles.logoText}>ABC Learning Centre</span>
         </div>
       </Link>
-
       <Search searchItems={searchItems} colorType="dark" />
-
       <div className={styles.menu}>
-        {menuItems.map((menu) => (
-          <div key={menu.title}>
+        {menuItems.map((menuObj) => (
+          <div key={menuObj.title}>
             <div
               className={styles.menuTitle}
-              onClick={() => toggleMenu(menu.title.toLowerCase())}
+              onClick={() => toggleMenu(menuObj.title.toLowerCase())}
             >
               <div className={styles.menuText}>
-                {menu.icon}
-                {menu.title}
+                {menuObj.icon}
+                {menuObj.title}
               </div>
-              {openMenus[menu.title.toLowerCase()]
+              {openMenus[menuObj.title.toLowerCase()]
                 ? icons.MinusIcon
                 : icons.PlusIcon}
             </div>
             <div
               className={`${styles.menuContent} ${
-                openMenus[menu.title.toLowerCase()] ? styles.open : ""
+                openMenus[menuObj.title.toLowerCase()] ? styles.open : ""
               }`}
             >
-              {menu.subItems.map((subItem) => (
-                <NavLink
-                  key={subItem.path}
-                  to={subItem.path}
-                  className={({ isActive }) =>
-                    isActive
-                      ? `${styles.menuItem} ${styles.current}`
-                      : styles.menuItem
-                  }
-                >
-                  <div className={styles.menuText}>
-                    {icons.CircleIcon}
-                    {subItem.label}
-                  </div>
-                </NavLink>
-              ))}
+              {menuObj.children
+                .filter((subItem) => subItem.hideInSidebar !== true)
+                .filter((subItem) => !subItem.index)
+                .map((subItem) => (
+                  <NavLink
+                    key={subItem.path}
+                    to={subItem.path}
+                    className={({ isActive }) =>
+                      isActive
+                        ? `${styles.menuItem} ${styles.current}`
+                        : styles.menuItem
+                    }
+                  >
+                    <div className={styles.menuText}>
+                      {icons.CircleIcon}
+                      {subItem.title}
+                    </div>
+                  </NavLink>
+                ))}
             </div>
           </div>
         ))}
       </div>
-
       <Link to="/" className={styles.logout}>
         <RiLogoutCircleLine />
         <span>Logout</span>
