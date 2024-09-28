@@ -3,7 +3,8 @@ import supabase from "../config/supabaseClient.js";
 export async function getProgramList() {
   const { data, error } = await supabase.from("Programs").select(`
    ProgramName,
-   ProgramCode
+   ProgramCode,
+   ProgramNo
   `);
 
   console.log(data);
@@ -15,13 +16,13 @@ export async function getProgramList() {
   return data;
 }
 
-export async function getProgram({ params }) {
- 
-  const { ID } = params;
+export async function getProgramById(programNo) {
+  const { ID } = programNo;
   const { data, error } = await supabase.from("Programs").select(`
         ProgramName,
-        ProgramCode     
-    `).eq("ProgramNo", ID)
+        ProgramCode,
+        ProgramNo   
+    `).eq("ProgramNo", programNo)
     .single();
 
   if (error) {
