@@ -3,7 +3,7 @@
 /* =================== */
 
 .link {
-  /* color: #e91f63; */
+  /* color: ##e91f63; */
 }
 .link:link,
 .link:visited,
@@ -42,13 +42,13 @@
   border-radius: 1rem;
   background-color: #fff;
   padding: 3rem;
-
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-right: 1px solid rgba(192, 192, 192, 0.5);
   border-bottom: 1px solid rgba(177, 177, 177, 0.5);
 }
 
 .containerHeader {
+  height: 4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

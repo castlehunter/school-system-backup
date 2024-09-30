@@ -1,38 +1,40 @@
 import generalStyles from "../../generalStyles.module.css";
 import Button from "../../components/Button/Button";
 
-//  This container can be used on the container with Edit button on the top right
 function EditContainer({
   children,
   title,
-  isEdit,
+  headingType = "secondaryHeading",
+  editBtnText = "Edit",
+  isEdit = false,
   onClickEdit,
-  onClickConfirm,
+  onClickSave,
   onClickCancel,
 }) {
   return (
     <div className={generalStyles.container}>
       <div className={generalStyles.containerHeader}>
-        <div className={generalStyles.secondaryHeading}>{title}</div>
-        <div>
-          {isEdit ? (
-            <>
-              <Button onClickBtn={onClickConfirm} size="small">
-                Confirm
-              </Button>
-              <span style={{ marginLeft: "1rem" }}>
-                {" "}
-                <Button onClickBtn={onClickCancel} size="small">
-                  Cancel
+        <div className={generalStyles[headingType]}>{title}</div>
+        {editBtnText && (
+          <div>
+            {isEdit ? (
+              <>
+                <Button onClickBtn={onClickSave} size="small">
+                  Save
                 </Button>
-              </span>
-            </>
-          ) : (
-            <Button onClickBtn={onClickEdit} size="small">
-              Edit
-            </Button>
-          )}
-        </div>
+                <span style={{ marginLeft: "1rem" }}>
+                  <Button onClickBtn={onClickCancel} size="small">
+                    Cancel
+                  </Button>
+                </span>
+              </>
+            ) : (
+              <Button onClickBtn={onClickEdit} size="small">
+                {editBtnText}
+              </Button>
+            )}
+          </div>
+        )}
       </div>
       <div>{children}</div>
     </div>

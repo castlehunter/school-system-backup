@@ -23,8 +23,8 @@
 }
 
 .pageButton.active {
-  border-color: #14add6;
-  background: linear-gradient(135deg, #14add6 0%, #384295 100%);
+  border-color: #e91f63;
+  background: linear-gradient(135deg, #e91f63 0%, #e91f63 100%);
   color: #fff;
 }
 

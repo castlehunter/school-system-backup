@@ -20,6 +20,10 @@ function TableContainer({
           <span>{title}</span>
           <Button>Add</Button>
         </div>
+      </div>
+      <div className={styles.searchSort}>
+        <button>Sort by xyxy</button>
+        <Search colorType="light" />{" "}
         <div className={styles.entriesPerPage}>
           <span>Showing</span>
           <select value={rowsPerPage} onChange={onRowsPerPageChange}>
@@ -32,10 +36,6 @@ function TableContainer({
           </select>
           <span>per page</span>
         </div>
-      </div>
-      <div className={styles.searchSort}>
-        <button>Sort by xyxy</button>
-        <Search colorType="light" />
       </div>
 
       <div>{children}</div>

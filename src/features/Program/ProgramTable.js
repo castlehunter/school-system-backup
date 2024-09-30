@@ -11,7 +11,7 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
   );
   console.log("currData " + JSON.stringify(currData));
   return (
-    <table>
+    <table className={styles.table}>
       <thead>
         <tr>
           <th>S/N</th>
@@ -25,13 +25,13 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
           <Loader />
         ) : (
           currData.map((program, index) => (
-            <tr key={program.ProgramNo} className={styles.tr}>
+            <tr key={program.ProgramCode} className={styles.tr}>
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{program.ProgramCode}</td>
               <td>{program.ProgramName}</td>
               <td>
                 <Link
-                  to={`/program/${program.programNo}`}
+                  to={`/program/${program.programCode}`}
                   className={generalStyles.link}
                 >
                   View

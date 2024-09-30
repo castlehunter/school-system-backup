@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import styles from "./MyAccount.module.css";
 import avatar from "../../assets/user-avatar-account.jpg";
 import { getUserById } from "../../services/apiUser";
-
+import UserInfoForm from "../../components/Form/UserInfoForm";
+import AccountInfoForm from "../../components/Form/AccountInfoForm";
+import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
+import EditContainer from "../../ui/Layout/EditContainer";
+import Container from "../../ui/Layout/Container";
+import { useNavigate } from "react-router-dom";
+import { UpdateUserInfo } from "../../services/apiUser";
 /*************************************************
  *
  * Page Design:
@@ -22,28 +28,59 @@ import { getUserById } from "../../services/apiUser";
  *************************************************/
 function MyAccount() {
   const userId = 4; // a hardcode userId / userNo.= 4 for testing purposes
-
+  const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
-  const [myAccount, setMyAccount] = useState({});
-  const {
-    FirstName: firstName,
-    LastName: lastName,
-    PhoneNumber: phone,
-    DateOfBirth: dob,
-    HomeAddress: address,
-    UserNo: userNo,
-    UserName: userName,
-    Email: employeeEmail,
-    RoleID: role,
-    CreatedAt: createdAt,
-    PasswordHash: password,
-  } = myAccount;
+  const [userInfo, setUserInfo] = useState({});
+  const [accountInfo, setAccountInfo] = useState({});
+  const [securityInfo, setSecurityInfo] = useState({});
 
   useEffect(() => {
     async function getMyAccount() {
       try {
         const res = await getUserById(userId);
-        setMyAccount(res);
+
+        const {
+          FirstName,
+          LastName,
+          Email,
+          DateOfBirth,
+          PhoneNumber,
+          HomeAddress,
+          UserName,
+          PasswordHash,
+          RoleName,
+          IsLocked,
+          FailedPasswordAttempt,
+          LastLoginDate,
+          CreatedAt,
+          IsAdmin,
+        } = res;
+
+        const userInfo = {
+          FirstName,
+          LastName,
+          Email,
+          DateOfBirth,
+          PhoneNumber,
+          HomeAddress,
+        };
+        setUserInfo(userInfo);
+
+        const securityInfo = {
+          UserName,
+          PasswordHash,
+        };
+        setSecurityInfo(securityInfo);
+
+        const accountInfo = {
+          RoleName,
+          IsLocked,
+          FailedPasswordAttempt,
+          LastLoginDate,
+          CreatedAt,
+          IsAdmin,
+        };
+        setAccountInfo(accountInfo);
       } catch (err) {
         console.log(err);
       }
@@ -52,225 +89,79 @@ function MyAccount() {
     getMyAccount();
   }, []);
 
-  function handleChangePicBtn(e) {
-    e.preventDefault();
-  }
-
   function handleEditBtn(e) {
     e.preventDefault();
+    setIsEdit((isEdit) => !isEdit);
+  }
+  async function handleSaveBtn() {
+    try {
+      // 记录更新前的 userInfo 数据
+      console.log("Sending updated user data:", userInfo);
+
+      // 调用 UpdateUserInfo API 并记录返回值
+      const response = await UpdateUserInfo(4, userInfo);
+
+      // 打印 API 的响应
+      console.log("API Response:", response);
+
+      // 检查响应并显示相应的消息
+      if (response) {
+        alert("User information updated successfully!");
+        console.log("User updated successfully!");
+      } else {
+        alert("Failed to update user information.");
+        console.error("Failed to update user information.");
+      }
+    } catch (error) {
+      console.error("Error saving user data:", error);
+      alert("An error occurred while saving the user data.");
+    }
+  }
+
+  function handleCancelBtn() {
     setIsEdit((prev) => !prev);
   }
-
-  function handleSaveBtn(e) {
-    e.preventDefault();
-    setIsEdit((prev) => !prev);
+  function resetPassword() {
+    navigate("/dashboard/reset-password");
   }
 
-  function handleEditForm(e) {
-    const { name, value } = e.target;
-    setMyAccount((prevAccount) => ({
-      ...prevAccount,
-      [name]: value,
-    }));
-  }
-
-  function handleResetPw(e) {
-    e.preventDefault();
+  function setUserInfoData(userInfo) {
+    setUserInfo(userInfo);
   }
 
   return (
-    <div className={styles.content}>
-      <div className={styles.section}>
-        <div className={styles["section-header"]}>Basic Information</div>
-        <div className={styles["section-details"]}>
-          <div className={styles.avatar}>
-            <img src={avatar} alt="user avatar" />
-            <button className={styles.btn} onClick={handleChangePicBtn}>
-              Change Picture
-            </button>
-          </div>
-          <form>
-            <div className={styles["form-row"]}>
-              <div className={styles["form-item"]}>
-                <label htmlFor="firstName" className={styles["form-label"]}>
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="FirstName"
-                  className={styles["form-input"]}
-                  disabled={!isEdit}
-                  value={firstName}
-                  onChange={handleEditForm}
-                />
-              </div>
-              <div className={styles["form-item"]}>
-                <label htmlFor="lastName" className={styles["form-label"]}>
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="LastName"
-                  className={styles["form-input"]}
-                  disabled={!isEdit}
-                  value={lastName}
-                  onChange={handleEditForm}
-                />
-              </div>
-            </div>
-            <div className={styles["form-row"]}>
-              <div className={styles["form-item"]}>
-                <label htmlFor="phone" className={styles["form-label"]}>
-                  Phone
-                </label>
-                <input
-                  type="phone"
-                  id="phone"
-                  name="PhoneNumber"
-                  className={styles["form-input"]}
-                  disabled={!isEdit}
-                  value={phone}
-                  onChange={handleEditForm}
-                />
-              </div>
-              <div className={styles["form-item"]}>
-                <label
-                  htmlFor="employee-email"
-                  className={styles["form-label"]}
-                >
-                  Employee Email
-                </label>
-                <input
-                  type="email"
-                  id="employee-email"
-                  name="Email"
-                  className={styles["form-input"]}
-                  disabled="true"
-                  value={employeeEmail}
-                  onChange={handleEditForm}
-                />
-              </div>
-            </div>
-            <div className={styles["form-item"]}>
-              <label htmlFor="dob" className={styles["form-label"]}>
-                Date of Birth
-              </label>
-              <input
-                type="date"
-                id="dob"
-                name="DateOfBirth"
-                className={styles["form-input"]}
-                disabled={!isEdit}
-                value={dob}
-                onChange={handleEditForm}
-              />
-            </div>
-            <div className={styles["form-item"]}>
-              <label htmlFor="address" className={styles["form-label"]}>
-                Home Address
-              </label>
-              <input
-                type="text"
-                id="address"
-                name="HomeAddress"
-                className={styles["form-input"]}
-                disabled={!isEdit}
-                value={address}
-                onChange={handleEditForm}
-              />
-            </div>
-            <button
-              className={styles.btn}
-              onClick={isEdit ? handleSaveBtn : handleEditBtn}
-            >
-              {isEdit ? "Save" : "Edit"}
-            </button>
-          </form>
-        </div>
-      </div>
+    <div className={styles.myAccountLayout}>
+      {/* User Information */}
+      <EditContainer
+        title="User Information"
+        isEdit={isEdit}
+        onClickEdit={handleEditBtn}
+        onClickSave={handleSaveBtn}
+        onClickCancel={handleCancelBtn}
+      >
+        <UserInfoForm
+          userInfo={userInfo}
+          isEdit={isEdit}
+          onInputChange={setUserInfoData}
+        />
+      </EditContainer>
 
-      <div className={styles.section}>
-        <div className={styles["section-header"]}>Account Security</div>
-        <form>
-          <div className={styles["form-row"]}>
-            <div className={styles["form-item"]}>
-              <label htmlFor="userNo" className={styles["form-label"]}>
-                User No.
-              </label>
-              <input
-                type="text"
-                id="userNo"
-                className={styles["form-input"]}
-                disabled="true"
-                value={userNo}
-              />
-            </div>
-            <div className={styles["form-item"]}>
-              <label htmlFor="username" className={styles["form-label"]}>
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                className={styles["form-input"]}
-                disabled="true"
-                value={userName}
-              />
-            </div>
-          </div>
-          <div className={styles["form-row"]}>
-            <div className={styles["form-item"]}>
-              <label htmlFor="password" className={styles["form-label"]}>
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                className={styles["form-input"]}
-                value={password}
-                disabled="true"
-              />
-            </div>
-            <button className={styles.btn} onClick={handleResetPw}>
-              Reset
-            </button>
-          </div>
-        </form>
-      </div>
+      {/* Security Information*/}
+      <EditContainer
+        title="Security Information"
+        editBtnText="Reset Password"
+        onClickEdit={resetPassword}
+      >
+        <SecurityInfoForm securityInfo={securityInfo} />
+      </EditContainer>
 
-      <div className={styles.section}>
-        <div className={styles["section-header"]}>Roles and Activity Logs</div>
-        <form>
-          <div className={styles["form-row"]}>
-            <div className={styles["form-item"]}>
-              <label htmlFor="role" className={styles["form-label"]}>
-                Current Role
-              </label>
-              <input
-                type="text"
-                id="role"
-                className={styles["form-input"]}
-                disabled="true"
-                value={role}
-              />
-            </div>
-            <div className={styles["form-item"]}>
-              <label htmlFor="created-at" className={styles["form-label"]}>
-                Account Created At
-              </label>
-              <input
-                type="text"
-                id="created-at"
-                className={styles["form-input"]}
-                disabled="true"
-                value={createdAt}
-              />
-            </div>
-          </div>
-        </form>
-      </div>
+      {/* Account Information */}
+      <Container
+        title="Account Information(`~~~cannot be edited on this page)"
+        headingType="secondaryHeading"
+      >
+        <AccountInfoForm accountInfo={accountInfo} />
+      </Container>
     </div>
   );
 }

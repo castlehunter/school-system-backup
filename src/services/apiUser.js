@@ -45,42 +45,57 @@ export async function getUsers() {
 // }
 
 export async function getUserById(userNo) {
-  const { data, error } = await supabase
+  const { data: userData, error: userError } = await supabase
     .from("Users")
     .select(
       `
-        UserName,
-        FirstName,
-        LastName,
-        Email,
-        CreatedAt,
-        HomeAddress,
-        DateOfBirth,
-        PhoneNumber,
-        UserNo,
-        PasswordHash
-      `
+      UserName,
+      PasswordHash,
+      RoleID,
+      Email,
+      CreatedAt,
+      IsAdmin,
+      HomeAddress,
+      DateOfBirth,
+      PhoneNumber,
+      FirstName,
+      LastName,
+      IsLockedOut,
+      FailedPasswordAttempt,
+      LastLoginDate,
+      UserNo
+    `
     )
     .eq("UserNo", userNo)
     .single();
 
-  console.log(data);
-  if (error) {
-    console.error(error);
+  if (userError) {
+    console.error(userError);
     throw new Error("Failed to load user information");
   }
 
-  return data;
+  const { data: roleData, error: roleError } = await supabase
+    .from("Roles")
+    .select("RoleName")
+    .eq("RoleID", userData.RoleID)
+    .single();
+
+  if (roleError) {
+    console.error(roleError);
+    throw new Error("Failed to load role information");
+  }
+
+  return { ...userData, RoleName: roleData.RoleName };
 }
 
-// This is a draft
-export async function createUser(formData) {
+// ============== This is a draft ============
+export async function CreateUser(newUser) {
   try {
-    // 1. Search Role table for role id
+    // 1. Search Role table for RoleID
     const { data: roleData, error: roleError } = await supabase
       .from("Role")
       .select("RoleID")
-      .eq("RoleName", formData.Role)
+      .eq("RoleName", newUser.RoleName)
       .single();
 
     if (roleError) {
@@ -98,17 +113,17 @@ export async function createUser(formData) {
     // 2. Insert User record
     const { data, error } = await supabase.from("Users").insert([
       {
-        UserName: formData.Username,
-        PasswordHash: formData.password,
+        UserName: newUser.Username,
+        PasswordHash: newUser.password,
         RoleID: roleID,
-        Email: formData.email,
-        CreateAt: formData.CreateAt,
-        IsAdmin: formData.isAdmin,
-        HomeAddress: formData.address,
-        DateOfBirth: formData.dob,
-        PhoneNumber: formData.phone,
-        FirstName: formData.firstName,
-        LastName: formData.lastName,
+        Email: newUser.email,
+        CreateAt: newUser.CreateAt,
+        IsAdmin: newUser.isAdmin,
+        HomeAddress: newUser.address,
+        DateOfBirth: newUser.dob,
+        PhoneNumber: newUser.phone,
+        FirstName: newUser.firstName,
+        LastName: newUser.lastName,
       },
     ]);
 
@@ -116,6 +131,30 @@ export async function createUser(formData) {
       console.error("Error uploading data:", error);
     } else {
       console.log("User created successfully:", data);
+    }
+  } catch (error) {
+    console.error("Unexpected error:", error);
+  }
+}
+
+export async function UpdateUserInfo(userNo, userInfo) {
+  try {
+    const { data, error } = await supabase
+      .from("Users")
+      .update({
+        FirstName: userInfo.FirstName,
+        LastName: userInfo.LastName,
+        Email: userInfo.Email,
+        DateOfBirth: userInfo.DateOfBirth,
+        PhoneNumber: userInfo.PhoneNumber,
+        HomeAddress: userInfo.HomeAddress,
+      })
+      .eq("UserNo", userNo);
+
+    if (error) {
+      console.error("Error updating user data:", error);
+    } else {
+      console.log("User updated successfully:", userInfo);
     }
   } catch (error) {
     console.error("Unexpected error:", error);

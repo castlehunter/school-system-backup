@@ -1,6 +1,7 @@
 import React from "react";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import ResetPassword from "./features/Dashboard/ResetPassword.js";
 import StudentList from "./features/Student/StudentList";
 import StudentConfirmed from "./features/Student/StudentConfirm";
 import ViewTeacher from "./features/Teacher/ViewTeacher.js";
@@ -68,6 +69,7 @@ const routes = [
     element: <HomePage />,
     title: "Home",
   },
+
   {
     element: <AppLayout />,
     errorElement: <Error />,
@@ -92,6 +94,26 @@ const routes = [
             element: <MyAccount />,
             title: "My Account",
           },
+          {
+            path: "/dashboard/reset-password",
+            element: <ResetPassword />,
+            title: "Reset Password",
+            hideInSidebar: true,
+          },
+        ],
+      },
+      {
+        path: "my-courses",
+        element: <MyCourses />,
+        title: "My Courses",
+        icon: icons.MyCoursesIcon,
+        children: [
+          { index: true, element: <MyCourses />, title: "My Courses" },
+          {
+            path: "my-courses",
+            element: <MyCourses />,
+            title: "My Courses",
+          },
         ],
       },
       {
@@ -113,20 +135,7 @@ const routes = [
           },
         ],
       },
-      {
-        path: "my-courses",
-        element: <MyCourses />,
-        title: "My Courses",
-        icon: icons.MyCoursesIcon,
-        children: [
-          { index: true, element: <MyCourses />, title: "My Courses" },
-          {
-            path: "my-courses",
-            element: <MyCourses />,
-            title: "My Courses",
-          },
-        ],
-      },
+
       {
         path: "student",
         element: <Outlet />,

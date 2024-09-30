@@ -1,7 +1,6 @@
 import generalStyles from "../../generalStyles.module.css";
 
-// This container is a genearl container (without edit button)
-function ContainerLayout({ children, title, headingType }) {
+function Container({ children, title, headingType = "secondaryHeading" }) {
   return (
     <div className={generalStyles.container}>
       <div className={generalStyles.containerHeader}>
@@ -12,4 +11,4 @@ function ContainerLayout({ children, title, headingType }) {
   );
 }
 
-export default ContainerLayout;
+export default Container;

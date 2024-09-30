@@ -2,7 +2,6 @@
   color: #ffffff;
   border: none;
   padding: 0.8rem 2rem;
-  font-size: 1.6rem;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -19,8 +18,8 @@
 }
 
 .small {
-  padding: 0.6rem 1.2rem;
-  font-size: 1.2rem;
+  /* padding: 0.6rem 1.2rem;
+  font-size: 1.2rem; */
 }
 /* .rose {
   background-color: #e53371;
