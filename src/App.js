@@ -23,7 +23,7 @@ import { getTeacherById } from "./services/apiTeacher.js";
 import { generateUserNo } from "./services/apiUser.js";
 import NewUser from "./features/Users/NewUser.js";
 import { getProgramList } from "./services/apiProgram.js";
-import { getProgram } from "./services/apiProgram.js";
+import { getUsers } from "./services/apiUser.js";
 import ProgramList from "./features/Program/ProgramList.js";
 import ViewProgram from "./features/Program/ViewProgram.js";
 import UserList from "./features/Users/UserList.js";
@@ -126,6 +126,7 @@ const routes = [
           {
             path: "/users/user-list",
             element: <UserList />,
+            loader: getUsers,
             title: "User List",
           },
           {
@@ -221,9 +222,8 @@ const routes = [
             title: "Program List",
           },
           {
-            path: "/program/:ID",
-            element: <ViewProgram type="Program" />,
-            loader: getProgram,
+            path: "/program/:programId",
+            element: <ViewProgram />,
             title: "View Program",
             hideInSidebar: true,
           },
