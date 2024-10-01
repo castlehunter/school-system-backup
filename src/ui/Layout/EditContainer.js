@@ -6,7 +6,9 @@ function EditContainer({
   title,
   headingType = "secondaryHeading",
   editBtnText = "Edit",
+  showEditButton = true,
   isEdit = false,
+  headerMessage,
   onClickEdit,
   onClickSave,
   onClickCancel,
@@ -15,7 +17,7 @@ function EditContainer({
     <div className={generalStyles.container}>
       <div className={generalStyles.containerHeader}>
         <div className={generalStyles[headingType]}>{title}</div>
-        {editBtnText && (
+        {showEditButton && (
           <div>
             {isEdit ? (
               <>

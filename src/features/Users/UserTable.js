@@ -9,23 +9,24 @@ function formatDate(dateString) {
 }
 
 function UserTable({ data, currPage, rowsPerPage }) {
-   
-    const currData = data.slice(
-        (currPage - 1) * rowsPerPage,
-        currPage * rowsPerPage
-      );
-      console.log('currData ' + JSON.stringify(currData));
+  const currData = data.slice(
+    (currPage - 1) * rowsPerPage,
+    currPage * rowsPerPage
+  );
+  console.log("currData " + JSON.stringify(currData));
 
-    const formatDate = (dateString) => {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(dateString).toLocaleDateString(undefined, options);
-    };
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   return (
     <table className={styles.table}>
       <thead>
         <tr>
           <th>S/N</th>
+          <th>User No.</th>
+          <th>Role</th>
           <th>User Name</th>
           <th>First Name</th>
           <th>Last Name</th>
@@ -40,8 +41,14 @@ function UserTable({ data, currPage, rowsPerPage }) {
 
       <tbody>
         {currData.map((user, index) => (
-          <tr key={user.UserName} className={styles.tr}>
+          <tr key={user.UserNo} className={styles.tr}>
             <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
+            <td>{user.UserNo}</td>
+            <td>
+              <p className={`${styles.role} ${styles[user.Roles?.RoleName]}`}>
+                {user.Roles?.RoleName}
+              </p>
+            </td>
             <td>{user.UserName}</td>
             <td>{user.FirstName}</td>
             <td>{user.LastName}</td>
@@ -51,10 +58,7 @@ function UserTable({ data, currPage, rowsPerPage }) {
             <td>{user.HomeAddress}</td>
             <td>{formatDate(user.CreatedAt)}</td>
             <td>
-              <Link
-                to={`/user/${user.UserID}`}
-                className={styles.link}
-              >
+              <Link to={`/user/${user.UserNo}`} className={generalStyles.link}>
                 view
               </Link>
             </td>
@@ -63,6 +67,6 @@ function UserTable({ data, currPage, rowsPerPage }) {
       </tbody>
     </table>
   );
-};
+}
 
 export default UserTable;

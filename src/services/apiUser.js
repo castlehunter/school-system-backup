@@ -2,6 +2,7 @@ import supabase from "../config/supabaseClient.js";
 
 export async function getUsers() {
   const { data, error } = await supabase.from("Users").select(`
+   UserNo,
    UserName,
    FirstName,
    LastName,
@@ -9,10 +10,10 @@ export async function getUsers() {
    CreatedAt,
    HomeAddress,
    DateOfBirth,
-   PhoneNumber
+   PhoneNumber,
+   Roles(RoleName)
   `);
 
-  console.log(data);
   if (error) {
     console.error(error);
     throw new Error("Failed to load users");
@@ -44,14 +45,14 @@ export async function getUsers() {
 //   }
 // }
 
-export async function getUserById(userNo) {
+export async function getUserAllInfoById(userNo) {
   const { data: userData, error: userError } = await supabase
     .from("Users")
     .select(
       `
       UserName,
       PasswordHash,
-      RoleID,
+      Roles(RoleName)
       Email,
       CreatedAt,
       IsAdmin,
@@ -74,18 +75,86 @@ export async function getUserById(userNo) {
     throw new Error("Failed to load user information");
   }
 
-  const { data: roleData, error: roleError } = await supabase
-    .from("Roles")
-    .select("RoleName")
-    .eq("RoleID", userData.RoleID)
+  return { ...userData };
+}
+
+export async function getProfileInfoByNo(userNo) {
+  const { data: userData, error: userError } = await supabase
+    .from("Users")
+    .select(
+      `
+      Email,
+      HomeAddress,
+      DateOfBirth,
+      PhoneNumber,
+      FirstName,
+      LastName,
+      UserNo
+    `
+    )
+    .eq("UserNo", userNo)
     .single();
+
+  if (userError) {
+    console.error(userError);
+    throw new Error("Failed to load user information");
+  }
+
+  return { ...userData };
+}
+
+export async function getSecurityInfoByNo(userNo) {
+  const { data: userData, error: userError } = await supabase
+    .from("Users")
+    .select(`UserName, PasswordHash`)
+    .eq("UserNo", userNo)
+    .single();
+  if (userError) {
+    console.error(userError);
+    throw new Error("Failed to load user information");
+  }
+
+  return { ...userData };
+}
+
+export async function getAccountInfoByNo(userNo) {
+  const { data: userData, error: userError } = await supabase
+    .from("Users")
+    .select(
+      `Roles(RoleName),
+      CreatedAt,
+      IsAdmin,
+      IsLockedOut,
+      FailedPasswordAttempt,
+      LastLoginDate,
+      UserNo`
+    )
+    .eq("UserNo", userNo)
+    .single();
+  console.log("API getAccountInfoByNo", userData);
+  if (userError) {
+    console.error(userError);
+    throw new Error("Failed to load user information");
+  }
+
+  return userData;
+}
+
+export async function getRoleNameByNo(userNo) {
+  const { data: roleData, error: roleError } = await supabase
+    .from("Users")
+    .select(`Roles(RoleName)`)
+    .eq("UserNo", userNo)
+    .single();
+
+  console.log("API getRoleNameByNo", roleData);
 
   if (roleError) {
     console.error(roleError);
     throw new Error("Failed to load role information");
   }
 
-  return { ...userData, RoleName: roleData.RoleName };
+  return roleData?.Roles?.RoleName || null;
 }
 
 // ============== This is a draft ============
@@ -137,7 +206,7 @@ export async function CreateUser(newUser) {
   }
 }
 
-export async function UpdateUserInfo(userNo, userInfo) {
+export async function UpdatePersonalInfo(userNo, userInfo) {
   try {
     const { data, error } = await supabase
       .from("Users")
@@ -149,14 +218,18 @@ export async function UpdateUserInfo(userNo, userInfo) {
         PhoneNumber: userInfo.PhoneNumber,
         HomeAddress: userInfo.HomeAddress,
       })
-      .eq("UserNo", userNo);
+      .eq("UserNo", userNo)
+      .select();
 
     if (error) {
-      console.error("Error updating user data:", error);
+      console.error("Api update Error updating user data:", error);
+      return null;
     } else {
-      console.log("User updated successfully:", userInfo);
+      console.log("Api Returned data:", data);
+      return data;
     }
   } catch (error) {
-    console.error("Unexpected error:", error);
+    console.error("api caught Unexpected error:", error);
+    return null;
   }
 }

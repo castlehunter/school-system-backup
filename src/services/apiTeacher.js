@@ -1,10 +1,10 @@
 import supabase from "../config/supabaseClient.js";
 
-export async function getTeacherByIds() {
+export async function getTeachers() {
   const { data, error } = await supabase.from("Teachers").select(`
     *,
     Users (
-      UserID,
+      UserNo,
       UserName,
       FirstName,
       LastName,
@@ -23,37 +23,37 @@ export async function getTeacherByIds() {
   return data;
 }
 
-export async function getTeacherById(teacherId) {
+export async function getTeacherByNo(userNo) {
   const { data, error } = await supabase
     .from("Teachers")
     .select(
-      `
-      *,
-      Users (
-        UserID,
-        UserName,
-        FirstName,
-        LastName,
-        Email,
-        HomeAddress,
-        DateOfBirth,
-        PhoneNumber,
+      `*,
+    Users (
+      UserNo,
+      UserID,
+      UserName,
+      FirstName,
+      LastName,
+      Email,
+      HomeAddress,
+      DateOfBirth,
+      PhoneNumber,
+      RoleID,
+      Roles: Roles (
         RoleID,
-        Roles (
-          RoleID,
-          RoleName
-        )
+        RoleName
       )
-    `
     )
-    .eq("TeacherID", teacherId)
+  `
+    )
+    .eq("Users.UserNo", userNo)
     .single();
 
   if (error) {
     console.error(error);
     throw new Error("Failed to load teacher!!");
   }
-  console.log("teacher by id", data);
+  console.log("API getTeacherByNo", data);
   return data;
 }
 

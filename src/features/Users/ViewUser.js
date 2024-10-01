@@ -3,42 +3,53 @@ import React, { useEffect, useState } from "react";
 import styles from "../Profile.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import Container from "../../ui/Layout/Container";
-import { getTeacherByNo } from "../../services/apiTeacher";
 import ProfileInfoForm from "../../components/Form/ProfileInfoForm";
+import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
+import AccountInfoForm from "../../components/Form/AccountInfoForm";
+import { getRoleNameByNo } from "../../services/apiUser";
 
-function ViewTeacher() {
+function ViewUser() {
   const { userNo } = useParams();
-  const [data, setData] = useState({});
+  const [roleName, setRoleName] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
+    async function getRoleName() {
       try {
         setIsLoading(true);
         setError("");
-        const teacherData = await getTeacherByNo(userNo);
-        setData(teacherData);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
+        const res = await getRoleNameByNo(userNo);
+        setRoleName(res);
+      } catch (error) {
+        setError(error);
       }
     }
-    fetchData();
-  }, [userNo]);
+    getRoleName();
+  }, []);
 
   return (
     <div className={styles.profileLayout}>
       <div className={styles.mainColumn}>
         <ProfileInfoForm userNo={userNo} />
-        <div className={styles.course}></div>
 
+        {roleName === "Teacher" || roleName === "Student" ? (
+          <EditContainer title="Course Information">
+            <div className={styles.detail}></div>
+          </EditContainer>
+        ) : (
+          <EditContainer title="Other">d</EditContainer>
+        )}
+        <EditContainer title="Additional Information">
+          <div className={styles.detail}></div>
+        </EditContainer>
         <EditContainer title="Additional Information">
           <div className={styles.detail}></div>
         </EditContainer>
       </div>
       <div className={styles.secondaryColumn}>
+        <SecurityInfoForm userNo={userNo} />
+        <AccountInfoForm userNo={userNo} />
         <Container title="Some charts here" headingType="secondaryHeading">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -70,4 +81,4 @@ function ViewTeacher() {
   );
 }
 
-export default ViewTeacher;
+export default ViewUser;

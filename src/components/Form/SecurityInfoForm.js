@@ -1,54 +1,70 @@
 import formStyles from "./Form.module.css";
 import { useState, useEffect } from "react";
-
-function SecurityInfoForm({ securityInfo, isEdit }) {
-  const [inputData, setInputData] = useState({});
+import EditContainer from "../../ui/Layout/EditContainer";
+import { getSecurityInfoByNo as getSecurityInfoByNo } from "../../services/apiUser";
+import { useNavigate } from "react-router-dom";
+function SecurityInfoForm({ userNo, showEditButton }) {
+  const [inputData, setInputData] = useState({
+    UserName: "",
+    PasswordHash: "",
+  });
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setInputData(securityInfo);
-  }, [securityInfo]);
+    async function getSecurityInfo() {
+      try {
+        const { UserName, PasswordHash } = await getSecurityInfoByNo(userNo);
+        setInputData({
+          UserName,
+          PasswordHash,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
-  function handleInputChange(e) {
-    const { name, value } = e.target;
-    const updatedInputData = {
-      ...inputData,
-      [name]: value,
-    };
-    setInputData(updatedInputData);
+    getSecurityInfo();
+  }, []);
+
+  function resetPassword() {
+    navigate("/dashboard/reset-password");
   }
-
   return (
-    <form>
-      {/* UserName, Password */}
-      <div className={formStyles.formRow}>
-        <div className={formStyles.formItem}>
-          <label htmlFor="username" className={formStyles.formLabel}>
-            Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            className={formStyles.formInput}
-            disabled={!isEdit}
-            value={inputData.UserName}
-            onChange={handleInputChange}
-          />
+    <EditContainer
+      title="Security Information"
+      editBtnText="Reset Password"
+      onClickEdit={resetPassword}
+      showEditButton={showEditButton}
+    >
+      <form>
+        <div className={formStyles.formRow}>
+          <div className={formStyles.formItem}>
+            <label htmlFor="username" className={formStyles.formLabel}>
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              className={formStyles.formInput}
+              disabled
+              value={inputData.UserName}
+            />
+          </div>
+          <div className={formStyles.formItem}>
+            <label htmlFor="password" className={formStyles.formLabel}>
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              className={formStyles.formInput}
+              value={inputData.PasswordHash}
+              disabled
+            />
+          </div>
         </div>
-        <div className={formStyles.formItem}>
-          <label htmlFor="password" className={formStyles.formLabel}>
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            className={formStyles.formInput}
-            value={inputData.PasswordHash}
-            onChange={handleInputChange}
-            disabled={!isEdit}
-          />
-        </div>
-      </div>
-    </form>
+      </form>
+    </EditContainer>
   );
 }
 

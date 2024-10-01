@@ -1,7 +1,7 @@
 .btn {
   color: #ffffff;
   border: none;
-  padding: 0.8rem 2rem;
+  padding: 1rem 2rem;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -17,10 +17,14 @@
   opacity: 0.8;
 }
 
-.small {
-  /* padding: 0.6rem 1.2rem;
-  font-size: 1.2rem; */
+.large {
+  font-size: 1.6rem;
 }
+
+.small {
+  font-size: 1.4rem;
+}
+
 /* .rose {
   background-color: #e53371;
 }

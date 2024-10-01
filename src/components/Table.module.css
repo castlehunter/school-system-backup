@@ -30,6 +30,26 @@ tr th:last-child {
   background-color: #f0f0f0;
 }
 
+.role {
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.Admin {
+  background-color: rgb(255, 159, 159);
+}
+.Advisor {
+  background-color: rgb(212, 255, 195);
+}
+.Teacher {
+  background-color: rgb(180, 244, 255);
+}
+.Student {
+  background-color: rgb(255, 248, 155);
+}
+
 @media (max-width: 991px) {
   .table {
     overflow-x: auto;

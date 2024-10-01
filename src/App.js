@@ -18,8 +18,8 @@ import AddEnrollment from "./features/Enrollment/AddEnrollment.js";
 import Error from "./ui/Error.js";
 import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
-import { getTeacherByIds } from "./services/apiTeacher.js";
-import { getTeacherById } from "./services/apiTeacher.js";
+import { getTeachers } from "./services/apiTeacher.js";
+import { getTeacherByNo } from "./services/apiTeacher.js";
 import { generateUserNo } from "./services/apiUser.js";
 import NewUser from "./features/Users/NewUser.js";
 import { getProgramList } from "./services/apiProgram.js";
@@ -27,6 +27,7 @@ import { getUsers } from "./services/apiUser.js";
 import ProgramList from "./features/Program/ProgramList.js";
 import ViewProgram from "./features/Program/ViewProgram.js";
 import UserList from "./features/Users/UserList.js";
+import ViewUser from "./features/Users/ViewUser.js";
 import {
   RiAddLine,
   RiSubtractLine,
@@ -117,22 +118,28 @@ const routes = [
         ],
       },
       {
-        path: "users",
+        path: "user",
         element: <Outlet />,
         title: "Users",
         icon: icons.DashboardIcon,
         children: [
           { index: true, element: <UserList />, title: "User List" },
           {
-            path: "/users/user-list",
+            path: "/user/user-list",
             element: <UserList />,
             loader: getUsers,
             title: "User List",
           },
           {
-            path: "/users/new-user",
+            path: "/user/new-user",
             element: <NewUser />,
             title: "New User",
+          },
+          {
+            path: "/user/:userNo",
+            element: <ViewUser />,
+            title: "View User",
+            hideInSidebar: true,
           },
         ],
       },
@@ -159,7 +166,7 @@ const routes = [
       },
 
       {
-        path: "Course",
+        path: "course",
         element: <Outlet />,
         title: "Courses",
         icon: icons.CourseIcon,
@@ -186,17 +193,17 @@ const routes = [
           {
             index: true,
             element: <TeacherList />,
-            loader: getTeacherByIds,
+            loader: getTeachers,
             title: "Teacher List",
           },
           {
             path: "/teacher/teacher-list",
             element: <TeacherList />,
-            loader: getTeacherByIds,
+            loader: getTeachers,
             title: "Teacher List",
           },
           {
-            path: "/teacher/:teacherId",
+            path: "/teacher/:userNo",
             element: <ViewTeacher />,
             title: "View Teacher",
             hideInSidebar: true,

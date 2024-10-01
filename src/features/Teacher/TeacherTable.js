@@ -19,7 +19,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
       <thead>
         <tr>
           <th>S/N</th>
-          <th>Teacher ID</th>
+          <th>User No.</th>
           <th>First Name</th>
           <th>Last Name</th>
           <th>Date of Birth</th>
@@ -34,7 +34,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
         {currData.map((Teacher, index) => (
           <tr key={Teacher.TeacherNo} className={styles.tr}>
             <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
-            <td>{Teacher.TeacherNo}</td>
+            <td>{Teacher.Users.UserNo}</td>
             <td>{Teacher.Users.FirstName}</td>
             <td>{Teacher.Users.LastName}</td>
             <td>{formatDate(Teacher.Users.DateOfBirth)}</td>
@@ -43,7 +43,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
             <td>{Teacher.Users.HomeAddress}</td>
             <td>
               <Link
-                to={`/teacher/${Teacher.TeacherID}`}
+                to={`/teacher/${Teacher.Users.UserNo}`}
                 className={generalStyles.link}
               >
                 view

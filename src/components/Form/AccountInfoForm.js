@@ -1,110 +1,161 @@
-import Container from "../../ui/Layout/Container";
+import EditContainer from "../../ui/Layout/EditContainer";
 import formStyles from "./Form.module.css";
-import avatar from "../../assets/user-avatar-account.jpg";
-import { getUserById } from "../../services/apiUser";
+import { getAccountInfoByNo } from "../../services/apiUser";
 import { useState, useEffect } from "react";
-import Button from "../Button/Button";
 
-function AccountInfoForm({ accountInfo, isEdit }) {
-  const [inputData, setInputData] = useState({});
+function AccountInfoForm({ userNo, showEditButton }) {
+  const [inputData, setInputData] = useState({
+    RoleName: "",
+    IsLockedOut: false,
+    FailedPasswordAttempt: 0,
+    IsAdmin: false,
+    CreatedAt: "",
+    LastLoginDate: "",
+  });
+  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
-    setInputData(accountInfo);
-  }, [accountInfo]);
+    async function getAccountInfo() {
+      try {
+        const {
+          Roles,
+          IsLockedOut,
+          FailedPasswordAttempt,
+          IsAdmin,
+          CreatedAt,
+          LastLoginDate,
+        } = await getAccountInfoByNo(userNo);
 
-  function handleInputChange(e) {
+        setInputData({
+          RoleName: Roles?.RoleName,
+          IsLockedOut,
+          FailedPasswordAttempt,
+          CreatedAt: CreatedAt || "",
+          LastLoginDate: LastLoginDate || "",
+          IsAdmin,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getAccountInfo();
+  }, []);
+
+  function handleChange(e) {
     const { name, value } = e.target;
-    const updatedAccount = {
-      ...inputData,
-      [name]: value,
-    };
-    setInputData(updatedAccount);
+
+    const updatedValue =
+      name === "FailedPasswordAttempt" ? Number(value) : value;
+
+    setInputData({ ...inputData, [name]: updatedValue });
   }
 
   return (
-    <div>
-      <form>
-        {/* Role, Admin Privilege */}
-        <div className={formStyles.formRow}>
-          <div className={formStyles.formItem}>
-            <label htmlFor="role-name" className={formStyles.formLabel}>
-              Role
-            </label>
-            <input
-              type="text"
-              id="role-name"
-              className={formStyles.formInput}
-              disabled={!isEdit}
-              value={inputData.RoleName}
-            />
-          </div>{" "}
-          <div className={formStyles.formItem}>
-            <label htmlFor="admin-privilege" className={formStyles.formLabel}>
-              Admin Privilege
-            </label>
-            <select value={inputData.IsAdmin} className={formStyles.formInput}>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
+    <EditContainer
+      title="Account Information"
+      headingType="secondaryHeading"
+      showEditButton={showEditButton}
+    >
+      <div>
+        <form>
+          <div className={formStyles.formRow}>
+            <div className={formStyles.formItem}>
+              <label htmlFor="role-name" className={formStyles.formLabel}>
+                Role
+              </label>
+              <input
+                type="text"
+                id="roleName"
+                name="RoleName"
+                className={formStyles.formInput}
+                disabled={!isEdit}
+                value={inputData.RoleName}
+                onChange={handleChange}
+              />
+            </div>{" "}
+            <div className={formStyles.formItem}>
+              <label htmlFor="isAdmin" className={formStyles.formLabel}>
+                Is Admin
+              </label>
+              <select
+                value={inputData.IsAdmin}
+                className={formStyles.formInput}
+                name="IsAdmin"
+                disabled={!isEdit}
+              >
+                <option value={true}>Yes</option>
+                <option value={false}>No</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        {/* CreateAt, LockAccount */}
-        <div className={formStyles.formRow}>
-          <div className={formStyles.formItem}>
-            <label htmlFor="created-at" className={formStyles.formLabel}>
-              Account Created At
-            </label>
-            <input
-              type="text"
-              id="created-at"
-              className={formStyles.formInput}
-              disabled={!isEdit}
-              value={inputData.CreatedAt}
-            />
+          <div className={formStyles.formRow}>
+            <div className={formStyles.formItem}>
+              <label htmlFor="created-at" className={formStyles.formLabel}>
+                Account Created At
+              </label>
+              <input
+                type="date"
+                id="created-at"
+                name="CreatedAt"
+                className={formStyles.formInput}
+                disabled={true}
+                readOnly
+                value={inputData.CreatedAt}
+              />
+            </div>
+            <div className={formStyles.formItem}>
+              <label htmlFor="lastLoginDate" className={formStyles.formLabel}>
+                Last Login Date
+              </label>
+              <input
+                type="date"
+                id="lastLoginDate"
+                name="LastLoginDate"
+                className={formStyles.formInput}
+                disabled={true}
+                readOnly
+                value={inputData.LastLoginDate}
+              />
+            </div>{" "}
           </div>
-          <div className={formStyles.formItem}>
-            <label htmlFor="last-login-date" className={formStyles.formLabel}>
-              Last Login Date/Time
-            </label>
-            <input
-              type="text"
-              id="last-login-date"
-              className={formStyles.formInput}
-              disabled={!isEdit}
-              value={inputData.LastLoginDate}
-            />
-          </div>{" "}
-        </div>
 
-        <div className={formStyles.formRow}>
-          <div className={formStyles.formItem}>
-            <label htmlFor="lock-account" className={formStyles.formLabel}>
-              Account Status(this field show lock or not)
-            </label>
-            <select value={inputData.IsAdmin} className={formStyles.formInput}>
-              <option value="Active">Active</option>
-              <option value="Locked">Locked</option>
-            </select>
+          <div className={formStyles.formRow}>
+            <div className={formStyles.formItem}>
+              <label htmlFor="lock-account" className={formStyles.formLabel}>
+                Account Status
+              </label>
+              <select
+                value={inputData.IsLockedOut}
+                className={formStyles.formInput}
+                disabled={!isEdit}
+                name="IsLockedOut"
+              >
+                <option value={true}>Active</option>
+                <option value={false}>Locked</option>
+              </select>
+            </div>
+            <div className={formStyles.formItem}>
+              <label
+                htmlFor="failed-password-attempts"
+                className={formStyles.formLabel}
+              >
+                Failed Password Attempt
+              </label>
+              <input
+                type="number"
+                id="failedPasswordAttempt"
+                name="FailedPasswordAttempt"
+                className={formStyles.formInput}
+                value={inputData.FailedPasswordAttempt}
+                disabled={!isEdit}
+              />
+            </div>
           </div>
-          <div className={formStyles.formItem}>
-            <label
-              htmlFor="failed-password-attempts"
-              className={formStyles.formLabel}
-            >
-              Failed Password Attempts
-            </label>
-            <input
-              type="text"
-              id="failed-password-attempts"
-              className={formStyles.formInput}
-              disabled="true"
-              value={inputData.FailedPasswordAttempts}
-            />
-          </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </EditContainer>
   );
 }
 

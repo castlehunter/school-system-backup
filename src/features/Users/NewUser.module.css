@@ -1,4 +1,17 @@
-.newUserLayout {
-  display: grid;
+.layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   gap: 2rem;
+}
+
+.buttonLayout {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.buttons {
+  display: flex;
+  gap: 5rem;
 }
