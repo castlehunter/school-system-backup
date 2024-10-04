@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import ProgramTable from "./ProgramTable.js";
 import TableContainer from "../../ui/Layout/TableContainer";
 import { getProgramById } from "../../services/apiProgram.js";
+import Container from "../../ui/Layout/Container";
+import styles from "../Profile.module.css";
 
 function ViewProgram() {
   const { programId } = useParams();
@@ -38,10 +40,25 @@ function ViewProgram() {
   }
 
   return (
-    <div>
-      <h1>{data.ProgramName}</h1>
-      <p>Program Code: {data.ProgramCode}</p>
-      <p>Program Number: {data.ProgramNo}</p>
+    <div class="generalStyles_container__DHmXN" style={{width:50 + 'em'}}>
+      <div className={styles.secondaryColumn}>
+      <Container title="Program" headingType="secondaryHeading">
+      <div class="Form_formRow__-UmKe"> 
+        <div class="Form_formItem__hJaw7">
+          <label for="userNo" class="Form_formLabel__vziVJ">Program Name</label>
+          <input type="text" id="ProgramName" name="ProgramName" class="Form_formInput__+EqoL" readonly="" disabled="" value={data.ProgramName}/>
+        </div>     
+        </div>
+        <div class="Form_formItem__hJaw7">
+          <label for="userNo" class="Form_formLabel__vziVJ">Program Code</label>
+          <input type="text" id="ProgramName" name="ProgramName" class="Form_formInput__+EqoL" readonly="" disabled="" value={data.ProgramCode}/>
+        </div>
+        <div> 
+          <button class="Button_btn__JwD5A Button_small__+07mn" style={{marginRight:25 + 'px'}}>Update</button>
+          <button class="Button_btn__JwD5A Button_small__+07mn">Cancel</button>
+        </div>
+      </Container>{" "}
+      </div>
     </div>
   
   );
