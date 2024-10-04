@@ -237,6 +237,26 @@ const routes = [
         ],
       },
       {
+        path: "enrollment",
+        element: <Outlet />,
+        title: "Enrollments",
+        icon: icons.ProgramIcon,
+        children: [
+          {
+            index: true,
+            element: <AddEnrollment />,
+            //loader: getProgramList,
+            title: "Enrollment List",
+          },
+          {
+            path: "/enrollment/enrollment-list",
+            element: <AddEnrollment />,
+            //loader: getProgramList,
+            title: "Enrollment List",
+          },
+        ],
+      },
+      {
         path: "*",
         element: <NOTFOUND />,
         title: "Not Found",
