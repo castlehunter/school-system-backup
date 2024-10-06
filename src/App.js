@@ -245,12 +245,23 @@ const routes = [
           {
             index: true,
             element: <AddEnrollment />,
+<<<<<<< HEAD
             title: "Add",
           },
           {
             path: "/enrollment/add-enrollment",
             element: <AddEnrollment />,
             title: "Add",
+=======
+            //loader: getProgramList,
+            title: "Enrollment List",
+          },
+          {
+            path: "/enrollment/enrollment-list",
+            element: <AddEnrollment />,
+            //loader: getProgramList,
+            title: "Enrollment List",
+>>>>>>> 1066ae4e9871aa3041f50d315352649c1773d262
           },
         ],
       },
