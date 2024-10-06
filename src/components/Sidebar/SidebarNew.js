@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./SidebarNew.module.css";
 import logo from "../../assets/logo.png";
@@ -42,7 +42,44 @@ function SidebarNew() {
     courses: true,
     teachers: true,
     programs: true,
+    enrollments: true,
   });
+
+  // Filter menu item logic
+  const [loginRole, setLoginRole] = useState("");
+
+  // hard code initial state for testing only //////////////////////////
+  useEffect(() => {
+    // Pull localstorage role information
+    const role = localStorage.getItem("role");
+    setLoginRole("Student");
+  }, []);
+
+  const filteredMenuItems = menuItems.filter((menuObj) => {
+    if (loginRole === "Administrator") {
+      return true;
+    } else if (loginRole === "Advisor") {
+      return (
+        menuObj.title === "Dashboard" ||
+        menuObj.title === "Students" ||
+        menuObj.title === "Courses" ||
+        menuObj.title === "Teachers" ||
+        menuObj.title === "Programs" ||
+        menuObj.title === "Enrollments"
+      );
+    } else if (loginRole === "Teacher") {
+      return menuObj.title === "Dashboard" || menuObj.title === "My Courses";
+    } else if (loginRole === "Student") {
+      return (
+        menuObj.title === "Dashboard" ||
+        menuObj.title === "My Courses" ||
+        menuObj.title === "Enrollments"
+      );
+    }
+    return true;
+  });
+
+  console.log("Filtered Menu Items", filteredMenuItems);
 
   const searchItems = menuItems
     .flatMap((item) => item.children)
@@ -65,7 +102,7 @@ function SidebarNew() {
       </Link>
       <Search searchItems={searchItems} colorType="dark" />
       <div className={styles.menu}>
-        {menuItems.map((menuObj) => (
+        {filteredMenuItems.map((menuObj) => (
           <div key={menuObj.title}>
             <div
               className={styles.menuTitle}

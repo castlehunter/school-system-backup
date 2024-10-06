@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import generalStyles from "../generalStyles.module.css";
-import styles from "./HomePage.module.css";
-import PageNav from "../components/PageNav";
-import Footer from "../components/Footer/Footer";
-import Button from "../components/Button/Button";
+import generalStyles from "../../generalStyles.module.css";
+import styles from "./Login.module.css";
+
+import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
-import formStyles from "../components/Form/Form.module.css";
-import supabase from "../config/supabaseClient";
+import supabase from "../../config/supabaseClient";
 import { Link } from "react-router-dom";
 
-function HomePage() {
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginAs, setLoginAs] = useState("");
@@ -18,34 +16,13 @@ function HomePage() {
   //show supabase client
   console.log(supabase);
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  const [loginRole, setLoginRole] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
     navigate("/dashboard");
-
-    // if (username && password) {
-    //   try {
-    //     const response = await fetch("http://localhost:5000/api/register", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({ username, password }),
-    //     });
-
-    //     if (response.ok) {
-    //       const data = await response.json();
-    //       console.log("Login successful:", data);
-    //       navigate("/dashboard");
-    //     } else {
-    //       alert("Login failed: " + response.statusText);
-    //     }
-    //   } catch (error) {
-    //     console.log("Error during login:", error);
-    //     alert("Error occurred. Please try again.");
-    //   }
-    // } else {
-    //   alert("Please enter a username and password!");
-    // }
+    // localstorage
+    localStorage.setItem("role", loginRole);
   };
 
   return (
@@ -114,4 +91,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default Login;

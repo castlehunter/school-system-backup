@@ -20,7 +20,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
       <thead>
         <tr>
           <th>S/N</th>
-          <th>Student No.</th>
+          <th>User No.</th>
           <th>First Name</th>
           <th>Last Name</th>
           <th>Dob</th>
