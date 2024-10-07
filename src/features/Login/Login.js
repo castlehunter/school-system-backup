@@ -6,7 +6,7 @@ import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import supabase from "../../config/supabaseClient";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo-removebg-preview.png";
+import logo from "../../assets/logo-removebg-preview.png";
 
 function Login() {
   const [username, setUsername] = useState("");
