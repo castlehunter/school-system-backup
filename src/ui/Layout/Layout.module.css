@@ -78,12 +78,76 @@ section {
   color: #9ca3af;
 }
 
+.user-avatar-container {
+  position: relative;
+  display: inline-block;
+}
+
 .user-avatar {
+  display: block;
+}
+
+.user-avatar img {
   border-radius: 9999px;
   max-width: 100%;
   height: auto;
-  display: block;
-  vertical-align: middle;
+  transition: box-shadow 0.3s ease;
+}
+
+.user-avatar img:hover {
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  background-color: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 150px;
+  border-radius: 5px;
+  z-index: 1;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.dropdown-menu p {
+  font-weight: bold;
+  padding: 12px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.dropdown-menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-menu ul li {
+  padding: 10px;
+  cursor: pointer;
+  /* transition: font-weight 0.3s ease; */
+}
+
+.dropdown-menu ul li:hover {
+  background-color: #e0e0e0;
+  font-size: 1.1em;
+}
+
+a li {
+  color: #333;
+  text-decoration: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .mainContent {
