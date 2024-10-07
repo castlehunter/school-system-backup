@@ -1,0 +1,25 @@
+.statcard {
+  border-radius: 0.8rem;
+  flex: 1;
+  padding: 1rem;
+}
+
+h3 {
+  margin-bottom: 1rem;
+}
+
+.bgcolor1 {
+  background-color: #17a2b8;
+}
+
+.bgcolor2 {
+  background-color: #28a745;
+}
+
+.bgcolor3 {
+  background-color: #ffc107;
+}
+
+.bgcolor4 {
+  background-color: #dc3545;
+}
