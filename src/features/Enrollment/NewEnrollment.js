@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-function AddEnrollment() {
+function NewEnrollment() {
   return <div>enrollment</div>;
 }
 
-export default AddEnrollment;
+export default NewEnrollment;
