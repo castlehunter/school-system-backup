@@ -1,6 +1,6 @@
 import React from "react";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import Login from "./features/Login/Login.js";
 import ResetPassword from "./features/Dashboard/ResetPassword.js";
 import StudentList from "./features/Student/StudentList";
 import StudentConfirmed from "./features/Student/StudentConfirm";
@@ -67,7 +67,7 @@ const icons = {
 const routes = [
   {
     path: "/",
-    element: <HomePage />,
+    element: <Login />,
     title: "Home",
   },
 
@@ -173,12 +173,12 @@ const routes = [
         children: [
           { index: true, element: <CourseList />, title: "Course List" },
           {
-            path: "course-list",
+            path: "/course/course-list",
             element: <CourseList />,
             title: "Course List",
           },
           {
-            path: "new-course",
+            path: "/course/new-course",
             element: <NewCourse />,
             title: "New Course",
           },
