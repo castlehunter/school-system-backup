@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./SidebarNew.module.css";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo-removebg-preview.png";
 import { Link } from "react-router-dom";
 import Search from "../Search/Search";
 import {
@@ -97,7 +97,7 @@ function SidebarNew() {
       <Link to="/" className={styles.logoLink}>
         <div className={styles.logoContainer}>
           <img src={logo} alt="logo" className={styles.logoImage} />
-          <span className={styles.logoText}>ABC Learning Centre</span>
+          {/* <span className={styles.logoText}>ABC Learning Centre</span> */}
         </div>
       </Link>
       <Search searchItems={searchItems} colorType="dark" />
