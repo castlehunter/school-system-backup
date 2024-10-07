@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import formStyles from "../components/Form/Form.module.css";
 import supabase from "../config/supabaseClient";
 import { Link } from "react-router-dom";
+import logo from "../assets/logo-removebg-preview.png";
 
 function HomePage() {
   const [username, setUsername] = useState("");
@@ -53,7 +54,11 @@ function HomePage() {
       <div className={styles.bg}></div>
 
       <section className={styles.loginSection}>
-        <div className={styles.welcome}>logo logo Welcome Back!</div>
+        <div className={styles.loginHeader}>
+          <img src={logo} alt="logo" className={styles.logo} />
+          <div className={styles.welcome}>Welcome Back!</div>
+        </div>
+
         <form className={styles.loginForm} onSubmit={handleLogin}>
           <div className={styles.loginFormItem}>
             <label className={styles.loginFormLabel} htmlFor="loginAs">
