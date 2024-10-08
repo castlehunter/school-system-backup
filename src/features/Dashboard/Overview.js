@@ -13,7 +13,7 @@ import {
 
 function Overview() {
   const icons = {
-    StudentIcon: <RiGraduationCapLine />,
+    StudentIcon: <i className={`ri-graduation-cap-line ${styles.icon}`}></i>,
     CourseIcon: <RiBookReadLine />,
     TeacherIcon: <RiUserLine />,
     EnrollmentIcon: <RiDraftLine />,
@@ -23,10 +23,10 @@ function Overview() {
       <div className={styles.statcards}>
         <StatCard
           number="150"
-          unit="New Students"
+          unit="Students"
           icon={icons.StudentIcon}
           bgcolor="bgcolor1"
-        />{" "}
+        />
         <StatCard
           number="150"
           unit="New Students"

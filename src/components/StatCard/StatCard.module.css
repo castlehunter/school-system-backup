@@ -1,11 +1,24 @@
 .statcard {
   border-radius: 0.8rem;
   flex: 1;
-  padding: 1rem;
+  color: white;
 }
 
 h3 {
+  font-size: 3rem;
   margin-bottom: 1rem;
+}
+
+.top {
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.topText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .bgcolor1 {
@@ -17,9 +30,30 @@ h3 {
 }
 
 .bgcolor3 {
-  background-color: #ffc107;
+  background-color: #e2ae11;
 }
 
 .bgcolor4 {
   background-color: #dc3545;
+}
+
+.icon {
+}
+
+.bottom {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 0.8rem 0.8rem;
+  padding: 0.5rem;
+}
+
+.moreinfo {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.arrow {
+  font-size: 2rem;
 }
