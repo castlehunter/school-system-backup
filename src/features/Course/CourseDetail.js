@@ -283,6 +283,12 @@ function CourseDetail() {
       alert("Failed to go back " + err.message); // Handle errors
     }
   };
+
+
+  const handleCancelEdit = () => {
+    setIsEditing(false); // Exit editing mode without saving changes
+  };
+
   const handleEditCourse = async (updatedCourse) => {
     try {
       await updateCourse(courseID, updatedCourse); // Update course details
@@ -311,7 +317,7 @@ function CourseDetail() {
         {course ? (
           <div>
             {isEditing ? (
-              <EditCourseForm course={course} onSubmit={handleEditCourse} /> // Render edit form if in editing mode
+              <EditCourseForm course={course} onSubmit={handleEditCourse}  onCancel={handleCancelEdit}/> // Render edit form if in editing mode
             ) : (
               <div>
                 <p>Course ID: {course.CourseID}</p>

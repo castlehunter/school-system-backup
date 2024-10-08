@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-//import styles from "./EditCourseForm.module.css"; // Import styles
 import styles from "./Form.module.css";
 
-function EditCourseForm({ course, onSubmit }) {
+function EditCourseForm({ course, onSubmit, onCancel }) {  // Add onCancel prop
   const [courseName, setCourseName] = useState(course.CourseName);
   const [description, setDescription] = useState(course.Description);
-  const [programID, setProgramID] = useState(course.ProgramID); // Assuming ProgramID exists
+  const [programID, setProgramID] = useState(course.ProgramID); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ CourseName: courseName, Description: description, ProgramID: programID }); // Prepare data for submission
+    onSubmit({ CourseName: courseName, Description: description, ProgramID: programID });
   };
 
   return (
@@ -41,6 +40,8 @@ function EditCourseForm({ course, onSubmit }) {
         />
       </div>
       <button type="submit">Update Course</button>
+      {/* Add onClick handler for the Cancel button */}
+      <button type="button" onClick={onCancel}>Cancel</button> 
     </form>
   );
 }

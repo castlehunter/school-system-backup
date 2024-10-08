@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import Button from "../Button/Button.js";
 import Container from "../../ui/Layout/Container.js";
 import styles from "./Form.module.css";
+import { getTeachers} from "../../services/apiTeacher.js"; // Import API calls
+import { getProgramList} from "../../services/apiProgram.js"; // Import API calls
+import { useNavigate } from "react-router-dom";
+
 function NewCourseForm({ type, formData, isEdit, onFormSubmit }) {
   const [inputData, setInputData] = useState({
     CourseID: "",
@@ -11,7 +15,34 @@ function NewCourseForm({ type, formData, isEdit, onFormSubmit }) {
     Program: "",
   });
 
-  function handleChange() {}
+  const [teachers, setTeachers] = useState([]);
+  const [programs, setPrograms] = useState([]);
+
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  // Fetch teachers and programs when the component mounts
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const teacherData = await getTeachers();
+        const programData = await getProgramList();
+        setTeachers(teacherData);
+        setPrograms(programData);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  // Handle input changes
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setInputData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
 
   return (
     <Container title="New Course" headingType="primaryHeading">
@@ -50,43 +81,67 @@ function NewCourseForm({ type, formData, isEdit, onFormSubmit }) {
             <label htmlFor="Description" className={styles.formLabel}>
               Description
             </label>
-            <input
-              type="text"
+            <textarea
               name="Description"
               value={inputData.Description}
               onChange={handleChange}
               className={styles.formInput}
+              required
             />
           </div>
         </div>
+
+        {/* Teacher dropdown */}
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="TeacherName" className={styles.formLabel}>
-              Last Name
+              Teacher
             </label>
-            <input
-              type="text"
+            <select
               name="TeacherName"
               value={inputData.TeacherName}
               onChange={handleChange}
               className={styles.formInput}
-            />
+              required
+            >
+              <option value="">Select a Teacher</option>
+              {teachers.map((teacher) => (
+                <option key={teacher.UserNo} value={teacher.UserNo}>
+                  {teacher.Users.FirstName} {teacher.Users.LastName}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
+
+        {/* Program dropdown */}
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="Program" className={styles.formLabel}>
               Program
             </label>
-            <input
-              type="text"
+            <select
               name="Program"
               value={inputData.Program}
               onChange={handleChange}
-              className={isEdit ? styles.formInput : styles.formInput}
-            />
+              className={styles.formInput}
+              required
+            >
+              <option value="">Select a Program</option>
+              {programs.map((program) => (
+                <option key={program.ProgramNo} value={program.ProgramNo}>
+                  {program.ProgramName}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
+
+        <Button type="submit">Submit</Button>
+        {/* Cancel button */}
+        <Button type="button" onClick={() => navigate("/course/course-list")}>
+          Cancel
+        </Button>
       </form>
     </Container>
   );
