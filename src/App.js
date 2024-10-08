@@ -9,6 +9,8 @@ import Overview from "./features/Dashboard/Overview";
 import MyAccount from "./features/Dashboard/MyAccount";
 import CourseList from "./features/Course/CourseList";
 import NewCourse from "./features/Course/NewCourse";
+import CourseDetailForm from "./features/Course/Detail";
+
 import CourseEdit from "./features/Course/CourseEdit";
 import CourseConfirm from "./features/Course/CourseConfirm";
 import AppLayout from "./ui/Layout/AppLayout.js";
@@ -28,6 +30,8 @@ import ProgramList from "./features/Program/ProgramList.js";
 import ViewProgram from "./features/Program/ViewProgram.js";
 import UserList from "./features/Users/UserList.js";
 import ViewUser from "./features/Users/ViewUser.js";
+//import CourseDetail from "./features/Course/CourseDetail.js";
+
 import {
   RiAddLine,
   RiSubtractLine,
@@ -41,6 +45,7 @@ import {
   RiDraftLine,
 } from "@remixicon/react";
 import EnrollmentList from "./features/Enrollment/EnrollmentList.js";
+import CourseDetail from "./features/Course/CourseDetail.js";
 
 const icons = {
   PlusIcon: <RiAddLine />,
@@ -183,6 +188,11 @@ const routes = [
             element: <NewCourse />,
             title: "New Course",
           },
+          {
+            path: "/course/:courseID",
+            element: <CourseDetail />,
+            title: "Course Details",
+          },
         ],
       },
       {
@@ -269,6 +279,11 @@ const routes = [
         title: "Not Found",
         icon: "ErrorIcon",
       },
+      // {
+      //   path: "/course/:courseID",
+      //   element: <CourseDetail />,
+      //   title: "Course Detail",
+      // },
     ],
   },
 ];
