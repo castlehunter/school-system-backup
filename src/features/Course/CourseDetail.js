@@ -271,12 +271,18 @@ function CourseDetail() {
     try {
       await deleteCourse(courseID); 
       alert("Course deleted successfully!");
-      navigate("/courselist"); 
+      navigate("/course/course-list"); 
     } catch (err) {
       alert("Failed to delete the course: " + err.message);
     }
   };
-
+  const handleBack = async () => {
+    try {
+      navigate("/course/course-list"); 
+    } catch (err) {
+      alert("Failed to go back " + err.message); // Handle errors
+    }
+  };
   const handleEditCourse = async (updatedCourse) => {
     try {
       await updateCourse(courseID, updatedCourse); // Update course details
@@ -317,6 +323,8 @@ function CourseDetail() {
                 <p>Teacher Email: {course.TeacherUser.Email}</p>
                 <Button onClickBtn={() => setIsEditing(true)}>Edit Course</Button> {/* Set edit mode */}
                 <Button onClickBtn={handleDeleteCourse}>Delete Course</Button>
+                <Button onClickBtn={handleBack}>Back</Button>
+
               </div>
             )}
           </div>
