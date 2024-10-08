@@ -2,17 +2,7 @@ import supabase from "../config/supabaseClient.js";
 
 export async function getCourses() {
   const { data, error } = await supabase.from("Courses").select(`
-    *,
-    Programs (
-        ProgramID,
-        ProgramName,
-        ProgramCode
-      ), Sections (
-        SectionID,
-        SectionName
-      ), Teachers(
-        TeacherID, UserID, StartDate, EnrollmentID
-      )
+    *
   `);
 
   console.log(data);
@@ -27,112 +17,114 @@ export async function getCourses() {
 
 
 export async function getCourseDetail({ params }) {
-    const { ID } = params;
-  
-    const { data: courseData, error: courseError } = await supabase
-      .from("Courses")
-      .select(
-        `
-        *,
-        Programs (
-          ProgramID,
-          ProgramName,
-          ProgramCode
-        ), Sections (
-          SectionID,
-          SectionName
-        ), Teachers(
-          TeacherID
-        )
+  const { ID } = params;
+
+  // Step 1: Fetch course data, including the TeacherID
+  const { data: courseData, error: courseError } = await supabase
+    .from("Courses")
+    .select(
       `
+      *,
+      Programs (
+        ProgramID,
+        ProgramName,
+        ProgramCode
+      ),  Teachers(
+        TeacherID
       )
-      .eq("CourseID", ID)
-      .single();
-  
-    if (courseError) {
-      console.error(courseError);
-      throw new Error("Failed to load course");
-    }
-  
-    const { data: teacherData, error: teacherError } = await supabase
-      .from("Teachers")
-      .select("UserID")
-      .eq("TeacherID", courseData.Teachers.TeacherID)
-      .single();
-  
-    if (teacherError) {
-      console.error(teacherError);
-      throw new Error("Failed to load teacher data");
-    }
-  
-    const userID = teacherData.UserID;
-  
-    const { data: userData, error: userError } = await supabase
-      .from("Users")
-      .select("FirstName, LastName, Email")
-      .eq("UserID", userID)
-      .single();
-  
-    if (userError) {
-      console.error(userError);
-      throw new Error("Failed to load user data");
-    }
-  
-    const fullCourseData = {
-      ...courseData,
-      TeacherUser: userData, 
-    };
-  
-    return fullCourseData;
+    `
+    )
+    .eq("CourseID", ID)
+    .single();
+
+  if (courseError) {
+    console.error(courseError);
+    throw new Error("Failed to load course");
   }
 
+  // Step 2: Use TeacherID from the course to query the UserID from Teachers table
+  const { data: teacherData, error: teacherError } = await supabase
+    .from("Teachers")
+    .select("UserID")
+    .eq("TeacherID", courseData.Teachers.TeacherID)
+    .single();
 
-
-  export async function deleteCourse({ params }) {
-    const { ID } = params;  
-  
-    const { data, error } = await supabase
-      .from("Courses") 
-      .delete()
-      .eq("CourseID", ID); 
-
-    if (error) {
-      console.error("Error deleting course:", error);
-      throw new Error("Failed to delete course");
-    }
-  
-    return {
-      message: `Course successfully deleted.`,
-      data,
-    };
+  if (teacherError) {
+    console.error(teacherError);
+    throw new Error("Failed to load teacher data");
   }
+
+  const userID = teacherData.UserID;
+
+  // Step 3: Use UserID to fetch the user details from the Users table
+  const { data: userData, error: userError } = await supabase
+    .from("Users")
+    .select("UserID, UserName, FirstName, LastName, Email")
+    .eq("UserID", userID)
+    .single();
+
+  if (userError) {
+    console.error(userError);
+    throw new Error("Failed to load user data");
+  }
+
+  // Combine course data with the teacher's user data
+  const fullCourseData = {
+    ...courseData,
+    TeacherUser: userData, // Adding the user data to the course data
+  };
+
+  return fullCourseData;
+}
+
+// export async function getCourseDetail({ params }) {
+//   const { ID } = params;
+  
+//   console.log("Fetching course details for ID:", ID);
+
+//   const { data: courseData, error: courseError } = await supabase
+//     .from("Courses")
+//     .select(`*`)
+//     .eq("CourseID", ID)
+//     .single();
+
+  
+//   const fullCourseData = {
+//     ...courseData,
+//   };
+
+//   return fullCourseData;
+// }
+
+
+
+
+export async function deleteCourse(courseID) {
+  const { error } = await supabase
+    .from("Courses")
+    .delete()
+    .eq("CourseID", courseID);
+
+  if (error) {
+    throw new Error("Failed to delete course: " + error.message);
+  }
+}
   
 
-  export async function updateCourse({ params, courseDetails }) {
-    const { ID } = params; 
-    const { CourseName, Description, TeacherID, ProgramID, CourseNumber } = courseDetails; 
-  
-    const { data, error } = await supabase
-      .from("Courses") 
-      .update({
-        CourseName: CourseName,
-        Description: Description,
-        TeacherID: TeacherID,
-        ProgramID: ProgramID,
-        CourseNumber: CourseNumber,
-      })
-      .eq("CourseID", ID); 
-  
-    if (error) {
-      console.error("Error updating course:", error);
-      throw new Error("Failed to update course");
-    }
-  
-    return {
-      message: `Course with ID ${ID} was successfully updated.`,
-      updatedCourse: data,
-    };
+  // In your api/courses.js file
+export async function updateCourse(courseID, updatedData) {
+  const { data, error } = await supabase
+    .from("Courses")
+    .update(updatedData)
+    .eq("CourseID", courseID);
+
+  if (error) {
+    throw new Error("Failed to update course");
   }
+
+  return data;
+}
+
 
 
 

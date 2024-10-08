@@ -12,19 +12,20 @@ function CourseList() {
   const totalPages = Math.ceil(courseData.length / rowsPerPage);
   const navigate = useNavigate();
   useEffect(() => {
-    // const fetchCourses = async () => {
-    //   setIsLoading(true);
-    //   try {
-    //     const data = await getCourses();
-    //     setCourseData(data);
-    //   } catch (error) {
-    //     setError("Failed to fetch courses.");
-    //     console.error("Error fetching courses:", error);
-    //   } finally {
-    //     setIsLoading(false);
-    //   }
-    // };
-    // fetchCourses();
+    const fetchCourses = async () => {
+      setIsLoading(true); // Start loading
+      try {
+        const data = await getCourses(); // Fetch courses
+        setCourseData(data); // Set the fetched data
+      } catch (error) {
+        setError("Failed to fetch courses.");
+        console.error("Error fetching courses:", error);
+      } finally {
+        setIsLoading(false); // Stop loading
+      }
+    };
+
+    fetchCourses(); // Call the fetch function when component mounts
   }, []);
 
   function handlePageChange(page) {
