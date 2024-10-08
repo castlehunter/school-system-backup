@@ -16,7 +16,7 @@ import CourseConfirm from "./features/Course/CourseConfirm";
 import AppLayout from "./ui/Layout/AppLayout.js";
 import MyCourses from "./features/MyCourses/MyCourses";
 import TeacherList from "./features/Teacher/TeacherList.js";
-import AddEnrollment from "./features/Enrollment/AddEnrollment.js";
+import NewEnrollment from "./features/Enrollment/NewEnrollment.js";
 import Error from "./ui/Error.js";
 import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
@@ -44,6 +44,7 @@ import {
   RiCalendarTodoLine,
   RiDraftLine,
 } from "@remixicon/react";
+import EnrollmentList from "./features/Enrollment/EnrollmentList.js";
 import CourseDetail from "./features/Course/CourseDetail.js";
 
 const icons = {
@@ -254,15 +255,21 @@ const routes = [
         children: [
           {
             index: true,
-            element: <AddEnrollment />,
+            element: <EnrollmentList />,
             //loader: getProgramList,
             title: "Enrollment List",
           },
           {
             path: "/enrollment/enrollment-list",
-            element: <AddEnrollment />,
+            element: <EnrollmentList />,
             //loader: getProgramList,
             title: "Enrollment List",
+          },
+          {
+            path: "/enrollment/new-enrollment",
+            element: <NewEnrollment />,
+            //loader: getProgramList,
+            title: "New Enrollment",
           },
         ],
       },

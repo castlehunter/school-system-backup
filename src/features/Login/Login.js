@@ -6,6 +6,7 @@ import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import supabase from "../../config/supabaseClient";
 import { Link } from "react-router-dom";
+import logo from "../../assets/logo-removebg-preview.png";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -30,7 +31,11 @@ function Login() {
       <div className={styles.bg}></div>
 
       <section className={styles.loginSection}>
-        <div className={styles.welcome}>logo logo Welcome Back!</div>
+        <div className={styles.loginHeader}>
+          <img src={logo} alt="logo" className={styles.logo} />
+          <div className={styles.welcome}>Welcome Back!</div>
+        </div>
+
         <form className={styles.loginForm} onSubmit={handleLogin}>
           <div className={styles.loginFormItem}>
             <label className={styles.loginFormLabel} htmlFor="loginAs">
@@ -44,6 +49,7 @@ function Login() {
             >
               <option value="Administrator">Administrator</option>
               <option value="Advisor">Advisor</option>
+              <option value="Teacher">Teacher</option>
               <option value="Student">Student</option>
             </select>
           </div>
