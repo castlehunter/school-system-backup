@@ -31,7 +31,7 @@ function CourseTable({ data, rowsPerPage, currPage }) {
             <td>{course.Description}</td>
             <td>
               <Link
-                to={`/course/${course.CourseID}`} // Link to the course details page with CourseID
+                to={`/course/${course.CourseID}`} 
                 className={generalStyles.link}
               >
                 View
