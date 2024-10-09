@@ -6,12 +6,42 @@ import generalStyles from "../../generalStyles.module.css";
 import Container from "../../ui/Layout/Container";
 import StatCard from "../../components/StatCard/StatCard";
 import icons from "../../ui/Icons/icons";
+import { getStudents } from "../../services/apiStudent";
+import { getTeachers } from "../../services/apiTeacher";
+import { getCourses } from "../../services/apiCourse";
 
 function Overview() {
   const [loginRole, setLoginRole] = useState("");
+  const [studentCount, setStudentCount] = useState(0);
+  const [teacherCount, setTeacherCount] = useState(0);
+  const [courseCount, setCourseCount] = useState(0);
+  const [EnrollmentCount, setEnrollmentCount] = useState(0);
+
   useEffect(() => {
     const role = localStorage.getItem("role");
     setLoginRole("Administrator");
+  }, []);
+
+  useEffect(() => {
+    async function fetchCounts() {
+      try {
+        const [students, teachers, courses, enrollments] = await Promise.all([
+          getStudents(),
+          getTeachers(),
+          getCourses(),
+          // getEnrollments(),
+        ]);
+
+        setStudentCount(students.length);
+        setTeacherCount(teachers.length);
+        setCourseCount(courses.length);
+        // setEnrollmentCount(enrollments.length);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    }
+
+    fetchCounts();
   }, []);
 
   const renderStatCards = () => {
@@ -19,29 +49,32 @@ function Overview() {
       return (
         <>
           <StatCard
-            number="150"
+            number={studentCount}
             unit="Students"
             icon={icons.StudentIcon(styles.largeIcon)}
             bgcolor="bgcolor1"
-            link="/student"
+            link="/students"
           />
           <StatCard
-            number="26"
+            number={teacherCount}
             unit="Teachers"
             icon={icons.TeacherIcon(styles.largeIcon)}
             bgcolor="bgcolor2"
+            link="/teachers"
           />
           <StatCard
-            number="30"
+            number={courseCount}
             unit="Courses"
             icon={icons.CourseIcon(styles.largeIcon)}
             bgcolor="bgcolor3"
+            link="/courses"
           />
           <StatCard
             number="87"
             unit="Enrollments"
             icon={icons.EnrollmentIcon(styles.largeIcon)}
             bgcolor="bgcolor4"
+            link="enrollments"
           />
         </>
       );
