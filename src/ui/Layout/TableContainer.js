@@ -13,17 +13,18 @@ function TableContainer({
   onPageChange,
   onRowsPerPageChange,
   onClickBtn,
+  showAddBtn,
 }) {
   return (
     <div className={generalStyles.container}>
       <div className={generalStyles.containerHeader}>
         <div className={generalStyles.primaryHeading}>
           <span>{title}</span>
-          <Button onClickBtn={onClickBtn}>Add</Button>
+          {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
         </div>
       </div>
       <div className={styles.searchSort}>
-        <button>Sort by xyxy</button>
+        <button>Sort by xyz</button>
         <Search colorType="light" />{" "}
         <div className={styles.entriesPerPage}>
           <span>Showing</span>

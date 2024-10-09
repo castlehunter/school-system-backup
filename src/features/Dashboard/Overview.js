@@ -11,7 +11,7 @@ function Overview() {
   const [loginRole, setLoginRole] = useState("");
   useEffect(() => {
     const role = localStorage.getItem("role");
-    setLoginRole("Teacher");
+    setLoginRole("Administrator");
   }, []);
 
   const renderStatCards = () => {
@@ -23,6 +23,7 @@ function Overview() {
             unit="Students"
             icon={icons.StudentIcon(styles.largeIcon)}
             bgcolor="bgcolor1"
+            link="/student"
           />
           <StatCard
             number="26"
@@ -68,7 +69,7 @@ function Overview() {
     <>
       <div className={styles.statcards}>{renderStatCards()}</div>
       <Container
-        title="Welcome to the School Management System Dashboard!"
+        title="Display different contents for different roles"
         headingType="primaryHeading"
       >
         <p>

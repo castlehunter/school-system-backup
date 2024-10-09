@@ -53,6 +53,7 @@ function CourseList() {
       onPageChange={handlePageChange}
       onRowsPerPageChange={handleRowsPerPageChange}
       onClickBtn={handleAddBtn}
+      showAddBtn
     >
       <CourseTable
         data={courseData}
