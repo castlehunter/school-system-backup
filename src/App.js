@@ -30,46 +30,9 @@ import ProgramList from "./features/Program/ProgramList.js";
 import ViewProgram from "./features/Program/ViewProgram.js";
 import UserList from "./features/Users/UserList.js";
 import ViewUser from "./features/Users/ViewUser.js";
-//import CourseDetail from "./features/Course/CourseDetail.js";
-
-import {
-  RiAddLine,
-  RiSubtractLine,
-  RiLogoutCircleLine,
-  RiCircleLine,
-  RiDashboardLine,
-  RiBookReadLine,
-  RiGraduationCapLine,
-  RiUserLine,
-  RiCalendarTodoLine,
-  RiDraftLine,
-} from "@remixicon/react";
 import EnrollmentList from "./features/Enrollment/EnrollmentList.js";
 import CourseDetail from "./features/Course/CourseDetail.js";
-
-const icons = {
-  PlusIcon: <RiAddLine />,
-  MinusIcon: <RiSubtractLine />,
-  CircleIcon: <RiCircleLine />,
-  DashboardIcon: <RiDashboardLine />,
-  MyCoursesIcon: <RiCalendarTodoLine />,
-  StudentIcon: <RiGraduationCapLine />,
-  CourseIcon: <RiBookReadLine />,
-  ProgramIcon: <RiBookReadLine />,
-  TeacherIcon: (
-    // <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    //   <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-    // </svg>
-    <RiUserLine />
-  ),
-  EnrollmentIcon: (
-    // <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    //   <path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2zm-1 17.93C7.06 18.69 4 15.36 4 12c0-.47.05-.92.13-1.37L9 15v1c0 1.1.9 2 2 2v1.93zM12 4c1.83 0 3.54.67 4.88 1.76L5.76 16.88C4.67 15.54 4 13.83 4 12c0-4.42 3.58-8 8-8zm1 12h-1v-4h1v4zm0-6h-1V7h1v3z" />
-    // </svg>
-    <RiDraftLine />
-  ),
-};
-
+import icons from "./ui/Icons/icons.js";
 const routes = [
   {
     path: "/",

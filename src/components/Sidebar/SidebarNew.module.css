@@ -13,7 +13,9 @@ svg {
   background-color: #4f4f52; 
 }
 */
-
+.icon {
+  fill: #ffffffa1;
+}
 .sidebar {
   border-radius: 1rem;
   display: flex;

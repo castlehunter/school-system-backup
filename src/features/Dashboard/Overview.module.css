@@ -1,13 +1,16 @@
 .statcards {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 2rem;
   margin-bottom: 2rem;
 }
 
-.icon {
-  font-size: 7rem;
-  color: #8585859a;
+.largeIcon {
+  width: 7rem;
+  height: 7rem;
+  fill: #ffffff83;
 }
+
 h1 {
   margin-bottom: 1.2rem;
 }
