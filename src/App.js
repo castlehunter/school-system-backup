@@ -1,20 +1,22 @@
 import React from "react";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import Login from "./features/Login/Login.js";
 import ResetPassword from "./features/Dashboard/ResetPassword.js";
 import StudentList from "./features/Student/StudentList";
-import StudentConfirmed from "./features/Student/StudentConfirm";
+import StudentDetail from "./features/Student/studentDetail";
 import ViewTeacher from "./features/Teacher/ViewTeacher.js";
 import Overview from "./features/Dashboard/Overview";
 import MyAccount from "./features/Dashboard/MyAccount";
 import CourseList from "./features/Course/CourseList";
 import NewCourse from "./features/Course/NewCourse";
+import CourseDetailForm from "./features/Course/Detail";
+
 import CourseEdit from "./features/Course/CourseEdit";
 import CourseConfirm from "./features/Course/CourseConfirm";
 import AppLayout from "./ui/Layout/AppLayout.js";
 import MyCourses from "./features/MyCourses/MyCourses";
 import TeacherList from "./features/Teacher/TeacherList.js";
-import AddEnrollment from "./features/Enrollment/AddEnrollment.js";
+import NewEnrollment from "./features/Enrollment/NewEnrollment.js";
 import Error from "./ui/Error.js";
 import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
@@ -28,46 +30,13 @@ import ProgramList from "./features/Program/ProgramList.js";
 import ViewProgram from "./features/Program/ViewProgram.js";
 import UserList from "./features/Users/UserList.js";
 import ViewUser from "./features/Users/ViewUser.js";
-import {
-  RiAddLine,
-  RiSubtractLine,
-  RiLogoutCircleLine,
-  RiCircleLine,
-  RiDashboardLine,
-  RiBookReadLine,
-  RiGraduationCapLine,
-  RiUserLine,
-  RiCalendarTodoLine,
-  RiDraftLine,
-} from "@remixicon/react";
-
-const icons = {
-  PlusIcon: <RiAddLine />,
-  MinusIcon: <RiSubtractLine />,
-  CircleIcon: <RiCircleLine />,
-  DashboardIcon: <RiDashboardLine />,
-  MyCoursesIcon: <RiCalendarTodoLine />,
-  StudentIcon: <RiGraduationCapLine />,
-  CourseIcon: <RiBookReadLine />,
-  ProgramIcon: <RiBookReadLine />,
-  TeacherIcon: (
-    // <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    //   <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-    // </svg>
-    <RiUserLine />
-  ),
-  EnrollmentIcon: (
-    // <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    //   <path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2zm-1 17.93C7.06 18.69 4 15.36 4 12c0-.47.05-.92.13-1.37L9 15v1c0 1.1.9 2 2 2v1.93zM12 4c1.83 0 3.54.67 4.88 1.76L5.76 16.88C4.67 15.54 4 13.83 4 12c0-4.42 3.58-8 8-8zm1 12h-1v-4h1v4zm0-6h-1V7h1v3z" />
-    // </svg>
-    <RiDraftLine />
-  ),
-};
-
+import EnrollmentList from "./features/Enrollment/EnrollmentList.js";
+import CourseDetail from "./features/Course/CourseDetail.js";
+import icons from "./ui/Icons/icons.js";
 const routes = [
   {
     path: "/",
-    element: <HomePage />,
+    element: <Login />,
     title: "Home",
   },
 
@@ -118,25 +87,25 @@ const routes = [
         ],
       },
       {
-        path: "user",
+        path: "users",
         element: <Outlet />,
         title: "Users",
         icon: icons.DashboardIcon,
         children: [
           { index: true, element: <UserList />, title: "User List" },
           {
-            path: "/user/user-list",
+            path: "/users/user-list",
             element: <UserList />,
             loader: getUsers,
             title: "User List",
           },
           {
-            path: "/user/new-user",
+            path: "/users/new-user",
             element: <NewUser />,
             title: "New User",
           },
           {
-            path: "/user/:userNo",
+            path: "/users/:userNo",
             element: <ViewUser />,
             title: "View User",
             hideInSidebar: true,
@@ -145,7 +114,7 @@ const routes = [
       },
 
       {
-        path: "student",
+        path: "students",
         element: <Outlet />,
         title: "Students",
         icon: icons.StudentIcon,
@@ -157,35 +126,45 @@ const routes = [
             title: "Student List",
           },
           {
-            path: "/student/student-list",
+            path: "/students/student-list",
             element: <StudentList />,
             loader: getStudents,
             title: "Student List",
           },
+          // {
+          //   path: "/student/:studentID",
+          //   element: <StudentDetail />,
+          //   title: "Student Details",
+          // },
         ],
       },
 
       {
-        path: "course",
+        path: "courses",
         element: <Outlet />,
         title: "Courses",
         icon: icons.CourseIcon,
         children: [
           { index: true, element: <CourseList />, title: "Course List" },
           {
-            path: "course-list",
+            path: "/courses/course-list",
             element: <CourseList />,
             title: "Course List",
           },
           {
-            path: "new-course",
+            path: "/courses/new-course",
             element: <NewCourse />,
             title: "New Course",
+          },
+          {
+            path: "/courses/:courseID",
+            element: <CourseDetail />,
+            title: "Course Details",
           },
         ],
       },
       {
-        path: "teacher",
+        path: "teachers",
         element: <Outlet />,
         title: "Teachers",
         icon: icons.TeacherIcon,
@@ -197,13 +176,13 @@ const routes = [
             title: "Teacher List",
           },
           {
-            path: "/teacher/teacher-list",
+            path: "/teachers/teacher-list",
             element: <TeacherList />,
             loader: getTeachers,
             title: "Teacher List",
           },
           {
-            path: "/teacher/:userNo",
+            path: "/teachers/:userNo",
             element: <ViewTeacher />,
             title: "View Teacher",
             hideInSidebar: true,
@@ -211,7 +190,7 @@ const routes = [
         ],
       },
       {
-        path: "program",
+        path: "programs",
         element: <Outlet />,
         title: "Programs",
         icon: icons.ProgramIcon,
@@ -223,16 +202,42 @@ const routes = [
             title: "Program List",
           },
           {
-            path: "/program/program-list",
+            path: "/programs/program-list",
             element: <ProgramList />,
             loader: getProgramList,
             title: "Program List",
           },
           {
-            path: "/program/:programId",
+            path: "/programs/:programId",
             element: <ViewProgram />,
             title: "View Program",
             hideInSidebar: true,
+          },
+        ],
+      },
+      {
+        path: "enrollments",
+        element: <Outlet />,
+        title: "Enrollments",
+        icon: icons.ProgramIcon,
+        children: [
+          {
+            index: true,
+            element: <EnrollmentList />,
+            //loader: getProgramList,
+            title: "Enrollment List",
+          },
+          {
+            path: "/enrollments/enrollment-list",
+            element: <EnrollmentList />,
+            //loader: getProgramList,
+            title: "Enrollment List",
+          },
+          {
+            path: "/enrollments/new-enrollment",
+            element: <NewEnrollment />,
+            //loader: getProgramList,
+            title: "New Enrollment",
           },
         ],
       },
@@ -242,6 +247,11 @@ const routes = [
         title: "Not Found",
         icon: "ErrorIcon",
       },
+      // {
+      //   path: "/course/:courseID",
+      //   element: <CourseDetail />,
+      //   title: "Course Detail",
+      // },
     ],
   },
 ];

@@ -13,7 +13,9 @@ svg {
   background-color: #4f4f52; 
 }
 */
-
+.icon {
+  fill: #ffffffa1;
+}
 .sidebar {
   border-radius: 1rem;
   display: flex;
@@ -43,12 +45,13 @@ svg {
   height: auto;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 1rem 2rem;
   background-color: #1d1d1d;
 }
 
 .logoImage {
-  width: 3rem;
+  width: 16rem;
   height: auto;
 }
 

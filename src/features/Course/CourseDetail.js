@@ -1,180 +1,126 @@
-import { useNavigate, useParams } from "react-router-dom";
+
+
+import Container from "../../ui/Layout/Container";
+import generalStyles from "../../generalStyles.module.css";
+import { useParams, useNavigate } from "react-router-dom"; 
 import React, { useEffect, useState } from "react";
-import styles from "./Profile.module.css";
-import formStyles from "../../components/Form/Form.module.css";
-import Loader from "../../ui/Loader";
-import EditContainer from "../../ui/Layout/EditContainer";
-import ProfileForm from "../../components/Form/ProfileForm";
-import OtherForm from "../../components/Form/OtherForm";
+import styles from "../Profile.module.css"; 
+import Loader from "../../ui/Loader"; 
+import EditContainer from "../../ui/Layout/EditContainer"; 
+import { getCourseDetail, deleteCourse, updateCourse } from "../../services/apiCourse"; 
+import Button from "../../components/Button/Button";
+import { Link } from "react-router-dom";
+import { getTeachers } from "../../services/apiTeacher"; 
 
+import EditCourseForm from "../../components/Form/EditCourseForm";
 function CourseDetail() {
-  const [basicInfo, setBasicInfo] = useState({
-    studentNo: "",
-    firstName: "",
-    lastName: "",
-    dob: "",
-    sex: "",
-    telephone: "",
-    mobile: "",
-    email: "",
-    address: "",
-  });
-  const [course, setCourse] = useState([]);
-  const [isEditBasic, setIsEditBasic] = useState(false);
-  const [isEditProgram, setIsEditProgram] = useState(false);
-  const [isEditCourse, setIsEditCourse] = useState(false);
-  const [isEditAdditional, setIsEditAdditional] = useState(false);
-
-  const { studentNo: urlStudentNo } = useParams();
-  const navigate = useNavigate();
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-
-    setBasicInfo((prevInfo) => ({
-      ...prevInfo,
-      [name]: value,
-    }));
-  }
-
-  function isValidPhoneNumber(number) {
-    return /^[0-9]+$/.test(number);
-  }
-
-  function isValidEmail(email) {
-    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
-  }
-
-  async function handleSubmitBasic(e) {
-    e.preventDefault();
-
-    const { telephone, mobile, email } = basicInfo;
-
-    if (!telephone || !email) {
-      alert("Fields cannot be blank!");
-      return;
-    }
-
-    if (!isValidPhoneNumber(telephone) || !isValidPhoneNumber(mobile)) {
-      alert("Telephone and mobile must contain only numbers");
-      return;
-    }
-
-    if (!isValidEmail(email)) {
-      alert("Email should be in the format of xxx@xxx.xxx");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `http://localhost:3900/api/student/${basicInfo.studentNo}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(basicInfo),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to update student");
+  const { courseID } = useParams(); 
+  const navigate = useNavigate(); 
+  const [course, setCourse] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isEditing, setIsEditing] = useState(false); 
+  const [teachers, setTeachers] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const teacherData = await getTeachers();
+        setTeachers(teacherData);
+      } catch (error) {
+        console.error('Failed to fetch teachers:', error);
       }
-
-      setIsEditBasic(false);
-      navigate(`/dashboard/staff/edit-confirmed/${basicInfo.studentNo}`);
-    } catch (error) {
-      setError(error.message);
     }
+
+    fetchData();
+  }, []);
+  useEffect(() => {
+    async function fetchCourseDetails() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const courseData = await getCourseDetail({ params: { ID: courseID } });
+        setCourse(courseData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchCourseDetails();
+  }, [courseID]);
+
+  const handleDeleteCourse = async () => {
+    try {
+      await deleteCourse(courseID); 
+      alert("Course deleted successfully!");
+      navigate("/course/course-list"); 
+    } catch (err) {
+      alert("Failed to delete the course: " + err.message);
+    }
+  };
+  const handleBack = async () => {
+    try {
+      navigate("/course/course-list"); 
+    } catch (err) {
+      alert("Failed to go back " + err.message); 
+    }
+  };
+
+
+  const handleCancelEdit = () => {
+    setIsEditing(false); 
+  };
+
+  const handleEditCourse = async (updatedCourse) => {
+    try {
+      await updateCourse(courseID, updatedCourse); 
+      alert("Course updated successfully!"); 
+      setIsEditing(false); 
+      const courseData = await getCourseDetail({ params: { ID: courseID } });
+      setCourse(courseData);
+    } catch (err) {
+      alert("Failed to update course: " + err.message); 
+    }
+  };
+
+  if (isLoading) {
+    return <Loader />;
   }
 
-  async function handleSubmitCourse(e) {}
-
-  async function handleSubmitAdditional(e) {}
-
-  function handleEditBasic() {
-    setIsEditBasic((prev) => !prev);
-  }
-
-  function handleEditCourse() {
-    setIsEditCourse((prev) => !prev);
-  }
-
-  function handleEditAdditional() {
-    setIsEditAdditional((prev) => !prev);
-  }
-
-  function handleCancelEditBasic() {
-    setIsEditBasic(false);
-  }
-
-  function handleCancelCourse() {
-    setIsEditCourse(false);
-  }
-
-  function handleCancelAdditional() {
-    setIsEditAdditional(false);
+  if (error) {
+    return <div>Error: {error}</div>;
   }
 
   return (
     <div className={styles.ProfileLayout}>
       <div className={styles.basicInfo}>
-        <EditContainer
-          title="Basic Information"
-          isEdit={isEditBasic}
-          onClickEdit={handleEditBasic}
-          onClickConfirm={handleSubmitBasic}
-          onClickCancel={handleCancelEditBasic}
-        >
-          <div className={styles.detail}>
-            <img
-              src="/img/profile/profile.jpg"
-              alt="img"
-              className={styles.profileImg}
-            />
-            <form className={styles.form} onSubmit={handleSubmitBasic}>
-              <ProfileForm
-                formData={basicInfo}
-                handleChange={handleChange}
-                isEdit={isEditBasic}
-                formWidth={formStyles.formFull}
-              />
-            </form>
-          </div>
-        </EditContainer>
-      </div>
-
-      <div className={styles.course}>
-        <EditContainer
-          title="Courses Enrolled"
-          isEdit={isEditProgram}
-          onClickEdit={isEditCourse ? handleSubmitCourse : handleEditCourse}
-          onClickCancel={handleCancelCourse}
-        >
+        <h2>Course Details</h2>
+        {course ? (
           <div>
-            <form className={styles.form} onSubmit={handleSubmitCourse}>
-              <OtherForm
-                formArr={course}
-                handleChange={handleChange}
-                isEdit={isEditProgram}
-              />
-            </form>
-          </div>
-        </EditContainer>
-      </div>
+            {isEditing ? (
+              <EditCourseForm course={course}       teachers={teachers}
+              onSubmit={handleEditCourse}  onCancel={handleCancelEdit}/> 
+            ) : (
+              <div>
+                <p>Course ID: {course.CourseID}</p>
+                <p>Course Name: {course.CourseName}</p>
+                <p>Description: {course.Description}</p>
+                <p>Program Name: {course.Programs.ProgramName}</p>
+                <p>Program Code: {course.Programs.ProgramCode}</p>
+                <p>Teacher Name: {course.TeacherUser.FirstName} {course.TeacherUser.LastName}</p>
+                <p>Teacher Email: {course.TeacherUser.Email}</p>
+                <Button onClickBtn={() => setIsEditing(true)}>Edit Course</Button> 
+                <Button onClickBtn={handleDeleteCourse}>Delete Course</Button>
+                <Button onClickBtn={handleBack}>Back</Button>
 
-      <EditContainer
-        title="Additional Information"
-        isEdit={isEditAdditional}
-        onClickEdit={
-          isEditAdditional ? handleSubmitAdditional : handleEditAdditional
-        }
-        onClickCancel={handleCancelAdditional}
-      >
-        <div className={styles.detail}>
-          <form className={styles.form} onSubmit={handleSubmitAdditional}>
-            {/* 在这里添加附加信息的表单组件 */}
-          </form>
-        </div>
-      </EditContainer>
+              </div>
+            )}
+          </div>
+        ) : (
+          <p>No course data found.</p>
+        )}
+      </div>
     </div>
   );
 }

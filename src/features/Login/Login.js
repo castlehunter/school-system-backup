@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import generalStyles from "../generalStyles.module.css";
-import styles from "./HomePage.module.css";
-import PageNav from "../components/PageNav";
-import Footer from "../components/Footer/Footer";
-import Button from "../components/Button/Button";
-import { useNavigate } from "react-router-dom";
-import formStyles from "../components/Form/Form.module.css";
-import supabase from "../config/supabaseClient";
-import { Link } from "react-router-dom";
+import generalStyles from "../../generalStyles.module.css";
+import styles from "./Login.module.css";
 
-function HomePage() {
+import Button from "../../components/Button/Button";
+import { useNavigate } from "react-router-dom";
+import supabase from "../../config/supabaseClient";
+import { Link } from "react-router-dom";
+import logo from "../../assets/logo-removebg-preview.png";
+
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginAs, setLoginAs] = useState("");
@@ -18,34 +17,13 @@ function HomePage() {
   //show supabase client
   console.log(supabase);
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  const [loginRole, setLoginRole] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
     navigate("/dashboard");
-
-    // if (username && password) {
-    //   try {
-    //     const response = await fetch("http://localhost:5000/api/register", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({ username, password }),
-    //     });
-
-    //     if (response.ok) {
-    //       const data = await response.json();
-    //       console.log("Login successful:", data);
-    //       navigate("/dashboard");
-    //     } else {
-    //       alert("Login failed: " + response.statusText);
-    //     }
-    //   } catch (error) {
-    //     console.log("Error during login:", error);
-    //     alert("Error occurred. Please try again.");
-    //   }
-    // } else {
-    //   alert("Please enter a username and password!");
-    // }
+    // localstorage
+    localStorage.setItem("role", loginRole);
   };
 
   return (
@@ -53,7 +31,11 @@ function HomePage() {
       <div className={styles.bg}></div>
 
       <section className={styles.loginSection}>
-        <div className={styles.welcome}>logo logo Welcome Back!</div>
+        <div className={styles.loginHeader}>
+          <img src={logo} alt="logo" className={styles.logo} />
+          <div className={styles.welcome}>Welcome Back!</div>
+        </div>
+
         <form className={styles.loginForm} onSubmit={handleLogin}>
           <div className={styles.loginFormItem}>
             <label className={styles.loginFormLabel} htmlFor="loginAs">
@@ -67,6 +49,7 @@ function HomePage() {
             >
               <option value="Administrator">Administrator</option>
               <option value="Advisor">Advisor</option>
+              <option value="Teacher">Teacher</option>
               <option value="Student">Student</option>
             </select>
           </div>
@@ -114,4 +97,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default Login;

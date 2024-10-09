@@ -41,7 +41,7 @@ function StudentList() {
 
   return (
     <TableContainer
-      title="All Students"
+      title="Students"
       rowsPerPage={rowsPerPage}
       totalPages={totalPages}
       currPage={currPage}

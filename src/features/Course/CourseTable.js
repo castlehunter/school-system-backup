@@ -3,7 +3,7 @@ import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
 
-function CourseTable({ data, rowsPerPage, currPage, isLoading }) {
+function CourseTable({ data, rowsPerPage, currPage }) {
   const currData = data.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
@@ -22,19 +22,19 @@ function CourseTable({ data, rowsPerPage, currPage, isLoading }) {
         </tr>
       </thead>
       <tbody>
-        {currData.map((student, index) => (
-          <tr key={student.studentNo} className={styles.tr}>
+        {currData.map((course, index) => (
+          <tr key={course.CourseID} className={styles.tr}>
             <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
-            <td>{student.CourseCode}</td>
-            <td>{student.CourseName}</td>
-            <td>{student.Time}</td>
-            <td>{student.Description}</td>
+            <td>{course.CourseNo}</td>
+            <td>{course.CourseName}</td>
+            <td>{course.Time}</td>
+            <td>{course.Description}</td>
             <td>
               <Link
-                to={`/course/${student.studentNo}`}
+                to={`/course/${course.CourseID}`} 
                 className={generalStyles.link}
               >
-                view
+                View
               </Link>
             </td>
           </tr>
@@ -43,5 +43,6 @@ function CourseTable({ data, rowsPerPage, currPage, isLoading }) {
     </table>
   );
 }
+
 
 export default CourseTable;

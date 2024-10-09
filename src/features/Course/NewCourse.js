@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button/Button";
+import NewCourseForm from "../../components/Form/NewCourseForm";
 
 function NewCourse() {
-  <div>d</div>;
+  return (
+    <div>
+      <NewCourseForm />
+    </div>
+  );
 }
 
 export default NewCourse;

@@ -25,13 +25,13 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
           <Loader />
         ) : (
           currData.map((program, index) => (
-            <tr key={program.ProgramCode} className={styles.tr}>
+            <tr key={program.ProgramNo} className={styles.tr}>
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{program.ProgramCode}</td>
               <td>{program.ProgramName}</td>
               <td>
                 <Link
-                  to={`/program/${program.programCode}`}
+                  to={`/program/${program.ProgramNo}`}
                   className={generalStyles.link}
                 >
                   View
