@@ -1,5 +1,5 @@
 import styles from "./NewUser.module.css";
-import PersonalInfoForm from "../../components/Form/ProfileInfoForm";
+import PersonalInfoForm from "../../components/Form/ProfileForm";
 import AccountInfoForm from "../../components/Form/AccountInfoForm";
 import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
 import Button from "../../components/Button/Button";
@@ -15,15 +15,7 @@ import Button from "../../components/Button/Button";
 function NewUser() {
   return (
     <div className={styles.layout}>
-      <PersonalInfoForm showEditButton={false} />
-      <SecurityInfoForm showEditButton={false} />
-      <AccountInfoForm showEditButton={false} />
-      <div className={styles.buttonLayout}>
-        <div className={styles.buttons}>
-          <Button size="large">Create</Button>
-          <Button size="large">Cancel</Button>
-        </div>
-      </div>
+      <PersonalInfoForm />
     </div>
   );
 }

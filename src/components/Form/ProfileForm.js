@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Button from "../Button/Button.js";
 import styles from "./Form.module.css";
+import { CreateUser } from "../../services/apiUser.js";
 
 function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   const [inputData, setInputData] = useState({
-    Role: "",
     UserName: "",
+    PasswordHash:"",
     FirstName: "",
     LastName: "",
     DateOfBirth: "",
     PhoneNumber: "",
     HomeAddress: "",
+    IsAdmin: Boolean,
   });
 
   useEffect(() => {
@@ -18,17 +20,20 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       setInputData({
         Role: formData.Users.Roles.RoleName || "",
         UserName: formData.Users.UserName || "",
+        PasswordHash: formData.Users.PasswordHash || "",
         FirstName: formData.Users.FirstName || "",
         LastName: formData.Users.LastName || "",
         DateOfBirth: formData.Users.DateOfBirth || "",
         PhoneNumber: formData.Users.PhoneNumber || "",
         HomeAddress: formData.Users.HomeAddress || "",
+        IsAdmin: formData.Users.IsAdmin || false,
       });
     }
   }, [formData]);
 
   // Debug
   // console.log("Form Data is", formData);
+  
   function handleChange(e) {
     const { name, value } = e.target;
     setInputData((prevData) => ({
@@ -37,37 +42,37 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     }));
   }
 
-  return (
-    <form className={styles.form} onSubmit={onFormSubmit}>
-      <div className={styles.formRow}>
-        <div className={styles.formItem}>
-          <label htmlFor="Role" className={styles.formLabel}>
-            Role
-          </label>
-          <input
-            type="text"
-            name="Role"
-            value={inputData.Role}
-            onChange={handleChange}
-            className={styles.formText}
-            disabled={true}
-          />
-        </div>
-        <div className={styles.formItem}>
-          <label htmlFor="UserName" className={styles.formLabel}>
-            User Name
-          </label>
-          <input
-            type="text"
-            name="UserName"
-            value={inputData.UserName}
-            onChange={handleChange}
-            className={styles.formText}
-            disabled={true}
-          />
-        </div>
-      </div>
+    function handleSubmit(e) {
+      e.preventDefault();
+    
+      const newUser = {
+        Username: inputData.UserName,
+        password: inputData.PasswordHash,
+        RoleName: inputData.RoleName,
+        email: inputData.Email,
+        CreateAt: new Date().toISOString(),
+        isAdmin: inputData.IsAdmin,
+        address: inputData.HomeAddress,
+        dob: inputData.DateOfBirth,
+        phone: inputData.PhoneNumber,
+        firstName: inputData.FirstName,
+        lastName: inputData.LastName,
+      };
+      console.log(newUser);
+      // Call CreateUser from apiUser.js
+      CreateUser(newUser)
+        .then((response) => {
+          //console.log('User created successfully', response);
+          alert("User created successfully");
+        })
+        .catch((error) => {
+          console.error('Error creating user:', error);
+        });
+    }
 
+
+  return (
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.formRow}>
         <div className={styles.formItem}>
           <label htmlFor="FirstName" className={styles.formLabel}>
@@ -78,8 +83,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
             name="FirstName"
             value={inputData.FirstName}
             onChange={handleChange}
-            className={styles.formText}
-            disabled
+            className={styles.formInput}
           />
         </div>
         <div className={styles.formItem}>
@@ -89,10 +93,9 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
           <input
             type="text"
             name="LastName"
+            className={styles.formInput}
             value={inputData.LastName}
             onChange={handleChange}
-            className={styles.formText}
-            disabled
           />
         </div>
       </div>
@@ -105,10 +108,9 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
           <input
             type="text"
             name="DateOfBirth"
+            className={styles.formInput}
             value={inputData.DateOfBirth}
             onChange={handleChange}
-            className={isEdit ? styles.formInput : styles.formText}
-            disabled={!isEdit}
           />
         </div>
         <div className={styles.formItem}>
@@ -118,10 +120,9 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
           <input
             type="text"
             name="PhoneNumber"
+            className={styles.formInput}
             value={inputData.PhoneNumber}
             onChange={handleChange}
-            className={isEdit ? styles.formInput : styles.formText}
-            disabled={!isEdit}
           />
         </div>
       </div>
@@ -134,11 +135,90 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
           <input
             type="text"
             name="HomeAddress"
+            className={styles.formInput}
             value={inputData.HomeAddress}
             onChange={handleChange}
-            className={isEdit ? styles.formInput : styles.formText}
-            disabled={!isEdit}
           />
+        </div>
+      </div>
+
+      <div className={styles.formItem}>
+        <label htmlFor="Email" className={styles.formLabel}>Email</label>
+        <input
+        type="email"
+        name="Email"
+        className={styles.formInput}
+        value={inputData.Email}
+        onChange={handleChange}
+        />
+      </div>
+
+      <div>
+      <div className={styles.formRow}>
+          <div className={styles.formItem}>
+            <label htmlFor="UserName" className={styles.formLabel}>
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="UserName"
+              className={styles.formInput}
+              value={inputData.UserName}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.formItem}>
+            <label htmlFor="PasswordHash" className={styles.formLabel}>
+              Password
+            </label>
+            <input
+              type="text"
+              id="password"
+              name="PasswordHash"
+              className={styles.formInput}
+              value={inputData.PasswordHash}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        </div>
+        <div className={styles.formRow}>
+            <div className={styles.formItem}>
+              <label htmlFor="role-name" className={styles.formLabel}>
+                Role
+              </label>
+              <select
+              value={inputData.RoleName}
+              className={styles.formInput}
+              name="RoleName"
+              onChange={handleChange}
+              >
+                <option value={"Admin"}>Admin</option>
+                <option value={"Advisor"}>Advisor</option>
+                <option value={"Student"}>Student</option>
+                <option value={"Teacher"}>Teacher</option>
+              </select>
+            </div>{" "}
+            <div className={styles.formItem}>
+              <label htmlFor="isAdmin" className={styles.formLabel}>
+                Is Admin
+              </label>
+              <select
+                value={inputData.IsAdmin}
+                className={styles.formInput}
+                name="IsAdmin"
+                onChange={handleChange}
+              >
+                <option value={true}>Yes</option>
+                <option value={false}>No</option>
+              </select>
+            </div>
+          </div>
+          <div className={styles.buttonLayout}>
+        <div className={styles.buttons}>
+          <Button onClickBtn={handleSubmit} size="large">Create</Button>
+          <Button size="large">Cancel</Button>
         </div>
       </div>
     </form>

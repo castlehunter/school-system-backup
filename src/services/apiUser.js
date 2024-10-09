@@ -161,8 +161,9 @@ export async function getRoleNameByNo(userNo) {
 export async function CreateUser(newUser) {
   try {
     // 1. Search Role table for RoleID
+    
     const { data: roleData, error: roleError } = await supabase
-      .from("Role")
+      .from("Roles")
       .select("RoleID")
       .eq("RoleName", newUser.RoleName)
       .single();
@@ -179,15 +180,36 @@ export async function CreateUser(newUser) {
       return;
     }
 
-    // 2. Insert User record
+    // 2. Search School table for SchoolID
+
+    const { data: schoolData, error: schoolError} = await supabase
+      .from("School")
+      .select("SchoolID")
+      .eq("SchoolNo", 1) // *temporary searching the school by no. and we only have 1 school for test
+      .single();
+
+    if (schoolError) {
+      console.error("Error fetching SchoolID", schoolError);
+      return;
+    }
+
+    const schoolID = schoolData?.SchoolID;
+
+    if(!schoolID) {
+      console.error("SchoolID not found for the given School number.");
+      return;
+    }
+
+    // 3. Insert User record
     const { data, error } = await supabase.from("Users").insert([
       {
         UserName: newUser.Username,
         PasswordHash: newUser.password,
         RoleID: roleID,
         Email: newUser.email,
-        CreateAt: newUser.CreateAt,
+        CreatedAt: newUser.CreateAt,
         IsAdmin: newUser.isAdmin,
+        SchoolID: schoolID,
         HomeAddress: newUser.address,
         DateOfBirth: newUser.dob,
         PhoneNumber: newUser.phone,
