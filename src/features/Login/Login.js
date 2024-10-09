@@ -19,8 +19,22 @@ function Login() {
 
   const [loginRole, setLoginRole] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+
+    const {data, error} = await supabase
+      .from("Users")
+      .select("*")
+      .eq("UserName",username)
+      .eq("PasswordHash",password) //we have hash the password later
+      .single();
+    
+    if(error || !data)
+    {
+      alert("Invalid Username or Password");
+      return;
+    }
+
     navigate("/dashboard");
     // localstorage
     localStorage.setItem("role", loginRole);

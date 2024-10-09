@@ -13,12 +13,12 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     PhoneNumber: "",
     HomeAddress: "",
     IsAdmin: Boolean,
+    RoleName: "",
   });
 
   useEffect(() => {
     if (formData && formData.Users) {
       setInputData({
-        Role: formData.Users.Roles.RoleName || "",
         UserName: formData.Users.UserName || "",
         PasswordHash: formData.Users.PasswordHash || "",
         FirstName: formData.Users.FirstName || "",
@@ -27,6 +27,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
         PhoneNumber: formData.Users.PhoneNumber || "",
         HomeAddress: formData.Users.HomeAddress || "",
         IsAdmin: formData.Users.IsAdmin || false,
+        RoleName: formData.Users.RoleName || "",
       });
     }
   }, [formData]);
@@ -185,7 +186,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
         </div>
         <div className={styles.formRow}>
             <div className={styles.formItem}>
-              <label htmlFor="role-name" className={styles.formLabel}>
+              <label htmlFor="RoleName" className={styles.formLabel}>
                 Role
               </label>
               <select
@@ -194,6 +195,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               name="RoleName"
               onChange={handleChange}
               >
+                <option>Select a role</option>
                 <option value={"Admin"}>Admin</option>
                 <option value={"Advisor"}>Advisor</option>
                 <option value={"Student"}>Student</option>
@@ -210,6 +212,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
                 name="IsAdmin"
                 onChange={handleChange}
               >
+                <option>Select an option</option>
                 <option value={true}>Yes</option>
                 <option value={false}>No</option>
               </select>
