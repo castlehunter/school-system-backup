@@ -3,8 +3,8 @@ import styles from "./MyCourse.module.css";
 import course1 from "../../assets/course-STEM.jpg";
 import instructor1 from "../../assets/instructor.jpg";
 import CourseCard from "../../components/CourseCard/CourseCard";
-import { NavigatorLockAcquireTimeoutError } from "@supabase/supabase-js";
 
+// Test data that will be replaced with real courses data
 const courseItems = [
   {
     id: 123456,
@@ -51,7 +51,7 @@ const courseItems = [
 function MyCourses() {
   return (
     <div className={generalStyles.container}>
-      <div>For teachers:</div>
+      {/* <div>For teachers:</div>
       <div>
         My Courses:
         <p>1. Computer 1 ---student list in this course.</p>;
@@ -62,9 +62,9 @@ function MyCourses() {
           <p>1. Maths</p>;<p>2. History</p>
         </div>
       </div>
-      <hr />
+      <hr /> */}
 
-      <div className={styles.header}>My Course</div>
+      <div className={generalStyles.primaryHeading}>My Courses</div>
 
       <div className={styles.searchSection}>
         <input type="search"></input>

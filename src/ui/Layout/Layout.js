@@ -1,4 +1,5 @@
 import styles from "./Layout.module.css";
+// import generalStyles from "../../generalStyles.module.css";
 import SidebarNew from "../../components/Sidebar/SidebarNew";
 import { RiMegaphoneLine } from "@remixicon/react";
 import avatar from "../../assets/user-avatar-header.jpg";

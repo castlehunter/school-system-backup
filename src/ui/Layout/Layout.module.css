@@ -112,6 +112,7 @@ section {
 }
 
 .dropdown-menu p {
+  color: #333;
   font-weight: bold;
   padding: 12px 10px;
   border-bottom: 1px solid #ddd;
@@ -130,8 +131,9 @@ section {
 }
 
 .dropdown-menu ul li:hover {
-  background-color: #e0e0e0;
+  background-color: #e91f63;
   font-size: 1.1em;
+  color: #f2f2f2;
 }
 
 a li {
