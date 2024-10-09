@@ -4,36 +4,12 @@ import styles from "./SidebarNew.module.css";
 import logo from "../../assets/logo-removebg-preview.png";
 import { Link } from "react-router-dom";
 import Search from "../Search/Search";
-import {
-  RiAddLine,
-  RiSubtractLine,
-  RiLogoutCircleLine,
-  RiCircleLine,
-  RiDashboardLine,
-  RiBookReadLine,
-  RiGraduationCapLine,
-  RiUserLine,
-  RiCalendarTodoLine,
-  RiDraftLine,
-} from "@remixicon/react";
-
+import icons from "../../ui/Icons/icons";
 import { useLoaderData } from "react-router-dom";
 
 function SidebarNew() {
   const routes = useLoaderData();
   const menuItems = routes[1].children.filter((e) => e.path !== "*");
-
-  const icons = {
-    PlusIcon: <RiAddLine />,
-    MinusIcon: <RiSubtractLine />,
-    CircleIcon: <RiCircleLine />,
-    DashboardIcon: <RiDashboardLine />,
-    MyCoursesIcon: <RiCalendarTodoLine />,
-    StudentIcon: <RiGraduationCapLine />,
-    CourseIcon: <RiBookReadLine />,
-    TeacherIcon: <RiUserLine />,
-    EnrollmentIcon: <RiDraftLine />,
-  };
 
   const [openMenus, setOpenMenus] = useState({
     dashboard: true,
@@ -110,12 +86,12 @@ function SidebarNew() {
               onClick={() => toggleMenu(menuObj.title.toLowerCase())}
             >
               <div className={styles.menuText}>
-                {menuObj.icon}
+                {menuObj.icon()}
                 {menuObj.title}
               </div>
               {openMenus[menuObj.title.toLowerCase()]
-                ? icons.MinusIcon
-                : icons.PlusIcon}
+                ? icons.MinusIcon()
+                : icons.PlusIcon()}
             </div>
             <div
               className={`${styles.menuContent} ${
@@ -136,7 +112,7 @@ function SidebarNew() {
                     }
                   >
                     <div className={styles.menuText}>
-                      {icons.CircleIcon}
+                      {icons.CircleIcon(styles.icon)}
                       {subItem.title}
                     </div>
                   </NavLink>
@@ -146,7 +122,7 @@ function SidebarNew() {
         ))}
       </div>
       <Link to="/" className={styles.logout}>
-        <RiLogoutCircleLine />
+        {icons.LogoutIcon}
         <span>Logout</span>
       </Link>
     </div>
