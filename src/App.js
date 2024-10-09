@@ -131,11 +131,11 @@ const routes = [
             loader: getStudents,
             title: "Student List",
           },
-          {
-            path: "/student/:studentID",
-            element: <StudentDetail />,
-            title: "Student Details",
-          },
+          // {
+          //   path: "/student/:studentID",
+          //   element: <StudentDetail />,
+          //   title: "Student Details",
+          // },
         ],
       },
 

@@ -3,72 +3,56 @@ import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
 import Loader from "../../ui/Loader";
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString();
-}
+import { useNavigate } from "react-router-dom";
 
 function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
   const currData = studentData.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
+  const navigate = useNavigate();
+  
+  function handleViewClick(StudentID) {
+    navigate(`/students/${StudentID}`);
+  }
 
   return (
     <table className={styles.table}>
       <thead>
         <tr>
           <th>S/N</th>
-          <th>User No.</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Dob</th>
-          <th>Email</th>
-          <th>Telephone</th>
-          <th>Mobile</th>
-          <th>Address</th>
+          <th>Student ID</th>
+          <th>Student Name</th>
+          <th>Start Date</th>
+          <th>Active</th>
+          <th>Program Name</th>
           <th>Action</th>
         </tr>
       </thead>
-
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <tbody>
-          {currData.map((student, index) => (
-            <tr key={student.studentNo} className={styles.tr}>
+      <tbody>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          currData.map((student, index) => (
+            <tr key={student.StudentID} className={styles.tr}>
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
-              <td>{student.studentNo}</td>
-              <td>{student.fname}</td>
-              <td>{student.lname}</td>
-              {/* <td>
-                {Array.isArray(student.program) ? (
-                  student.program.map((prog, i) => (
-                    <div key={i}>{prog.name}</div>
-                  ))
-                ) : (
-                  <div>{student.program.name}</div>
-                )}
-              </td>
-              <td>{student.sex}</td> */}
-              <td>{formatDate(student.dob)}</td>
-              <td>{student.email}</td>
-              <td>{student.telephone}</td>
-              <td>{student.mobile}</td>
-              <td>{student.address}</td>
+              <td>{student.StudentID}</td>
+              <td>{`${student.Users.FirstName} ${student.Users.LastName}`}</td>
+              <td>{student.StartDate}</td>
+              <td>{student.Active ? "Yes" : "No"}</td>
+              <td>{student.Programs.ProgramName}</td>
               <td>
                 <Link
-                  to={`/student/${student.studentNo}`}
+                  onClick={() => handleViewClick(student.StudentID)}
                   className={generalStyles.link}
                 >
-                  view
+                  View Details
                 </Link>
               </td>
             </tr>
-          ))}
-        </tbody>
-      )}
+          ))
+        )}
+      </tbody>
     </table>
   );
 }
