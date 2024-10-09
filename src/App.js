@@ -3,7 +3,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Login from "./features/Login/Login.js";
 import ResetPassword from "./features/Dashboard/ResetPassword.js";
 import StudentList from "./features/Student/StudentList";
-import StudentConfirmed from "./features/Student/StudentConfirm";
+import StudentDetail from "./features/Student/studentDetail";
 import ViewTeacher from "./features/Teacher/ViewTeacher.js";
 import Overview from "./features/Dashboard/Overview";
 import MyAccount from "./features/Dashboard/MyAccount";
@@ -130,6 +130,11 @@ const routes = [
             element: <StudentList />,
             loader: getStudents,
             title: "Student List",
+          },
+          {
+            path: "/student/:studentID",
+            element: <StudentDetail />,
+            title: "Student Details",
           },
         ],
       },

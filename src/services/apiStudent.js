@@ -46,6 +46,9 @@ export async function getStudents() {
       HomeAddress,
       DateOfBirth,
       PhoneNumber
+    ),
+    Programs (
+      ProgramName
     )
   `);
 
@@ -70,25 +73,26 @@ export async function addStudent(student) {
 }
 
 // updating a student
-export async function updateStudent(studentNo, updatedData) {
+export async function updateStudent(StudentNo, updatedData) {
   const { data, error } = await supabase
     .from("Students")
     .update(updatedData)
-    .eq("StudentNo", studentNo);
+    .eq("StudentNo", StudentNo);
 
   if (error) {
-    handleError(error, "Failed to update student");
+    console.error("Failed to update student:", error);
+    throw error;
   }
 
   return data;
 }
 
 // deleting a student
-export async function deleteStudent(studentNo) {
+export async function deleteStudent(StudentNo) {
   const { data, error } = await supabase
     .from("Students")
     .delete()
-    .eq("StudentNo", studentNo);
+    .eq("StudentNo", StudentNo);
 
   if (error) {
     handleError(error, "Failed to delete student");
@@ -98,15 +102,16 @@ export async function deleteStudent(studentNo) {
 }
 
 // get student by student number
-export async function getStudentByStudentNo(studentNo) {
+export async function getStudentByStudentNo(StudentNo) {
   const { data, error } = await supabase
     .from("Students")
     .select("*")
-    .eq("StudentNo", studentNo)
+    .eq("StudentNo", StudentNo)
     .single();
 
   if (error) {
-    handleError(error, "Failed to get student");
+    console.error("Failed to fetch student:", error);
+    throw error;
   }
 
   return data;
