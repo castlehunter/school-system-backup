@@ -79,26 +79,26 @@ function SidebarNew() {
       </Link>
       <Search searchItems={searchItems} colorType="dark" />
       <div className={styles.menu}>
-        {filteredMenuItems.map((menuObj) => (
-          <div key={menuObj.title}>
+        {filteredMenuItems.map((item) => (
+          <div key={item.title}>
             <div
               className={styles.menuTitle}
-              onClick={() => toggleMenu(menuObj.title.toLowerCase())}
+              onClick={() => toggleMenu(item.title.toLowerCase())}
             >
               <div className={styles.menuText}>
-                {menuObj.icon()}
-                {menuObj.title}
+                {item.icon()}
+                {item.title}
               </div>
-              {openMenus[menuObj.title.toLowerCase()]
+              {openMenus[item.title.toLowerCase()]
                 ? icons.MinusIcon()
                 : icons.PlusIcon()}
             </div>
             <div
               className={`${styles.menuContent} ${
-                openMenus[menuObj.title.toLowerCase()] ? styles.open : ""
+                openMenus[item.title.toLowerCase()] ? styles.open : ""
               }`}
             >
-              {menuObj.children
+              {item.children
                 .filter((subItem) => subItem.hideInSidebar !== true)
                 .filter((subItem) => !subItem.index)
                 .map((subItem) => (

@@ -3,7 +3,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Login from "./features/Login/Login.js";
 import ResetPassword from "./features/Dashboard/ResetPassword.js";
 import StudentList from "./features/Student/StudentList";
-import StudentConfirmed from "./features/Student/StudentConfirm";
+import StudentDetail from "./features/Student/studentDetail";
 import ViewTeacher from "./features/Teacher/ViewTeacher.js";
 import Overview from "./features/Dashboard/Overview";
 import MyAccount from "./features/Dashboard/MyAccount";
@@ -87,25 +87,25 @@ const routes = [
         ],
       },
       {
-        path: "user",
+        path: "users",
         element: <Outlet />,
         title: "Users",
         icon: icons.DashboardIcon,
         children: [
           { index: true, element: <UserList />, title: "User List" },
           {
-            path: "/user/user-list",
+            path: "/users/user-list",
             element: <UserList />,
             loader: getUsers,
             title: "User List",
           },
           {
-            path: "/user/new-user",
+            path: "/users/new-user",
             element: <NewUser />,
             title: "New User",
           },
           {
-            path: "/user/:userNo",
+            path: "/users/:userNo",
             element: <ViewUser />,
             title: "View User",
             hideInSidebar: true,
@@ -114,7 +114,7 @@ const routes = [
       },
 
       {
-        path: "student",
+        path: "students",
         element: <Outlet />,
         title: "Students",
         icon: icons.StudentIcon,
@@ -126,40 +126,45 @@ const routes = [
             title: "Student List",
           },
           {
-            path: "/student/student-list",
+            path: "/students/student-list",
             element: <StudentList />,
             loader: getStudents,
             title: "Student List",
           },
+          // {
+          //   path: "/student/:studentID",
+          //   element: <StudentDetail />,
+          //   title: "Student Details",
+          // },
         ],
       },
 
       {
-        path: "course",
+        path: "courses",
         element: <Outlet />,
         title: "Courses",
         icon: icons.CourseIcon,
         children: [
           { index: true, element: <CourseList />, title: "Course List" },
           {
-            path: "/course/course-list",
+            path: "/courses/course-list",
             element: <CourseList />,
             title: "Course List",
           },
           {
-            path: "/course/new-course",
+            path: "/courses/new-course",
             element: <NewCourse />,
             title: "New Course",
           },
           {
-            path: "/course/:courseID",
+            path: "/courses/:courseID",
             element: <CourseDetail />,
             title: "Course Details",
           },
         ],
       },
       {
-        path: "teacher",
+        path: "teachers",
         element: <Outlet />,
         title: "Teachers",
         icon: icons.TeacherIcon,
@@ -171,13 +176,13 @@ const routes = [
             title: "Teacher List",
           },
           {
-            path: "/teacher/teacher-list",
+            path: "/teachers/teacher-list",
             element: <TeacherList />,
             loader: getTeachers,
             title: "Teacher List",
           },
           {
-            path: "/teacher/:userNo",
+            path: "/teachers/:userNo",
             element: <ViewTeacher />,
             title: "View Teacher",
             hideInSidebar: true,
@@ -185,7 +190,7 @@ const routes = [
         ],
       },
       {
-        path: "program",
+        path: "programs",
         element: <Outlet />,
         title: "Programs",
         icon: icons.ProgramIcon,
@@ -197,13 +202,13 @@ const routes = [
             title: "Program List",
           },
           {
-            path: "/program/program-list",
+            path: "/programs/program-list",
             element: <ProgramList />,
             loader: getProgramList,
             title: "Program List",
           },
           {
-            path: "/program/:programId",
+            path: "/programs/:programId",
             element: <ViewProgram />,
             title: "View Program",
             hideInSidebar: true,
@@ -211,7 +216,7 @@ const routes = [
         ],
       },
       {
-        path: "enrollment",
+        path: "enrollments",
         element: <Outlet />,
         title: "Enrollments",
         icon: icons.ProgramIcon,
@@ -223,13 +228,13 @@ const routes = [
             title: "Enrollment List",
           },
           {
-            path: "/enrollment/enrollment-list",
+            path: "/enrollments/enrollment-list",
             element: <EnrollmentList />,
             //loader: getProgramList,
             title: "Enrollment List",
           },
           {
-            path: "/enrollment/new-enrollment",
+            path: "/enrollments/new-enrollment",
             element: <NewEnrollment />,
             //loader: getProgramList,
             title: "New Enrollment",

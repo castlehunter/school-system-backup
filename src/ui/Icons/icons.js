@@ -11,6 +11,9 @@ import {
   RiDraftFill,
   RiArchiveDrawerFill,
   RiUser3Fill,
+  RiSearchLine,
+  RiCloseLine,
+  RiArrowRightCircleLine,
 } from "@remixicon/react";
 
 const icons = {
@@ -48,6 +51,11 @@ const icons = {
     <RiDraftFill className={className} style={style} />
   ),
   LogoutIcon: <RiLogoutCircleLine />,
+  SearchIcon: <RiSearchLine />,
+  CloseIcon: <RiCloseLine />,
+  ArrowRightIcon: (className = "", style = {}) => (
+    <RiArrowRightCircleLine className={className} style={style} />
+  ),
 };
 
 export default icons;

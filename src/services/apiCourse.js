@@ -112,18 +112,19 @@ export async function deleteCourse(courseID) {
   
 
   // In your api/courses.js file
-export async function updateCourse(courseID, updatedData) {
-  const { data, error } = await supabase
-    .from("Courses")
-    .update(updatedData)
-    .eq("CourseID", courseID);
-
-  if (error) {
-    throw new Error("Failed to update course");
+  export async function updateCourse(courseID, updatedData) {
+    const { data, error } = await supabase
+      .from("Courses")
+      .update(updatedData)
+      .eq("CourseID", courseID);
+  
+    if (error) {
+      console.error(error.message);
+      throw new Error("Failed to update course");
+    }
+  
+    return data;
   }
-
-  return data;
-}
 
 
 

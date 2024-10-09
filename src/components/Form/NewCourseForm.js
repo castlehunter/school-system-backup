@@ -18,9 +18,8 @@ function NewCourseForm({ type, formData, isEdit, onFormSubmit }) {
   const [teachers, setTeachers] = useState([]);
   const [programs, setPrograms] = useState([]);
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
 
-  // Fetch teachers and programs when the component mounts
   useEffect(() => {
     async function fetchData() {
       try {
@@ -35,7 +34,6 @@ function NewCourseForm({ type, formData, isEdit, onFormSubmit }) {
     fetchData();
   }, []);
 
-  // Handle input changes
   function handleChange(e) {
     const { name, value } = e.target;
     setInputData((prev) => ({
@@ -91,7 +89,6 @@ function NewCourseForm({ type, formData, isEdit, onFormSubmit }) {
           </div>
         </div>
 
-        {/* Teacher dropdown */}
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="TeacherName" className={styles.formLabel}>
@@ -114,7 +111,6 @@ function NewCourseForm({ type, formData, isEdit, onFormSubmit }) {
           </div>
         </div>
 
-        {/* Program dropdown */}
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="Program" className={styles.formLabel}>
@@ -138,7 +134,6 @@ function NewCourseForm({ type, formData, isEdit, onFormSubmit }) {
         </div>
 
         <Button type="submit">Submit</Button>
-        {/* Cancel button */}
         <Button type="button" onClick={() => navigate("/course/course-list")}>
           Cancel
         </Button>

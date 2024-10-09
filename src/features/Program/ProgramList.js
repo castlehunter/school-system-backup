@@ -52,6 +52,7 @@ function ProgramList() {
       currPage={currPage}
       onPageChange={handlePageChange}
       onRowsPerPageChange={handleRowsPerPageChange}
+      showAddBtn
     >
       <ProgramTable
         programData={programData}
