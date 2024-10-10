@@ -58,7 +58,7 @@ function UserTable({ data, currPage, rowsPerPage }) {
             <td>{user.HomeAddress}</td>
             <td>{formatDate(user.CreatedAt)}</td>
             <td>
-              <Link to={`/user/${user.UserNo}`} className={generalStyles.link}>
+              <Link to={`/users/${user.UserNo}`} className={generalStyles.link}>
                 view
               </Link>
             </td>

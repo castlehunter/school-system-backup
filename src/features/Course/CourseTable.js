@@ -31,7 +31,7 @@ function CourseTable({ data, rowsPerPage, currPage }) {
             <td>{course.Description}</td>
             <td>
               <Link
-                to={`/course/${course.CourseID}`} 
+                to={`/courses/${course.CourseID}`}
                 className={generalStyles.link}
               >
                 View
@@ -43,6 +43,5 @@ function CourseTable({ data, rowsPerPage, currPage }) {
     </table>
   );
 }
-
 
 export default CourseTable;

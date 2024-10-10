@@ -43,7 +43,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
             <td>{Teacher.Users.HomeAddress}</td>
             <td>
               <Link
-                to={`/teacher/${Teacher.Users.UserNo}`}
+                to={`/teachers/${Teacher.Users.UserNo}`}
                 className={generalStyles.link}
               >
                 view
