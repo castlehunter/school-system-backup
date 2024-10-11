@@ -44,18 +44,18 @@ function ViewProgram() {
       <div className={styles.secondaryColumn}>
       <Container title="Program" headingType="secondaryHeading">
       <div class="Form_formRow__-UmKe"> 
-        <div class="Form_formItem__hJaw7">
-          <label for="userNo" class="Form_formLabel__vziVJ">Program Name</label>
-          <input type="text" id="ProgramName" name="ProgramName" class="Form_formInput__+EqoL" readonly="" disabled="" value={data.ProgramName}/>
+        <div class="Form_formRow__-Md9k">
+          <label for="userNo" class="Form_formLabel__8ERnw">Program Name</label>
+          <input type="text" id="ProgramName" name="ProgramName" class="Form_formInput__Ks+09" readonly="" disabled="" value={data.ProgramName}/>
         </div>     
         </div>
-        <div class="Form_formItem__hJaw7">
-          <label for="userNo" class="Form_formLabel__vziVJ">Program Code</label>
-          <input type="text" id="ProgramName" name="ProgramName" class="Form_formInput__+EqoL" readonly="" disabled="" value={data.ProgramCode}/>
+        <div class="Form_formRow__-Md9k">
+          <label for="userNo" class="Form_formLabel__8ERnw">Program Code</label>
+          <input type="text" id="ProgramName" name="ProgramName" class="Form_formInput__Ks+09" readonly="" disabled="" value={data.ProgramCode}/>
         </div>
         <div> 
-          <button class="Button_btn__JwD5A Button_small__+07mn" style={{marginRight:25 + 'px'}}>Update</button>
-          <button class="Button_btn__JwD5A Button_small__+07mn">Cancel</button>
+          <button class="Button_btn__QqUSv Button_small__Vq6Gg" style={{marginRight:25 + 'px'}}>Update</button>
+          <button class="Button_btn__QqUSv Button_small__Vq6Gg">Cancel</button>
         </div>
       </Container>{" "}
       </div>
