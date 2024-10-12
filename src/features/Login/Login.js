@@ -15,18 +15,23 @@ function Login() {
   const navigate = useNavigate();
 
   //show supabase client
-  console.log(supabase);
+  //console.log(supabase);
 
   const [loginRole, setLoginRole] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    const {data, error} = await supabase
+    const { data, error } = await supabase
       .from("Users")
-      .select("*")
-      .eq("UserName",username)
-      .eq("PasswordHash",password) //we have hash the password later
+      .select(`
+        UserName,
+        PasswordHash,
+        UserRole (
+          Roles (RoleName)
+        )
+      `)
+      .eq("UserName", username)
+      .eq("PasswordHash", password) // remember to hash the password
       .single();
     
     if(error || !data)
@@ -34,10 +39,12 @@ function Login() {
       alert("Invalid Username or Password");
       return;
     }
+    console.log('data ' + JSON.stringify(data));
+    const userRole = data.UserRole[0].Roles.RoleName;
 
+
+    localStorage.setItem("role", userRole);
     navigate("/dashboard");
-    // localstorage
-    localStorage.setItem("role", loginRole);
   };
 
   return (
