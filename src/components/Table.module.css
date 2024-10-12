@@ -4,6 +4,10 @@
   overflow: hidden;
 }
 
+.checkbox {
+  vertical-align: middle;
+}
+
 .table th {
   font-weight: 600;
   background-color: #7b809a;

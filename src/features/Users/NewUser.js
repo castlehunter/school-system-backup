@@ -1,5 +1,5 @@
 import styles from "./NewUser.module.css";
-import PersonalInfoForm from "../../components/Form/ProfileForm";
+import ProfileForm from "../../components/Form/ProfileForm";
 import AccountInfoForm from "../../components/Form/AccountInfoForm";
 import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
 import Button from "../../components/Button/Button";
@@ -15,7 +15,7 @@ import Button from "../../components/Button/Button";
 function NewUser() {
   return (
     <div className={styles.layout}>
-      <PersonalInfoForm />
+      <ProfileForm />
     </div>
   );
 }

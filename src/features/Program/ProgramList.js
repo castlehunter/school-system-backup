@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ProgramTable from "./ProgramTable.js";
 import TableContainer from "../../ui/Layout/TableContainer";
 import { getProgramList } from "../../services/apiProgram.js";
-
 function ProgramList() {
   const [programData, setProgramData] = useState([]);
   const [error, setError] = useState(null);

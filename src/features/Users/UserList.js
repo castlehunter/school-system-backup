@@ -25,7 +25,7 @@ function UserList() {
 
   return (
     <TableContainer
-      title="All Users (Users Menu on sidebar only displayed to Admin role"
+      title="All Users"
       rowsPerPage={rowsPerPage}
       totalPages={totalPages}
       currPage={currPage}

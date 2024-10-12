@@ -2,6 +2,7 @@ import React from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
+import useCheckbox from "../../hooks/useCheckbox";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -9,6 +10,13 @@ function formatDate(dateString) {
 }
 
 function TeacherTable({ data, rowsPerPage, currPage }) {
+  const {
+    selectedCheckboxes,
+    handleCheckboxes,
+    isAllSelected,
+    handleSelectAll,
+  } = useCheckbox();
+
   const currData = data.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
@@ -18,6 +26,15 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
     <table className={styles.table}>
       <thead>
         <tr>
+          <th>
+            <input
+              type="checkbox"
+              checked={isAllSelected}
+              onChange={() =>
+                handleSelectAll(currData.map((element) => element.Users.UserNo))
+              }
+            />
+          </th>
           <th>S/N</th>
           <th>User No.</th>
           <th>First Name</th>
@@ -32,7 +49,14 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
 
       <tbody>
         {currData.map((Teacher, index) => (
-          <tr key={Teacher.TeacherNo} className={styles.tr}>
+          <tr key={Teacher.Users.UserNo} className={styles.tr}>
+            <td>
+              <input
+                type="checkbox"
+                checked={selectedCheckboxes.includes(Teacher.Users.UserNo)}
+                onChange={() => handleCheckboxes(Teacher.Users.UserNo)}
+              />
+            </td>
             <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
             <td>{Teacher.Users.UserNo}</td>
             <td>{Teacher.Users.FirstName}</td>
