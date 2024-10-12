@@ -9,7 +9,7 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
-  console.log("currData " + JSON.stringify(currData));
+
   return (
     <table className={styles.table}>
       <thead>
@@ -29,12 +29,21 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{program.ProgramCode}</td>
               <td>{program.ProgramName}</td>
-              <td>
+              <td >
                 <Link
                   to={`/programs/${program.ProgramNo}`}
                   className={generalStyles.link}
+                  style={{paddingRight: 15 + 'px'}}
                 >
                   View
+                </Link>  
+                       
+                <Link
+                  to={`/programs/edit/${program.ProgramNo}`}
+                  className={generalStyles.link}
+                  style={{paddingRight: 15 + 'px'}}
+                >
+                  Edit
                 </Link>
               </td>
             </tr>

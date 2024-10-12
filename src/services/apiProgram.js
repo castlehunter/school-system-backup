@@ -32,3 +32,30 @@ export async function getProgramById(programNo) {
 
   return data;
 }
+
+export async function updateProgram(updatedData) {
+  console.log('updatedData' + JSON.stringify(updatedData));
+  const { ProgramNo, ...updateFields } = updatedData;
+  const { data, error } = await supabase.from("Programs")
+  .update({
+    ProgramName: updatedData.ProgramName,
+    ProgramCode: updatedData.ProgramCode
+  })
+  .eq("ProgramNo", updatedData.ProgramNo);
+  if (error) {
+    console.error(error);
+    throw new Error("Failed to update program");
+  }
+  return data;
+}
+
+export async function addProgram(programData) {
+  const { data, error } = await supabase.from("Programs")
+    .insert([programData]);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Failed to add program");
+  }
+  return data;
+}

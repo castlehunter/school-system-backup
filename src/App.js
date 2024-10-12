@@ -28,6 +28,8 @@ import { getProgramList } from "./services/apiProgram.js";
 import { getUsers } from "./services/apiUser.js";
 import ProgramList from "./features/Program/ProgramList.js";
 import ViewProgram from "./features/Program/ViewProgram.js";
+import EditProgram from "./features/Program/EditProgram.js";
+import NewProgram from "./features/Program/NewProgram.js";
 import UserList from "./features/Users/UserList.js";
 import ViewUser from "./features/Users/ViewUser.js";
 import EnrollmentList from "./features/Enrollment/EnrollmentList.js";
@@ -211,6 +213,18 @@ const routes = [
             path: "/programs/:programId",
             element: <ViewProgram />,
             title: "View Program",
+            hideInSidebar: true,
+          },
+          {
+            path: "/programs/edit/:programId",
+            element: <EditProgram />,
+            title: "Edit Program",
+            hideInSidebar: true,
+          },
+          {
+            path: "/programs/new-program",
+            element: <NewProgram />,
+            title: "New Program",
             hideInSidebar: true,
           },
         ],

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ProgramTable from "./ProgramTable.js";
 import TableContainer from "../../ui/Layout/TableContainer";
 import { getProgramList } from "../../services/apiProgram.js";
+import { useNavigate, useParams } from "react-router-dom";
 
 function ProgramList() {
   const [programData, setProgramData] = useState([]);
@@ -9,7 +10,7 @@ function ProgramList() {
   const [isLoading, setIsLoading] = useState(true);
   const [currPage, setCurrPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
+  const navigate = useNavigate(); 
   const totalPages = Math.ceil(programData.length / rowsPerPage);
 
   useEffect(() => {
@@ -40,6 +41,10 @@ function ProgramList() {
     setCurrPage(1); // Reset to first page when rows per page changes
   }
 
+  function handleAddBtn() {
+    navigate("/programs/new-program");
+  }
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -52,6 +57,7 @@ function ProgramList() {
       currPage={currPage}
       onPageChange={handlePageChange}
       onRowsPerPageChange={handleRowsPerPageChange}
+      onClickBtn={handleAddBtn}
       showAddBtn
     >
       <ProgramTable
