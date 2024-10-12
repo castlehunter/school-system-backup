@@ -14,6 +14,7 @@ function TableContainer({
   onRowsPerPageChange,
   onClickBtn,
   showAddBtn,
+  itemsNums = [5, 10, 15, 20, 25, 30],
 }) {
   return (
     <div className={generalStyles.container}>
@@ -29,12 +30,17 @@ function TableContainer({
         <div className={styles.entriesPerPage}>
           <span>Showing</span>
           <select value={rowsPerPage} onChange={onRowsPerPageChange}>
-            <option value={5}>5</option>
+            {itemsNums.map((num, index) => (
+              <option value={num} key={index}>
+                {num}
+              </option>
+            ))}
+            {/* <option value={5}>5</option>
             <option value={10}>10</option>
             <option value={15}>15</option>
             <option value={20}>20</option>
             <option value={25}>25</option>
-            <option value={30}>30</option>
+            <option value={30}>30</option> */}
           </select>
           <span>per page</span>
         </div>

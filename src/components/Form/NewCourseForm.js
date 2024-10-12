@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Button from "../Button/Button.js";
 import Container from "../../ui/Layout/Container.js";
 import styles from "./Form.module.css";
-import { getTeachers} from "../../services/apiTeacher.js"; // Import API calls
-import { getProgramList} from "../../services/apiProgram.js"; // Import API calls
+import { getTeachers } from "../../services/apiTeacher.js"; // Import API calls
+import { getProgramList } from "../../services/apiProgram.js"; // Import API calls
 import { useNavigate } from "react-router-dom";
 
 function NewCourseForm({ type, formData, isEdit, onFormSubmit }) {
@@ -18,7 +18,7 @@ function NewCourseForm({ type, formData, isEdit, onFormSubmit }) {
   const [teachers, setTeachers] = useState([]);
   const [programs, setPrograms] = useState([]);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -133,10 +133,12 @@ function NewCourseForm({ type, formData, isEdit, onFormSubmit }) {
           </div>
         </div>
 
-        <Button type="submit">Submit</Button>
-        <Button type="button" onClick={() => navigate("/course/course-list")}>
-          Cancel
-        </Button>
+        <div className={styles.buttons}>
+          <Button type="submit">Submit</Button>
+          <Button type="button" onClick={() => navigate("/course/course-list")}>
+            Cancel
+          </Button>
+        </div>
       </form>
     </Container>
   );

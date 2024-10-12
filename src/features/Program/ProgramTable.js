@@ -55,7 +55,7 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
               <td>{program.ProgramName}</td>
               <td>
                 <Link
-                  to={`/program/${program.ProgramNo}`}
+                  to={`/programs/${program.ProgramNo}`}
                   className={generalStyles.link}
                 >
                   View

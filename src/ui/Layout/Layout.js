@@ -6,13 +6,6 @@ import avatar from "../../assets/user-avatar-header.jpg";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-/*****************************************************************
- * To do features for the Avanta Dropdown Menu:
- * 1. Replace the hardcoded user name in the Avanta Menu with the actual
- *    logged-in user's name, based on their account information.
- * 2. Discuss and finalize which dropdown menu items are necessary for this section.
- *
- *****************************************************************/
 function Layout({ children, breadcrumb }) {
   const [isOpen, setIsOpen] = useState(false); // Manager menu display status
   const menuRef = useRef(null);
