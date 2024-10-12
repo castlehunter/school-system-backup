@@ -10,13 +10,10 @@ function StudentList() {
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
   const [currPage, setCurrPage] = useState(1);
-
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  
-  // use hook to fetch data
+
   useEffect(() => {
     async function fetchData() {
-    
       try {
         const data = await getStudents();
         setStudentData(data);

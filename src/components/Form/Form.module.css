@@ -83,3 +83,11 @@
   gap: 20px;
   margin-top: 30px;
 }
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+  gap: 5rem;
+}

@@ -3,6 +3,7 @@ import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
 import Loader from "../../ui/Loader";
+import useCheckbox from "../../hooks/useCheckbox";
 
 function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
   const currData = programData.slice(
@@ -14,6 +15,15 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
     <table className={styles.table}>
       <thead>
         <tr>
+          <th>
+            <input
+              type="checkbox"
+              checked={isAllSelected}
+              onChange={() =>
+                handleSelectAll(currData.map((element) => element.ProgramCode))
+              }
+            />
+          </th>
           <th>S/N</th>
           <th>Program Code</th>
           <th>Program Name</th>
@@ -26,6 +36,13 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
         ) : (
           currData.map((program, index) => (
             <tr key={program.ProgramNo} className={styles.tr}>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedCheckboxes.includes(program.ProgramCode)}
+                  onChange={() => handleCheckboxes(program.ProgramCode)}
+                />
+              </td>
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{program.ProgramCode}</td>
               <td>{program.ProgramName}</td>

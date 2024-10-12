@@ -2,8 +2,16 @@ import React from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
+import useCheckbox from "../../hooks/useCheckbox";
 
 function CourseTable({ data, rowsPerPage, currPage }) {
+  const {
+    isAllSelected,
+    handleSelectAll,
+    selectedCheckboxes,
+    handleCheckboxes,
+  } = useCheckbox();
+
   const currData = data.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
@@ -13,6 +21,16 @@ function CourseTable({ data, rowsPerPage, currPage }) {
     <table className={styles.table}>
       <thead>
         <tr>
+          <th>
+            <input
+              type="checkbox"
+              checked={isAllSelected}
+              onChange={() =>
+                handleSelectAll(currData.map((element) => element.CourseID))
+              }
+              className={styles.checkbox}
+            />
+          </th>
           <th>S/N</th>
           <th>Course Code</th>
           <th>Course Name</th>
@@ -24,6 +42,14 @@ function CourseTable({ data, rowsPerPage, currPage }) {
       <tbody>
         {currData.map((course, index) => (
           <tr key={course.CourseID} className={styles.tr}>
+            <td>
+              <input
+                type="checkbox"
+                checked={selectedCheckboxes.includes(course.CourseID)}
+                onChange={() => handleCheckboxes(course.CourseID)}
+                className={styles.checkbox}
+              />
+            </td>
             <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
             <td>{course.CourseNo}</td>
             <td>{course.CourseName}</td>

@@ -4,14 +4,23 @@ import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
 import Loader from "../../ui/Loader";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import useCheckbox from "../../hooks/useCheckbox";
 
 function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
+  const {
+    selectedCheckboxes,
+    handleCheckboxes,
+    isAllSelected,
+    handleSelectAll,
+  } = useCheckbox();
+
   const currData = studentData.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
   const navigate = useNavigate();
-  
+
   function handleViewClick(StudentID) {
     navigate(`/students/${StudentID}`);
   }
@@ -20,6 +29,16 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
     <table className={styles.table}>
       <thead>
         <tr>
+          <th>
+            <input
+              type="checkbox"
+              checked={isAllSelected}
+              onChange={() =>
+                handleSelectAll(currData.map((element) => element.Users.UserNo))
+              }
+              className={styles.checkbox}
+            />
+          </th>
           <th>S/N</th>
           <th>Student ID</th>
           <th>Student Name</th>
@@ -34,7 +53,16 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
           <Loader />
         ) : (
           currData.map((student, index) => (
-            <tr key={student.StudentID} className={styles.tr}>
+            <tr key={student.Users.UserNo} className={styles.tr}>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedCheckboxes.includes(student.Users.UserNo)}
+                  onChange={() => handleCheckboxes(student.Users.UserNo)}
+                  className={styles.checkbox}
+                />
+              </td>
+
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{student.StudentID}</td>
               <td>{`${student.Users.FirstName} ${student.Users.LastName}`}</td>

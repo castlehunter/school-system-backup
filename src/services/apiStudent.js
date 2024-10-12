@@ -11,14 +11,15 @@ export async function getStudents() {
       Email,
       HomeAddress,
       DateOfBirth,
-      PhoneNumber
+      PhoneNumber,
+      UserNo
     ),
     Programs (
       ProgramName
     )
   `);
 
-  console.log(data);
+  console.log("getStudents", data);
   if (error) {
     console.error(error);
     throw new Error("Failed to load students");

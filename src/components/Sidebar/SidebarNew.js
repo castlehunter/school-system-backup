@@ -29,7 +29,7 @@ function SidebarNew() {
   useEffect(() => {
     // Pull localstorage role information
     const role = localStorage.getItem("role");
-    setLoginRole("Administrator");
+    setLoginRole(role);
   }, []);
 
   const filteredMenuItems = menuItems.filter((menuObj) => {
