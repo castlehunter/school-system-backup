@@ -1,9 +1,7 @@
 import supabase from "../config/supabaseClient.js";
 
-export async function getEnrollmentList() {
-    const { data, error } = await supabase
-    .from("Enrollments")
-    .select(`
+export async function getEnrollments() {
+  const { data, error } = await supabase.from("Enrollments").select(`
       *,
       Students (
         StudentID,
@@ -19,7 +17,7 @@ export async function getEnrollmentList() {
         CourseName
       )
     `);
-  console.log('data  ' + JSON.stringify(data));
+  console.log("data  " + JSON.stringify(data));
   if (error) {
     console.error("Error fetching enrollments:", error);
   } else {

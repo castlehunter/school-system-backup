@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EnrollmentTable from "./EnrollmentTable.js";
 import TableContainer from "../../ui/Layout/TableContainer";
-import { getEnrollmentList } from "../../services/apiEnrollment.js";
+import { getEnrollments } from "../../services/apiEnrollment.js";
 import { useNavigate } from "react-router-dom";
 
 function EnrollmentList() {
@@ -19,7 +19,7 @@ function EnrollmentList() {
       try {
         setIsLoading(true);
         setError(null);
-        const data = await getEnrollmentList();
+        const data = await getEnrollments();
         setEnrollmentData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -57,7 +57,6 @@ function EnrollmentList() {
       onPageChange={handlePageChange}
       onRowsPerPageChange={handleRowsPerPageChange}
       onClickBtn={handleAddBtn}
-      showAddBtn
     >
       <EnrollmentTable
         enrollmentData={enrollmentData}

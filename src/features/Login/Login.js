@@ -23,26 +23,30 @@ function Login() {
     e.preventDefault();
     const { data, error } = await supabase
       .from("Users")
-      .select(`
+      .select(
+        `
         UserName,
+        FirstName,
+        LastName,
         PasswordHash,
         UserRole (
           Roles (RoleName)
         )
-      `)
+      `
+      )
       .eq("UserName", username)
       .eq("PasswordHash", password) // remember to hash the password
       .single();
-    
-    if(error || !data)
-    {
+
+    if (error || !data) {
       alert("Invalid Username or Password");
       return;
     }
-    console.log('data ' + JSON.stringify(data));
+    console.log("data " + JSON.stringify(data));
     const userRole = data.UserRole[0].Roles.RoleName;
 
-
+    localStorage.setItem("firstName", data.FirstName);
+    localStorage.setItem("lastName", data.LastName);
     localStorage.setItem("role", userRole);
     navigate("/dashboard");
   };
@@ -68,7 +72,7 @@ function Login() {
               onChange={(e) => setLoginAs(e.target.value)}
               required
             >
-              <option value="Administrator">Administrator</option>
+              <option value="Admin">Admin</option>
               <option value="Advisor">Advisor</option>
               <option value="Teacher">Teacher</option>
               <option value="Student">Student</option>

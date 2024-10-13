@@ -9,17 +9,24 @@ import icons from "../../ui/Icons/icons";
 import { getStudents } from "../../services/apiStudent";
 import { getTeachers } from "../../services/apiTeacher";
 import { getCourses } from "../../services/apiCourse";
+import { getEnrollments } from "../../services/apiEnrollment";
 
 function Overview() {
   const [loginRole, setLoginRole] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [studentCount, setStudentCount] = useState(0);
   const [teacherCount, setTeacherCount] = useState(0);
   const [courseCount, setCourseCount] = useState(0);
-  const [EnrollmentCount, setEnrollmentCount] = useState(0);
+  const [enrollmentCount, setEnrollmentCount] = useState(0);
 
   useEffect(() => {
-    const role = localStorage.getItem("role");
-    setLoginRole("Administrator");
+    const storedRole = localStorage.getItem("role");
+    const storedFirstName = localStorage.getItem("firstName");
+    const storedLastName = localStorage.getItem("lastName");
+    setLoginRole(storedRole);
+    setFirstName(storedFirstName);
+    setLastName(storedLastName);
   }, []);
 
   useEffect(() => {
@@ -29,13 +36,13 @@ function Overview() {
           getStudents(),
           getTeachers(),
           getCourses(),
-          // getEnrollments(),
+          getEnrollments(),
         ]);
 
         setStudentCount(students.length);
         setTeacherCount(teachers.length);
         setCourseCount(courses.length);
-        // setEnrollmentCount(enrollments.length);
+        setEnrollmentCount(enrollments.length);
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -44,8 +51,9 @@ function Overview() {
     fetchCounts();
   }, []);
 
-  const renderStatCards = () => {
-    if (loginRole === "Administrator" || loginRole === "Advisor") {
+  // Render Stat Cards
+  function renderStatCards() {
+    if (loginRole === "Admin" || loginRole === "Advisor") {
       return (
         <>
           <StatCard
@@ -70,11 +78,11 @@ function Overview() {
             link="/courses"
           />
           <StatCard
-            number="87"
+            number={enrollmentCount}
             unit="Enrollments"
             icon={icons.EnrollmentIcon(styles.largeIcon)}
             bgcolor="bgcolor4"
-            link="enrollments"
+            link="/enrollments"
           />
         </>
       );
@@ -96,50 +104,73 @@ function Overview() {
         </>
       );
     }
-  };
+  }
+
+  function renderQuickLinks() {
+    if (loginRole === "Admin") {
+      return (
+        <ul>
+          <li>
+            <Link to="/users/new-user" className={generalStyles.link}>
+              Add New User
+            </Link>
+          </li>
+        </ul>
+      );
+    } else if (loginRole === "Advisor") {
+      return (
+        <ul>
+          <li>
+            <Link to="/courses/new-course" className={generalStyles.link}>
+              Add New Course
+            </Link>
+          </li>
+        </ul>
+      );
+    } else if (loginRole === "Teacher" || loginRole === "Student") {
+      return (
+        <ul>
+          <li>
+            <Link to="/my-courses" className={generalStyles.link}>
+              My Courses
+            </Link>
+          </li>
+        </ul>
+      );
+    }
+  }
 
   return (
     <>
       <div className={styles.statcards}>{renderStatCards()}</div>
-      <Container
-        title="Display different contents for different roles"
-        headingType="primaryHeading"
-      >
+      <Container title="Overview" headingType="primaryHeading">
         <p>
-          This is your central hub for managing students, teachers, and classes.
-          Navigate through the menu to access various features and tools to
-          streamline school operations.
+          Navigate through the menu to explore features and tools that simplify
+          and enhance your tasks within the school system. Add more textsAdd
+          more textsAdd more textsAdd more textsAdd more texts<br></br>Add more
+          texts<br></br>Add more texts<br></br>Add more texts<br></br>Add more
+          texts<br></br>Add more texts<br></br>Add more texts<br></br>Add more
+          texts<br></br>Add more texts
         </p>
 
         <div className={styles.navigationLinks}>
           <h2 className={generalStyles.secondaryHeading}>Quick Links</h2>
-          <ul>
-            <li>
-              <Link to="/student/student-list" className={generalStyles.link}>
-                View Student List
-              </Link>
-            </li>
-            <li>
-              <Link to="/course/course-list" className={generalStyles.link}>
-                View Course List
-              </Link>
-            </li>
-            <li>
-              <Link to="/teacher/teacher-list" className={generalStyles.link}>
-                View Teacher List
-              </Link>
-            </li>
-          </ul>
+          {renderQuickLinks()}
         </div>
 
         <div className={styles.announcements}>
           <h2 className={generalStyles.secondaryHeading}>Announcements</h2>
-          <p>No new announcements at this time.</p>
+          <p>
+            This feature will be implemented after other functionalities are
+            completed.
+          </p>
         </div>
 
         <div className={styles.userInfo}>
           <h2 className={generalStyles.secondaryHeading}>User Information</h2>
-          <p>Logged in as: John Doe</p>
+          <p>
+            Logged in as: {firstName} {lastName}
+          </p>
         </div>
       </Container>
     </>
