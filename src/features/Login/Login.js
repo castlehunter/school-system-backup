@@ -26,6 +26,8 @@ function Login() {
       .select(
         `
         UserName,
+        FirstName,
+        LastName,
         PasswordHash,
         UserRole (
           Roles (RoleName)
@@ -43,6 +45,8 @@ function Login() {
     console.log("data " + JSON.stringify(data));
     const userRole = data.UserRole[0].Roles.RoleName;
 
+    localStorage.setItem("firstName", data.FirstName);
+    localStorage.setItem("lastName", data.LastName);
     localStorage.setItem("role", userRole);
     navigate("/dashboard");
   };
@@ -68,7 +72,7 @@ function Login() {
               onChange={(e) => setLoginAs(e.target.value)}
               required
             >
-              <option value="Administrator">Administrator</option>
+              <option value="Admin">Admin</option>
               <option value="Advisor">Advisor</option>
               <option value="Teacher">Teacher</option>
               <option value="Student">Student</option>

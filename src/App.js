@@ -36,15 +36,13 @@ import EnrollmentList from "./features/Enrollment/EnrollmentList.js";
 import CourseDetail from "./features/Course/CourseDetail.js";
 import icons from "./ui/Icons/icons.js";
 
-
 function App() {
-
   const [role, setRole] = useState(null);
 
   useEffect(() => {
     // Retrieve role from local storage or other state management
     const storedRole = localStorage.getItem("role");
-    console.log('storedRole ' + storedRole);
+    console.log("storedRole " + storedRole);
     setRole(storedRole);
   }, []);
 
@@ -130,7 +128,7 @@ function App() {
             },
           ],
         },
-  
+
         {
           path: "students",
           element: <Outlet />,
@@ -156,7 +154,7 @@ function App() {
             // },
           ],
         },
-  
+
         {
           path: "courses",
           element: <Outlet />,
@@ -263,12 +261,12 @@ function App() {
               //loader: getProgramList,
               title: "Enrollment List",
             },
-            {
-              path: "/enrollments/new-enrollment",
-              element: <NewEnrollment />,
-              //loader: getProgramList,
-              title: "New Enrollment",
-            },
+            // {
+            //   path: "/enrollments/new-enrollment",
+            //   element: <NewEnrollment />,
+            //   //loader: getProgramList,
+            //   title: "New Enrollment",
+            // },
           ],
         },
         {
@@ -285,9 +283,9 @@ function App() {
       ],
     },
   ];
-  
+
   const router = createBrowserRouter(routes);
-  
+
   return <RouterProvider router={router} />;
 }
 

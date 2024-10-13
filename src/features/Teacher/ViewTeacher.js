@@ -32,11 +32,7 @@ function ViewTeacher() {
     <div className={styles.profileLayout}>
       <div className={styles.mainColumn}>
         <ProfileInfoForm userNo={userNo} />
-        <div className={styles.course}></div>
-
-        <EditContainer title="Additional Information">
-          <div className={styles.detail}></div>
-        </EditContainer>
+        <EditContainer title="Additional Information"></EditContainer>
       </div>
       <div className={styles.secondaryColumn}>
         <Container title="Some charts here" headingType="secondaryHeading">

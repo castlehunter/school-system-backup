@@ -23,11 +23,11 @@ function SidebarNew() {
   });
 
   const [loginRole, setLoginRole] = useState(null);
-  useEffect(() => {   
-    const storedRole = localStorage.getItem("role");  
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role");
     setLoginRole(storedRole);
   }, []);
- 
+
   const filteredMenuItems = menuItems.filter((menuObj) => {
     if (loginRole === "Admin") {
       return true;
@@ -43,11 +43,7 @@ function SidebarNew() {
     } else if (loginRole === "Teacher") {
       return menuObj.title === "Dashboard" || menuObj.title === "My Courses";
     } else if (loginRole === "Student") {
-      return (
-        menuObj.title === "Dashboard" ||
-        menuObj.title === "My Courses" ||
-        menuObj.title === "Enrollments"
-      );
+      return menuObj.title === "Dashboard" || menuObj.title === "My Courses";
     }
     return true;
   });
