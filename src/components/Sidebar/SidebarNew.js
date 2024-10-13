@@ -22,18 +22,14 @@ function SidebarNew() {
     enrollments: true,
   });
 
-  // Filter menu item logic
-  const [loginRole, setLoginRole] = useState("");
-
-  // hard code initial state for testing only //////////////////////////
-  useEffect(() => {
-    // Pull localstorage role information
-    const role = localStorage.getItem("role");
-    setLoginRole(role);
+  const [loginRole, setLoginRole] = useState(null);
+  useEffect(() => {   
+    const storedRole = localStorage.getItem("role");  
+    setLoginRole(storedRole);
   }, []);
-
+ 
   const filteredMenuItems = menuItems.filter((menuObj) => {
-    if (loginRole === "Administrator") {
+    if (loginRole === "Admin") {
       return true;
     } else if (loginRole === "Advisor") {
       return (
