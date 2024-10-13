@@ -23,25 +23,25 @@ function Login() {
     e.preventDefault();
     const { data, error } = await supabase
       .from("Users")
-      .select(`
+      .select(
+        `
         UserName,
         PasswordHash,
         UserRole (
           Roles (RoleName)
         )
-      `)
+      `
+      )
       .eq("UserName", username)
       .eq("PasswordHash", password) // remember to hash the password
       .single();
-    
-    if(error || !data)
-    {
+
+    if (error || !data) {
       alert("Invalid Username or Password");
       return;
     }
-    console.log('data ' + JSON.stringify(data));
+    console.log("data " + JSON.stringify(data));
     const userRole = data.UserRole[0].Roles.RoleName;
-
 
     localStorage.setItem("role", userRole);
     navigate("/dashboard");
@@ -110,7 +110,7 @@ function Login() {
           </div>
 
           <div className={styles.loginFormItem}>
-            <Button colorType="rose">Login</Button>
+            <Button>Login</Button>
           </div>
         </form>
       </section>

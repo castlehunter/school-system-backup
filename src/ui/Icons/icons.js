@@ -14,9 +14,13 @@ import {
   RiSearchLine,
   RiCloseLine,
   RiArrowRightCircleLine,
+  RiCheckboxCircleFill,
 } from "@remixicon/react";
 
 const icons = {
+  CheckboxCircleIcon: (className = "", style = {}) => (
+    <RiCheckboxCircleFill className={className} style={style} />
+  ),
   PlusIcon: (className = "", style = {}) => (
     <RiAddLine className={className} style={style} />
   ),

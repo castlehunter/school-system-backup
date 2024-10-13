@@ -3,6 +3,7 @@ import Button from "../Button/Button.js";
 import styles from "./Form.module.css";
 import { CreateUser } from "../../services/apiUser.js";
 import Container from "../../ui/Layout/Container.js";
+import ModalBox from "../ModalBox/ModalBox.js";
 
 function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   const [inputData, setInputData] = useState({
@@ -32,6 +33,17 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       });
     }
   }, [formData]);
+
+  // implement modal functionality
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function handleOpenModal() {
+    setIsModalOpen(true);
+  }
+
+  function handleCloseModal() {
+    setIsModalOpen(false);
+  }
 
   // Debug
   // console.log("Form Data is", formData);
@@ -65,7 +77,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     CreateUser(newUser)
       .then((response) => {
         //console.log('User created successfully', response);
-        alert("User created successfully");
+        // alert("User created successfully");
+        handleOpenModal();
       })
       .catch((error) => {
         console.error("Error creating user:", error);
@@ -74,7 +87,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
 
   return (
     <Container title="New Course" headingType="primaryHeading">
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="FirstName" className={styles.formLabel}>
@@ -86,6 +99,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               value={inputData.FirstName}
               onChange={handleChange}
               className={styles.formInput}
+              disabled={isModalOpen}
             />
           </div>
           <div className={styles.formItem}>
@@ -98,6 +112,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               className={styles.formInput}
               value={inputData.LastName}
               onChange={handleChange}
+              disabled={isModalOpen}
             />
           </div>
         </div>
@@ -113,6 +128,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               className={styles.formInput}
               value={inputData.DateOfBirth}
               onChange={handleChange}
+              disabled={isModalOpen}
             />
           </div>
           <div className={styles.formItem}>
@@ -125,6 +141,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               className={styles.formInput}
               value={inputData.PhoneNumber}
               onChange={handleChange}
+              disabled={isModalOpen}
             />
           </div>
         </div>
@@ -140,6 +157,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               className={styles.formInput}
               value={inputData.HomeAddress}
               onChange={handleChange}
+              disabled={isModalOpen}
             />
           </div>
         </div>
@@ -154,6 +172,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
             className={styles.formInput}
             value={inputData.Email}
             onChange={handleChange}
+            disabled={isModalOpen}
           />
         </div>
 
@@ -170,6 +189,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
                 className={styles.formInput}
                 value={inputData.UserName}
                 onChange={handleChange}
+                disabled={isModalOpen}
               />
             </div>
             <div className={styles.formItem}>
@@ -183,6 +203,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
                 className={styles.formInput}
                 value={inputData.PasswordHash}
                 onChange={handleChange}
+                disabled={isModalOpen}
               />
             </div>
           </div>
@@ -197,6 +218,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               className={styles.formInput}
               name="RoleName"
               onChange={handleChange}
+              disabled={isModalOpen}
             >
               <option>Select a role</option>
               <option value={"Admin"}>Admin</option>
@@ -214,6 +236,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               className={styles.formInput}
               name="IsAdmin"
               onChange={handleChange}
+              disabled={isModalOpen}
             >
               <option>Select an option</option>
               <option value={true}>Yes</option>
@@ -230,6 +253,13 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
           </div>
         </div>
       </form>
+
+      {/* control modal box */}
+      {isModalOpen && (
+        <div className={styles.modal}>
+          <ModalBox handleCloseModal={handleCloseModal} />
+        </div>
+      )}
     </Container>
   );
 }
