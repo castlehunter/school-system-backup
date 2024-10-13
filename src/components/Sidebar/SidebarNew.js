@@ -47,11 +47,7 @@ function SidebarNew() {
     } else if (loginRole === "Teacher") {
       return menuObj.title === "Dashboard" || menuObj.title === "My Courses";
     } else if (loginRole === "Student") {
-      return (
-        menuObj.title === "Dashboard" ||
-        menuObj.title === "My Courses" ||
-        menuObj.title === "Enrollments"
-      );
+      return menuObj.title === "Dashboard" || menuObj.title === "My Courses";
     }
     return true;
   });
