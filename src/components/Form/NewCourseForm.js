@@ -11,10 +11,11 @@ function NewCourseForm({ type }) {
   const [inputData, setInputData] = useState({
     CourseName: "",
     Description: "",
-    TeacherID: "", // Ensure this is a UUID
-    ProgramID: "", // Ensure this is a UUID
+    TeacherID: "", 
+    ProgramID: "", 
     StartDate: "",
     EndDate: "",
+    Time:""
   });
 
   const [teachers, setTeachers] = useState([]);
@@ -24,8 +25,8 @@ function NewCourseForm({ type }) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const teacherData = await getTeachers(); // Fetch teachers from API
-        const programData = await getProgramList(); // Fetch programs from API
+        const teacherData = await getTeachers();
+        const programData = await getProgramList(); 
         setTeachers(teacherData);
         setPrograms(programData);
       } catch (error) {
@@ -117,7 +118,21 @@ function NewCourseForm({ type }) {
             />
           </div>
         </div>
-
+        <div className={styles.formRow}>
+  <div className={styles.formItem}>
+    <label htmlFor="Time" className={styles.formLabel}>
+      Time
+    </label>
+    <input
+      type="text"
+      name="Time"
+      value={inputData.Time}
+      onChange={handleChange}
+      className={styles.formInput}
+      required
+    />
+  </div>
+</div>
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="TeacherID" className={styles.formLabel}>
@@ -134,7 +149,6 @@ function NewCourseForm({ type }) {
               {teachers.map((teacher) => (
                 <option key={teacher.TeacherID} value={teacher.TeacherID}>
                   {" "}
-                  {/* Ensure UserNo is the UUID */}
                   {teacher.Users.FirstName} {teacher.Users.LastName}
                 </option>
               ))}
@@ -158,7 +172,6 @@ function NewCourseForm({ type }) {
               {programs.map((program) => (
                 <option key={program.ProgramID} value={program.ProgramID}>
                   {" "}
-                  {/* Use ProgramID instead of ProgramNo */}
                   {program.ProgramName}
                 </option>
               ))}

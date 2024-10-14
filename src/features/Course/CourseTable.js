@@ -36,6 +36,7 @@ function CourseTable({ data, rowsPerPage, currPage }) {
           <th>Course Name</th>
           <th>Start Date</th>
           <th>End Date</th>
+          <th>Time</th>
           <th>Description</th>
           <th>Action</th>
         </tr>
@@ -56,6 +57,7 @@ function CourseTable({ data, rowsPerPage, currPage }) {
             <td>{course.CourseName}</td>
             <td>{course.StartDate}</td>
             <td>{course.EndDate}</td>
+            <td>{course.Time}</td>
             <td>{course.Description}</td>
             <td>
               <Link

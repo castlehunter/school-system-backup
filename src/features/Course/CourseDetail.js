@@ -110,6 +110,7 @@ function CourseDetail() {
                 <p>Description: {course.Description}</p>
                 <p>Start Date: {course.StartDate}</p>
                 <p>End Date: {course.EndDate}</p>
+                <p>Time: {course.Time}</p>
                 <p>Program Name: {course.Programs.ProgramName}</p>
                 <p>Program Code: {course.Programs.ProgramCode}</p>
                 <p>Teacher Name: {course.TeacherUser.FirstName} {course.TeacherUser.LastName}</p>

@@ -8,6 +8,7 @@ function EditCourseForm({ course, onSubmit, onCancel, teachers }) {
   const [teacherID, setTeacherID] = useState(course.TeacherID);
   const [startDate, setStartDate] = useState(course.StartDate || ""); // Optional Start Date
   const [endDate, setEndDate] = useState(course.EndDate || "");       // Optional End Date
+  const [time, setTime] = useState(course.Time || "");       // Optional End Date
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,6 +18,7 @@ function EditCourseForm({ course, onSubmit, onCancel, teachers }) {
       TeacherID: teacherID,
       StartDate: startDate || null, // Ensure empty string is treated as null
       EndDate: endDate || null,
+      Time: time
     });
   };
 
@@ -39,6 +41,7 @@ function EditCourseForm({ course, onSubmit, onCancel, teachers }) {
           required
         />
       </div>
+      
       <div>
         <label>Start Date:</label>
         <input
@@ -53,6 +56,15 @@ function EditCourseForm({ course, onSubmit, onCancel, teachers }) {
           type="date"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
+        />
+      </div>
+
+      <div>
+        <label>Time:</label>
+        <textarea
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
+          
         />
       </div>
       <div>

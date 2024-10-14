@@ -132,7 +132,7 @@ export async function deleteCourse(courseID) {
 
 export async function addCourse(courseData) {
   // Destructure the necessary fields from courseData
-  const { CourseName, Description, TeacherID, ProgramID, StartDate, EndDate } = courseData;
+  const { CourseName, Description, TeacherID, ProgramID, StartDate, EndDate, Time } = courseData;
 
   // Use Supabase to insert the new course
   const { data, error } = await supabase
@@ -144,6 +144,7 @@ export async function addCourse(courseData) {
         TeacherID, // Ensure this is a valid UUID
         ProgramID, // Ensure this is a valid UUID
         StartDate: StartDate || null, // Set to null if not provided
+        Time: Time || null,
         EndDate: EndDate || null, // Set to null if not provided
       },
     ]);
