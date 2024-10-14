@@ -11,11 +11,11 @@ function NewCourseForm({ type }) {
   const [inputData, setInputData] = useState({
     CourseName: "",
     Description: "",
-    TeacherID: "", 
-    ProgramID: "", 
+    TeacherID: "",
+    ProgramID: "",
     StartDate: "",
     EndDate: "",
-    Time:""
+    Time: "",
   });
 
   const [teachers, setTeachers] = useState([]);
@@ -26,7 +26,7 @@ function NewCourseForm({ type }) {
     async function fetchData() {
       try {
         const teacherData = await getTeachers();
-        const programData = await getProgramList(); 
+        const programData = await getProgramList();
         setTeachers(teacherData);
         setPrograms(programData);
       } catch (error) {
@@ -119,20 +119,19 @@ function NewCourseForm({ type }) {
           </div>
         </div>
         <div className={styles.formRow}>
-  <div className={styles.formItem}>
-    <label htmlFor="Time" className={styles.formLabel}>
-      Time
-    </label>
-    <input
-      type="text"
-      name="Time"
-      value={inputData.Time}
-      onChange={handleChange}
-      className={styles.formInput}
-      required
-    />
-  </div>
-</div>
+          <div className={styles.formItem}>
+            <label htmlFor="Time" className={styles.formLabel}>
+              Time
+            </label>
+            <input
+              type="text"
+              name="Time"
+              value={inputData.Time}
+              onChange={handleChange}
+              className={styles.formInput}
+            />
+          </div>
+        </div>
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="TeacherID" className={styles.formLabel}>
@@ -180,14 +179,17 @@ function NewCourseForm({ type }) {
         </div>
 
         <div className={styles.buttons}>
-          <Button type="submit">Submit</Button>
-          <Button
-            type="button"
-            onClick={() => navigate("/courses/course-list")}
-          >
-            Cancel
-          </Button>
-        </div>
+  <Button type="submit">Submit</Button>
+  <Button
+    type="button"
+    onClickBtn={() => {
+      console.log("Cancel button clicked");
+      navigate("/courses/course-list");
+    }}
+  >
+    Cancel
+  </Button>
+</div>
       </form>
     </Container>
   );

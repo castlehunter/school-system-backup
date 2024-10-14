@@ -13,19 +13,19 @@ function CourseList() {
   const navigate = useNavigate();
   useEffect(() => {
     const fetchCourses = async () => {
-      setIsLoading(true); // Start loading
+      setIsLoading(true); 
       try {
-        const data = await getCourses(); // Fetch courses
-        setCourseData(data); // Set the fetched data
+        const data = await getCourses(); 
+        setCourseData(data);
       } catch (error) {
         setError("Failed to fetch courses.");
         console.error("Error fetching courses:", error);
       } finally {
-        setIsLoading(false); // Stop loading
+        setIsLoading(false); 
       }
     };
 
-    fetchCourses(); // Call the fetch function when component mounts
+    fetchCourses(); 
   }, []);
 
   function handlePageChange(page) {

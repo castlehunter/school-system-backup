@@ -1,8 +1,8 @@
 import styles from "./Button.module.css";
 
-function Button({ children, onClickBtn, size = "small",type = "button" }) {
+function Button({ children, onClickBtn, size = "small" }) {
   return (
-    <button onClick={onClickBtn} className={`${styles.btn} ${styles[size]}`} type={type}>
+    <button onClick={onClickBtn} className={`${styles.btn} ${styles[size]}`}>
       {children}
     </button>
   );
