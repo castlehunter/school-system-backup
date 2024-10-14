@@ -11,8 +11,8 @@ function NewCourseForm({ type }) {
   const [inputData, setInputData] = useState({
     CourseName: "",
     Description: "",
-    TeacherID: "",
-    ProgramID: "",
+    TeacherID: "", // Ensure this is a UUID
+    ProgramID: "", // Ensure this is a UUID
     StartDate: "",
     EndDate: "",
   });
@@ -24,8 +24,8 @@ function NewCourseForm({ type }) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const teacherData = await getTeachers();
-        const programData = await getProgramList();
+        const teacherData = await getTeachers(); // Fetch teachers from API
+        const programData = await getProgramList(); // Fetch programs from API
         setTeachers(teacherData);
         setPrograms(programData);
       } catch (error) {
@@ -45,13 +45,12 @@ function NewCourseForm({ type }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting Course Data:", inputData); // Log the inputData to debug
     try {
       await addCourse(inputData);
-      // Optionally, redirect or show a success message
-      navigate("/courses/course-list"); // Redirect to the course list or wherever appropriate
+      navigate("/courses/course-list");
     } catch (error) {
       console.error("Error submitting form:", error);
-      // Optionally, show an error message to the user
     }
   };
 
@@ -133,7 +132,9 @@ function NewCourseForm({ type }) {
             >
               <option value="">Select a Teacher</option>
               {teachers.map((teacher) => (
-                <option key={teacher.UserNo} value={teacher.UserNo}>
+                <option key={teacher.TeacherID} value={teacher.TeacherID}>
+                  {" "}
+                  {/* Ensure UserNo is the UUID */}
                   {teacher.Users.FirstName} {teacher.Users.LastName}
                 </option>
               ))}
@@ -155,7 +156,9 @@ function NewCourseForm({ type }) {
             >
               <option value="">Select a Program</option>
               {programs.map((program) => (
-                <option key={program.ProgramNo} value={program.ProgramNo}>
+                <option key={program.ProgramID} value={program.ProgramID}>
+                  {" "}
+                  {/* Use ProgramID instead of ProgramNo */}
                   {program.ProgramName}
                 </option>
               ))}
@@ -165,7 +168,10 @@ function NewCourseForm({ type }) {
 
         <div className={styles.buttons}>
           <Button type="submit">Submit</Button>
-          <Button type="button" onClick={() => navigate("/courses/course-list")}>
+          <Button
+            type="button"
+            onClick={() => navigate("/courses/course-list")}
+          >
             Cancel
           </Button>
         </div>

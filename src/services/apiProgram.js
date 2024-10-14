@@ -4,7 +4,8 @@ export async function getProgramList() {
   const { data, error } = await supabase.from("Programs").select(`
    ProgramName,
    ProgramCode,
-   ProgramNo
+   ProgramNo,
+   ProgramID
   `);
 
   console.log(data);
