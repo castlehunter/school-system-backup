@@ -147,11 +147,12 @@ function App() {
               loader: getStudents,
               title: "Student List",
             },
-            // {
-            //   path: "/student/:studentID",
-            //   element: <StudentDetail />,
-            //   title: "Student Details",
-            // },
+            {
+              path: "/students/:studentID",
+              element: <StudentDetail />,
+              title: "Student Detail",
+              hideInSidebar: true,
+            }
           ],
         },
 

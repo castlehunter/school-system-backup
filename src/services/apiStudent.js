@@ -69,12 +69,31 @@ export async function deleteStudent(StudentNo) {
 }
 
 // get student by student number
-export async function getStudentByStudentNo(StudentNo) {
+export async function getStudentByStudentNo(userNo) {
   const { data, error } = await supabase
-    .from("Students")
-    .select("*")
-    .eq("StudentNo", StudentNo)
-    .single();
+  .from("Students")
+  .select(
+    `*,
+  Users (
+    UserNo,
+    UserID,
+    UserName,
+    FirstName,
+    LastName,
+    Email,
+    HomeAddress,
+    DateOfBirth,
+    PhoneNumber,
+    RoleID,
+    Roles: Roles (
+      RoleID,
+      RoleName
+    )
+  )
+`
+  )
+  .eq("Users.UserNo", userNo)
+  .single();
 
   if (error) {
     console.error("Failed to fetch student:", error);
