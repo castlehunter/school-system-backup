@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getStudents } from "../../services/apiStudent"; // API to fetch students
-import { insertEnrollment } from "../../services/apiEnrollment"; // API to insert enrollment
-import { getCourseDetail } from "../../services/apiCourse"; // API to fetch course details
-import Button from "../../components/Button/Button"; // Your button component
+import { getStudents } from "../../services/apiStudent"; 
+import { insertEnrollment } from "../../services/apiEnrollment"; 
+import { getCourseDetail } from "../../services/apiCourse"; 
+import Button from "../../components/Button/Button"; 
 
 function EnrollmentForm() {
-  const { courseNo } = useParams(); // Get the courseNo from URL
+  const { courseNo } = useParams(); 
   const [students, setStudents] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [course, setCourse] = useState(null);
-  const [enrollmentDate, setEnrollmentDate] = useState(""); // State for enrollment date
-  const [isFinished, setIsFinished] = useState(false); // State for isFinished
+  const [enrollmentDate, setEnrollmentDate] = useState(""); 
+  const [isFinished, setIsFinished] = useState(false); 
 
-  // Fetch students when the component mounts
   useEffect(() => {
     const fetchStudents = async () => {
       try {
@@ -27,7 +26,6 @@ function EnrollmentForm() {
     fetchStudents();
   }, []);
 
-  // Fetch course details using courseNo
   useEffect(() => {
     const fetchCourseDetails = async () => {
       try {
@@ -41,18 +39,16 @@ function EnrollmentForm() {
     fetchCourseDetails();
   }, [courseNo]);
 
-  // Handle checkbox change
   const handleCheckboxChange = (studentId) => {
     setSelectedStudents((prevSelected) => {
       if (prevSelected.includes(studentId)) {
-        return prevSelected.filter((id) => id !== studentId); // Remove from selection
+        return prevSelected.filter((id) => id !== studentId); 
       } else {
-        return [...prevSelected, studentId]; // Add to selection
+        return [...prevSelected, studentId]; 
       }
     });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -60,7 +56,6 @@ function EnrollmentForm() {
         await insertEnrollment(studentId, course.CourseID, enrollmentDate, isFinished); // Include new fields in the API call
       }
       alert("Enrollment successful!");
-      // Reset selections and fields if needed
       setSelectedStudents([]);
       setEnrollmentDate("");
       setIsFinished(false);
@@ -108,7 +103,7 @@ function EnrollmentForm() {
           <input
             type="checkbox"
             checked={isFinished}
-            onChange={() => setIsFinished((prev) => !prev)} // Toggle isFinished
+            onChange={() => setIsFinished((prev) => !prev)} 
           />
           Is Finished
         </label>
