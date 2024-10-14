@@ -1,5 +1,3 @@
-
-
 import Container from "../../ui/Layout/Container";
 import generalStyles from "../../generalStyles.module.css";
 import { useParams, useNavigate } from "react-router-dom"; 
@@ -9,18 +7,18 @@ import Loader from "../../ui/Loader";
 import EditContainer from "../../ui/Layout/EditContainer"; 
 import { getCourseDetail, deleteCourse, updateCourse } from "../../services/apiCourse"; 
 import Button from "../../components/Button/Button";
-import { Link } from "react-router-dom";
 import { getTeachers } from "../../services/apiTeacher"; 
-
 import EditCourseForm from "../../components/Form/EditCourseForm";
+
 function CourseDetail() {
-  const { courseNo } = useParams(); 
+  const { courseNo, courseName } = useParams(); // Extract both courseNo and courseName
   const navigate = useNavigate(); 
   const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false); 
   const [teachers, setTeachers] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -30,14 +28,15 @@ function CourseDetail() {
         console.error('Failed to fetch teachers:', error);
       }
     }
-
     fetchData();
   }, []);
+
   useEffect(() => {
     async function fetchCourseDetails() {
       try {
         setIsLoading(true);
         setError(null);
+        // Fetch course data using courseNo
         const courseData = await getCourseDetail({ params: { ID: courseNo } });
         setCourse(courseData);
       } catch (err) {
@@ -46,7 +45,6 @@ function CourseDetail() {
         setIsLoading(false);
       }
     }
-
     fetchCourseDetails();
   }, [courseNo]);
 
@@ -60,15 +58,9 @@ function CourseDetail() {
     }
   };
 
-
-  const handleBack = async () => {
-    try {
-      navigate("/courses/course-list"); 
-    } catch (err) {
-      alert("Failed to go back " + err.message); 
-    }
+  const handleBack = () => {
+    navigate("/courses/course-list"); 
   };
-
 
   const handleCancelEdit = () => {
     setIsEditing(false); 
@@ -101,8 +93,12 @@ function CourseDetail() {
         {course ? (
           <div>
             {isEditing ? (
-              <EditCourseForm course={course}       teachers={teachers}
-              onSubmit={handleEditCourse}  onCancel={handleCancelEdit}/> 
+              <EditCourseForm 
+                course={course}       
+                teachers={teachers}
+                onSubmit={handleEditCourse}  
+                onCancel={handleCancelEdit}
+              /> 
             ) : (
               <div>
                 <p>Course Code: {course.CourseNo}</p>

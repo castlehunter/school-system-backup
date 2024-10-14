@@ -33,7 +33,7 @@ export async function getCourseDetail({ params }) {
       )
     `
     )
-    .eq("CourseID", ID)
+    .eq("CourseNo", ID)
     .single();
 
   if (courseError) {

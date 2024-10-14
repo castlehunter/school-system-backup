@@ -178,6 +178,12 @@ function App() {
               element: <CourseDetail />,
               title: "Course Details",
             },
+            {
+              path: "/courses/newEnrollment/:courseNo",
+              element: <NewEnrollment />,
+              title: "New Enrollment",
+            }
+            
           ],
         },
         {
