@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link, useLoaderData } from "react-router-dom";
 import styles from "./SidebarNew.module.css";
 import logo from "../../assets/logo-removebg-preview.png";
-import { Link } from "react-router-dom";
 import Search from "../Search/Search";
 import icons from "../../ui/Icons/icons";
-import { useLoaderData } from "react-router-dom";
 
 function SidebarNew() {
   const routes = useLoaderData();
@@ -48,7 +46,19 @@ function SidebarNew() {
     return true;
   });
 
-  console.log("Filtered Menu Items", filteredMenuItems);
+  const itemsToRemove = ["New Enrollment", "Course Details"];
+
+  const finalFilteredMenuItems = filteredMenuItems.map((item) => {
+    if (item.title === "Courses") {
+      return {
+        ...item,
+        children: item.children.filter(
+          (subItem) => !itemsToRemove.includes(subItem.title)
+        ),
+      };
+    }
+    return item;
+  });
 
   const searchItems = menuItems
     .flatMap((item) => item.children)
@@ -66,12 +76,11 @@ function SidebarNew() {
       <Link to="/" className={styles.logoLink}>
         <div className={styles.logoContainer}>
           <img src={logo} alt="logo" className={styles.logoImage} />
-          {/* <span className={styles.logoText}>ABC Learning Centre</span> */}
         </div>
       </Link>
       <Search searchItems={searchItems} colorType="dark" />
       <div className={styles.menu}>
-        {filteredMenuItems.map((item) => (
+        {finalFilteredMenuItems.map((item) => (
           <div key={item.title}>
             <div
               className={styles.menuTitle}
