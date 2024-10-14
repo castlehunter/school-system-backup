@@ -34,7 +34,8 @@ function CourseTable({ data, rowsPerPage, currPage }) {
           <th>S/N</th>
           <th>Course Code</th>
           <th>Course Name</th>
-          <th>Time</th>
+          <th>Start Date</th>
+          <th>End Date</th>
           <th>Description</th>
           <th>Action</th>
         </tr>
@@ -53,7 +54,8 @@ function CourseTable({ data, rowsPerPage, currPage }) {
             <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
             <td>{course.CourseNo}</td>
             <td>{course.CourseName}</td>
-            <td>{course.Time}</td>
+            <td>{course.StartDate}</td>
+            <td>{course.EndDate}</td>
             <td>{course.Description}</td>
             <td>
               <Link

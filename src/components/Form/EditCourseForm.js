@@ -6,10 +6,18 @@ function EditCourseForm({ course, onSubmit, onCancel, teachers }) {
   const [courseName, setCourseName] = useState(course.CourseName);
   const [description, setDescription] = useState(course.Description);
   const [teacherID, setTeacherID] = useState(course.TeacherID);
+  const [startDate, setStartDate] = useState(course.StartDate || ""); // Optional Start Date
+  const [endDate, setEndDate] = useState(course.EndDate || "");       // Optional End Date
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ CourseName: courseName, Description: description, TeacherID: teacherID });
+    onSubmit({
+      CourseName: courseName,
+      Description: description,
+      TeacherID: teacherID,
+      StartDate: startDate || null, // Ensure empty string is treated as null
+      EndDate: endDate || null,
+    });
   };
 
   return (
@@ -31,29 +39,34 @@ function EditCourseForm({ course, onSubmit, onCancel, teachers }) {
           required
         />
       </div>
-      
-      {/* Non-editable ProgramID and ProgramName */}
       <div>
-        <label>Program ID:</label>
+        <label>Start Date:</label>
         <input
-          type="text"
-          value={course.ProgramID}
-          readOnly
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+      </div>
+      <div>
+        <label>End Date:</label>
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
         />
       </div>
       <div>
         <label>Program Name:</label>
-        <input
-          type="text"
-          value={course.Programs.ProgramName}
-          readOnly
-        />
+        <input type="text" value={course.Programs.ProgramName} readOnly />
       </div>
-
       <div>
         <label>Teacher:</label>
         {teachers && teachers.length > 0 ? (
-          <select value={teacherID} onChange={(e) => setTeacherID(e.target.value)} required>
+          <select
+            value={teacherID}
+            onChange={(e) => setTeacherID(e.target.value)}
+            required
+          >
             {teachers.map((teacher) => (
               <option key={teacher.TeacherID} value={teacher.TeacherID}>
                 {teacher.Users.FirstName} {teacher.Users.LastName}
@@ -66,9 +79,9 @@ function EditCourseForm({ course, onSubmit, onCancel, teachers }) {
       </div>
 
       <Button type="submit">Update Course</Button>
-      <button className="btn btn-secondary" type="button" onClick={onCancel}>
+      <Button type="button" onClickBtn={onCancel}>
         Cancel
-      </button>
+      </Button>
     </form>
   );
 }

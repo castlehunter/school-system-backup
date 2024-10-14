@@ -14,7 +14,7 @@ import { getTeachers } from "../../services/apiTeacher";
 
 import EditCourseForm from "../../components/Form/EditCourseForm";
 function CourseDetail() {
-  const { courseID } = useParams(); 
+  const { courseNo } = useParams(); 
   const navigate = useNavigate(); 
   const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +38,7 @@ function CourseDetail() {
       try {
         setIsLoading(true);
         setError(null);
-        const courseData = await getCourseDetail({ params: { ID: courseID } });
+        const courseData = await getCourseDetail({ params: { ID: courseNo } });
         setCourse(courseData);
       } catch (err) {
         setError(err.message);
@@ -48,20 +48,22 @@ function CourseDetail() {
     }
 
     fetchCourseDetails();
-  }, [courseID]);
+  }, [courseNo]);
 
   const handleDeleteCourse = async () => {
     try {
-      await deleteCourse(courseID); 
+      await deleteCourse(courseNo); 
       alert("Course deleted successfully!");
-      navigate("/course/course-list"); 
+      navigate("/courses/course-list"); 
     } catch (err) {
       alert("Failed to delete the course: " + err.message);
     }
   };
+
+
   const handleBack = async () => {
     try {
-      navigate("/course/course-list"); 
+      navigate("/courses/course-list"); 
     } catch (err) {
       alert("Failed to go back " + err.message); 
     }
@@ -74,10 +76,10 @@ function CourseDetail() {
 
   const handleEditCourse = async (updatedCourse) => {
     try {
-      await updateCourse(courseID, updatedCourse); 
+      await updateCourse(courseNo, updatedCourse); 
       alert("Course updated successfully!"); 
       setIsEditing(false); 
-      const courseData = await getCourseDetail({ params: { ID: courseID } });
+      const courseData = await getCourseDetail({ params: { ID: courseNo } });
       setCourse(courseData);
     } catch (err) {
       alert("Failed to update course: " + err.message); 
@@ -103,9 +105,11 @@ function CourseDetail() {
               onSubmit={handleEditCourse}  onCancel={handleCancelEdit}/> 
             ) : (
               <div>
-                <p>Course ID: {course.CourseID}</p>
+                <p>Course Code: {course.CourseNo}</p>
                 <p>Course Name: {course.CourseName}</p>
                 <p>Description: {course.Description}</p>
+                <p>Start Date: {course.StartDate}</p>
+                <p>End Date: {course.EndDate}</p>
                 <p>Program Name: {course.Programs.ProgramName}</p>
                 <p>Program Code: {course.Programs.ProgramCode}</p>
                 <p>Teacher Name: {course.TeacherUser.FirstName} {course.TeacherUser.LastName}</p>
@@ -113,7 +117,6 @@ function CourseDetail() {
                 <Button onClickBtn={() => setIsEditing(true)}>Edit Course</Button> 
                 <Button onClickBtn={handleDeleteCourse}>Delete Course</Button>
                 <Button onClickBtn={handleBack}>Back</Button>
-
               </div>
             )}
           </div>

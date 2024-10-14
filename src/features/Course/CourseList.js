@@ -41,7 +41,7 @@ function CourseList() {
   }
 
   function handleAddBtn() {
-    navigate("/course/new-course");
+    navigate("/courses/new-course");
   }
 
   return (

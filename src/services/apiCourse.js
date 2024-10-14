@@ -129,29 +129,35 @@ export async function deleteCourse(courseID) {
 
 
 
-  export async function createCourse(courseDetails) {
-    const { CourseName, Description, TeacherID, ProgramID, CourseNumber } = courseDetails;
-  
-    const { data, error } = await supabase
-      .from("Courses") 
-      .insert([
-        {
-          CourseName: CourseName,
-          Description: Description,
-          TeacherID: TeacherID,
-          ProgramID: ProgramID,
-          CourseNumber: CourseNumber,
-        },
-      ]);
-  
-    if (error) {
-      console.error("Error creating course:", error);
-      throw new Error("Failed to create course");
-    }
-  
-    return {
-      message: "Course successfully created.",
-      newCourse: data,
-    };
+
+export async function addCourse(courseData) {
+  // Destructure the necessary fields from courseData
+  const { CourseName, Description, TeacherID, ProgramID, StartDate, EndDate } = courseData;
+
+  // Use Supabase to insert the new course
+  const { data, error } = await supabase
+    .from("Courses")
+    .insert([
+      {
+        CourseName,
+        Description,
+        TeacherID, // Ensure this is a valid UUID
+        ProgramID, // Ensure this is a valid UUID
+        StartDate: StartDate || null, // Set to null if not provided
+        EndDate: EndDate || null, // Set to null if not provided
+      },
+    ]);
+
+  // Check for errors and handle them
+  if (error) {
+    console.error("Error adding course:", error);
+    throw new Error("Failed to add course");
   }
+
+  // Return the newly added course data
+  return data;
+}
+
+  
+  
   

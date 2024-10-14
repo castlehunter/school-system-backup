@@ -173,7 +173,7 @@ function App() {
               title: "New Course",
             },
             {
-              path: "/courses/:courseID",
+              path: "/courses/:courseNo",
               element: <CourseDetail />,
               title: "Course Details",
             },
