@@ -4,7 +4,6 @@ import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
 import Loader from "../../ui/Loader";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import useCheckbox from "../../hooks/useCheckbox";
 
 function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
@@ -71,7 +70,8 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
               <td>{student.Programs.ProgramName}</td>
               <td>
                 <Link
-                  onClick={() => handleViewClick(student.StudentID)}
+                  to={`/teachers/${student.Users.UserNo}`}
+                  //onClick={() => handleViewClick(student.Users.UserNo)}
                   className={generalStyles.link}
                 >
                   View Details

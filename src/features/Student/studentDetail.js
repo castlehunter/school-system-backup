@@ -4,13 +4,13 @@ import { getStudentByStudentNo } from "../../services/apiStudent";
 import StudentDetailForm from "../../components/Form/StudentDetailForm";
 
 function StudentDetail() {
-  const { studentID } = useParams();
+  const { userNo } = useParams();
   const [studentData, setStudentData] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getStudentByStudentNo(studentID);
+        const data = await getStudentByStudentNo(userNo);
         setStudentData(data);
       } catch (error) {
         console.error("Failed to fetch student data:", error);
@@ -18,7 +18,7 @@ function StudentDetail() {
     }
 
     fetchData();
-  }, [studentID]);
+  }, [userNo]);
 
   return (
     <div>
