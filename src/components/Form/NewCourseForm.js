@@ -179,17 +179,17 @@ function NewCourseForm({ type }) {
         </div>
 
         <div className={styles.buttons}>
-  <Button type="submit">Submit</Button>
-  <Button
-    type="button"
-    onClickBtn={() => {
-      console.log("Cancel button clicked");
-      navigate("/courses/course-list");
-    }}
-  >
-    Cancel
-  </Button>
-</div>
+          <Button type="submit">Submit</Button>
+          <Button
+            type="button"
+            onClickBtn={() => {
+              console.log("Cancel button clicked");
+              navigate("/courses/course-list");
+            }}
+          >
+            Cancel
+          </Button>
+        </div>
       </form>
     </Container>
   );
