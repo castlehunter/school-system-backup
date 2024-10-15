@@ -12,6 +12,14 @@ function EditCourseForm({ course, onSubmit, onCancel, teachers }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Course Data being submitted:", {
+      CourseName: courseName,
+      Description: description,
+      TeacherID: teacherID,
+      StartDate: startDate || null,
+      EndDate: endDate || null,
+      Time: time,
+    });
     onSubmit({
       CourseName: courseName,
       Description: description,

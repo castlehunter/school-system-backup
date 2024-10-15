@@ -88,11 +88,11 @@ export async function deleteCourse(courseID) {
 }
   
 
-  export async function updateCourse(courseID, updatedData) {
+  export async function updateCourse(courseNo, updatedData) {
     const { data, error } = await supabase
       .from("Courses")
       .update(updatedData)
-      .eq("CourseID", courseID);
+      .eq("CourseNo", courseNo);
   
     if (error) {
       console.error(error.message);
