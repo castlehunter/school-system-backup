@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { getProgramById } from "../../services/apiProgram.js";
-import ProgramForm from '../../components/Form/ProgramForm.js';
+import ProgramForm from "../../components/Form/ProgramForm.js";
 
 function ViewProgram() {
   const { programId } = useParams();
@@ -10,8 +10,7 @@ function ViewProgram() {
   const [isLoading, setIsLoading] = useState(true);
   const [currPage, setCurrPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -39,19 +38,15 @@ function ViewProgram() {
   }
   const handleBack = async () => {
     try {
-      navigate("/programs/program-list"); 
+      navigate("/programs/program-list");
     } catch (err) {
-      alert("Failed to go back " + err.message); 
+      alert("Failed to go back " + err.message);
     }
   };
   return (
-     <div>
+    <div>
       <h1>Program Management</h1>
-      <ProgramForm
-        mode="view" 
-        data={data}     
-        handleBack={handleBack}
-      />
+      <ProgramForm mode="view" data={data} handleBack={handleBack} />
     </div>
   );
 }
