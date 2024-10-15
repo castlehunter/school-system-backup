@@ -10,6 +10,7 @@ import { getStudents } from "../../services/apiStudent";
 import { getTeachers } from "../../services/apiTeacher";
 import { getCourses } from "../../services/apiCourse";
 import { getEnrollments } from "../../services/apiEnrollment";
+import EditContainer from "../../ui/Layout/EditContainer";
 
 function Overview() {
   const [loginRole, setLoginRole] = useState("");
@@ -142,37 +143,42 @@ function Overview() {
 
   return (
     <>
+      <h1>Overview</h1>{" "}
       <div className={styles.statcards}>{renderStatCards()}</div>
-      <Container title="Overview" headingType="primaryHeading">
-        <p>
-          Navigate through the menu to explore features and tools that simplify
-          and enhance your tasks within the school system. Add more textsAdd
-          more textsAdd more textsAdd more textsAdd more texts<br></br>Add more
-          texts<br></br>Add more texts<br></br>Add more texts<br></br>Add more
-          texts<br></br>Add more texts<br></br>Add more texts<br></br>Add more
-          texts<br></br>Add more texts
-        </p>
-
-        <div className={styles.navigationLinks}>
-          <h2 className={generalStyles.secondaryHeading}>Quick Links</h2>
-          {renderQuickLinks()}
+      <div className={styles.overviewLayout}>
+        <div className={styles.mainColumn}>
+          <EditContainer title="Announcement" showEditButton={false}>
+            Navigate through the menu to explore features and tools that
+            simplify and enhance your tasks within the school system. Add more
+            textsAdd more textsAdd more textsAdd more textsAdd more texts
+            <br></br>Add more texts
+            <br></br>Add more texts<br></br>Add more texts<br></br>Add more
+            texts
+            <br></br>Add more texts<br></br>Add more texts<br></br>Add more
+            texts
+            <br></br>Add more texts
+          </EditContainer>
+          <EditContainer title="Quick Links" showEditButton={false}>
+            {renderQuickLinks()}
+          </EditContainer>
+          <EditContainer title="Logged in as" showEditButton={false}>
+            {firstName} {lastName}
+          </EditContainer>
         </div>
-
-        <div className={styles.announcements}>
-          <h2 className={generalStyles.secondaryHeading}>Announcements</h2>
-          <p>
-            This feature will be implemented after other functionalities are
-            completed.
-          </p>
+        <div className={styles.secondaryColumn}>
+          <EditContainer title="secondary column" showEditButton={false}>
+            "The silver umbrellas floated gently through the ocean breeze, while
+            the mountains whispered secrets to the birds wearing mismatched
+            socks. In the distance, a train made entirely of marshmallows glided
+            on a rainbow track, leaving behind a trail of laughing bubbles.
+            Meanwhile, the clocktower chimed at the wrong time, prompting a
+            parade of giant rubber ducks to march through the sunflower forest.
+            Every tree was made of candy canes, and the wind carried the faint
+            sound of a piano playing underwater, as jellybeans fell from the sky
+            like soft rain.
+          </EditContainer>
         </div>
-
-        <div className={styles.userInfo}>
-          <h2 className={generalStyles.secondaryHeading}>User Information</h2>
-          <p>
-            Logged in as: {firstName} {lastName}
-          </p>
-        </div>
-      </Container>
+      </div>
     </>
   );
 }
