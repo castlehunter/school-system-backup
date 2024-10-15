@@ -85,6 +85,7 @@ function CourseDetail() {
 
   async function handleClickSave() {
     try {
+      console.log(course);
       const res = await updateCourse(courseNo, course);
       setIsEditing(false);
       if (res) {
