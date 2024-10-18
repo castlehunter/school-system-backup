@@ -20,7 +20,7 @@ body {
   color: #333;
   font-size: 1.4rem;
   overflow-x: hidden;
-
+  line-height: 2.2rem;
   margin-left: calc(100vw - 100%);
 }
 

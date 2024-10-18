@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Overview.module.css";
 import generalStyles from "../../generalStyles.module.css";
-import Container from "../../ui/Layout/Container";
 import StatCard from "../../components/StatCard/StatCard";
 import icons from "../../ui/Icons/icons";
 import { getStudents } from "../../services/apiStudent";
@@ -165,17 +164,45 @@ function Overview() {
             {firstName} {lastName}
           </EditContainer>
         </div>
+
         <div className={styles.secondaryColumn}>
-          <EditContainer title="secondary column" showEditButton={false}>
-            "The silver umbrellas floated gently through the ocean breeze, while
-            the mountains whispered secrets to the birds wearing mismatched
-            socks. In the distance, a train made entirely of marshmallows glided
-            on a rainbow track, leaving behind a trail of laughing bubbles.
-            Meanwhile, the clocktower chimed at the wrong time, prompting a
-            parade of giant rubber ducks to march through the sunflower forest.
-            Every tree was made of candy canes, and the wind carried the faint
-            sound of a piano playing underwater, as jellybeans fell from the sky
-            like soft rain.
+          <EditContainer title="Main Office Contact" showEditButton={false}>
+            <p>
+              For inquiries related to enrolled students, including class
+              adjustments, withdrawals, and general support:
+            </p>
+            <br />
+            <p>Address: 123 Learning Avenue, Education City, XYZ 45678 </p>
+            <p>Phone: (123) 456-7890 </p>
+            <p>Email: info@abc-learn.edu</p>
+            <p>Website: www.abc-learn.edu</p>
+            <br />
+            <p> General Office Hours</p>
+            Monday to Friday: 8:00 AM - 4:00 PM <br />
+            Saturday & Sunday: Closed
+          </EditContainer>
+          <EditContainer
+            title="Admission Office Contact"
+            showEditButton={false}
+          >
+            <p>
+              For all admissions-related inquiries, including application and
+              enrollment procedures:
+            </p>
+            <p>Phone: (123) 456-7890 </p>
+            <p>Email: admissions@abc-learn.edu</p>
+          </EditContainer>
+          <EditContainer
+            title="Technical Support / IT Helpdesk"
+            showEditButton={false}
+          >
+            <p>
+              For issues related to school system or technical difficulties:
+            </p>
+            <p>Phone: (416) 666-0000 </p>
+            <p>Email: tech@abc-learn.edu</p>
+            <p>Website: www.abc-learn.edu</p>
+            <br />
           </EditContainer>
         </div>
       </div>

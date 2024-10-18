@@ -54,7 +54,7 @@ function AccountInfoForm({ userNo, showEditButton }) {
   return (
     <EditContainer
       title="Account Information"
-      headingType="secondaryHeading"
+      headingType="containerHeading"
       showEditButton={showEditButton}
     >
       <div>

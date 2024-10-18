@@ -24,20 +24,23 @@ function TeacherList() {
   }
 
   return (
-    <TableContainer
-      title="All Teachers"
-      rowsPerPage={rowsPerPage}
-      totalPages={totalPages}
-      currPage={currPage}
-      onPageChange={handlePageChange}
-      onRowsPerPageChange={handleRowsPerPageChange}
-    >
-      <TeacherTable
-        data={teachersData}
+    <>
+      <h1>Teacher List</h1>
+      <TableContainer
+        title="All Teachers"
         rowsPerPage={rowsPerPage}
+        totalPages={totalPages}
         currPage={currPage}
-      />
-    </TableContainer>
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleRowsPerPageChange}
+      >
+        <TeacherTable
+          data={teachersData}
+          rowsPerPage={rowsPerPage}
+          currPage={currPage}
+        />
+      </TableContainer>
+    </>
   );
 }
 

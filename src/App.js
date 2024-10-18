@@ -152,7 +152,7 @@ function App() {
               element: <StudentDetail />,
               title: "Student Detail",
               hideInSidebar: true,
-            }
+            },
           ],
         },
 
@@ -182,8 +182,7 @@ function App() {
               path: "/courses/newEnrollment/:courseNo",
               element: <NewEnrollment />,
               title: "New Enrollment",
-            }
-            
+            },
           ],
         },
         {

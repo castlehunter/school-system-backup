@@ -23,11 +23,11 @@ gap: 2rem;
 - html
 62.5% (10px)
 
-- primaryHeading
+- containerHeading
 2.4rem
 800 weight
 
-- secondaryHeading / sidebar menu title
+- containerHeading / sidebar menu title
 1.8rem
 800 weight
 

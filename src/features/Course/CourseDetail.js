@@ -1,4 +1,3 @@
-import Container from "../../ui/Layout/Container";
 import generalStyles from "../../generalStyles.module.css";
 import EditCourseForm from "../../components/Form/EditCourseForm";
 import styles from "../Profile.module.css";
@@ -137,7 +136,7 @@ function CourseDetail() {
           onClickEdit={handleEditBtn}
           onClickSave={handleClickSave}
           onClickCancel={handleCancelEdit}
-          headingType="primaryHeading"
+          headingType="containerHeading"
         >
           <div className={formStyles.sectionLayout}>
             <form>

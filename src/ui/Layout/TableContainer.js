@@ -19,7 +19,7 @@ function TableContainer({
   return (
     <div className={generalStyles.container}>
       <div className={generalStyles.containerHeader}>
-        <div className={generalStyles.primaryHeading}>
+        <div className={generalStyles.containerHeading}>
           <span>{title}</span>
           {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
         </div>

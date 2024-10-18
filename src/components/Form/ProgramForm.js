@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styles from "../../features/Profile.module.css";
 import generalStyles from "../../generalStyles.module.css";
 import formStyles from "../Form/Form.module.css";
-import Container from "../../ui/Layout/Container";
+import EditContainer from "../../ui/Layout/EditContainer";
 import Button from "../../components/Button/Button.js";
 
 const ProgramForm = ({ mode, data, handleUpdate, handleBack, handleSave }) => {
@@ -12,7 +12,7 @@ const ProgramForm = ({ mode, data, handleUpdate, handleBack, handleSave }) => {
   return (
     // <div className={styles.generalStyles_container} >
     //   <div className={styles.secondaryColumn}>
-    <Container
+    <EditContainer
       title={
         mode === "edit"
           ? "Edit Program"
@@ -20,7 +20,7 @@ const ProgramForm = ({ mode, data, handleUpdate, handleBack, handleSave }) => {
           ? "View Program"
           : "Add New Program"
       }
-      headingType="primaryHeading"
+      headingType="containerHeading"
     >
       <div className={formStyles.formRow}>
         <div className={formStyles.formItem}>
@@ -64,7 +64,7 @@ const ProgramForm = ({ mode, data, handleUpdate, handleBack, handleSave }) => {
         )}
         <Button onClickBtn={handleBack}>Cancel</Button>{" "}
       </div>
-    </Container>
+    </EditContainer>
     //   </div>
     // </div>
   );

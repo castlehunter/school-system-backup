@@ -13,11 +13,14 @@ import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
  *************************************************/
 function MyAccount() {
   return (
-    <div className={styles.myAccountLayout}>
-      <PersonalInfoForm />
-      <SecurityInfoForm />
-      <AccountInfoForm />
-    </div>
+    <>
+      <h1>My Account</h1>
+      <div className={styles.myAccountLayout}>
+        <PersonalInfoForm />
+        <SecurityInfoForm />
+        <AccountInfoForm />
+      </div>
+    </>
   );
 }
 

@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import styles from "../Profile.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
-import Container from "../../ui/Layout/Container";
 import ProfileInfoForm from "../../components/Form/ProfileInfoForm";
 import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
 import AccountInfoForm from "../../components/Form/AccountInfoForm";
@@ -50,7 +49,7 @@ function ViewUser() {
       <div className={styles.secondaryColumn}>
         <SecurityInfoForm userNo={userNo} />
         <AccountInfoForm userNo={userNo} />
-        <Container title="Some charts here" headingType="secondaryHeading">
+        <EditContainer title="Some charts here">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -58,16 +57,16 @@ function ViewUser() {
           reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
-        </Container>{" "}
-        <Container title="Remarks" headingType="secondaryHeading">
+        </EditContainer>{" "}
+        <EditContainer title="Remarks">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-        </Container>{" "}
-        <Container title="Communication" headingType="secondaryHeading">
+        </EditContainer>{" "}
+        <EditContainer title="Communication">
           123 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-        </Container>{" "}
-        <Container title="Communication" headingType="secondaryHeading">
+        </EditContainer>{" "}
+        <EditContainer title="Communication">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -75,7 +74,7 @@ function ViewUser() {
           reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
-        </Container>
+        </EditContainer>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "../Button/Button.js";
 import styles from "./Form.module.css";
 import { CreateUser } from "../../services/apiUser.js";
-import Container from "../../ui/Layout/Container.js";
+import EditContainer from "../../ui/Layout/EditContainer.js";
 import ModalBox from "../ModalBox/ModalBox.js";
 
 function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
@@ -86,7 +86,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   }
   //
   return (
-    <Container title="New Course" headingType="primaryHeading">
+    <EditContainer title="New Course">
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formRow}>
           <div className={styles.formItem}>
@@ -260,7 +260,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
           <ModalBox handleCloseModal={handleCloseModal} />
         </div>
       )}
-    </Container>
+    </EditContainer>
   );
 }
 

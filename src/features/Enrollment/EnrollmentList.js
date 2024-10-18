@@ -49,22 +49,25 @@ function EnrollmentList() {
   }
 
   return (
-    <TableContainer
-      title="All Enrollments"
-      rowsPerPage={rowsPerPage}
-      totalPages={totalPages}
-      currPage={currPage}
-      onPageChange={handlePageChange}
-      onRowsPerPageChange={handleRowsPerPageChange}
-      onClickBtn={handleAddBtn}
-    >
-      <EnrollmentTable
-        enrollmentData={enrollmentData}
+    <>
+      <h1>Enrollment List</h1>
+      <TableContainer
+        title="All Enrollments"
         rowsPerPage={rowsPerPage}
+        totalPages={totalPages}
         currPage={currPage}
-        isLoading={isLoading}
-      />
-    </TableContainer>
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleRowsPerPageChange}
+        onClickBtn={handleAddBtn}
+      >
+        <EnrollmentTable
+          enrollmentData={enrollmentData}
+          rowsPerPage={rowsPerPage}
+          currPage={currPage}
+          isLoading={isLoading}
+        />
+      </TableContainer>
+    </>
   );
 }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Button from "../Button/Button.js";
-import Container from "../../ui/Layout/Container.js";
+import EditContainer from "../../ui/Layout/EditContainer.js";
 import styles from "./Form.module.css";
 import { getTeachers } from "../../services/apiTeacher.js"; // Import API calls
 import { getProgramList } from "../../services/apiProgram.js"; // Import API calls
@@ -56,7 +56,7 @@ function NewCourseForm({ type }) {
   };
 
   return (
-    <Container title="New Course" headingType="primaryHeading">
+    <EditContainer title="New Course" headingType="containerHeading">
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.formRow}>
           <div className={styles.formItem}>
@@ -191,7 +191,7 @@ function NewCourseForm({ type }) {
           </Button>
         </div>
       </form>
-    </Container>
+    </EditContainer>
   );
 }
 

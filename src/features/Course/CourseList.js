@@ -13,19 +13,19 @@ function CourseList() {
   const navigate = useNavigate();
   useEffect(() => {
     const fetchCourses = async () => {
-      setIsLoading(true); 
+      setIsLoading(true);
       try {
-        const data = await getCourses(); 
+        const data = await getCourses();
         setCourseData(data);
       } catch (error) {
         setError("Failed to fetch courses.");
         console.error("Error fetching courses:", error);
       } finally {
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
 
-    fetchCourses(); 
+    fetchCourses();
   }, []);
 
   function handlePageChange(page) {
@@ -45,23 +45,26 @@ function CourseList() {
   }
 
   return (
-    <TableContainer
-      title="All Courses"
-      rowsPerPage={rowsPerPage}
-      totalPages={totalPages}
-      currPage={currPage}
-      onPageChange={handlePageChange}
-      onRowsPerPageChange={handleRowsPerPageChange}
-      onClickBtn={handleAddBtn}
-      showAddBtn
-    >
-      <CourseTable
-        data={courseData}
+    <>
+      <h1>Course List</h1>
+      <TableContainer
+        title="All Courses"
         rowsPerPage={rowsPerPage}
+        totalPages={totalPages}
         currPage={currPage}
-        isLoading={isLoading}
-      />
-    </TableContainer>
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleRowsPerPageChange}
+        onClickBtn={handleAddBtn}
+        showAddBtn
+      >
+        <CourseTable
+          data={courseData}
+          rowsPerPage={rowsPerPage}
+          currPage={currPage}
+          isLoading={isLoading}
+        />
+      </TableContainer>
+    </>
   );
 }
 
