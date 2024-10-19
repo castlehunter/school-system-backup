@@ -20,7 +20,7 @@ body {
   color: #333;
   font-size: 1.4rem;
   overflow-x: hidden;
-  line-height: 2.2rem;
+  line-height: 2.4rem;
   margin-left: calc(100vw - 100%);
 }
 
@@ -32,6 +32,10 @@ h1 {
   font-size: 3rem;
   color: #344767;
   margin-bottom: 2rem;
+}
+
+ul li {
+  list-style-type: none;
 }
 
 code {

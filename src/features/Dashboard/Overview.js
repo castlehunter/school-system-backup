@@ -160,9 +160,6 @@ function Overview() {
           <EditContainer title="Quick Links" showEditButton={false}>
             {renderQuickLinks()}
           </EditContainer>
-          <EditContainer title="Logged in as" showEditButton={false}>
-            {firstName} {lastName}
-          </EditContainer>
         </div>
 
         <div className={styles.secondaryColumn}>

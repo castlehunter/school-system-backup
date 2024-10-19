@@ -129,6 +129,7 @@ function CourseDetail() {
 
   return (
     <div>
+      <h1>Course Detail</h1>
       {course ? (
         <EditContainer
           title="Course Details"
