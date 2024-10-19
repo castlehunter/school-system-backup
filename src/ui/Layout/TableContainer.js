@@ -20,7 +20,7 @@ function TableContainer({
     <div className={generalStyles.container}>
       <div className={generalStyles.containerHeader}>
         <div className={generalStyles.containerHeading}>
-          <span>{title}</span>
+          <span>{title}&nbsp;&nbsp;&nbsp;</span>
           {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
         </div>
       </div>

@@ -56,7 +56,7 @@ function NewCourseForm({ type }) {
   };
 
   return (
-    <EditContainer title="New Course" headingType="containerHeading">
+    <EditContainer title="Create a new course">
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.formRow}>
           <div className={styles.formItem}>

@@ -86,7 +86,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   }
   //
   return (
-    <EditContainer title="New Course">
+    <EditContainer title="Create a new user">
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formRow}>
           <div className={styles.formItem}>
