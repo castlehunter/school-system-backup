@@ -14,6 +14,8 @@ function TableContainer({
   onRowsPerPageChange,
   onClickBtn,
   showAddBtn,
+  showEditBtn,
+  onClickEditBtn,
   itemsNums = [5, 10, 15, 20, 25, 30],
 }) {
   return (
@@ -22,6 +24,7 @@ function TableContainer({
         <div className={generalStyles.containerHeading}>
           <span>{title}</span>
           {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
+          {showEditBtn && <Button onClickEditBtn={onClickEditBtn}>Edit</Button>}
         </div>
       </div>
       <div className={styles.searchSort}>

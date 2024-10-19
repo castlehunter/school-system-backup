@@ -13,6 +13,7 @@ function SidebarNew() {
     dashboard: true,
     users: true,
     "my courses": true,
+    "my grades":true,
     students: true,
     courses: true,
     teachers: true,
@@ -28,7 +29,7 @@ function SidebarNew() {
 
   const filteredMenuItems = menuItems.filter((menuObj) => {
     if (loginRole === "Admin") {
-      return true;
+      return !(menuObj.title === "My Grades");
     } else if (loginRole === "Advisor") {
       return (
         menuObj.title === "Dashboard" ||
@@ -37,13 +38,13 @@ function SidebarNew() {
         menuObj.title === "Teachers" ||
         menuObj.title === "Programs" ||
         menuObj.title === "Enrollments"
-      );
+      ) ;
     } else if (loginRole === "Teacher") {
-      return menuObj.title === "Dashboard" || menuObj.title === "My Courses";
+      return (menuObj.title === "Dashboard" || menuObj.title === "My Courses");
     } else if (loginRole === "Student") {
-      return menuObj.title === "Dashboard" || menuObj.title === "My Courses";
+      return (menuObj.title === "Dashboard" || menuObj.title === "My Courses" || menuObj.title === "My Grades" );
     }
-    return true;
+    return false;
   });
 
   const itemsToRemove = ["New Enrollment", "Course Details"];

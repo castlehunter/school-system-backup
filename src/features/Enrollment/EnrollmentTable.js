@@ -10,13 +10,15 @@ function EnrollmentTable({ enrollmentData, rowsPerPage, currPage, isLoading }) {
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
-  console.log('currData ' + JSON.stringify(currData));
+  
   const {
     isAllSelected,
     handleSelectAll,
     selectedCheckboxes,
     handleCheckboxes,
   } = useCheckbox();
+
+console.log('selectedCheckboxes ' + selectedCheckboxes);
 
   return (
     <table className={styles.table}>
