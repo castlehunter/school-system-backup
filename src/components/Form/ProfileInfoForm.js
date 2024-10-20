@@ -18,7 +18,27 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
   });
   const [isEdit, setIsEdit] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const profileData = await getProfileInfoByNo(userNo);
+
+        setInputData({
+          RoleName: profileData.Roles.RoleName || "",
+          FirstName: profileData.FirstName || "",
+          LastName: profileData.LastName || "",
+          PhoneNumber: profileData.PhoneNumber || "",
+          Email: profileData.Email || "",
+          HomeAddress: profileData.HomeAddress || "",
+          DateOfBirth: profileData.DateOfBirth || "",
+        });
+      } catch (error) {
+        console.error("Error fetching profile info:", error);
+      }
+    };
+
+    fetchProfileData();
+  }, [userNo]);
 
   useEffect(() => {
     async function getMyAccount() {

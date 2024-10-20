@@ -158,6 +158,26 @@ export async function getRoleNameByNo(userNo) {
   return roleData?.Roles?.RoleName || null;
 }
 
+export async function getFullNameByNo(userNo) {
+  const { data: fullNameData, error: err } = await supabase
+    .from("Users")
+    .select(
+      `FirstName,
+      LastName`
+    )
+    .eq("UserNo", userNo)
+    .single();
+
+  if (err) {
+    console.error(err);
+    throw new Error("Failed to load full name information");
+  }
+
+  return fullNameData
+    ? `${fullNameData.FirstName} ${fullNameData.LastName}`.trim()
+    : null;
+}
+
 // ============== This is a draft ============
 export async function CreateUser(newUser) {
   try {

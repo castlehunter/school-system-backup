@@ -40,7 +40,7 @@ function AccountInfoForm({ userNo, showEditButton }) {
     }
 
     getAccountInfo();
-  }, []);
+  }, [userNo]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -133,8 +133,8 @@ function AccountInfoForm({ userNo, showEditButton }) {
                 disabled={!isEdit}
                 name="IsLockedOut"
               >
-                <option value={true}>Active</option>
-                <option value={false}>Locked</option>
+                <option value={true}>Locked</option>
+                <option value={false}>Active</option>
               </select>
             </div>
             <div className={formStyles.formItem}>

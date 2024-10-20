@@ -59,6 +59,7 @@ function EnrollmentList() {
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
         onClickBtn={handleAddBtn}
+        showEditBtn
       >
         <EnrollmentTable
           enrollmentData={enrollmentData}

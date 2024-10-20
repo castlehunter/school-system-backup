@@ -8,11 +8,16 @@ import supabase from "../../config/supabaseClient";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo-removebg-preview.png";
 
+import { useUser } from "../../contexts/UserContext";
+
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginAs, setLoginAs] = useState("");
   const navigate = useNavigate();
+
+  // Share login user data
+  const { setUserNo } = useUser();
 
   //show supabase client
   //console.log(supabase);
@@ -25,6 +30,7 @@ function Login() {
       .from("Users")
       .select(
         `
+        UserNo,
         UserName,
         FirstName,
         LastName,
@@ -46,6 +52,7 @@ function Login() {
     localStorage.setItem("firstName", data.FirstName);
     localStorage.setItem("lastName", data.LastName);
     localStorage.setItem("role", userRole);
+    setUserNo(data.UserNo); // Set login user data
     navigate("/dashboard");
   };
 

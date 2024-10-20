@@ -15,6 +15,7 @@ import CourseEdit from "./features/Course/CourseEdit";
 import CourseConfirm from "./features/Course/CourseConfirm";
 import AppLayout from "./ui/Layout/AppLayout.js";
 import MyCourses from "./features/MyCourses/MyCourses";
+import MyGrades from "./features/MyCourses/MyGrades";
 import TeacherList from "./features/Teacher/TeacherList.js";
 import NewEnrollment from "./features/Enrollment/NewEnrollment.js";
 import Error from "./ui/Error.js";
@@ -35,6 +36,7 @@ import ViewUser from "./features/Users/ViewUser.js";
 import EnrollmentList from "./features/Enrollment/EnrollmentList.js";
 import CourseDetail from "./features/Course/CourseDetail.js";
 import icons from "./ui/Icons/icons.js";
+import { UserProvider } from "./contexts/UserContext.js";
 
 function App() {
   const routes = [
@@ -86,6 +88,20 @@ function App() {
               path: "my-courses",
               element: <MyCourses />,
               title: "My Courses",
+            },
+          ],
+        },
+        {
+          path: "my-grades",
+          element: <MyGrades />,
+          title: "My Grades",
+          icon: icons.MyCoursesIcon,
+          children: [
+            { index: true, element: <MyGrades />, title: "My Grades" },
+            {
+              path: "my-grades",
+              element: <MyGrades />,
+              title: "My Grades",
             },
           ],
         },
@@ -251,15 +267,15 @@ function App() {
             {
               path: "/enrollments/enrollment-list",
               element: <EnrollmentList />,
-              //loader: getProgramList,
               title: "Enrollment List",
             },
-            // {
-            //   path: "/enrollments/new-enrollment",
-            //   element: <NewEnrollment />,
-            //   //loader: getProgramList,
-            //   title: "New Enrollment",
-            // },
+            {
+              path: "/enrollments/edit/:EnrollmentID",
+              element: <NewEnrollment />,
+              //loader: getProgramList,
+              title: "Update Enrollment",
+              hideInSidebar: true,
+            },
           ],
         },
         {
@@ -279,7 +295,12 @@ function App() {
 
   const router = createBrowserRouter(routes);
 
-  return <RouterProvider router={router} />;
+  // return <RouterProvider router={router} />;
+  return (
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
+  );
 }
 
 export default App;
