@@ -2,6 +2,7 @@ import styles from "./MyAccount.module.css";
 import PersonalInfoForm from "../../components/Form/ProfileInfoForm";
 import AccountInfoForm from "../../components/Form/AccountInfoForm";
 import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
+import { useUser } from "../../contexts/UserContext";
 
 /*************************************************
  * Tasks to be completed:
@@ -12,13 +13,14 @@ import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
 
  *************************************************/
 function MyAccount() {
+  const { userNo } = useUser();
   return (
     <>
       <h1>My Account</h1>
       <div className={styles.myAccountLayout}>
-        <PersonalInfoForm />
-        <SecurityInfoForm />
-        <AccountInfoForm />
+        <PersonalInfoForm userNo={userNo} />
+        <SecurityInfoForm userNo={userNo} />
+        <AccountInfoForm userNo={userNo} />
       </div>
     </>
   );

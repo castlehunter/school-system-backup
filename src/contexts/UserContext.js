@@ -1,24 +1,24 @@
-// UserContext.js is used to stroe login user data
+// UserContext.js is used to stroe login userNo data
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem("loginUser");
-    return storedUser ? JSON.parse(storedUser) : null;
+  const [userNo, setUserNo] = useState(() => {
+    const storedUserNo = localStorage.getItem("loginUserNo");
+    return storedUserNo ? JSON.parse(storedUserNo) : null;
   });
 
   useEffect(() => {
-    if (user) {
-      localStorage.setItem("loginUser", JSON.stringify(user));
+    if (userNo) {
+      localStorage.setItem("loginUserNo", JSON.stringify(userNo));
     } else {
-      localStorage.removeItem("loginUser"); // 用户登出时移除
+      localStorage.removeItem("loginUserNo"); // 用户登出时移除
     }
-  }, [user]);
+  }, [userNo]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ userNo, setUserNo }}>
       {children}
     </UserContext.Provider>
   );

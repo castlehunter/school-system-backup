@@ -17,7 +17,7 @@ function Login() {
   const navigate = useNavigate();
 
   // Share login user data
-  const { setUser } = useUser();
+  const { setUserNo } = useUser();
 
   //show supabase client
   //console.log(supabase);
@@ -30,6 +30,7 @@ function Login() {
       .from("Users")
       .select(
         `
+        UserNo,
         UserName,
         FirstName,
         LastName,
@@ -53,7 +54,7 @@ function Login() {
     localStorage.setItem("firstName", data.FirstName);
     localStorage.setItem("lastName", data.LastName);
     localStorage.setItem("role", userRole);
-    setUser(data); // Set login user data
+    setUserNo(data.UserNo); // Set login user data
     navigate("/dashboard");
   };
 

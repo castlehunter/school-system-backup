@@ -5,10 +5,13 @@ import { RiMegaphoneLine } from "@remixicon/react";
 import avatar from "../../assets/user-avatar-header.jpg";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { getRoleNameByNo, getFullNameByNo } from "../../services/apiUser";
 
-function Layout({ children, breadcrumb, user }) {
+function Layout({ children, breadcrumb, userNo }) {
   const [isOpen, setIsOpen] = useState(false); // Manager menu display status
   const menuRef = useRef(null);
+  const [roleName, setRoleName] = useState(null);
+  const [fullName, setFullName] = useState(null);
 
   const toggleMenu = () => {
     setIsOpen((isOpen) => !isOpen);
@@ -32,6 +35,34 @@ function Layout({ children, breadcrumb, user }) {
     setIsOpen(false);
   };
 
+  // Get role name
+  useEffect(() => {
+    const getRoleName = async () => {
+      try {
+        const role = await getRoleNameByNo(userNo);
+        setRoleName(role);
+      } catch (error) {
+        console.error("Error fetching role name:", error);
+      }
+    };
+
+    getRoleName();
+  }, [userNo]);
+
+  // Get full name
+  useEffect(() => {
+    const getFullName = async () => {
+      try {
+        const role = await getFullNameByNo(userNo);
+        setFullName(role);
+      } catch (error) {
+        console.error("Error fetching full name:", error);
+      }
+    };
+
+    getFullName();
+  }, [userNo]);
+
   return (
     <main className={styles.layout}>
       <aside>
@@ -50,12 +81,8 @@ function Layout({ children, breadcrumb, user }) {
             </div>
 
             <div className={styles["user-name"]}>
-              <span
-                className={styles.name}
-              >{`${user.FirstName} ${user.LastName}`}</span>
-              <span className={styles.identity}>
-                {user.UserRole[0].Roles.RoleName}
-              </span>
+              <span className={styles.name}>{fullName}</span>
+              <span className={styles.identity}>{roleName}</span>
             </div>
 
             <div className={styles["user-avatar-container"]} ref={menuRef}>
@@ -65,7 +92,7 @@ function Layout({ children, breadcrumb, user }) {
               {/* dropdown menu */}
               {isOpen && (
                 <div className={styles["dropdown-menu"]}>
-                  <p>{`${user.FirstName} ${user.LastName}`}</p>
+                  <p>test</p>
                   <ul>
                     <Link
                       to="/dashboard/my-account"

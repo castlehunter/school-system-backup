@@ -4,9 +4,9 @@ import { Outlet } from "react-router-dom";
 import { useUser } from "../../contexts/UserContext";
 
 function AppLayout() {
-  const { user } = useUser(); // get login user data
+  const { userNo } = useUser(); // get login user data
   return (
-    <Layout breadcrumb={<Breadcrumb />} user={user}>
+    <Layout breadcrumb={<Breadcrumb />} userNo={userNo}>
       <div>
         <Outlet />
       </div>
