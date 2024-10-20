@@ -15,6 +15,7 @@ const ProgramForm = ({ data }) => {
     ProgramDescription: "",
   });
 
+  console.log("Program Form", data);
   // Update inputData when data prop changes
   useEffect(() => {
     if (data) {

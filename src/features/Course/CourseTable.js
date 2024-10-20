@@ -64,13 +64,13 @@ function CourseTable({ data, rowsPerPage, currPage }) {
                 to={`/courses/${course.CourseNo}`}
                 className={generalStyles.link}
               >
-                View
+                View/Edit
               </Link>
 
               <Link
                 to={`/courses/newEnrollment/${course.CourseNo}`}
                 className={generalStyles.link}
-                style={{ marginLeft: '10px' }}
+                style={{ marginLeft: "10px" }}
               >
                 Enroll
               </Link>
