@@ -4,7 +4,16 @@ import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
 import Loader from "../../ui/Loader";
 
-function EnrollmentTable({ enrollmentData, rowsPerPage, currPage, isLoading }) {
+function EnrollmentTable({
+  enrollmentData,
+  rowsPerPage,
+  currPage,
+  isLoading,
+  isAllSelected,
+  handleSelectAll,
+  selectedCheckboxes,
+  handleCheckboxes,
+}) {
   const currData = enrollmentData.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
@@ -14,6 +23,16 @@ function EnrollmentTable({ enrollmentData, rowsPerPage, currPage, isLoading }) {
     <table className={styles.table}>
       <thead>
         <tr>
+          <th>
+            <input
+              type="checkbox"
+              checked={isAllSelected}
+              onChange={() =>
+                handleSelectAll(currData.map((element) => element.EnrollmentID))
+              }
+              className={styles.checkbox}
+            />
+          </th>
           <th>S/N</th>
           <th>Student First Name</th>
           <th>Student Last Name</th>
@@ -28,7 +47,15 @@ function EnrollmentTable({ enrollmentData, rowsPerPage, currPage, isLoading }) {
           <Loader />
         ) : (
           currData.map((enrollment, index) => (
-            <tr key={enrollment.enrollmentId} className={styles.tr}>
+            <tr key={enrollment.EnrollmentID} className={styles.tr}>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedCheckboxes.includes(enrollment.EnrollmentID)}
+                  onChange={() => handleCheckboxes(enrollment.EnrollmentID)}
+                  className={styles.checkbox}
+                />
+              </td>
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{enrollment.Students.Users.FirstName}</td>
               <td>{enrollment.Students.Users.LastName}</td>
@@ -37,18 +64,11 @@ function EnrollmentTable({ enrollmentData, rowsPerPage, currPage, isLoading }) {
               <td>{enrollment.isFinished ? "Yes" : "No"}</td>
               <td>
                 <Link
-                  to={`/enrollments/${enrollment.enrollmentId}`}
+                  to={`/enrollments/edit/${enrollment.EnrollmentID}`}
                   className={generalStyles.link}
-                  style={{ paddingRight: 15 + 'px' }}
+                  style={{ paddingRight: 15 + "px" }}
                 >
-                  View
-                </Link>
-                <Link
-                  to={`/enrollments/edit/${enrollment.enrollmentId}`}
-                  className={generalStyles.link}
-                  style={{ paddingRight: 15 + 'px' }}
-                >
-                  Edit
+                  Update Status
                 </Link>
               </td>
             </tr>

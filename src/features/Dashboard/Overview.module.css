@@ -1,3 +1,20 @@
+.overviewLayout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+.mainColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.secondaryColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .statcards {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -11,14 +28,10 @@
   fill: #ffffff83;
 }
 
-h1 {
-  margin-bottom: 1.2rem;
-}
-
-h2 {
+/* h2 {
   margin-top: 4rem;
   margin-bottom: 1.5rem;
-}
+} */
 .navigationLinks {
   margin-top: 2rem;
 }

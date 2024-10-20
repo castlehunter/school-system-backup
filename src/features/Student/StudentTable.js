@@ -70,7 +70,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
               <td>{student.Programs.ProgramName}</td>
               <td>
                 <Link
-                  to={`/teachers/${student.Users.UserNo}`}
+                  to={`/students/${student.Users.UserNo}`}
                   //onClick={() => handleViewClick(student.Users.UserNo)}
                   className={generalStyles.link}
                 >

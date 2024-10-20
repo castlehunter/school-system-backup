@@ -82,7 +82,7 @@ export async function getProfileInfoByNo(userNo) {
   const { data: userData, error: userError } = await supabase
     .from("Users")
     .select(
-      `
+      `Roles(RoleName),
       Email,
       HomeAddress,
       DateOfBirth,
@@ -95,6 +95,7 @@ export async function getProfileInfoByNo(userNo) {
     .eq("UserNo", userNo)
     .single();
 
+  console.log("API getProfileInfoByNo", userData);
   if (userError) {
     console.error(userError);
     throw new Error("Failed to load user information");
@@ -157,11 +158,31 @@ export async function getRoleNameByNo(userNo) {
   return roleData?.Roles?.RoleName || null;
 }
 
+export async function getFullNameByNo(userNo) {
+  const { data: fullNameData, error: err } = await supabase
+    .from("Users")
+    .select(
+      `FirstName,
+      LastName`
+    )
+    .eq("UserNo", userNo)
+    .single();
+
+  if (err) {
+    console.error(err);
+    throw new Error("Failed to load full name information");
+  }
+
+  return fullNameData
+    ? `${fullNameData.FirstName} ${fullNameData.LastName}`.trim()
+    : null;
+}
+
 // ============== This is a draft ============
 export async function CreateUser(newUser) {
   try {
     // 1. Search Role table for RoleID
-    
+
     const { data: roleData, error: roleError } = await supabase
       .from("Roles")
       .select("RoleID")
@@ -182,7 +203,7 @@ export async function CreateUser(newUser) {
 
     // 2. Search School table for SchoolID
 
-    const { data: schoolData, error: schoolError} = await supabase
+    const { data: schoolData, error: schoolError } = await supabase
       .from("School")
       .select("SchoolID")
       .eq("SchoolNo", 1) // *temporary searching the school by no. and we only have 1 school for test
@@ -195,7 +216,7 @@ export async function CreateUser(newUser) {
 
     const schoolID = schoolData?.SchoolID;
 
-    if(!schoolID) {
+    if (!schoolID) {
       console.error("SchoolID not found for the given School number.");
       return;
     }

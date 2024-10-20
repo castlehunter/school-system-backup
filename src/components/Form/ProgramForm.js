@@ -1,54 +1,77 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styles from '../../features/Profile.module.css';
-import Container from '../../ui/Layout/Container';
-import Button from '../../components/Button/Button.js';
+import React from "react";
+import PropTypes from "prop-types";
+import styles from "../../features/Profile.module.css";
+import generalStyles from "../../generalStyles.module.css";
+import formStyles from "../Form/Form.module.css";
+import EditContainer from "../../ui/Layout/EditContainer";
+import Button from "../../components/Button/Button.js";
 
 const ProgramForm = ({ mode, data, handleUpdate, handleBack, handleSave }) => {
-  const isViewMode = mode === 'view';
+  const isViewMode = mode === "view";
 
   return (
-    <div className={styles.generalStyles_container} style={{ width: '50em' }}>
-      <div className={styles.secondaryColumn}>
-        <Container title={mode === 'edit' ? 'Edit Program' : mode === 'view' ? 'View Program' : 'Add New Program'} headingType="secondaryHeading">
-          <div className={styles.Form_formRow}>
-            <label htmlFor="ProgramName" className={styles.Form_formLabel}>Program Name</label>
-            <input
-              type="text"
-              id="ProgramName"
-              name="ProgramName"
-              className={styles.Form_formInput}
-              value={data.ProgramName || ''}
-              onChange={handleUpdate}
-              readOnly={isViewMode}
-            />
-          </div>
-          <br />
-          <div className={styles.Form_formRow}>
-            <label htmlFor="ProgramCode" className={styles.Form_formLabel}>Program Code</label>
-            <input
-              type="text"
-              id="ProgramCode"
-              name="ProgramCode"
-              className={styles.Form_formInput}
-              value={data.ProgramCode || ''}
-              onChange={handleUpdate}
-              readOnly={isViewMode}
-            />
-          </div>
-          <br />
-          <div>
-            {!isViewMode && <Button onClickBtn={handleSave}>{mode === 'edit' ? 'Update' : 'Save'}</Button>}
-            <Button onClickBtn={handleBack}>Cancel</Button>
-          </div>
-        </Container>
+    // <div className={styles.generalStyles_container} >
+    //   <div className={styles.secondaryColumn}>
+    <EditContainer
+      title={
+        mode === "edit"
+          ? "Edit Program"
+          : mode === "view"
+          ? "View Program"
+          : "Add New Program"
+      }
+      headingType="containerHeading"
+    >
+      <div className={formStyles.formRow}>
+        <div className={formStyles.formItem}>
+          <label htmlFor="ProgramName" className={formStyles.formLabel}>
+            Program Name
+          </label>
+          <input
+            type="text"
+            id="ProgramName"
+            name="ProgramName"
+            className={formStyles.formInput}
+            value={data.ProgramName || ""}
+            onChange={handleUpdate}
+            readOnly={isViewMode}
+          />
+        </div>
+
+        <div className={formStyles.formItem}>
+          <label htmlFor="ProgramCode" className={formStyles.formLabel}>
+            Program Code
+          </label>
+          <input
+            type="text"
+            id="ProgramCode"
+            name="ProgramCode"
+            className={formStyles.formInput}
+            value={data.ProgramCode || ""}
+            onChange={handleUpdate}
+            readOnly={isViewMode}
+          />
+        </div>
       </div>
-    </div>
+      <br />
+      {/* <div className={formStyles.formRow}></div> */}
+
+      <div className={formStyles.buttons}>
+        {!isViewMode && (
+          <Button onClickBtn={handleSave}>
+            {mode === "edit" ? "Update" : "Save"}
+          </Button>
+        )}
+        <Button onClickBtn={handleBack}>Cancel</Button>{" "}
+      </div>
+    </EditContainer>
+    //   </div>
+    // </div>
   );
 };
 
 ProgramForm.propTypes = {
-  mode: PropTypes.oneOf(['add', 'edit', 'view']).isRequired,
+  mode: PropTypes.oneOf(["add", "edit", "view"]).isRequired,
   data: PropTypes.shape({
     ProgramName: PropTypes.string.isRequired,
     ProgramCode: PropTypes.string.isRequired,

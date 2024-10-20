@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import EditContainer from "../../ui/Layout/EditContainer";
 import { getSecurityInfoByNo as getSecurityInfoByNo } from "../../services/apiUser";
 import { useNavigate } from "react-router-dom";
+
 function SecurityInfoForm({ userNo, showEditButton }) {
   const [inputData, setInputData] = useState({
     UserName: "",
@@ -24,7 +25,7 @@ function SecurityInfoForm({ userNo, showEditButton }) {
     }
 
     getSecurityInfo();
-  }, []);
+  }, [userNo]);
 
   function resetPassword() {
     navigate("/dashboard/reset-password");

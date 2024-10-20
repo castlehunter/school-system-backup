@@ -4,9 +4,7 @@ import Button from "../../components/Button/Button";
 function EditContainer({
   children,
   title,
-  headingType = "secondaryHeading",
-  editBtnText = "Edit",
-  showEditButton = true,
+  editBtnText,
   isEdit = false,
   headerMessage,
   onClickEdit,
@@ -16,8 +14,8 @@ function EditContainer({
   return (
     <div className={generalStyles.container}>
       <div className={generalStyles.containerHeader}>
-        <div className={generalStyles[headingType]}>{title}</div>
-        {showEditButton && (
+        <div className={generalStyles.containerHeading}>{title}</div>
+        {editBtnText && (
           <div>
             {isEdit ? (
               <>

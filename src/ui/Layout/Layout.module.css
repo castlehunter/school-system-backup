@@ -1,7 +1,7 @@
 .layout {
   display: flex;
   width: 100vw;
-  padding: 2rem 3rem 2rem 2rem;
+  padding: 2rem 4rem 2rem 3rem;
 }
 
 section {
@@ -13,7 +13,7 @@ section {
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 1rem 0rem;
   /* margin-bottom: 1rem; */
 }
 

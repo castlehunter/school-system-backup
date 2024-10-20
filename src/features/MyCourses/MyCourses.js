@@ -132,31 +132,35 @@ function MyCourses() {
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
+
   return (
-    <TableContainer
-      title="My Courses"
-      rowsPerPage={rowsPerPage}
-      totalPages={totalPages}
-      currPage={currPage}
-      onPageChange={handlePageChange}
-      onRowsPerPageChange={handleRowsPerPageChange}
-      itemsNums={itemsNums}
-    >
-      <div className={styles["course-grid"]}>
-        {currCourseItems.map((item) => (
-          <CourseCard
-            key={item.id}
-            title={item.title}
-            image={item.image}
-            instructorName={item.instructorName}
-            instructorAvtar={item.instructorAvtar}
-            classRoom={item.classRoom}
-            classTime={item.classTime}
-            description={item.description}
-          />
-        ))}
-      </div>
-    </TableContainer>
+    <>
+      <h1>My Courses</h1>
+      <TableContainer
+        title="Current Courses"
+        rowsPerPage={rowsPerPage}
+        totalPages={totalPages}
+        currPage={currPage}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleRowsPerPageChange}
+        itemsNums={itemsNums}
+      >
+        <div className={styles["course-grid"]}>
+          {currCourseItems.map((item) => (
+            <CourseCard
+              key={item.id}
+              title={item.title}
+              image={item.image}
+              instructorName={item.instructorName}
+              instructorAvtar={item.instructorAvtar}
+              classRoom={item.classRoom}
+              classTime={item.classTime}
+              description={item.description}
+            />
+          ))}
+        </div>
+      </TableContainer>
+    </>
     // <div className={generalStyles.container}>
     //   {/* <div>For teachers:</div>
     //   <div>
@@ -171,7 +175,7 @@ function MyCourses() {
     //   </div>
     //   <hr /> */}
 
-    //   <div className={generalStyles.primaryHeading}>My Courses</div>
+    //   <div className={generalStyles.containerHeading}>My Courses</div>
 
     //   <div className={styles.searchSection}>
     //     <Search searchItems={courseItems} colorType="light" />

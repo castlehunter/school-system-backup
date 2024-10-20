@@ -37,24 +37,27 @@ function StudentList() {
   }
 
   return (
-    <TableContainer
-      title="Students"
-      rowsPerPage={rowsPerPage}
-      totalPages={totalPages}
-      currPage={currPage}
-      onPageChange={handlePageChange}
-      onRowsPerPageChange={handleRowsPerPageChange}
-    >
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <StudentTable
-          studentData={studentData}
-          rowsPerPage={rowsPerPage}
-          currPage={currPage}
-        />
-      )}
-    </TableContainer>
+    <>
+      <h1>Student List</h1>
+      <TableContainer
+        title="All Students"
+        rowsPerPage={rowsPerPage}
+        totalPages={totalPages}
+        currPage={currPage}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleRowsPerPageChange}
+      >
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <StudentTable
+            studentData={studentData}
+            rowsPerPage={rowsPerPage}
+            currPage={currPage}
+          />
+        )}
+      </TableContainer>
+    </>
   );
 }
 

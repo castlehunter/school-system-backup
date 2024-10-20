@@ -1,10 +1,12 @@
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 import Layout from "./Layout";
 import { Outlet } from "react-router-dom";
+import { useUser } from "../../contexts/UserContext";
 
 function AppLayout() {
+  const { userNo } = useUser(); // get login user data
   return (
-    <Layout breadcrumb={<Breadcrumb />}>
+    <Layout breadcrumb={<Breadcrumb />} userNo={userNo}>
       <div>
         <Outlet />
       </div>

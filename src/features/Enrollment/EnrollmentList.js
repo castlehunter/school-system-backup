@@ -3,6 +3,7 @@ import EnrollmentTable from "./EnrollmentTable.js";
 import TableContainer from "../../ui/Layout/TableContainer";
 import { getEnrollments } from "../../services/apiEnrollment.js";
 import { useNavigate } from "react-router-dom";
+import useCheckbox from "../../hooks/useCheckbox"; // Assuming you have this hook for handling checkboxes
 
 function EnrollmentList() {
   const [enrollmentData, setEnrollmentData] = useState([]);
@@ -13,6 +14,13 @@ function EnrollmentList() {
   const navigate = useNavigate();
 
   const totalPages = Math.ceil(enrollmentData.length / rowsPerPage);
+
+  const {
+    isAllSelected,
+    handleSelectAll,
+    selectedCheckboxes,
+    handleCheckboxes,
+  } = useCheckbox();
 
   useEffect(() => {
     async function fetchEnrollmentData() {
@@ -44,27 +52,45 @@ function EnrollmentList() {
     navigate("/enrollments/new-enrollment");
   }
 
+ //send the selected Ids over
+  function handleBulkEdit() {
+    if (selectedCheckboxes.length > 0) {
+      navigate('/enrollments/bulk-edit', { state: { selectedIds: selectedCheckboxes } });
+    } else {
+      alert("Please select at least one enrollment to edit.");
+    }
+  }
+  
+
   if (error) {
     return <div>Error: {error}</div>;
   }
 
   return (
-    <TableContainer
-      title="All Enrollments"
-      rowsPerPage={rowsPerPage}
-      totalPages={totalPages}
-      currPage={currPage}
-      onPageChange={handlePageChange}
-      onRowsPerPageChange={handleRowsPerPageChange}
-      onClickBtn={handleAddBtn}
-    >
-      <EnrollmentTable
-        enrollmentData={enrollmentData}
+    <>
+      <h1>Enrollment List</h1>
+      <TableContainer
+        title="All Enrollments"
         rowsPerPage={rowsPerPage}
+        totalPages={totalPages}
         currPage={currPage}
-        isLoading={isLoading}
-      />
-    </TableContainer>
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleRowsPerPageChange}       
+        showEditBtn
+        onClickEditBtn={handleBulkEdit}
+      >
+        <EnrollmentTable
+          enrollmentData={enrollmentData}
+          rowsPerPage={rowsPerPage}
+          currPage={currPage}
+          isLoading={isLoading}
+          isAllSelected={isAllSelected}
+          handleSelectAll={handleSelectAll}
+          selectedCheckboxes={selectedCheckboxes}
+          handleCheckboxes={handleCheckboxes}
+        />      
+      </TableContainer>
+    </>
   );
 }
 

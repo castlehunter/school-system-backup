@@ -19,7 +19,7 @@ export async function getStudents() {
     )
   `);
 
-  console.log("getStudents", data);
+  // console.log("API getStudents", data);
   if (error) {
     console.error(error);
     throw new Error("Failed to load students");
@@ -71,9 +71,9 @@ export async function deleteStudent(StudentNo) {
 // get student by student number
 export async function getStudentByStudentNo(userNo) {
   const { data, error } = await supabase
-  .from("Students")
-  .select(
-    `*,
+    .from("Students")
+    .select(
+      `*,
   Users (
     UserNo,
     UserID,
@@ -91,9 +91,9 @@ export async function getStudentByStudentNo(userNo) {
     )
   )
 `
-  )
-  .eq("Users.UserNo", userNo)
-  .single();
+    )
+    .eq("Users.UserNo", userNo)
+    .single();
 
   if (error) {
     console.error("Failed to fetch student:", error);

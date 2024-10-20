@@ -24,20 +24,23 @@ function UserList() {
   }
 
   return (
-    <TableContainer
-      title="All Users"
-      rowsPerPage={rowsPerPage}
-      totalPages={totalPages}
-      currPage={currPage}
-      onPageChange={handlePageChange}
-      onRowsPerPageChange={handleRowsPerPageChange}
-    >
-      <UserTable
-        data={userData}
+    <>
+      <h1>User List</h1>
+      <TableContainer
+        title="All Users"
         rowsPerPage={rowsPerPage}
+        totalPages={totalPages}
         currPage={currPage}
-      />
-    </TableContainer>
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleRowsPerPageChange}
+      >
+        <UserTable
+          data={userData}
+          rowsPerPage={rowsPerPage}
+          currPage={currPage}
+        />
+      </TableContainer>
+    </>
   );
 }
 

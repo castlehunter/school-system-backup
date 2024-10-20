@@ -1,4 +1,3 @@
-import Container from "../../ui/Layout/Container";
 import generalStyles from "../../generalStyles.module.css";
 import EditCourseForm from "../../components/Form/EditCourseForm";
 import styles from "../Profile.module.css";
@@ -85,6 +84,7 @@ function CourseDetail() {
 
   async function handleClickSave() {
     try {
+      console.log(course);
       const res = await updateCourse(courseNo, course);
       setIsEditing(false);
       if (res) {
@@ -129,6 +129,7 @@ function CourseDetail() {
 
   return (
     <div>
+      <h1>Course Detail</h1>
       {course ? (
         <EditContainer
           title="Course Details"
@@ -136,7 +137,7 @@ function CourseDetail() {
           onClickEdit={handleEditBtn}
           onClickSave={handleClickSave}
           onClickCancel={handleCancelEdit}
-          headingType="primaryHeading"
+          headingType="containerHeading"
         >
           <div className={formStyles.sectionLayout}>
             <form>

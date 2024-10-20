@@ -10,7 +10,7 @@ function ProgramList() {
   const [isLoading, setIsLoading] = useState(true);
   const [currPage, setCurrPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const totalPages = Math.ceil(programData.length / rowsPerPage);
 
   useEffect(() => {
@@ -50,23 +50,26 @@ function ProgramList() {
   }
 
   return (
-    <TableContainer
-      title="All Programs"
-      rowsPerPage={rowsPerPage}
-      totalPages={totalPages}
-      currPage={currPage}
-      onPageChange={handlePageChange}
-      onRowsPerPageChange={handleRowsPerPageChange}
-      onClickBtn={handleAddBtn}
-      showAddBtn
-    >
-      <ProgramTable
-        programData={programData}
+    <>
+      <h1>Program List</h1>
+      <TableContainer
+        title="All Programs"
         rowsPerPage={rowsPerPage}
+        totalPages={totalPages}
         currPage={currPage}
-        isLoading={isLoading}
-      />
-    </TableContainer>
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleRowsPerPageChange}
+        onClickBtn={handleAddBtn}
+        showAddBtn
+      >
+        <ProgramTable
+          programData={programData}
+          rowsPerPage={rowsPerPage}
+          currPage={currPage}
+          isLoading={isLoading}
+        />
+      </TableContainer>
+    </>
   );
 }
 
