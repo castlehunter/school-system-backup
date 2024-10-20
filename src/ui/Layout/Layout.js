@@ -6,7 +6,7 @@ import avatar from "../../assets/user-avatar-header.jpg";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-function Layout({ children, breadcrumb }) {
+function Layout({ children, breadcrumb, user }) {
   const [isOpen, setIsOpen] = useState(false); // Manager menu display status
   const menuRef = useRef(null);
 
@@ -50,8 +50,12 @@ function Layout({ children, breadcrumb }) {
             </div>
 
             <div className={styles["user-name"]}>
-              <span className={styles.name}>Test Name</span>
-              <span className={styles.identity}>Admin</span>
+              <span
+                className={styles.name}
+              >{`${user.FirstName} ${user.LastName}`}</span>
+              <span className={styles.identity}>
+                {user.UserRole[0].Roles.RoleName}
+              </span>
             </div>
 
             <div className={styles["user-avatar-container"]} ref={menuRef}>
@@ -61,7 +65,7 @@ function Layout({ children, breadcrumb }) {
               {/* dropdown menu */}
               {isOpen && (
                 <div className={styles["dropdown-menu"]}>
-                  <p>User Name</p>
+                  <p>{`${user.FirstName} ${user.LastName}`}</p>
                   <ul>
                     <Link
                       to="/dashboard/my-account"
