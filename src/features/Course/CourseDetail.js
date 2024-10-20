@@ -54,7 +54,7 @@ function CourseDetail() {
 
   const handleDeleteCourse = async () => {
     try {
-      await deleteCourse(courseNo);
+      await deleteCourse(course.CourseID);
       alert("Course deleted successfully!");
       navigate("/courses/course-list");
     } catch (err) {
