@@ -37,19 +37,6 @@ import CourseDetail from "./features/Course/CourseDetail.js";
 import icons from "./ui/Icons/icons.js";
 
 function App() {
-  const [role, setRole] = useState(null);
-
-  useEffect(() => {
-    // Retrieve role from local storage or other state management
-    const storedRole = localStorage.getItem("role");
-    console.log("storedRole " + storedRole);
-    setRole(storedRole);
-  }, []);
-
-  if (!role) {
-    //return <Login />;
-  }
-
   const routes = [
     {
       path: "/",

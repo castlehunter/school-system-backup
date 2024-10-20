@@ -29,21 +29,19 @@ function Login() {
         FirstName,
         LastName,
         PasswordHash,
-        UserRole (
-          Roles (RoleName)
-        )
+        Roles (RoleName)
       `
       )
       .eq("UserName", username)
-      .eq("PasswordHash", password) // remember to hash the password
+      .eq("PasswordHash", password)
       .single();
 
     if (error || !data) {
       alert("Invalid Username or Password");
       return;
     }
-    console.log("data " + JSON.stringify(data));
-    const userRole = data.UserRole[0].Roles.RoleName;
+    console.log("Login page data " + JSON.stringify(data));
+    const userRole = data.Roles.RoleName;
 
     localStorage.setItem("firstName", data.FirstName);
     localStorage.setItem("lastName", data.LastName);
