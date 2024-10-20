@@ -253,7 +253,7 @@ function CourseDetail() {
                       name="TeacherName"
                       className={formStyles.formInput}
                       disabled={!isEditing}
-                      value={`${course.TeacherUser.courseName} ${course.TeacherUser.description}`}
+                      value={`${course.TeacherUser.FirstName} ${course.TeacherUser.LastName}`}
                     />
                   )}
                 </div>
@@ -286,6 +286,8 @@ function CourseDetail() {
                     disabled={!isEditing}
                     value={course.Programs.ProgramName}
                     onChange={handleChange}
+                    readOnly
+                  
                   />
                 </div>
                 <div className={formStyles.formItem}>
@@ -300,6 +302,8 @@ function CourseDetail() {
                     disabled={!isEditing}
                     value={course.Programs.ProgramCode}
                     onChange={handleChange}
+                    readOnly
+                    
                   />
                 </div>
               </div>
