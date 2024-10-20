@@ -36,22 +36,10 @@ import ViewUser from "./features/Users/ViewUser.js";
 import EnrollmentList from "./features/Enrollment/EnrollmentList.js";
 import CourseDetail from "./features/Course/CourseDetail.js";
 import icons from "./ui/Icons/icons.js";
+import { UserProvider } from "./contexts/UserContext.js";
 import BulkEditEnrollmentForm from "./features/Enrollment/BulkEditEnrollmentForm.js";
 
 function App() {
-  const [role, setRole] = useState(null);
-
-  useEffect(() => {
-    // Retrieve role from local storage or other state management
-    const storedRole = localStorage.getItem("role");
-    console.log("storedRole " + storedRole);
-    setRole(storedRole);
-  }, []);
-
-  if (!role) {
-    //return <Login />;
-  }
-
   const routes = [
     {
       path: "/",
@@ -101,7 +89,7 @@ function App() {
               path: "my-courses",
               element: <MyCourses />,
               title: "My Courses",
-            },          
+            },
           ],
         },
         {
@@ -109,7 +97,7 @@ function App() {
           element: <MyGrades />,
           title: "My Grades",
           icon: icons.MyCoursesIcon,
-          children: [        
+          children: [
             { index: true, element: <MyGrades />, title: "My Grades" },
             {
               path: "my-grades",
@@ -282,6 +270,13 @@ function App() {
               element: <EnrollmentList />,
               title: "Enrollment List",
             },
+            {
+              path: "/enrollments/edit/:EnrollmentID",
+              element: <NewEnrollment />,
+              //loader: getProgramList,
+              title: "Update Enrollment",
+              hideInSidebar: true,
+            },
              {
                path: "/enrollments/edit/:EnrollmentID",
                element: <NewEnrollment />,
@@ -314,7 +309,12 @@ function App() {
 
   const router = createBrowserRouter(routes);
 
-  return <RouterProvider router={router} />;
+  // return <RouterProvider router={router} />;
+  return (
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
+  );
 }
 
 export default App;

@@ -22,10 +22,15 @@ function SidebarNew() {
   });
 
   const [loginRole, setLoginRole] = useState(null);
+
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
     setLoginRole(storedRole);
   }, []);
+
+  useEffect(() => {
+    console.log("current role is", loginRole);
+  }, [loginRole]);
 
   const filteredMenuItems = menuItems.filter((menuObj) => {
     if (loginRole === "Admin") {
