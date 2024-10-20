@@ -30,6 +30,7 @@ function Login() {
       .from("Users")
       .select(
         `
+        UserID,
         UserNo,
         UserName,
         FirstName,
@@ -48,7 +49,7 @@ function Login() {
     }
     console.log("Login page data " + JSON.stringify(data));
     const userRole = data.Roles.RoleName;
-
+    localStorage.setItem("UserID", data.UserID);
     localStorage.setItem("firstName", data.FirstName);
     localStorage.setItem("lastName", data.LastName);
     localStorage.setItem("role", userRole);
