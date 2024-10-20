@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import ProgramForm from '../../components/Form/ProgramForm.js';
+import ProgramForm from "../../components/Form/ProgramForm.js";
 import { addProgram } from "../../services/apiProgram.js";
 
 function NewProgram() {
-  const [formData, setFormData] = useState({ ProgramName: '', ProgramCode: '' });
+  const [formData, setFormData] = useState({
+    ProgramName: "",
+    ProgramCode: "",
+  });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -36,7 +39,6 @@ function NewProgram() {
     <div>
       <h1>Program Management</h1>
       <ProgramForm
-        mode="add"
         data={formData}
         handleUpdate={handleUpdate}
         handleSave={handleSave}

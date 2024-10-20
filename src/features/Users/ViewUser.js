@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import styles from "../Profile.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
-import ProfileInfoForm from "../../components/Form/ProfileInfoForm";
+import PersonalInfoForm from "../../components/Form/PersonalInfoForm";
 import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
 import AccountInfoForm from "../../components/Form/AccountInfoForm";
 import { getRoleNameByNo } from "../../services/apiUser";
@@ -43,11 +43,7 @@ function ViewUser() {
       <div className={styles.profileLayout}>
         <div className={styles.mainColumn}>
           {Object.keys(profileData).length > 0 && (
-            <ProfileInfoForm
-              data={profileData}
-              userNo={userNo}
-              showEditButton={true}
-            />
+            <PersonalInfoForm data={profileData} userNo={userNo} />
           )}
 
           {(profileData?.Roles?.RoleName === "Teacher" ||

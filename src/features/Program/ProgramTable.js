@@ -17,20 +17,19 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
     handleCheckboxes,
   } = useCheckbox();
 
-  
   return (
     <table className={styles.table}>
       <thead>
         <tr>
-        <th> 
-          <input
+          <th>
+            <input
               type="checkbox"
               checked={isAllSelected}
               onChange={() =>
                 handleSelectAll(currData.map((element) => element.ProgramNo))
               }
               className={styles.checkbox}
-          />
+            />
           </th>
           <th>S/N</th>
           <th>Program Code</th>
@@ -45,31 +44,23 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
           currData.map((program, index) => (
             <tr key={program.ProgramNo} className={styles.tr}>
               <td>
-              <input
-                type="checkbox"
-                checked={selectedCheckboxes.includes(program.ProgramNo)}
-                onChange={() => handleCheckboxes(program.ProgramNo)}
-                className={styles.checkbox}
-              />
-            </td>
+                <input
+                  type="checkbox"
+                  checked={selectedCheckboxes.includes(program.ProgramNo)}
+                  onChange={() => handleCheckboxes(program.ProgramNo)}
+                  className={styles.checkbox}
+                />
+              </td>
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{program.ProgramCode}</td>
               <td>{program.ProgramName}</td>
-              <td >
+              <td>
                 <Link
                   to={`/programs/${program.ProgramNo}`}
                   className={generalStyles.link}
-                  style={{paddingRight: 15 + 'px'}}
+                  style={{ paddingRight: 15 + "px" }}
                 >
-                  View
-                </Link>  
-                       
-                <Link
-                  to={`/programs/edit/${program.ProgramNo}`}
-                  className={generalStyles.link}
-                  style={{paddingRight: 15 + 'px'}}
-                >
-                  Edit
+                  View/Edit
                 </Link>
               </td>
             </tr>

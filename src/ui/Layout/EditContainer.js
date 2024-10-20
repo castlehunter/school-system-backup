@@ -6,7 +6,6 @@ function EditContainer({
   title,
   editBtnText,
   isEdit = false,
-  headerMessage,
   onClickEdit,
   onClickSave,
   onClickCancel,

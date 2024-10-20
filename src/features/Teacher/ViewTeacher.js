@@ -2,39 +2,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import styles from "../Profile.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
-import ProfileInfoForm from "../../components/Form/ProfileInfoForm";
+import PersonalInfoForm from "../../components/Form/PersonalInfoForm";
 import { getProfileInfoByNo } from "../../services/apiUser";
 
 function ViewTeacher() {
   const { userNo } = useParams();
-  const [profileData, setProfileData] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setIsLoading(true);
-        setError("");
-        const teacherData = await getProfileInfoByNo(userNo);
-        setProfileData(teacherData);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchData();
-  }, [userNo]);
-
   return (
     <>
-      <h1>
-        {profileData.FirstName} {profileData.LastName}
-      </h1>
+      <h1>View Teacher</h1>
       <div className={styles.profileLayout}>
         <div className={styles.mainColumn}>
-          <ProfileInfoForm data={profileData} />
+          <PersonalInfoForm userNo={userNo} />
           <EditContainer title="Additional Information"></EditContainer>
         </div>
         <div className={styles.secondaryColumn}>

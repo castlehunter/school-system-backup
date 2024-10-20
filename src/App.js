@@ -248,7 +248,6 @@ function App() {
               path: "/programs/new-program",
               element: <NewProgram />,
               title: "New Program",
-              hideInSidebar: true,
             },
           ],
         },

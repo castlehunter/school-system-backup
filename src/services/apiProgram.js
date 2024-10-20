@@ -19,11 +19,16 @@ export async function getProgramList() {
 
 export async function getProgramById(programNo) {
   const { ID } = programNo;
-  const { data, error } = await supabase.from("Programs").select(`
-        ProgramName,
+  const { data, error } = await supabase
+    .from("Programs")
+    .select(
+      `
         ProgramCode,
-        ProgramNo   
-    `).eq("ProgramNo", programNo)
+        ProgramName,
+        ProgramDescription  
+    `
+    )
+    .eq("ProgramNo", programNo)
     .single();
 
   if (error) {
@@ -35,14 +40,16 @@ export async function getProgramById(programNo) {
 }
 
 export async function updateProgram(updatedData) {
-  console.log('updatedData' + JSON.stringify(updatedData));
+  console.log("updatedData" + JSON.stringify(updatedData));
   const { ProgramNo, ...updateFields } = updatedData;
-  const { data, error } = await supabase.from("Programs")
-  .update({
-    ProgramName: updatedData.ProgramName,
-    ProgramCode: updatedData.ProgramCode
-  })
-  .eq("ProgramNo", updatedData.ProgramNo);
+  const { data, error } = await supabase
+    .from("Programs")
+    .update({
+      ProgramCode: updatedData.ProgramCode,
+      ProgramName: updatedData.ProgramName,
+      ProgramDescription: updatedData.ProgramDescription,
+    })
+    .eq("ProgramNo", updatedData.ProgramNo);
   if (error) {
     console.error(error);
     throw new Error("Failed to update program");
@@ -51,8 +58,7 @@ export async function updateProgram(updatedData) {
 }
 
 export async function addProgram(programData) {
-  const { data, error } = await supabase.from("Programs")
-    .insert([programData]);
+  const { data, error } = await supabase.from("Programs").insert([programData]);
 
   if (error) {
     console.error(error);
