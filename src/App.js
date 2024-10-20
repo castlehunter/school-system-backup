@@ -15,7 +15,7 @@ import CourseEdit from "./features/Course/CourseEdit";
 import CourseConfirm from "./features/Course/CourseConfirm";
 import AppLayout from "./ui/Layout/AppLayout.js";
 import MyCourses from "./features/MyCourses/MyCourses";
-import MyGrades from "./features/MyCourses/MyGrades";
+import TestGradeList from "./features/TestGrades/TestGradeList";
 import TeacherList from "./features/Teacher/TeacherList.js";
 import NewEnrollment from "./features/Enrollment/NewEnrollment.js";
 import Error from "./ui/Error.js";
@@ -94,14 +94,14 @@ function App() {
         },
         {
           path: "my-grades",
-          element: <MyGrades />,
+          element: <TestGradeList />,
           title: "My Grades",
           icon: icons.MyCoursesIcon,
           children: [
-            { index: true, element: <MyGrades />, title: "My Grades" },
+            { index: true, element: <TestGradeList />, title: "My Grades" },
             {
               path: "my-grades",
-              element: <MyGrades />,
+              element: <TestGradeList />,
               title: "My Grades",
             },
           ],
