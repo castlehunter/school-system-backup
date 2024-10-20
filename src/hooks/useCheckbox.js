@@ -1,30 +1,33 @@
 import { useState } from "react";
 
-function useCheckbox() {
-  const [isAllSelected, setIsAllSelected] = useState(false);
+const useCheckbox = () => {
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
+  const [isAllSelected, setIsAllSelected] = useState(false);
 
-  function handleSelectAll(allCheckItems) {
-    setIsAllSelected((prev) => !prev);
-    setSelectedCheckboxes(isAllSelected ? [] : allCheckItems);
-  }
-
-  function handleCheckboxes(checkitem) {
-    if (selectedCheckboxes.includes(checkitem)) {
-      setSelectedCheckboxes(
-        selectedCheckboxes.filter((element) => element !== checkitem)
-      );
+  const handleSelectAll = (allIds) => {
+    if (isAllSelected) {
+      setSelectedCheckboxes([]);
     } else {
-      setSelectedCheckboxes([...selectedCheckboxes, checkitem]);
+      setSelectedCheckboxes(allIds);
     }
-  }
+    setIsAllSelected(!isAllSelected);
+  };
+
+  const handleCheckboxes = (id) => {
+    if (selectedCheckboxes.includes(id)) {
+      setSelectedCheckboxes(selectedCheckboxes.filter((checkbox) => checkbox !== id));
+    } else {
+      setSelectedCheckboxes([...selectedCheckboxes, id]);
+    }
+    setIsAllSelected(false); // Reset 'Select All' if any checkbox is individually toggled
+  };
 
   return {
+    selectedCheckboxes,
     isAllSelected,
     handleSelectAll,
-    selectedCheckboxes,
     handleCheckboxes,
   };
-}
+};
 
 export default useCheckbox;

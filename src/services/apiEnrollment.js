@@ -17,7 +17,6 @@ export async function getEnrollments() {
         CourseName
       )
     `);
-  //console.log("data  " + JSON.stringify(data));
   if (error) {
     console.error("Error fetching enrollments:", error);
   } else {
@@ -46,24 +45,20 @@ export async function insertEnrollment(studentId, courseId, enrollmentDate, isFi
   return data;
 }
 // New update function for multiple IDs
-export async function updateEnrollments(ids, isFinished, enrollmentDate, courseName) {
+export async function updateEnrollments(EnrollmentIDs, isFinished, enrollmentDate) {
   const { data, error } = await supabase
     .from("Enrollments")
     .update({
       isFinished: isFinished,
       EnrollmentDate: enrollmentDate,
-      CourseName: courseName 
     })
-    .in('id', ids); 
-
+    .in('EnrollmentID', EnrollmentIDs); 
   if (error) {
     throw new Error("Error updating enrollments: " + error.message);
   }
-  
   return data;
 }
 
-//updateEnrollment
 // New update function for a single enrollment
 export async function updateEnrollment(EnrollmentID, enrollmentDate, isFinished) {
   const { data, error } = await supabase

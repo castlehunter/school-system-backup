@@ -15,7 +15,7 @@ import CourseEdit from "./features/Course/CourseEdit";
 import CourseConfirm from "./features/Course/CourseConfirm";
 import AppLayout from "./ui/Layout/AppLayout.js";
 import MyCourses from "./features/MyCourses/MyCourses";
-import MyGrades from "./features/MyCourses/MyGrades";
+import TestGradeList from "./features/TestGrades/TestGradeList";
 import TeacherList from "./features/Teacher/TeacherList.js";
 import NewEnrollment from "./features/Enrollment/NewEnrollment.js";
 import Error from "./ui/Error.js";
@@ -37,6 +37,7 @@ import EnrollmentList from "./features/Enrollment/EnrollmentList.js";
 import CourseDetail from "./features/Course/CourseDetail.js";
 import icons from "./ui/Icons/icons.js";
 import { UserProvider } from "./contexts/UserContext.js";
+import BulkEditEnrollmentForm from "./features/Enrollment/BulkEditEnrollmentForm.js";
 
 function App() {
   const routes = [
@@ -93,14 +94,14 @@ function App() {
         },
         {
           path: "my-grades",
-          element: <MyGrades />,
+          element: <TestGradeList />,
           title: "My Grades",
           icon: icons.MyCoursesIcon,
           children: [
-            { index: true, element: <MyGrades />, title: "My Grades" },
+            { index: true, element: <TestGradeList />, title: "My Grades" },
             {
               path: "my-grades",
-              element: <MyGrades />,
+              element: <TestGradeList />,
               title: "My Grades",
             },
           ],
@@ -273,6 +274,19 @@ function App() {
               element: <NewEnrollment />,
               //loader: getProgramList,
               title: "Update Enrollment",
+              hideInSidebar: true,
+            },
+             {
+               path: "/enrollments/edit/:EnrollmentID",
+               element: <NewEnrollment />,
+               //loader: getProgramList,
+               title: "Update Enrollment",
+               hideInSidebar: true,
+             },
+             {
+              path: "/enrollments/bulk-edit",
+              element: <BulkEditEnrollmentForm />,             
+              title: "Bulk Update Enrollment Status",
               hideInSidebar: true,
             },
           ],
