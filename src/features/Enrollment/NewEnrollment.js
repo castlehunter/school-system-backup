@@ -25,7 +25,6 @@ function EnrollmentForm() {
   }, [EnrollmentID]);
 
   const handleUpdate = async (e) => {
-    console.log('handleupdate');
     e.preventDefault();
     try {
       await updateEnrollment(EnrollmentID, enrollmentDate, isFinished);
@@ -38,7 +37,6 @@ function EnrollmentForm() {
   };
 
   const handleCancel = () => {
-    console.log('handleCancel');
     navigate("/enrollments/enrollment-list");
   };
 

@@ -3,28 +3,27 @@ import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
 import Loader from "../../ui/Loader";
-import useCheckbox from "../../hooks/useCheckbox";
 
-function EnrollmentTable({ enrollmentData, rowsPerPage, currPage, isLoading }) {
+function EnrollmentTable({
+  enrollmentData,
+  rowsPerPage,
+  currPage,
+  isLoading,
+  isAllSelected,
+  handleSelectAll,
+  selectedCheckboxes,
+  handleCheckboxes,
+}) {
   const currData = enrollmentData.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
-  
-  const {
-    isAllSelected,
-    handleSelectAll,
-    selectedCheckboxes,
-    handleCheckboxes,
-  } = useCheckbox();
-
-console.log('selectedCheckboxes ' + selectedCheckboxes);
 
   return (
     <table className={styles.table}>
       <thead>
         <tr>
-          <th> 
+          <th>
             <input
               type="checkbox"
               checked={isAllSelected}
@@ -33,7 +32,7 @@ console.log('selectedCheckboxes ' + selectedCheckboxes);
               }
               className={styles.checkbox}
             />
-            </th>
+          </th>
           <th>S/N</th>
           <th>Student First Name</th>
           <th>Student Last Name</th>
@@ -48,14 +47,14 @@ console.log('selectedCheckboxes ' + selectedCheckboxes);
           <Loader />
         ) : (
           currData.map((enrollment, index) => (
-            <tr key={enrollment.enrollmentId} className={styles.tr}>
-               <td>
-              <input
-                type="checkbox"
-                checked={selectedCheckboxes.includes(enrollment.EnrollmentID)}
-                onChange={() => handleCheckboxes(enrollment.EnrollmentID)}
-                className={styles.checkbox}
-              />
+            <tr key={enrollment.EnrollmentID} className={styles.tr}>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedCheckboxes.includes(enrollment.EnrollmentID)}
+                  onChange={() => handleCheckboxes(enrollment.EnrollmentID)}
+                  className={styles.checkbox}
+                />
               </td>
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{enrollment.Students.Users.FirstName}</td>
@@ -63,12 +62,12 @@ console.log('selectedCheckboxes ' + selectedCheckboxes);
               <td>{enrollment.Courses.CourseName}</td>
               <td>{new Date(enrollment.EnrollmentDate).toLocaleDateString()}</td>
               <td>{enrollment.isFinished ? "Yes" : "No"}</td>
-              <td>              
+              <td>
                 <Link
                   to={`/enrollments/edit/${enrollment.EnrollmentID}`}
                   className={generalStyles.link}
-                  style={{ paddingRight: 15 + 'px' }}
-                  >
+                  style={{ paddingRight: 15 + "px" }}
+                >
                   Update Status
                 </Link>
               </td>

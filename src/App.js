@@ -36,6 +36,7 @@ import ViewUser from "./features/Users/ViewUser.js";
 import EnrollmentList from "./features/Enrollment/EnrollmentList.js";
 import CourseDetail from "./features/Course/CourseDetail.js";
 import icons from "./ui/Icons/icons.js";
+import BulkEditEnrollmentForm from "./features/Enrollment/BulkEditEnrollmentForm.js";
 
 function App() {
   const [role, setRole] = useState(null);
@@ -288,6 +289,12 @@ function App() {
                title: "Update Enrollment",
                hideInSidebar: true,
              },
+             {
+              path: "/enrollments/bulk-edit",
+              element: <BulkEditEnrollmentForm />,             
+              title: "Bulk Update Enrollment Status",
+              hideInSidebar: true,
+            },
           ],
         },
         {
