@@ -1,166 +1,241 @@
-import React, { useState, useEffect } from "react";
-import { updateStudent } from "../../services/apiStudent";
-import styles from "./Form.module.css";
+// prev code
 
-function StudentDetailForm({ studentData, onCancel }) {
+// import React from "react";
+// import formStyles from "./Form.module.css";
+// import EditContainer from "../../ui/Layout/EditContainer";
+// import Button from "../Button/Button";
+
+// function StudentDetailForm({ studentData, onCancel }) {
+//   return (
+//     <EditContainer>
+//       <div className={formStyles.formContainer}>
+//         <h1 className={formStyles.formTitle}>Student Details</h1>
+//         <div className={formStyles.formItem}>
+//           <label className={formStyles.formLabel}><strong>Name:</strong></label>
+//           <p className={formStyles.formValue}>{studentData.Users.FirstName} {studentData.Users.LastName}</p>
+//         </div>
+//         <div className={formStyles.formItem}>
+//           <label className={formStyles.formLabel}><strong>Email:</strong></label>
+//           <p className={formStyles.formValue}>{studentData.Users.Email}</p>
+//         </div>
+//         <div className={formStyles.formItem}>
+//           <label className={formStyles.formLabel}><strong>Home Address:</strong></label>
+//           <p className={formStyles.formValue}>{studentData.Users.HomeAddress}</p>
+//         </div>
+//         <div className={formStyles.formItem}>
+//           <label className={formStyles.formLabel}><strong>Date of Birth:</strong></label>
+//           <p className={formStyles.formValue}>{studentData.Users.DateOfBirth}</p>
+//         </div>
+//         <div className={formStyles.formItem}>
+//           <label className={formStyles.formLabel}><strong>Phone Number:</strong></label>
+//           <p className={formStyles.formValue}>{studentData.Users.PhoneNumber}</p>
+//         </div>
+//         <div className={formStyles.buttonContainer}>
+//           <Button onClickBtn={onCancel} size="large">
+//             Cancel
+//           </Button>
+//         </div>
+//       </div>
+//     </EditContainer>
+//   );
+// }
+
+// export default StudentDetailForm;
+
+
+import React, { useState, useEffect } from "react";
+import formStyles from "./Form.module.css";
+import EditContainer from "../../ui/Layout/EditContainer";
+import Button from "../Button/Button";
+import { updateStudent } from "../../services/apiStudent";
+import avatar from "../../assets/user-avatar-account.jpg";
+
+function StudentDetailForm({ studentData, data, showEditButton }) {
   const [inputData, setInputData] = useState({
-    Role: "",
-    UserName: "",
     FirstName: "",
     LastName: "",
-    DateOfBirth: "",
     Email: "",
-    PhoneNumber: "",
     HomeAddress: "",
+    DateOfBirth: "",
+    PhoneNumber: "",
   });
   const [isEdit, setIsEdit] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (studentData) {
+    if (studentData && studentData.Users) {
       setInputData({
-        Role: studentData.Role || "",
-        UserName: studentData.UserName || "",
-        FirstName: studentData.FirstName || "",
-        LastName: studentData.LastName || "",
-        DateOfBirth: studentData.DateOfBirth || "",
-        Email: studentData.Email || "",
-        PhoneNumber: studentData.PhoneNumber || "",
-        HomeAddress: studentData.HomeAddress || "",
+        FirstName: studentData.Users.FirstName || "",
+        LastName: studentData.Users.LastName || "",
+        Email: studentData.Users.Email || "",
+        HomeAddress: studentData.Users.HomeAddress || "",
+        DateOfBirth: studentData.Users.DateOfBirth || "",
+        PhoneNumber: studentData.Users.PhoneNumber || "",
       });
     }
   }, [studentData]);
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setInputData((prev) => ({
-      ...prev,
+    setInputData((prevData) => ({
+      ...prevData,
       [name]: value,
     }));
   }
 
-  async function handleClickSave() {
-    try {
-      const response = await updateStudent(studentData.StudentNo, inputData);
-      setIsEdit(false);
-      if (response) {
-        alert("Student information updated successfully!");
-      } else {
-        alert("Failed to update student information.");
-      }
-    } catch (error) {
-      console.error("Error saving student data:", error);
-      alert("An error occurred while saving the student data.");
-    }
-  }
-
-  function handleClickEdit() {
-    setIsEdit(true);
+  function handleClickEdit(e) {
+    e.preventDefault();
+    setIsEdit((isEdit) => !isEdit);
   }
 
   function handleClickCancel() {
-    setIsEdit(false);
-    onCancel();
+    setIsEdit((prev) => !prev);
+    setError(null);
+  }
+
+  async function handleClickSave() {
+    try {
+      const response = await updateStudent(studentData.Users.UserNo, inputData);
+      setIsEdit(false);
+      // if (response) {
+      //   alert("User information updated successfully!");
+
+      //   console.log("User updated successfully!", response);
+      // } else {
+      //   alert("Failed to update user information.");
+      //   console.error("Failed to update user information.");
+      // }
+    } catch (error) {
+      console.error("Error saving user data:", error);
+      alert("An error occurred while saving the user data.");
+    }
   }
 
   return (
-    <div className={styles.formContainer}>
-      <form>
-        <div>
-          <label>Role:</label>
-          <input
-            type="text"
-            name="Role"
-            value={inputData.Role}
-            onChange={handleChange}
-            disabled={!isEdit}
-          />
+    <EditContainer
+      title="Personal Information"
+      editBtnText="Edit"
+      isEdit={isEdit}
+      onClickEdit={handleClickEdit}
+      onClickSave={handleClickSave}
+      onClickCancel={handleClickCancel}
+      showEditButton={showEditButton}
+    >
+      {console.log("prprpr", data)}
+      <div className={formStyles.sectionLayout}>
+        <div className={formStyles.avatar}>
+          <img src={avatar} alt="user avatar" />
+          <Button>Upload Picture</Button>
         </div>
-        <div>
-          <label>User Name:</label>
-          <input
-            type="text"
-            name="UserName"
-            value={inputData.UserName}
-            onChange={handleChange}
-            disabled={!isEdit}
-          />
-        </div>
-        <div>
-          <label>First Name:</label>
-          <input
-            type="text"
-            name="FirstName"
-            value={inputData.FirstName}
-            onChange={handleChange}
-            disabled={!isEdit}
-          />
-        </div>
-        <div>
-          <label>Last Name:</label>
-          <input
-            type="text"
-            name="LastName"
-            value={inputData.LastName}
-            onChange={handleChange}
-            disabled={!isEdit}
-          />
-        </div>
-        <div>
-          <label>Date of Birth:</label>
-          <input
-            type="date"
-            name="DateOfBirth"
-            value={inputData.DateOfBirth}
-            onChange={handleChange}
-            disabled={!isEdit}
-          />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="Email"
-            value={inputData.Email}
-            onChange={handleChange}
-            disabled={!isEdit}
-          />
-        </div>
-        <div>
-          <label>Phone Number:</label>
-          <input
-            type="text"
-            name="PhoneNumber"
-            value={inputData.PhoneNumber}
-            onChange={handleChange}
-            disabled={!isEdit}
-          />
-        </div>
-        <div>
-          <label>Home Address:</label>
-          <input
-            type="text"
-            name="HomeAddress"
-            value={inputData.HomeAddress}
-            onChange={handleChange}
-            disabled={!isEdit}
-          />
-        </div>
-        {isEdit ? (
-          <>
-            <button type="button" onClick={handleClickSave}>
-              Save
-            </button>
-            <button type="button" onClick={handleClickCancel}>
-              Cancel
-            </button>
-          </>
-        ) : (
-          <button type="button" onClick={handleClickEdit}>
-            Edit
-          </button>
-        )}
-      </form>
-    </div>
+        <form>
+          <div className={formStyles.formRow}>
+            {" "}
+            <div className={formStyles.formItem}>
+              <label htmlFor="role" className={formStyles.formLabel}>
+                Role
+              </label>
+              <input
+                type="text"
+                id="role"
+                name="role"
+                className={formStyles.formInput}
+                readOnly
+                disabled
+                value={inputData.RoleName}
+              />
+            </div>
+          </div>
+          <div className={formStyles.formRow}>
+            <div className={formStyles.formItem}>
+              <label htmlFor="firstName" className={formStyles.formLabel}>
+                First Name
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                name="FirstName"
+                className={formStyles.formInput}
+                disabled={!isEdit}
+                value={inputData.FirstName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={formStyles.formItem}>
+              <label htmlFor="lastName" className={formStyles.formLabel}>
+                Last Name
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="LastName"
+                className={formStyles.formInput}
+                disabled={!isEdit}
+                value={inputData.LastName}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className={formStyles.formRow}>
+            <div className={formStyles.formItem}>
+              <label htmlFor="phone" className={formStyles.formLabel}>
+                Phone
+              </label>
+              <input
+                type="phone"
+                id="phone"
+                name="PhoneNumber"
+                className={formStyles.formInput}
+                disabled={!isEdit}
+                value={inputData.PhoneNumber}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={formStyles.formItem}>
+              <label htmlFor="email" className={formStyles.formLabel}>
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="Email"
+                className={formStyles.formInput}
+                disabled={!isEdit}
+                value={inputData.Email}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className={formStyles.formItem}>
+            <label htmlFor="dob" className={formStyles.formLabel}>
+              Date of Birth
+            </label>
+            <input
+              type="date"
+              id="dob"
+              name="DateOfBirth"
+              className={formStyles.formInput}
+              disabled={!isEdit}
+              value={inputData.DateOfBirth}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={formStyles.formItem}>
+            <label htmlFor="address" className={formStyles.formLabel}>
+              Home Address
+            </label>
+            <input
+              type="text"
+              id="address"
+              name="HomeAddress"
+              className={formStyles.formInput}
+              disabled={!isEdit}
+              value={inputData.HomeAddress}
+              onChange={handleChange}
+            />
+          </div>
+        </form>
+      </div>
+    </EditContainer>
   );
 }
 

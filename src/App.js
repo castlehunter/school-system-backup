@@ -152,7 +152,7 @@ function App() {
               title: "Student List",
             },
             {
-              path: "/students/:studentID",
+              path: "/students/:userNo",
               element: <StudentDetail />,
               title: "Student Detail",
               hideInSidebar: true,
