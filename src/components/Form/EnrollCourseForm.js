@@ -67,7 +67,7 @@ function EnrollCourseForm() {
           </tbody>
         </table>
         <div className={formStyles.buttonContainer}>
-          <Button onClickBtn={() => navigate(`/students/${userNo}`)} size="large">
+          <Button onClickBtn={() => navigate(`/students`)} size="large">
             Back
           </Button>
         </div>
