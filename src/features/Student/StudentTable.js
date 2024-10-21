@@ -20,9 +20,9 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
   );
   const navigate = useNavigate();
 
-  function handleViewClick(StudentID) {
-    navigate(`/students/${StudentID}`);
-  }
+  // function handleViewClick(StudentID) {
+  //   navigate(`/students/${StudentID}`);
+  // }
 
   return (
     <table className={styles.table}>
@@ -74,7 +74,14 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
                   //onClick={() => handleViewClick(student.Users.UserNo)}
                   className={generalStyles.link}
                 >
-                  View Details
+                  View
+                </Link>
+                <span> | </span>
+                <Link
+                  to={`/students/${student.Users.UserNo}/enroll`}
+                  className={generalStyles.link}
+                >
+                  Enroll
                 </Link>
               </td>
             </tr>

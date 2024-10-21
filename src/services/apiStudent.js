@@ -40,11 +40,11 @@ export async function addStudent(student) {
 }
 
 // updating a student
-export async function updateStudent(StudentNo, updatedData) {
+export async function updateStudent(UserNo, updatedData) {
   const { data, error } = await supabase
-    .from("Students")
+    .from("Users")
     .update(updatedData)
-    .eq("StudentNo", StudentNo);
+    .eq("UserNo", UserNo);
 
   if (error) {
     console.error("Failed to update student:", error);
@@ -68,31 +68,77 @@ export async function deleteStudent(StudentNo) {
   return data;
 }
 
+// // get student by student number
+// export async function getStudentByStudentNo(userNo) {
+//   const { data, error } = await supabase
+//     .from("Students")
+//     .select(
+//       `*,
+//       Users (
+//         UserNo,
+//         UserID,
+//         UserName,
+//         FirstName,
+//         LastName,
+//         Email,
+//         HomeAddress,
+//         DateOfBirth,
+//         PhoneNumber,
+//         RoleID,
+//         Roles: Roles (
+//           RoleID,
+//           RoleName
+//         )
+//       )`
+//     )
+//     .eq("Users.UserNo", userNo)
+//     .single();
+
+//   if (error) {
+//     console.error("Failed to fetch student:", error);
+//     throw error;
+//   }
+
+//   return data;
+// }
 // get student by student number
 export async function getStudentByStudentNo(userNo) {
+  // get userID by userNo
+  const { data: userData, error: userError } = await supabase
+    .from("Users")
+    .select("UserID")
+    .eq("UserNo", userNo)
+    .single();
+
+  if (userError) {
+    console.error("Failed to fetch user:", userError);
+    throw userError;
+  }
+
+  const userID = userData.UserID;
+  // get student by userID
   const { data, error } = await supabase
     .from("Students")
     .select(
       `*,
-  Users (
-    UserNo,
-    UserID,
-    UserName,
-    FirstName,
-    LastName,
-    Email,
-    HomeAddress,
-    DateOfBirth,
-    PhoneNumber,
-    RoleID,
-    Roles: Roles (
-      RoleID,
-      RoleName
+      Users (
+        UserNo,
+        UserID,
+        UserName,
+        FirstName,
+        LastName,
+        Email,
+        HomeAddress,
+        DateOfBirth,
+        PhoneNumber,
+        RoleID,
+        Roles: Roles (
+          RoleID,
+          RoleName
+        )
+      )`
     )
-  )
-`
-    )
-    .eq("Users.UserNo", userNo)
+    .eq("UserID", userID)
     .single();
 
   if (error) {
