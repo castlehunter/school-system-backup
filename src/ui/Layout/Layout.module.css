@@ -12,8 +12,13 @@ section {
 
 .header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  /* padding: 1rem 0rem; */
+  background-color: #f9f9f9;
+  padding: 0 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 3rem;
 }
 
 .breadcrumb {
@@ -60,7 +65,9 @@ section {
 }
 
 .user-name {
+  background-color: rgb(196, 196, 202);
   display: flex;
+  justify-content: center;
   flex-direction: column;
   gap: 0.6rem;
 }

@@ -81,8 +81,8 @@ function Layout({ children, breadcrumb, userNo }) {
             </div>
 
             <div className={styles["user-name"]}>
-              <span className={styles.name}>{fullName}</span>
-              <span className={styles.identity}>{roleName}</span>
+              <div className={styles.name}>{fullName}</div>
+              <div className={styles.identity}>{roleName}</div>
             </div>
 
             <div className={styles["user-avatar-container"]} ref={menuRef}>
