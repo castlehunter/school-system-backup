@@ -256,6 +256,7 @@ function StudentDetailForm({ studentData, data, showEditButton }) {
         </form>
       </div>
     </EditContainer>
+    <br />
     <EditContainer
       title="Enrolled Courses"
     >
