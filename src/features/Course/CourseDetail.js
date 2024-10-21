@@ -131,14 +131,7 @@ function CourseDetail() {
     <div>
       <h1>Course Detail</h1>
       {course ? (
-        <EditContainer
-          title="Course Details"
-          isEdit={isEditing}
-          onClickEdit={handleEditBtn}
-          onClickSave={handleClickSave}
-          onClickCancel={handleCancelEdit}
-          headingType="containerHeading"
-        >
+        <EditContainer title={course.CourseName}>
           <div className={formStyles.sectionLayout}>
             <form>
               <div className={formStyles.formRow}>
@@ -311,6 +304,7 @@ function CourseDetail() {
             </form>
           </div>
           <div className={formStyles.buttons}>
+            <Button onClickBtn={handleEditBtn}>Edit Course</Button>
             <Button onClickBtn={handleDeleteCourse}>Delete Course</Button>
             <Button onClickBtn={handleBack}>Back To List</Button>
           </div>

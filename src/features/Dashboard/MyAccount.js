@@ -1,5 +1,5 @@
 import styles from "./MyAccount.module.css";
-import PersonalInfoForm from "../../components/Form/ProfileInfoForm";
+import PersonalInfoForm from "../../components/Form/PersonalInfoForm";
 import AccountInfoForm from "../../components/Form/AccountInfoForm";
 import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
 import { useUser } from "../../contexts/UserContext";

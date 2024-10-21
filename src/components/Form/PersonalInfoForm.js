@@ -6,8 +6,8 @@ import Button from "../Button/Button";
 import { getProfileInfoByNo } from "../../services/apiUser";
 import { UpdatePersonalInfo } from "../../services/apiUser";
 
-function ProfileInfoForm({ userNo, data, showEditButton }) {
-  const [inputData, setInputData] = useState({
+function PersonalInfoForm({ userNo }) {
+  const [personalInfoData, setPersonalInfoData] = useState({
     RoleName: "",
     FirstName: "",
     LastName: "",
@@ -23,7 +23,7 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
       try {
         const profileData = await getProfileInfoByNo(userNo);
 
-        setInputData({
+        setPersonalInfoData({
           RoleName: profileData.Roles.RoleName || "",
           FirstName: profileData.FirstName || "",
           LastName: profileData.LastName || "",
@@ -40,32 +40,13 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
     fetchProfileData();
   }, [userNo]);
 
-  useEffect(() => {
-    async function getMyAccount() {
-      try {
-        setInputData({
-          RoleName: data.Roles.RoleName,
-          FirstName: data.FirstName,
-          LastName: data.LastName,
-          PhoneNumber: data.PhoneNumber,
-          Email: data.Email,
-          HomeAddress: data.HomeAddress,
-          DateOfBirth: data.DateOfBirth,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getMyAccount();
-  }, []);
-
   function handleChange(e) {
     const { name, value } = e.target;
     const updatedData = {
-      ...inputData,
+      ...personalInfoData,
       [name]: value,
     };
-    setInputData(updatedData);
+    setPersonalInfoData(updatedData);
   }
 
   function handleClickEdit(e) {
@@ -79,7 +60,7 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
 
   async function handleClickSave() {
     try {
-      const response = await UpdatePersonalInfo(userNo, inputData);
+      const response = await UpdatePersonalInfo(userNo, personalInfoData);
       setIsEdit(false);
       if (response) {
         alert("User information updated successfully!");
@@ -103,9 +84,7 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
       onClickEdit={handleClickEdit}
       onClickSave={handleClickSave}
       onClickCancel={handleClickCancel}
-      showEditButton={showEditButton}
     >
-      {console.log("prprpr", data)}
       <div className={formStyles.sectionLayout}>
         <div className={formStyles.avatar}>
           <img src={avatar} alt="user avatar" />
@@ -125,7 +104,7 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
                 className={formStyles.formInput}
                 readOnly
                 disabled
-                value={inputData.RoleName}
+                value={personalInfoData.RoleName}
               />
             </div>
           </div>
@@ -157,7 +136,7 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
                 name="FirstName"
                 className={formStyles.formInput}
                 disabled={!isEdit}
-                value={inputData.FirstName}
+                value={personalInfoData.FirstName}
                 onChange={handleChange}
               />
             </div>
@@ -171,7 +150,7 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
                 name="LastName"
                 className={formStyles.formInput}
                 disabled={!isEdit}
-                value={inputData.LastName}
+                value={personalInfoData.LastName}
                 onChange={handleChange}
               />
             </div>
@@ -187,7 +166,7 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
                 name="PhoneNumber"
                 className={formStyles.formInput}
                 disabled={!isEdit}
-                value={inputData.PhoneNumber}
+                value={personalInfoData.PhoneNumber}
                 onChange={handleChange}
               />
             </div>
@@ -201,7 +180,7 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
                 name="Email"
                 className={formStyles.formInput}
                 disabled={!isEdit}
-                value={inputData.Email}
+                value={personalInfoData.Email}
                 onChange={handleChange}
               />
             </div>
@@ -216,7 +195,7 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
               name="DateOfBirth"
               className={formStyles.formInput}
               disabled={!isEdit}
-              value={inputData.DateOfBirth}
+              value={personalInfoData.DateOfBirth}
               onChange={handleChange}
             />
           </div>
@@ -230,7 +209,7 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
               name="HomeAddress"
               className={formStyles.formInput}
               disabled={!isEdit}
-              value={inputData.HomeAddress}
+              value={personalInfoData.HomeAddress}
               onChange={handleChange}
             />
           </div>
@@ -240,4 +219,4 @@ function ProfileInfoForm({ userNo, data, showEditButton }) {
   );
 }
 
-export default ProfileInfoForm;
+export default PersonalInfoForm;
