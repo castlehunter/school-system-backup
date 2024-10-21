@@ -103,3 +103,41 @@
   transform: translate(-50%, -50%);
   z-index: 10;
 }
+
+/* for EnrollCourseForm table */
+.courseTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.courseTable th,
+.courseTable td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.courseTable th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.courseTable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.courseTable tr:hover {
+  background-color: #f1f1f1;
+}
+
+.buttonContainer {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.error {
+  color: red;
+  margin-bottom: 20px;
+}
+/* done */

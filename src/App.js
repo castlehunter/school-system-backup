@@ -21,6 +21,7 @@ import NewEnrollment from "./features/Enrollment/NewEnrollment.js";
 import Error from "./ui/Error.js";
 import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
+import EnrollCourseForm from "./components/Form/EnrollCourseForm";
 import { getTeachers } from "./services/apiTeacher.js";
 import { getTeacherByNo } from "./services/apiTeacher.js";
 import { generateUserNo } from "./services/apiUser.js";
@@ -157,6 +158,12 @@ function App() {
               title: "Student Detail",
               hideInSidebar: true,
             },
+            {
+              path: "/students/:userNo/enroll",
+              element: <EnrollCourseForm />,
+              title: "Enroll in a Course",
+              hideInSidebar: true,
+            }
           ],
         },
 
