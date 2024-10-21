@@ -154,3 +154,57 @@ function handleError(error, message) {
   console.error(error);
   throw new Error(message);
 }
+
+// get student enrollments
+export async function getStudentEnrollments(userNo) {
+  // get userID by userNo
+  const { data: userData, error: userError } = await supabase
+    .from("Users")
+    .select("UserID")
+    .eq("UserNo", userNo)
+    .single();
+
+  if (userError) {
+    console.error("Failed to fetch user:", userError);
+    throw userError;
+  }
+
+  const userID = userData.UserID;
+  // get studentID by userID
+  const { data: studentData, error: studentError } = await supabase
+    .from("Students")
+    .select("StudentID")
+    .eq("UserID", userID)
+    .single();
+
+  if (studentError) {
+    console.error("Failed to fetch student:", studentError);
+    throw studentError;
+  }
+
+  const studentID = studentData.StudentID;
+  // get enrollments by studentID
+  const { data, error } = await supabase
+    .from("Enrollments")
+    .select(`
+      CourseID,
+      Courses (
+        CourseName,
+        StartDate,
+        EndDate
+      )
+    `)
+    .eq("StudentID", studentID);
+
+  if (error) {
+    console.error("Failed to fetch enrollments:", error);
+    throw error;
+  }
+
+  return data.map((enrollment) => ({
+    CourseID: enrollment.CourseID,
+    CourseName: enrollment.Courses.CourseName,
+    StartDate: enrollment.Courses.StartDate,
+    EndDate: enrollment.Courses.EndDate,
+  }));
+}

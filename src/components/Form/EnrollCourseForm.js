@@ -3,6 +3,7 @@ import formStyles from "./Form.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import Button from "../Button/Button";
 import { getCourses } from "../../services/apiCourse";
+import { getStudentByStudentNo } from "../../services/apiStudent";
 import { insertEnrollment } from "../../services/apiEnrollment";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -28,12 +29,14 @@ function EnrollCourseForm() {
 
   async function handleEnroll(courseId) {
     try {
-      await insertEnrollment(userNo, courseId, new Date().toISOString(), false);
-      alert("Student enrolled successfully!");
-      navigate(`/students/${userNo}`);
-    } catch (error) {
-      console.error("Error enrolling student:", error);
-      alert("An error occurred while enrolling the student.");
+        const studentData = await getStudentByStudentNo(userNo);
+        const studentId = studentData.StudentID;
+  
+        await insertEnrollment(studentId, courseId, new Date().toISOString(), false);
+        alert("Student enrolled successfully!");
+      } catch (error) {
+        console.error("Error enrolling student:", error);
+        alert("An error occurred while enrolling the student.");
     }
   }
 
