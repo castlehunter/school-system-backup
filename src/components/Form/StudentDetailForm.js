@@ -47,8 +47,10 @@ import React, { useState, useEffect } from "react";
 import formStyles from "./Form.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import Button from "../Button/Button";
-import { updateStudent } from "../../services/apiStudent";
+import { updateStudent, getStudentEnrollments } from "../../services/apiStudent";
 import avatar from "../../assets/user-avatar-account.jpg";
+
+import { useParams } from "react-router-dom";
 
 function StudentDetailForm({ studentData, data, showEditButton }) {
   const [inputData, setInputData] = useState({
@@ -62,6 +64,9 @@ function StudentDetailForm({ studentData, data, showEditButton }) {
   const [isEdit, setIsEdit] = useState(false);
   const [error, setError] = useState(null);
 
+  const { userNo } = useParams();
+  const [enrollments, setEnrollments] = useState([]);
+
   useEffect(() => {
     if (studentData && studentData.Users) {
       setInputData({
@@ -74,6 +79,20 @@ function StudentDetailForm({ studentData, data, showEditButton }) {
       });
     }
   }, [studentData]);
+
+  useEffect(() => {
+    async function fetchEnrollments() {
+      try {
+        const enrollmentData = await getStudentEnrollments(userNo);
+        setEnrollments(enrollmentData);
+      } catch (error) {
+        console.error("Failed to fetch enrollments:", error);
+        setError("Failed to fetch enrollments.");
+      }
+    }
+
+    fetchEnrollments();
+  }, [userNo]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -112,6 +131,7 @@ function StudentDetailForm({ studentData, data, showEditButton }) {
   }
 
   return (
+    <>
     <EditContainer
       title="Personal Information"
       editBtnText="Edit"
@@ -236,6 +256,32 @@ function StudentDetailForm({ studentData, data, showEditButton }) {
         </form>
       </div>
     </EditContainer>
+    <br />
+    <EditContainer
+      title="Enrolled Courses"
+    >
+    <div className={formStyles.formContainer}>
+    <table className={formStyles.courseTable}>
+      <thead>
+        <tr>
+          <th>Course Name</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {enrollments.map((enrollment) => (
+          <tr key={enrollment.CourseID}>
+            <td>{enrollment.CourseName}</td>
+            <td>{new Date(enrollment.StartDate).toLocaleDateString()}</td>
+            <td>{new Date(enrollment.EndDate).toLocaleDateString()}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  </EditContainer>
+  </>
   );
 }
 
