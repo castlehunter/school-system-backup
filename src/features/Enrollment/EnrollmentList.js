@@ -4,6 +4,7 @@ import TableContainer from "../../ui/Layout/TableContainer";
 import { getEnrollments } from "../../services/apiEnrollment.js";
 import { useNavigate } from "react-router-dom";
 import useCheckbox from "../../hooks/useCheckbox"; // Assuming you have this hook for handling checkboxes
+import MainTitle from "../../ui/MainTitle/MainTitle.js";
 
 function EnrollmentList() {
   const [enrollmentData, setEnrollmentData] = useState([]);
@@ -52,15 +53,16 @@ function EnrollmentList() {
     navigate("/enrollments/new-enrollment");
   }
 
- //send the selected Ids over
+  //send the selected Ids over
   function handleBulkEdit() {
     if (selectedCheckboxes.length > 0) {
-      navigate('/enrollments/bulk-edit', { state: { selectedIds: selectedCheckboxes } });
+      navigate("/enrollments/bulk-edit", {
+        state: { selectedIds: selectedCheckboxes },
+      });
     } else {
       alert("Please select at least one enrollment to edit.");
     }
   }
-  
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -68,14 +70,14 @@ function EnrollmentList() {
 
   return (
     <>
-      <h1>Enrollment List</h1>
+      <MainTitle title="Enrollment List" />
       <TableContainer
         title="All Enrollments"
         rowsPerPage={rowsPerPage}
         totalPages={totalPages}
         currPage={currPage}
         onPageChange={handlePageChange}
-        onRowsPerPageChange={handleRowsPerPageChange}       
+        onRowsPerPageChange={handleRowsPerPageChange}
         showEditBtn
         onClickEditBtn={handleBulkEdit}
       >
@@ -88,7 +90,7 @@ function EnrollmentList() {
           handleSelectAll={handleSelectAll}
           selectedCheckboxes={selectedCheckboxes}
           handleCheckboxes={handleCheckboxes}
-        />      
+        />
       </TableContainer>
     </>
   );

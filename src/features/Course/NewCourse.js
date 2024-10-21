@@ -1,9 +1,9 @@
 import NewCourseForm from "../../components/Form/NewCourseForm";
-
+import MainTitle from "../../ui/MainTitle/MainTitle";
 function NewCourse() {
   return (
     <div>
-      <h1>New Course</h1>
+      <MainTitle title="New Course" />
       <NewCourseForm />
     </div>
   );

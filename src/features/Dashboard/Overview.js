@@ -10,6 +10,7 @@ import { getTeachers } from "../../services/apiTeacher";
 import { getCourses } from "../../services/apiCourse";
 import { getEnrollments } from "../../services/apiEnrollment";
 import EditContainer from "../../ui/Layout/EditContainer";
+import MainTitle from "../../ui/MainTitle/MainTitle";
 
 function Overview() {
   const [loginRole, setLoginRole] = useState("");
@@ -142,7 +143,7 @@ function Overview() {
 
   return (
     <>
-      <h1>Overview</h1>{" "}
+      <MainTitle title="Overview" />
       <div className={styles.statcards}>{renderStatCards()}</div>
       <div className={styles.overviewLayout}>
         <div className={styles.mainColumn}>

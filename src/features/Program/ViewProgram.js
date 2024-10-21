@@ -1,11 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { getProgramById } from "../../services/apiProgram.js";
+import { getProgramByCode } from "../../services/apiProgram.js";
 import React, { useState, useEffect } from "react";
+import MainTitle from "../../ui/MainTitle/MainTitle.js";
 
 import ProgramForm from "../../components/Form/ProgramForm.js";
 
 function ViewProgram() {
-  const { programId } = useParams();
+  const { programCode } = useParams();
   const [programData, setProgramData] = useState({});
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,7 +17,7 @@ function ViewProgram() {
       try {
         setIsLoading(true);
         setError("");
-        const data = await getProgramById(programId);
+        const data = await getProgramByCode(programCode);
         setProgramData(data);
       } catch (err) {
         setError(err.message);
@@ -25,7 +26,7 @@ function ViewProgram() {
       }
     }
     fetchData();
-  }, [programId]);
+  }, [programCode]);
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -40,9 +41,8 @@ function ViewProgram() {
   };
   return (
     <div>
-      <h1>Program Management</h1>
-
-      <ProgramForm data={programData} />
+      <MainTitle title="Program Detail" />
+      <ProgramForm mode="view" data={programData} />
     </div>
   );
 }

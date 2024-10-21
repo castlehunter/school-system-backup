@@ -3,6 +3,7 @@ import TableContainer from "../../ui/Layout/TableContainer";
 import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import TeacherTable from "./TeacherTable";
+import MainTitle from "../../ui/MainTitle/MainTitle";
 
 function TeacherList() {
   const teachersData = useLoaderData() || [];
@@ -25,7 +26,7 @@ function TeacherList() {
 
   return (
     <>
-      <h1>Teacher List</h1>
+      <MainTitle title="Teacher List" />
       <TableContainer
         title="All Teachers"
         rowsPerPage={rowsPerPage}

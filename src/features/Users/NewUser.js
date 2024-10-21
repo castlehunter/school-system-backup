@@ -1,9 +1,10 @@
 import ProfileForm from "../../components/Form/ProfileForm";
+import MainTitle from "../../ui/MainTitle/MainTitle";
 
 function NewUser() {
   return (
     <div>
-      <h1>New User</h1>
+      <MainTitle title="New User" />
       <ProfileForm />
     </div>
   );

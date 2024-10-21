@@ -1,0 +1,36 @@
+/* MainTitle.module.css */
+.mainTitle {
+  display: flex;
+  align-items: center;
+  font-size: 2em;
+  color: #344767;
+  margin-bottom: 1.5rem;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  color: #bdbdbd;
+  margin-right: 2rem;
+  transition: color 0.3s ease;
+}
+
+.back:hover {
+  color: #344767;
+  cursor: pointer;
+}
+
+.arrowBack {
+  width: 2.5rem;
+  height: 2.5rem;
+  fill: #bdbdbd;
+}
+
+.separator {
+  border-top: 1px solid #d3d3d3;
+  margin: 1rem 0;
+}

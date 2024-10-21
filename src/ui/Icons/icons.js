@@ -15,6 +15,7 @@ import {
   RiCloseLine,
   RiArrowRightCircleLine,
   RiCheckboxCircleFill,
+  RiArrowLeftCircleLine,
 } from "@remixicon/react";
 
 const icons = {
@@ -59,6 +60,9 @@ const icons = {
   CloseIcon: <RiCloseLine />,
   ArrowRightIcon: (className = "", style = {}) => (
     <RiArrowRightCircleLine className={className} style={style} />
+  ),
+  ArrowBack: (className = "", style = {}) => (
+    <RiArrowLeftCircleLine className={className} style={style} />
   ),
 };
 

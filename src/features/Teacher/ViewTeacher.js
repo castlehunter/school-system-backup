@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 import styles from "../Profile.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import PersonalInfoForm from "../../components/Form/PersonalInfoForm";
+import MainTitle from "../../ui/MainTitle/MainTitle";
 import { getProfileInfoByNo } from "../../services/apiUser";
 
 function ViewTeacher() {
   const { userNo } = useParams();
   return (
     <>
-      <h1>View Teacher</h1>
+      <MainTitle title="Teacher Detail" />
       <div className={styles.profileLayout}>
         <div className={styles.mainColumn}>
           <PersonalInfoForm userNo={userNo} />

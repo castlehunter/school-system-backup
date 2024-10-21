@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import styles from "../../features/Profile.module.css";
-import generalStyles from "../../generalStyles.module.css";
 import formStyles from "../Form/Form.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import Button from "../../components/Button/Button.js";
 import { updateProgram } from "../../services/apiProgram.js";
+import { addProgram } from "../../services/apiProgram.js";
+import { useNavigate } from "react-router-dom";
 
-const ProgramForm = ({ data }) => {
+const ProgramForm = ({ data, mode }) => {
+  const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
+  const [error, setError] = useState("");
   const [inputData, setInputData] = useState({
     ProgramCode: "",
     ProgramName: "",
     ProgramDescription: "",
   });
 
-  console.log("Program Form", data);
-  // Update inputData when data prop changes
   useEffect(() => {
     if (data) {
       setInputData({
@@ -35,6 +35,7 @@ const ProgramForm = ({ data }) => {
   async function handleClickSave() {
     try {
       const response = await updateProgram(inputData);
+      console.log("response", response);
       setIsEdit(false);
       if (response) {
         alert("User information updated successfully!");
@@ -51,7 +52,6 @@ const ProgramForm = ({ data }) => {
 
   function handleClickCancel() {
     setIsEdit(false);
-    // Optionally reset form data when cancelling edit
     setInputData({
       ProgramCode: data.ProgramCode || "",
       ProgramName: data.ProgramName || "",
@@ -64,11 +64,22 @@ const ProgramForm = ({ data }) => {
     setInputData((prevInputData) => ({ ...prevInputData, [name]: value }));
   }
 
+  const handleCreate = async () => {
+    try {
+      await addProgram(inputData);
+      alert("Program added successfully");
+      navigate("/programs/program-list");
+    } catch (err) {
+      setError(err.message);
+      alert("Failed to add program: " + err.message);
+    }
+  };
+
   return (
     <EditContainer
-      title={inputData.ProgramName}
-      editBtnText="Edit Program"
+      title={mode === "view" ? inputData.ProgramName : "Create a new program"}
       isEdit={isEdit}
+      editBtnText={mode === "view" ? "Edit Program" : false}
       onClickEdit={handleClickEdit}
       onClickSave={handleClickSave}
       onClickCancel={handleClickCancel}
@@ -85,7 +96,7 @@ const ProgramForm = ({ data }) => {
             className={formStyles.formInput}
             value={inputData.ProgramCode}
             onChange={handleUpdate}
-            disabled
+            disabled={mode === "view"}
           />
         </div>
 
@@ -100,7 +111,7 @@ const ProgramForm = ({ data }) => {
             className={formStyles.formInput}
             value={inputData.ProgramName}
             onChange={handleUpdate}
-            disabled={!isEdit}
+            disabled={mode === "view" && !isEdit}
           />
         </div>
       </div>
@@ -117,22 +128,20 @@ const ProgramForm = ({ data }) => {
             className={formStyles.formInput}
             value={inputData.ProgramDescription}
             onChange={handleUpdate}
-            disabled={!isEdit}
+            disabled={mode === "view" && !isEdit}
           />
         </div>
       </div>
-
-      <br />
+      {mode === "create" && (
+        <div className={styles.buttonLayout}>
+          <div className={styles.buttons}>
+            <Button onClickBtn={handleCreate}>Create</Button>
+            <Button onClickCancel={handleClickCancel}>Cancel</Button>
+          </div>
+        </div>
+      )}
     </EditContainer>
   );
-};
-
-ProgramForm.propTypes = {
-  data: PropTypes.shape({
-    ProgramCode: PropTypes.string,
-    ProgramName: PropTypes.string,
-    ProgramDescription: PropTypes.string,
-  }).isRequired,
 };
 
 export default ProgramForm;

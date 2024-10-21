@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import StudentTable from "./StudentTable";
 import TableContainer from "../../ui/Layout/TableContainer";
 import Loader from "../../ui/Loader";
+import MainTitle from "../../ui/MainTitle/MainTitle";
 import { useLoaderData, useNavigation } from "react-router-dom";
 import { getStudents } from "../../services/apiStudent";
 function StudentList() {
@@ -38,7 +39,7 @@ function StudentList() {
 
   return (
     <>
-      <h1>Student List</h1>
+      <MainTitle title="Student List" />
       <TableContainer
         title="All Students"
         rowsPerPage={rowsPerPage}

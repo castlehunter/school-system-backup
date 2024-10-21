@@ -70,7 +70,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
                 to={`/teachers/${Teacher.Users.UserNo}`}
                 className={generalStyles.link}
               >
-                view
+                View/Edit
               </Link>
             </td>
           </tr>

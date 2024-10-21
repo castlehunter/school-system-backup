@@ -17,8 +17,7 @@ export async function getProgramList() {
   return data;
 }
 
-export async function getProgramById(programNo) {
-  const { ID } = programNo;
+export async function getProgramByCode(programCode) {
   const { data, error } = await supabase
     .from("Programs")
     .select(
@@ -28,9 +27,10 @@ export async function getProgramById(programNo) {
         ProgramDescription  
     `
     )
-    .eq("ProgramNo", programNo)
+    .eq("ProgramCode", programCode)
     .single();
 
+  console.log("API getProgramByCode", data);
   if (error) {
     console.error(error);
     throw new Error("Failed to load program");
@@ -40,8 +40,7 @@ export async function getProgramById(programNo) {
 }
 
 export async function updateProgram(updatedData) {
-  console.log("updatedData" + JSON.stringify(updatedData));
-  const { ProgramNo, ...updateFields } = updatedData;
+  // console.log("updatedData" + JSON.stringify(updatedData));
   const { data, error } = await supabase
     .from("Programs")
     .update({
@@ -49,7 +48,8 @@ export async function updateProgram(updatedData) {
       ProgramName: updatedData.ProgramName,
       ProgramDescription: updatedData.ProgramDescription,
     })
-    .eq("ProgramNo", updatedData.ProgramNo);
+    .eq("ProgramCode", updatedData.ProgramCode)
+    .select("*");
   if (error) {
     console.error(error);
     throw new Error("Failed to update program");

@@ -7,6 +7,7 @@ import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
 import AccountInfoForm from "../../components/Form/AccountInfoForm";
 import { getRoleNameByNo } from "../../services/apiUser";
 import { getProfileInfoByNo } from "../../services/apiUser";
+import MainTitle from "../../ui/MainTitle/MainTitle";
 function ViewUser() {
   const { userNo } = useParams();
   const [profileData, setProfileData] = useState({});
@@ -27,24 +28,12 @@ function ViewUser() {
   //   getRoleName();
   // }, []);
 
-  useEffect(() => {
-    async function getUserInfo() {
-      const userInfo = await getProfileInfoByNo(userNo);
-      setProfileData(userInfo);
-    }
-    getUserInfo();
-  }, [userNo]);
-
   return (
     <>
-      <h1>
-        {profileData.FirstName} {profileData.LastName}
-      </h1>
+      <MainTitle title="User Detail" />
       <div className={styles.profileLayout}>
         <div className={styles.mainColumn}>
-          {Object.keys(profileData).length > 0 && (
-            <PersonalInfoForm data={profileData} userNo={userNo} />
-          )}
+          <PersonalInfoForm userNo={userNo} />
 
           {(profileData?.Roles?.RoleName === "Teacher" ||
             profileData?.Roles?.RoleName === "Student") && (

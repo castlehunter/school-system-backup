@@ -246,10 +246,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
         </div>
         <div className={styles.buttonLayout}>
           <div className={styles.buttons}>
-            <Button onClickBtn={handleSubmit} size="large">
-              Create
-            </Button>
-            <Button size="large">Cancel</Button>
+            <Button onClickBtn={handleSubmit}>Create</Button>
+            <Button>Cancel</Button>
           </div>
         </div>
       </form>

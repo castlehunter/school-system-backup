@@ -3,7 +3,7 @@ import ProgramTable from "./ProgramTable.js";
 import TableContainer from "../../ui/Layout/TableContainer";
 import { getProgramList } from "../../services/apiProgram.js";
 import { useNavigate, useParams } from "react-router-dom";
-
+import MainTitle from "../../ui/MainTitle/MainTitle.js";
 function ProgramList() {
   const [programData, setProgramData] = useState([]);
   const [error, setError] = useState(null);
@@ -51,7 +51,7 @@ function ProgramList() {
 
   return (
     <>
-      <h1>Program List</h1>
+      <MainTitle title="Program List" />
       <TableContainer
         title="All Programs"
         rowsPerPage={rowsPerPage}

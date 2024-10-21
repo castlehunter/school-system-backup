@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import Loader from "../../ui/Loader";
 import EditContainer from "../../ui/Layout/EditContainer";
+import MainTitle from "../../ui/MainTitle/MainTitle";
 import {
   getCourseDetail,
   deleteCourse,
@@ -129,7 +130,7 @@ function CourseDetail() {
 
   return (
     <div>
-      <h1>Course Detail</h1>
+      <MainTitle title="Course Detail" />
       {course ? (
         <EditContainer title={course.CourseName}>
           <div className={formStyles.sectionLayout}>
@@ -281,7 +282,6 @@ function CourseDetail() {
                     value={course.Programs.ProgramName}
                     onChange={handleChange}
                     readOnly
-                  
                   />
                 </div>
                 <div className={formStyles.formItem}>
@@ -297,7 +297,6 @@ function CourseDetail() {
                     value={course.Programs.ProgramCode}
                     onChange={handleChange}
                     readOnly
-                    
                   />
                 </div>
               </div>

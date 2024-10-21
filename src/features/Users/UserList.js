@@ -3,6 +3,7 @@ import TableContainer from "../../ui/Layout/TableContainer";
 import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import UserTable from "./UserTable";
+import MainTitle from "../../ui/MainTitle/MainTitle";
 
 function UserList() {
   const userData = useLoaderData() || [];
@@ -25,7 +26,7 @@ function UserList() {
 
   return (
     <>
-      <h1>User List</h1>
+      <MainTitle title="User List" />
       <TableContainer
         title="All Users"
         rowsPerPage={rowsPerPage}

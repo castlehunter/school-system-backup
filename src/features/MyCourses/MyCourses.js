@@ -5,6 +5,7 @@ import course1 from "../../assets/course-STEM.jpg";
 import instructor1 from "../../assets/instructor.jpg";
 import CourseCard from "../../components/CourseCard/CourseCard";
 import TableContainer from "../../ui/Layout/TableContainer";
+import MainTitle from "../../ui/MainTitle/MainTitle";
 
 // Test data that will be replaced with real courses data
 const courseItems = [
@@ -135,7 +136,7 @@ function MyCourses() {
 
   return (
     <>
-      <h1>My Courses</h1>
+      <MainTitle title="My Courses" />
       <TableContainer
         title="Current Courses"
         rowsPerPage={rowsPerPage}

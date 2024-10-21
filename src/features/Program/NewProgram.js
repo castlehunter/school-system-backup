@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import ProgramForm from "../../components/Form/ProgramForm.js";
-import { addProgram } from "../../services/apiProgram.js";
-
+import MainTitle from "../../ui/MainTitle/MainTitle.js";
 function NewProgram() {
   const [formData, setFormData] = useState({
     ProgramName: "",
@@ -16,17 +15,6 @@ function NewProgram() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSave = async () => {
-    try {
-      await addProgram(formData);
-      alert("Program added successfully");
-      navigate("/programs/program-list");
-    } catch (err) {
-      setError(err.message);
-      alert("Failed to add program: " + err.message);
-    }
-  };
-
   const handleBack = () => {
     navigate("/programs/program-list");
   };
@@ -37,13 +25,8 @@ function NewProgram() {
 
   return (
     <div>
-      <h1>Program Management</h1>
-      <ProgramForm
-        data={formData}
-        handleUpdate={handleUpdate}
-        handleSave={handleSave}
-        handleBack={handleBack}
-      />
+      <MainTitle title="New Program" />
+      <ProgramForm mode="create" data={formData} />
     </div>
   );
 }

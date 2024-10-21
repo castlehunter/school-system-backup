@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import TableContainer from "../../ui/Layout/TableContainer";
 import CourseTable from "./CourseTable";
 import { getCourse, getCourses } from "../../services/apiCourse";
+import MainTitle from "../../ui/MainTitle/MainTitle";
 import { useNavigate } from "react-router-dom";
 function CourseList() {
   const [courseData, setCourseData] = useState([]);
@@ -46,7 +47,7 @@ function CourseList() {
 
   return (
     <>
-      <h1>Course List</h1>
+      <MainTitle title="Course List" />
       <TableContainer
         title="All Courses"
         rowsPerPage={rowsPerPage}

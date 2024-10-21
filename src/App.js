@@ -234,17 +234,12 @@ function App() {
               title: "Program List",
             },
             {
-              path: "/programs/:programId",
+              path: "/programs/:programCode",
               element: <ViewProgram />,
               title: "View Program",
               hideInSidebar: true,
             },
-            {
-              path: "/programs/edit/:programId",
-              element: <EditProgram />,
-              title: "Edit Program",
-              hideInSidebar: true,
-            },
+
             {
               path: "/programs/new-program",
               element: <NewProgram />,
@@ -276,16 +271,16 @@ function App() {
               title: "Update Enrollment",
               hideInSidebar: true,
             },
-             {
-               path: "/enrollments/edit/:EnrollmentID",
-               element: <NewEnrollment />,
-               //loader: getProgramList,
-               title: "Update Enrollment",
-               hideInSidebar: true,
-             },
-             {
+            {
+              path: "/enrollments/edit/:EnrollmentID",
+              element: <NewEnrollment />,
+              //loader: getProgramList,
+              title: "Update Enrollment",
+              hideInSidebar: true,
+            },
+            {
               path: "/enrollments/bulk-edit",
-              element: <BulkEditEnrollmentForm />,             
+              element: <BulkEditEnrollmentForm />,
               title: "Bulk Update Enrollment Status",
               hideInSidebar: true,
             },
