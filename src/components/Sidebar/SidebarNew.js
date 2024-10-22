@@ -13,12 +13,13 @@ function SidebarNew() {
     dashboard: true,
     users: true,
     "my courses": true,
-    "my grades":true,
+    "my grades": true,
     students: true,
     courses: true,
     teachers: true,
     programs: true,
     enrollments: true,
+    "my calendar": true,
   });
 
   const [loginRole, setLoginRole] = useState(null);
@@ -43,11 +44,20 @@ function SidebarNew() {
         menuObj.title === "Teachers" ||
         menuObj.title === "Programs" ||
         menuObj.title === "Enrollments"
-      ) ;
+      );
     } else if (loginRole === "Teacher") {
-      return (menuObj.title === "Dashboard" || menuObj.title === "My Courses");
+      return (
+        menuObj.title === "Dashboard" ||
+        menuObj.title === "My Courses" ||
+        menuObj.title === "My Calendar"
+      );
     } else if (loginRole === "Student") {
-      return (menuObj.title === "Dashboard" || menuObj.title === "My Courses" || menuObj.title === "My Grades" );
+      return (
+        menuObj.title === "Dashboard" ||
+        menuObj.title === "My Courses" ||
+        menuObj.title === "My Grades" ||
+        menuObj.title === "My Calendar"
+      );
     }
     return false;
   });
