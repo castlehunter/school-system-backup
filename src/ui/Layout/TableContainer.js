@@ -24,14 +24,12 @@ function TableContainer({
         <div className={generalStyles.containerHeader}>
           <div className={generalStyles.containerHeading}>
             <span>{title}&nbsp;&nbsp;&nbsp;</span>
-            {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
-            {showEditBtn && (
-              <Button onClickEditBtn={onClickEditBtn}>Edit</Button>
-            )}
           </div>
         </div>
       )}
-      <div className={styles.searchSort}>
+      <div className={styles.tableFeatures}>
+        {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
+        {showEditBtn && <Button onClickEditBtn={onClickEditBtn}>Edit</Button>}
         <button>Sort by xyz</button>
         <Search colorType="light" />{" "}
         <div className={styles.entriesPerPage}>
