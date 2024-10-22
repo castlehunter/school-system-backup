@@ -1,5 +1,5 @@
 import supabase from "../config/supabaseClient.js";
-
+import bcrypt from "bcryptjs";
 export async function getUsers() {
   const { data, error } = await supabase.from("Users").select(`
    UserNo,
@@ -274,5 +274,39 @@ export async function UpdatePersonalInfo(userNo, userInfo) {
   } catch (error) {
     console.error("api caught Unexpected error:", error);
     return null;
+  }
+}
+
+export async function updatePassword(username, currentPassword, newPassword) {
+  try {
+    const { data: userData, error: fetchError } = await supabase
+      .from("Users")
+      .select("PasswordHash")
+      .eq("UserName", username)
+      .single();
+
+    if (fetchError) {
+      throw new Error("Failed to fetch user: " + fetchError.message);
+    }
+
+    if (currentPassword !== userData.PasswordHash) {
+      throw new Error("Current password is incorrect.");
+    }
+
+    // const newPasswordHash = await hashPassword(newPassword);
+    const newPasswordHash = newPassword;
+    const { data, error } = await supabase
+      .from("Users")
+      .update({ PasswordHash: newPasswordHash })
+      .eq("UserName", username);
+
+    if (error) {
+      throw new Error("Failed to update password: " + error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error updating password:", error);
+    throw error;
   }
 }

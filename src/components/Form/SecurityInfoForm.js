@@ -28,7 +28,9 @@ function SecurityInfoForm({ userNo, showEditButton }) {
   }, [userNo]);
 
   function resetPassword() {
-    navigate("/dashboard/reset-password");
+    navigate("/dashboard/reset-password", {
+      state: { username: inputData.UserName },
+    });
   }
   return (
     <EditContainer
