@@ -13,7 +13,8 @@
   height: 10rem;
   margin-top: -5rem;
   fill: #22c55e;
-  background-color: #fff; /* Prevent the bottom of the input box at the bottom from displaying through the icon */
+  background-color: #fff;
+  border-radius: 50%;
 }
 
 h2 {

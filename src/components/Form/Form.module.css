@@ -100,8 +100,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+  transform: translate(-50%, -60%);
+  /* z-index: 10; */
 }
 
 /* for EnrollCourseForm table */

@@ -252,7 +252,6 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
         </div>
       </form>
 
-      {/* control modal box */}
       {isModalOpen && (
         <div className={styles.modal}>
           <ModalBox handleCloseModal={handleCloseModal} />
