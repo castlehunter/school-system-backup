@@ -72,7 +72,6 @@ function EnrollmentList() {
     <>
       <MainTitle title="Enrollment List" />
       <TableContainer
-        title="All Enrollments"
         rowsPerPage={rowsPerPage}
         totalPages={totalPages}
         currPage={currPage}

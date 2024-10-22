@@ -40,10 +40,3 @@
   font: 400 12px/167% Nunito, sans-serif;
   margin-top: 114px;
 }
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 4rem;
-  gap: 5rem;
-}

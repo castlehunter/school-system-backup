@@ -28,7 +28,6 @@ function TeacherList() {
     <>
       <MainTitle title="Teacher List" />
       <TableContainer
-        title="All Teachers"
         rowsPerPage={rowsPerPage}
         totalPages={totalPages}
         currPage={currPage}

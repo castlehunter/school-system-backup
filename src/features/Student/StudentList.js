@@ -41,7 +41,6 @@ function StudentList() {
     <>
       <MainTitle title="Student List" />
       <TableContainer
-        title="All Students"
         rowsPerPage={rowsPerPage}
         totalPages={totalPages}
         currPage={currPage}

@@ -138,7 +138,6 @@ function MyCourses() {
     <>
       <MainTitle title="My Courses" />
       <TableContainer
-        title="Current Courses"
         rowsPerPage={rowsPerPage}
         totalPages={totalPages}
         currPage={currPage}

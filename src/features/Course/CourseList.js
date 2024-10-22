@@ -49,7 +49,6 @@ function CourseList() {
     <>
       <MainTitle title="Course List" />
       <TableContainer
-        title="All Courses"
         rowsPerPage={rowsPerPage}
         totalPages={totalPages}
         currPage={currPage}

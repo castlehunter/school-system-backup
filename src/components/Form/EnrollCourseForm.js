@@ -29,21 +29,25 @@ function EnrollCourseForm() {
 
   async function handleEnroll(courseId) {
     try {
-        const studentData = await getStudentByStudentNo(userNo);
-        const studentId = studentData.StudentID;
-  
-        await insertEnrollment(studentId, courseId, new Date().toISOString(), false);
-        alert("Student enrolled successfully!");
-      } catch (error) {
-        console.error("Error enrolling student:", error);
-        alert("An error occurred while enrolling the student.");
+      const studentData = await getStudentByStudentNo(userNo);
+      const studentId = studentData.StudentID;
+
+      await insertEnrollment(
+        studentId,
+        courseId,
+        new Date().toISOString(),
+        false
+      );
+      alert("Student enrolled successfully!");
+    } catch (error) {
+      console.error("Error enrolling student:", error);
+      alert("An error occurred while enrolling the student.");
     }
   }
 
   return (
-    <EditContainer>
+    <EditContainer title="Enroll in a course">
       <div className={formStyles.formContainer}>
-        <h1 className={formStyles.formTitle}>Enroll in a Course</h1>
         {error && <div className={formStyles.error}>{error}</div>}
         <table className={formStyles.courseTable}>
           <thead>
@@ -61,7 +65,10 @@ function EnrollCourseForm() {
                 <td>{new Date(course.StartDate).toLocaleDateString()}</td>
                 <td>{new Date(course.EndDate).toLocaleDateString()}</td>
                 <td>
-                  <Button onClickBtn={() => handleEnroll(course.CourseID)} size="small">
+                  <Button
+                    onClickBtn={() => handleEnroll(course.CourseID)}
+                    size="small"
+                  >
                     Enroll
                   </Button>
                 </td>

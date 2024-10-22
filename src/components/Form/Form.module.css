@@ -140,4 +140,19 @@
   color: red;
   margin-bottom: 20px;
 }
-/* done */
+
+.passwordContainer {
+  position: relative;
+}
+
+.formInput {
+  padding-right: 40px;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

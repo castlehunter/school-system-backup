@@ -20,13 +20,17 @@ function TableContainer({
 }) {
   return (
     <div className={generalStyles.container}>
-      <div className={generalStyles.containerHeader}>
-        <div className={generalStyles.containerHeading}>
-          <span>{title}&nbsp;&nbsp;&nbsp;</span>
-          {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
-          {showEditBtn && <Button onClickEditBtn={onClickEditBtn}>Edit</Button>}
+      {title && (
+        <div className={generalStyles.containerHeader}>
+          <div className={generalStyles.containerHeading}>
+            <span>{title}&nbsp;&nbsp;&nbsp;</span>
+            {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
+            {showEditBtn && (
+              <Button onClickEditBtn={onClickEditBtn}>Edit</Button>
+            )}
+          </div>
         </div>
-      </div>
+      )}
       <div className={styles.searchSort}>
         <button>Sort by xyz</button>
         <Search colorType="light" />{" "}
@@ -38,12 +42,6 @@ function TableContainer({
                 {num}
               </option>
             ))}
-            {/* <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={15}>15</option>
-            <option value={20}>20</option>
-            <option value={25}>25</option>
-            <option value={30}>30</option> */}
           </select>
           <span>per page</span>
         </div>

@@ -28,7 +28,6 @@ function UserList() {
     <>
       <MainTitle title="User List" />
       <TableContainer
-        title="All Users"
         rowsPerPage={rowsPerPage}
         totalPages={totalPages}
         currPage={currPage}

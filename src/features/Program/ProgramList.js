@@ -53,7 +53,6 @@ function ProgramList() {
     <>
       <MainTitle title="Program List" />
       <TableContainer
-        title="All Programs"
         rowsPerPage={rowsPerPage}
         totalPages={totalPages}
         currPage={currPage}

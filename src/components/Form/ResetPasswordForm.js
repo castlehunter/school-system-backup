@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import styles from "../../features/Profile.module.css";
 import formStyles from "../Form/Form.module.css";
+import generalStyles from "../../generalStyles.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import Button from "../../components/Button/Button.js";
+import icons from "../../ui/Icons/icons.js";
 import { updatePassword } from "../../services/apiUser.js";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -19,7 +20,6 @@ function ResetPasswordForm({ data }) {
     confirmPassword: "",
   });
 
-  // 状态管理：控制密码框的可见性
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -60,77 +60,96 @@ function ResetPasswordForm({ data }) {
   }
 
   return (
-    <EditContainer title={`User Name: ${username}`}>
-      <div className={formStyles.formRow}>
-        <div className={formStyles.formItem}>
-          <label htmlFor="currentPassword" className={formStyles.formLabel}>
-            Current Password
-          </label>
-          <div className={formStyles.passwordContainer}>
-            <input
-              type={showCurrentPassword ? "text" : "password"}
-              id="currentPassword"
-              name="currentPassword"
-              className={formStyles.formInput}
-              value={inputData.currentPassword}
-              onChange={handleUpdate}
-            />
-            <span
-              className={formStyles.eyeIcon}
-              onClick={() => setShowCurrentPassword((prev) => !prev)}
-            >
-              {showCurrentPassword ? "click this icon to close" : "👁️‍🗨️"}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div className={formStyles.formRow}>
-        <div className={formStyles.formItem}>
-          <label htmlFor="newPassword" className={formStyles.formLabel}>
-            New Password
-          </label>
-          <div className={formStyles.passwordContainer}>
-            <input
-              type={showNewPassword ? "text" : "password"}
-              id="newPassword"
-              name="newPassword"
-              className={formStyles.formInput}
-              value={inputData.newPassword}
-              onChange={handleUpdate}
-            />
-            <span
-              className={formStyles.eyeIcon}
-              onClick={() => setShowNewPassword((prev) => !prev)}
-            >
-              {showNewPassword ? "-" : "👁️‍🗨️"}
-            </span>
+    <EditContainer>
+      <div className={formStyles.form}>
+        <div className={formStyles.formRow}>
+          <div className={formStyles.formItem}>
+            <label htmlFor="userName" className={formStyles.formLabel}>
+              User Name
+            </label>
+            <div className={formStyles.passwordContainer}>
+              <input
+                type="text"
+                id="userName"
+                name="username"
+                className={formStyles.formInput}
+                value={username}
+                disabled
+              />
+            </div>
           </div>
         </div>
 
-        <div className={formStyles.formItem}>
-          <label htmlFor="confirmPassword" className={formStyles.formLabel}>
-            Confirm Password
-          </label>
-          <div className={formStyles.passwordContainer}>
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              id="confirmPassword"
-              name="confirmPassword"
-              className={formStyles.formInput}
-              value={inputData.confirmPassword}
-              onChange={handleUpdate}
-            />
-            <span
-              className={formStyles.eyeIcon}
-              onClick={() => setShowConfirmPassword((prev) => !prev)}
-            >
-              {showConfirmPassword ? "-" : "👁️‍🗨️"}
-            </span>
+        <div className={formStyles.formRow}>
+          <div className={formStyles.formItem}>
+            <label htmlFor="currentPassword" className={formStyles.formLabel}>
+              Current Password
+            </label>
+            <div className={formStyles.passwordContainer}>
+              <input
+                type={showCurrentPassword ? "text" : "password"}
+                id="currentPassword"
+                name="currentPassword"
+                className={formStyles.formInput}
+                value={inputData.currentPassword}
+                onChange={handleUpdate}
+              />
+              <span
+                className={formStyles.eyeIcon}
+                onClick={() => setShowCurrentPassword((prev) => !prev)}
+              >
+                {showCurrentPassword ? icons.EyeOff : icons.EyeOpen}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className={styles.buttonLayout}>
-        <div className={styles.buttons}>
+        <div className={formStyles.formRow}>
+          <div className={formStyles.formItem}>
+            <label htmlFor="newPassword" className={formStyles.formLabel}>
+              New Password
+            </label>
+            <div className={formStyles.passwordContainer}>
+              <input
+                type={showNewPassword ? "text" : "password"}
+                id="newPassword"
+                name="newPassword"
+                className={formStyles.formInput}
+                value={inputData.newPassword}
+                onChange={handleUpdate}
+              />
+              <span
+                className={formStyles.eyeIcon}
+                onClick={() => setShowNewPassword((prev) => !prev)}
+              >
+                {showNewPassword ? icons.EyeOff : icons.EyeOpen}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className={formStyles.formRow}>
+          <div className={formStyles.formItem}>
+            <label htmlFor="confirmPassword" className={formStyles.formLabel}>
+              Confirm Password
+            </label>
+            <div className={formStyles.passwordContainer}>
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+                className={formStyles.formInput}
+                value={inputData.confirmPassword}
+                onChange={handleUpdate}
+              />
+              <span
+                className={formStyles.eyeIcon}
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+              >
+                {showConfirmPassword ? icons.EyeOff : icons.EyeOpen}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className={generalStyles.bottomButtons}>
           <Button onClickBtn={handleClickReset}>Reset Password</Button>
           <Button onClickBtn={handleClickCancel}>Cancel</Button>
         </div>
