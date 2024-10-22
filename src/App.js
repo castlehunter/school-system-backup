@@ -39,6 +39,7 @@ import CourseDetail from "./features/Course/CourseDetail.js";
 import icons from "./ui/Icons/icons.js";
 import { UserProvider } from "./contexts/UserContext.js";
 import BulkEditEnrollmentForm from "./features/Enrollment/BulkEditEnrollmentForm.js";
+import Calendar from "./features/Calendar/Calendar.js";
 
 function App() {
   const routes = [
@@ -163,7 +164,7 @@ function App() {
               element: <EnrollCourseForm />,
               title: "Enroll in a Course",
               hideInSidebar: true,
-            }
+            },
           ],
         },
 
@@ -290,6 +291,20 @@ function App() {
               element: <BulkEditEnrollmentForm />,
               title: "Bulk Update Enrollment Status",
               hideInSidebar: true,
+            },
+          ],
+        },
+        {
+          path: "my-calendar",
+          element: <Calendar />,
+          title: "My Calendar",
+          icon: icons.MyCoursesIcon,
+          children: [
+            { index: true, element: <Calendar />, title: "My Calendar" },
+            {
+              path: "my-calendar",
+              element: <Calendar />,
+              title: "My Calendar",
             },
           ],
         },
