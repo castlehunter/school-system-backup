@@ -189,11 +189,13 @@ function App() {
               path: "/courses/:courseNo",
               element: <CourseDetail />,
               title: "Course Details",
+              hideInSidebar: true,
             },
             {
               path: "/courses/newEnrollment/:courseNo",
               element: <NewEnrollment />,
               title: "New Enrollment",
+              hideInSidebar: true,
             },
           ],
         },

@@ -62,20 +62,6 @@ function SidebarNew() {
     return false;
   });
 
-  const itemsToRemove = ["New Enrollment", "Course Details"];
-
-  const finalFilteredMenuItems = filteredMenuItems.map((item) => {
-    if (item.title === "Courses") {
-      return {
-        ...item,
-        children: item.children.filter(
-          (subItem) => !itemsToRemove.includes(subItem.title)
-        ),
-      };
-    }
-    return item;
-  });
-
   const searchItems = menuItems
     .flatMap((item) => item.children)
     .filter((e) => !e.index);
@@ -96,7 +82,7 @@ function SidebarNew() {
       </Link>
       <Search searchItems={searchItems} colorType="dark" />
       <div className={styles.menu}>
-        {finalFilteredMenuItems.map((item) => (
+        {filteredMenuItems.map((item) => (
           <div key={item.title}>
             <div
               className={styles.menuTitle}

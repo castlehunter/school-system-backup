@@ -51,12 +51,7 @@ function ResetPasswordForm({ data }) {
   }
 
   function handleClickCancel() {
-    console.log("Handle click cancel");
-    setInputData({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    });
+    navigate(-1);
   }
 
   function handleUpdate(e) {
