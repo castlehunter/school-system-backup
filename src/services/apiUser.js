@@ -1,5 +1,4 @@
 import supabase from "../config/supabaseClient.js";
-import bcrypt from "bcryptjs";
 export async function getUsers() {
   const { data, error } = await supabase.from("Users").select(`
    UserNo,
