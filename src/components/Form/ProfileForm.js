@@ -17,7 +17,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     HomeAddress: "",
     IsAdmin: Boolean,
     RoleName: "",
-    file: File,
+    SecurityQuestion:"",
+    SecurityAnswer: "",
   });
 
   const [excelData, setExcelData] = useState([]);
@@ -34,6 +35,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
         HomeAddress: formData.Users.HomeAddress || "",
         IsAdmin: formData.Users.IsAdmin || false,
         RoleName: formData.Users.RoleName || "",
+        SecurityQusetion: formData.Users.SecurityQusetion || "",
+        SecurityAnswer: formData.Users.SecurityQusetion || "",
       });
     }
   }, [formData]);
@@ -134,6 +137,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       phone: inputData.PhoneNumber,
       firstName: inputData.FirstName,
       lastName: inputData.LastName,
+      SecurityQuestion: inputData.SecurityQuestion,
+      SecurityAnswer: inputData.SecurityAnswer,
     };
     console.log(newUser);
     // Call CreateUser from apiUser.js
@@ -271,6 +276,36 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
             </div>
           </div>
         </div>
+        <div className={styles.formRow}>
+          <div className={styles.formItem}>
+            <label htmlFor="SecurityQuestion" className={styles.formLabel}>
+              Security Question
+            </label>
+            <input
+              type="text"
+              name="SecurityQuestion"
+              value={inputData.SecurityQuestion}
+              onChange={handleChange}
+              className={styles.formInput}
+              disabled={isModalOpen}
+            />
+          </div>
+          </div>
+          <div className={styles.formRow}>
+          <div className={styles.formItem}>
+            <label htmlFor="SecurityAnswer" className={styles.formLabel}>
+              Security Answer
+            </label>
+            <input
+              type="text"
+              name="SecurityAnswer"
+              value={inputData.SecurityAnswer}
+              onChange={handleChange}
+              className={styles.formInput}
+              disabled={isModalOpen}
+            />
+          </div>
+          </div>
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="RoleName" className={styles.formLabel}>

@@ -235,6 +235,8 @@ export async function CreateUser(newUser) {
         PhoneNumber: newUser.phone,
         FirstName: newUser.firstName,
         LastName: newUser.lastName,
+        SecurityQuestion: newUser.SecurityQuestion,
+        SecurityAnswer: newUser.SecurityAnswer,
       },
     ]);
 
