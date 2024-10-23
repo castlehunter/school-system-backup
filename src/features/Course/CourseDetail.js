@@ -132,7 +132,13 @@ function CourseDetail() {
     <div>
       <MainTitle title="Course Detail" />
       {course ? (
-        <EditContainer title={course.CourseName}>
+         <EditContainer
+         title={course.CourseName}
+         isEdit= {true} // Pass the isEditing state
+         onClickEdit={handleEditBtn}
+         onClickSave={handleClickSave}
+         onClickCancel={handleCancelEdit}
+       >
           <div className={formStyles.sectionLayout}>
             <form>
               <div className={formStyles.formRow}>
