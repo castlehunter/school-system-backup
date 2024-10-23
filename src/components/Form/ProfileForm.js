@@ -191,7 +191,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               DateOfBirth
             </label>
             <input
-              type="text"
+              type="date"
               name="DateOfBirth"
               className={styles.formInput}
               value={inputData.DateOfBirth}
@@ -265,7 +265,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
                 Password
               </label>
               <input
-                type="text"
+                type="password"
                 id="password"
                 name="PasswordHash"
                 className={styles.formInput}
