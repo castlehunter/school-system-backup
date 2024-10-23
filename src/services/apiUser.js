@@ -248,6 +248,26 @@ export async function CreateUser(newUser) {
   }
 }
 
+//function to create multiplt users
+export async function CreateMultipleUsers(excelData) {
+  
+  if (excelData.length > 0)
+  {
+    const {data, error} = await supabase
+      .from("Users")
+      .insert(excelData);
+  
+
+  if(error) {
+    console.error("Error inserting dat:", error)
+  }
+  else{
+    console.log("data inserted successfully", data)
+  }
+}
+
+}
+
 export async function UpdatePersonalInfo(userNo, userInfo) {
   try {
     const { data, error } = await supabase
