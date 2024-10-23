@@ -242,8 +242,10 @@ export async function CreateUser(newUser) {
 
     if (error) {
       console.error("Error uploading data:", error);
+      return false;
     } else {
       console.log("User created successfully:", data);
+      return true;
     }
   } catch (error) {
     console.error("Unexpected error:", error);

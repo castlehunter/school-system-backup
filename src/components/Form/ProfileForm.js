@@ -144,9 +144,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     // Call CreateUser from apiUser.js
     CreateUser(newUser)
       .then((response) => {
-        //console.log('User created successfully', response);
-        // alert("User created successfully");
-        handleOpenModal();
+        if(response == true)
+          handleOpenModal();
       })
       .catch((error) => {
         console.error("Error creating user:", error);
