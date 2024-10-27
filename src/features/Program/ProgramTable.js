@@ -32,8 +32,8 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
             />
           </th>
           <th>S/N</th>
-          <th>Program Code</th>
-          <th>Program Name</th>
+          <th>Course Category Code</th>
+          <th>Course Category Name</th>
           <th>Action</th>
         </tr>
       </thead>
