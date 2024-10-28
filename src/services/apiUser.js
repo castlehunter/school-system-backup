@@ -262,17 +262,41 @@ export async function CreateUser(newUser) {
         PhoneNumber: newUser.phone,
         FirstName: newUser.firstName,
         LastName: newUser.lastName,
+        SecurityQuestion: newUser.SecurityQuestion,
+        SecurityAnswer: newUser.SecurityAnswer,
       },
     ]);
 
     if (error) {
       console.error("Error uploading data:", error);
+      return false;
     } else {
       console.log("User created successfully:", data);
+      return true;
     }
   } catch (error) {
     console.error("Unexpected error:", error);
   }
+}
+
+//function to create multiplt users
+export async function CreateMultipleUsers(excelData) {
+  
+  if (excelData.length > 0)
+  {
+    const {data, error} = await supabase
+      .from("Users")
+      .insert(excelData);
+  
+
+  if(error) {
+    console.error("Error inserting dat:", error)
+  }
+  else{
+    console.log("data inserted successfully", data)
+  }
+}
+
 }
 
 export async function UpdatePersonalInfo(userNo, userInfo) {

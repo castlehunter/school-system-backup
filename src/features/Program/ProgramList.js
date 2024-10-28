@@ -51,7 +51,7 @@ function ProgramList() {
 
   return (
     <>
-      <MainTitle title="Program List" />
+      <MainTitle title="Course Category List" />
       <TableContainer
         rowsPerPage={rowsPerPage}
         totalPages={totalPages}

@@ -41,7 +41,7 @@ function ViewProgram() {
   };
   return (
     <div>
-      <MainTitle title="Program Detail" />
+      <MainTitle title="Course Category Detail" />
       <ProgramForm mode="view" data={programData} />
     </div>
   );
