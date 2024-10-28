@@ -24,8 +24,8 @@
 } */
 
 .course-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 20px hsla(0, 0%, 0%, 0.4);
+  transform: translateY(-0.3rem);
+  box-shadow: 0 1rem 2rem hsla(0, 0%, 0%, 0.4);
 }
 /* .course-banner .course-tag-box {
   position: absolute;

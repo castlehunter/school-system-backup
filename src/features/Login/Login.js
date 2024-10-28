@@ -19,9 +19,6 @@ function Login() {
   // Share login user data
   const { setUserNo } = useUser();
 
-  //show supabase client
-  //console.log(supabase);
-
   const [loginRole, setLoginRole] = useState("");
 
   const handleLogin = async (e) => {
@@ -53,7 +50,8 @@ function Login() {
     localStorage.setItem("firstName", data.FirstName);
     localStorage.setItem("lastName", data.LastName);
     localStorage.setItem("role", userRole);
-    setUserNo(data.UserNo); // Set login user data
+
+    setUserNo(data.UserNo);
     navigate("/dashboard");
   };
 
