@@ -25,4 +25,10 @@
 
 .tableFeatures {
   display: flex;
+  justify-content: space-between;
+}
+
+.tableFeaturesLeftBox {
+  display: flex;
+  align-items: center;
 }
