@@ -70,7 +70,7 @@ function Layout({ children, breadcrumb, userNo }) {
       </aside>
 
       <section>
-        {/* The top section */}
+        {/* ================ The top section ===============*/}
         <div className={styles.header}>
           <div className={styles.breadcrumb}>{breadcrumb}</div>
 
@@ -80,9 +80,9 @@ function Layout({ children, breadcrumb, userNo }) {
               <div className={styles["announcement-count"]}>1</div>
             </div>
 
-            <div className={styles["user-name"]}>
+            <div className={styles.nameRole}>
               <div className={styles.name}>{fullName}</div>
-              <div className={styles.identity}>{roleName}</div>
+              <div className={styles.role}>{roleName}</div>
             </div>
 
             <div className={styles["user-avatar-container"]} ref={menuRef}>
