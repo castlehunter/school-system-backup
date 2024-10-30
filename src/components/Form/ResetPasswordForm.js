@@ -92,6 +92,7 @@ function ResetPasswordForm({ data }) {
                 name="currentPassword"
                 className={formStyles.formInput}
                 value={inputData.currentPassword}
+                autoComplete="off"
                 onChange={handleUpdate}
               />
               <span

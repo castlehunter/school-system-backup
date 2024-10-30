@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Button from "../Button/Button.js";
 import styles from "./Form.module.css";
-import { CreateUser } from "../../services/apiUser.js";
+import { CreateMultipleUsers, CreateUser } from "../../services/apiUser.js";
 import EditContainer from "../../ui/Layout/EditContainer.js";
 import ModalBox from "../ModalBox/ModalBox.js";
+import * as XLSX from "xlsx";
 
 function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   const [inputData, setInputData] = useState({
@@ -16,7 +17,11 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     HomeAddress: "",
     IsAdmin: Boolean,
     RoleName: "",
+    SecurityQuestion:"",
+    SecurityAnswer: "",
   });
+
+  const [excelData, setExcelData] = useState([]);
 
   useEffect(() => {
     if (formData && formData.Users) {
@@ -30,6 +35,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
         HomeAddress: formData.Users.HomeAddress || "",
         IsAdmin: formData.Users.IsAdmin || false,
         RoleName: formData.Users.RoleName || "",
+        SecurityQusetion: formData.Users.SecurityQusetion || "",
+        SecurityAnswer: formData.Users.SecurityQusetion || "",
       });
     }
   }, [formData]);
@@ -56,6 +63,65 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     }));
   }
 
+  function handleFileUpload(e) {
+    const file = e.target.files[0];
+    if (!file) {
+      console.error("No file selected");
+      return;
+    }
+  
+    //console.log("File selected:", file); // Debug: Check the selected file
+  
+    var reader = new FileReader();
+    reader.onload = (event) => {
+      const arrayBuffer = event.target.result;
+      const workbook = XLSX.read(arrayBuffer, { type: "array", cellDates: true });
+  
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+  
+      const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+      if (rawData.length < 2) {
+        console.error("No data rows found in Excel file.");
+        return;
+      }
+  
+      const headers = rawData[0];
+      const dataRows = rawData.slice(1);
+  
+      // Map each row to an object using the headers
+      const formattedData = dataRows.map((row) => {
+        const rowObj = {};
+        headers.forEach((header, index) => {
+          rowObj[header] = row[index];
+        });
+        return rowObj;
+      });
+      setExcelData(formattedData);
+    };
+  
+    reader.onerror = () => {
+      console.error("Failed to read file");
+    };
+
+    reader.readAsArrayBuffer(file);
+
+  }
+
+  function insertDataExcel(e) {
+    e.preventDefault();
+
+    console.log(excelData);
+    CreateMultipleUsers(excelData)
+      .then((response) => {
+        handleOpenModal();
+      })
+      .catch((error) => {
+        console.error("Error inserting data:", error);
+      })
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -71,14 +137,15 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       phone: inputData.PhoneNumber,
       firstName: inputData.FirstName,
       lastName: inputData.LastName,
+      SecurityQuestion: inputData.SecurityQuestion,
+      SecurityAnswer: inputData.SecurityAnswer,
     };
     console.log(newUser);
     // Call CreateUser from apiUser.js
     CreateUser(newUser)
       .then((response) => {
-        //console.log('User created successfully', response);
-        // alert("User created successfully");
-        handleOpenModal();
+        if(response == true)
+          handleOpenModal();
       })
       .catch((error) => {
         console.error("Error creating user:", error);
@@ -123,7 +190,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               DateOfBirth
             </label>
             <input
-              type="text"
+              type="date"
               name="DateOfBirth"
               className={styles.formInput}
               value={inputData.DateOfBirth}
@@ -197,7 +264,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
                 Password
               </label>
               <input
-                type="text"
+                type="password"
                 id="password"
                 name="PasswordHash"
                 className={styles.formInput}
@@ -208,6 +275,36 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
             </div>
           </div>
         </div>
+        <div className={styles.formRow}>
+          <div className={styles.formItem}>
+            <label htmlFor="SecurityQuestion" className={styles.formLabel}>
+              Security Question
+            </label>
+            <input
+              type="text"
+              name="SecurityQuestion"
+              value={inputData.SecurityQuestion}
+              onChange={handleChange}
+              className={styles.formInput}
+              disabled={isModalOpen}
+            />
+          </div>
+          </div>
+          <div className={styles.formRow}>
+          <div className={styles.formItem}>
+            <label htmlFor="SecurityAnswer" className={styles.formLabel}>
+              Security Answer
+            </label>
+            <input
+              type="text"
+              name="SecurityAnswer"
+              value={inputData.SecurityAnswer}
+              onChange={handleChange}
+              className={styles.formInput}
+              disabled={isModalOpen}
+            />
+          </div>
+          </div>
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="RoleName" className={styles.formLabel}>
@@ -244,6 +341,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
             </select>
           </div>
         </div>
+        
         <div className={styles.buttonLayout}>
           <div className={styles.buttons}>
             <Button onClickBtn={handleSubmit}>Create</Button>
@@ -251,6 +349,17 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
           </div>
         </div>
       </form>
+
+      <div>
+          <h1>Insert Data from Excel to Supabase</h1>
+
+          {/* File input for Excel upload */}
+          <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
+
+          <Button onClickBtn={insertDataExcel}>
+             Insert data
+          </Button>
+        </div>
 
       {isModalOpen && (
         <div className={styles.modal}>

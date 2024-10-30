@@ -228,32 +228,33 @@ function App() {
         {
           path: "programs",
           element: <Outlet />,
-          title: "Programs",
+          title: "Course Category",
           icon: icons.ProgramIcon,
           children: [
             {
               index: true,
               element: <ProgramList />,
               loader: getProgramList,
-              title: "Program List",
+              title: "Course Category",
             },
             {
               path: "/programs/program-list",
               element: <ProgramList />,
               loader: getProgramList,
-              title: "Program List",
+              title: "Course Category List",
             },
             {
               path: "/programs/:programCode",
               element: <ViewProgram />,
-              title: "View Program",
+              title: "View Course Category",
               hideInSidebar: true,
             },
 
             {
               path: "/programs/new-program",
               element: <NewProgram />,
-              title: "New Program",
+              title: "New Course Category",
+              hideInSidebar: true,
             },
           ],
         },

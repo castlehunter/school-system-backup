@@ -18,6 +18,7 @@ import {
   RiArrowLeftCircleLine,
   RiEyeLine,
   RiEyeOffLine,
+  RiArrowDownSFill,
 } from "@remixicon/react";
 
 const icons = {
@@ -68,6 +69,7 @@ const icons = {
   ),
   EyeOpen: <RiEyeLine style={{ fill: "black" }} />,
   EyeOff: <RiEyeOffLine style={{ fill: "black" }} />,
+  ArrowDownIcon: <RiArrowDownSFill />,
 };
 
 export default icons;

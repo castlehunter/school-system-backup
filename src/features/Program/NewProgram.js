@@ -25,7 +25,7 @@ function NewProgram() {
 
   return (
     <div>
-      <MainTitle title="New Program" />
+      <MainTitle title="New Course Category" />
       <ProgramForm mode="create" data={formData} />
     </div>
   );

@@ -24,7 +24,8 @@ export async function getProgramByCode(programCode) {
       `
         ProgramCode,
         ProgramName,
-        ProgramDescription  
+        ProgramDescription,
+        ProgramID  
     `
     )
     .eq("ProgramCode", programCode)

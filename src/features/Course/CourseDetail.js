@@ -30,7 +30,7 @@ function CourseDetail() {
         const teacherData = await getTeachers();
         setTeachers(teacherData);
       } catch (error) {
-        console.error("Failed to fetch teachers:", error);
+        console.error('Failed to fetch teachers:', error);
       }
     }
     fetchData();
@@ -39,10 +39,11 @@ function CourseDetail() {
   useEffect(() => {
     async function fetchCourseDetails() {
       try {
+       
         setIsLoading(true);
         setError(null);
-        // Fetch course data using courseNo
         const courseData = await getCourseDetail({ params: { ID: courseNo } });
+        console.log(courseData);
         setCourse(courseData);
       } catch (err) {
         setError(err.message);
@@ -56,69 +57,56 @@ function CourseDetail() {
   const handleDeleteCourse = async () => {
     try {
       await deleteCourse(course.CourseID);
-      alert("Course deleted successfully!");
-      navigate("/courses/course-list");
+      alert('Course deleted successfully!');
+      navigate('/courses/course-list');
     } catch (err) {
-      alert("Failed to delete the course: " + err.message);
+      alert('Failed to delete the course: ' + err.message);
     }
   };
 
   const handleBack = () => {
-    navigate("/courses/course-list");
+    navigate('/courses/course-list');
   };
 
   const handleCancelEdit = () => {
     setIsEditing(false);
   };
 
-  // const handleEditCourse = async (updatedCourse) => {
-  //   try {
-  //     await updateCourse(courseNo, updatedCourse);
-  //     alert("Course updated successfully!");
-  //     setIsEditing(false);
-  //     const courseData = await getCourseDetail({ params: { ID: courseNo } });
-  //     setCourse(courseData);
-  //   } catch (err) {
-  //     alert("Failed to update course: " + err.message);
-  //   }
-  // };
-
-  async function handleClickSave() {
+  const handleClickSave = async () => {
     try {
-      console.log(course);
-      const res = await updateCourse(courseNo, course);
+      // Create a copy of the course and exclude unwanted fields
+      const { Programs, TeacherUser, Teachers, ...cleanedCourse } = course;
+  
+      console.log('Cleaned course data:', cleanedCourse); // Debugging line
+  
+      const res = await updateCourse(courseNo, cleanedCourse);
       setIsEditing(false);
+  
       if (res) {
-        alert("User information updated successfully!");
-
-        console.log("User updated successfully!", res);
+        alert('Course information updated successfully!');
+        const courseData = await getCourseDetail({ params: { ID: courseNo } });
+        setCourse(courseData); // Refresh course data
       } else {
-        alert("Failed to update user information.");
-        console.error("Failed to update user information.");
+        alert('Failed to update course information.');
       }
     } catch (error) {
-      console.error("Error saving user data:", error);
-      alert("An error occurred while saving the user data.");
+      console.error('Error saving course data:', error);
+      alert('An error occurred while saving the course data.');
     }
-  }
+  };
 
-  function handleEditBtn(e) {
+  const handleEditBtn = (e) => {
     e.preventDefault();
-    setIsEditing((prev) => !prev);
-  }
+    setIsEditing((prev) => !prev); // Toggle isEditing state
+  };
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    const updatedCourse = {
-      ...course,
+    setCourse((prevCourse) => ({
+      ...prevCourse,
       [name]: value,
-      Programs: {
-        ...course.Programs,
-        [name]: value,
-      },
-    };
-    setCourse(updatedCourse);
-  }
+    }));
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -132,9 +120,16 @@ function CourseDetail() {
     <div>
       <MainTitle title="Course Detail" />
       {course ? (
-        <EditContainer title={course.CourseName}>
+        <EditContainer
+          title={course.CourseName}
+          isEdit={isEditing} // Use the isEditing state here
+          onClickEdit={handleEditBtn}
+          onClickSave={handleClickSave}
+          onClickCancel={handleCancelEdit}
+        >
           <div className={formStyles.sectionLayout}>
             <form>
+              {/* Course ID */}
               <div className={formStyles.formRow}>
                 <div className={formStyles.formItem}>
                   <label htmlFor="courseID" className={formStyles.formLabel}>
@@ -152,6 +147,7 @@ function CourseDetail() {
                 </div>
               </div>
 
+              {/* Course Name and Description */}
               <div className={formStyles.formRow}>
                 <div className={formStyles.formItem}>
                   <label htmlFor="courseName" className={formStyles.formLabel}>
@@ -183,6 +179,7 @@ function CourseDetail() {
                 </div>
               </div>
 
+              {/* Start Date and End Date */}
               <div className={formStyles.formRow}>
                 <div className={formStyles.formItem}>
                   <label htmlFor="startDate" className={formStyles.formLabel}>
@@ -212,8 +209,24 @@ function CourseDetail() {
                     onChange={handleChange}
                   />
                 </div>
+
+                <div className={formStyles.formItem}>
+                  <label htmlFor="time" className={formStyles.formLabel}>
+                    Time
+                  </label>
+                  <input
+                    type="text"
+                    id="time"
+                    name="time"
+                    className={formStyles.formInput}
+                    disabled={!isEditing}
+                    value={course.Time}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
 
+              {/* Teacher Selection */}
               <div className={formStyles.formRow}>
                 <div className={formStyles.formItem}>
                   <label htmlFor="teacherName" className={formStyles.formLabel}>
@@ -223,7 +236,6 @@ function CourseDetail() {
                     teachers && teachers.length > 0 ? (
                       <select
                         value={course.TeacherID}
-                        // onChange={(e) => setTeacherID(e.target.value)}
                         name="TeacherID"
                         onChange={handleChange}
                         required
@@ -252,22 +264,9 @@ function CourseDetail() {
                     />
                   )}
                 </div>
-                <div className={formStyles.formItem}>
-                  <label htmlFor="courseTime" className={formStyles.formLabel}>
-                    Course Time
-                  </label>
-                  <input
-                    type="text"
-                    id="courseTime"
-                    name="Time"
-                    className={formStyles.formInput}
-                    disabled={!isEditing}
-                    value={course.Time}
-                    onChange={handleChange}
-                  />
-                </div>
               </div>
 
+              {/* Program Details (Read-only) */}
               <div className={formStyles.formRow}>
                 <div className={formStyles.formItem}>
                   <label htmlFor="programName" className={formStyles.formLabel}>
@@ -278,10 +277,8 @@ function CourseDetail() {
                     id="programName"
                     name="ProgramName"
                     className={formStyles.formInput}
-                    disabled={!isEditing}
+                    disabled
                     value={course.Programs.ProgramName}
-                    onChange={handleChange}
-                    readOnly
                   />
                 </div>
                 <div className={formStyles.formItem}>
@@ -293,17 +290,24 @@ function CourseDetail() {
                     id="programCode"
                     name="ProgramCode"
                     className={formStyles.formInput}
-                    disabled={!isEditing}
+                    disabled
                     value={course.Programs.ProgramCode}
-                    onChange={handleChange}
-                    readOnly
                   />
                 </div>
               </div>
             </form>
           </div>
+
+          {/* Action Buttons */}
           <div className={formStyles.buttons}>
-            <Button onClickBtn={handleEditBtn}>Edit Course</Button>
+            {!isEditing ? (
+              <Button onClickBtn={handleEditBtn}>Edit Course</Button>
+            ) : (
+              <>
+                <Button onClickBtn={handleClickSave}>Save</Button>
+                <Button onClickBtn={handleCancelEdit}>Cancel</Button>
+              </>
+            )}
             <Button onClickBtn={handleDeleteCourse}>Delete Course</Button>
             <Button onClickBtn={handleBack}>Back To List</Button>
           </div>
@@ -312,41 +316,6 @@ function CourseDetail() {
         <p>No course data found.</p>
       )}
     </div>
-    // <div className={styles.ProfileLayout}>
-    //   <div className={styles.basicInfo}>
-    //     <h2>Course Details</h2>
-    //     {course ? (
-    //       <div>
-    //         {isEditing ? (
-    //           <EditCourseForm
-    //             course={course}
-    //             teachers={teachers}
-    //             onSubmit={handleEditCourse}
-    //             onCancel={handleCancelEdit}
-    //           />
-    //         ) : (
-    //           <div>
-    //             <p>Course Code: {course.CourseNo}</p>
-    //             <p>Course Name: {course.CourseName}</p>
-    //             <p>Description: {course.Description}</p>
-    //             <p>Start Date: {course.StartDate}</p>
-    //             <p>End Date: {course.EndDate}</p>
-    //             <p>Time: {course.Time}</p>
-    //             <p>Program Name: {course.Programs.ProgramName}</p>
-    //             <p>Program Code: {course.Programs.ProgramCode}</p>
-    //             <p>Teacher Name: {course.TeacherUser.FirstName} {course.TeacherUser.LastName}</p>
-    //             <p>Teacher Email: {course.TeacherUser.Email}</p>
-    //             <Button onClickBtn={() => setIsEditing(true)}>Edit Course</Button>
-    //             <Button onClickBtn={handleDeleteCourse}>Delete Course</Button>
-    //             <Button onClickBtn={handleBack}>Back</Button>
-    //           </div>
-    //         )}
-    //       </div>
-    //     ) : (
-    //       <p>No course data found.</p>
-    //     )}
-    //   </div>
-    // </div>
   );
 }
 

@@ -67,7 +67,7 @@ const ProgramForm = ({ data, mode }) => {
   const handleCreate = async () => {
     try {
       await addProgram(inputData);
-      alert("Program added successfully");
+      alert("Course Category added successfully");
       navigate("/programs/program-list");
     } catch (err) {
       setError(err.message);
@@ -77,9 +77,9 @@ const ProgramForm = ({ data, mode }) => {
 
   return (
     <EditContainer
-      title={mode === "view" ? inputData.ProgramName : "Create a new program"}
+      title={mode === "view" ? inputData.ProgramName : "Create a new Course Category"}
       isEdit={isEdit}
-      editBtnText={mode === "view" ? "Edit Program" : false}
+      editBtnText={mode === "view" ? "Edit Category" : false}
       onClickEdit={handleClickEdit}
       onClickSave={handleClickSave}
       onClickCancel={handleClickCancel}
@@ -87,7 +87,7 @@ const ProgramForm = ({ data, mode }) => {
       <div className={formStyles.formRow}>
         <div className={formStyles.formItem}>
           <label htmlFor="ProgramCode" className={formStyles.formLabel}>
-            Program Code
+          Course Category Code
           </label>
           <input
             type="text"
@@ -102,7 +102,7 @@ const ProgramForm = ({ data, mode }) => {
 
         <div className={formStyles.formItem}>
           <label htmlFor="ProgramName" className={formStyles.formLabel}>
-            Program Name
+          Course Category Name
           </label>
           <input
             type="text"
@@ -119,7 +119,7 @@ const ProgramForm = ({ data, mode }) => {
       <div className={formStyles.formRow}>
         <div className={formStyles.formItem}>
           <label htmlFor="ProgramDescription" className={formStyles.formLabel}>
-            Program Description
+          Course Category Description
           </label>
           <input
             type="text"
