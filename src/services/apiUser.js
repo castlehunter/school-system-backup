@@ -264,9 +264,11 @@ export async function CreateMultipleUsers(excelData) {
 
   if(error) {
     console.error("Error inserting dat:", error)
+    return false;
   }
   else{
     console.log("data inserted successfully", data)
+    return true;
   }
 }
 
