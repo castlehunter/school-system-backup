@@ -29,18 +29,19 @@ section {
 
 .user-section {
   display: flex;
-  gap: 2rem;
   align-items: center;
+  gap: 1rem;
 }
 
 .announcement {
   display: flex;
-  /* justify-content: center; */
+  flex: 1;
   align-items: center;
   position: relative;
   cursor: pointer;
   width: 5rem;
   height: 5rem;
+  margin-right: 1rem;
 }
 .announcement-icon {
   width: 2.5rem;
@@ -64,39 +65,41 @@ section {
   align-items: center;
 }
 
-.user-name {
-  background-color: rgb(196, 196, 202);
+.nameRole {
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  gap: 0.6rem;
+  margin-top: auto;
 }
 
 .name {
+  line-height: 1;
+  text-align: right;
   font-weight: 500;
-  font-size: 1.5rem;
-  line-height: 0.75rem;
 }
 
-.identity {
+.role {
   text-align: right;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: #9ca3af;
 }
 
 .user-avatar-container {
   position: relative;
-  display: inline-block;
+  flex: 1;
 }
 
 .user-avatar {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 .user-avatar img {
   border-radius: 9999px;
   max-width: 100%;
-  height: auto;
+  margin: 0;
   transition: box-shadow 0.3s ease;
 }
 

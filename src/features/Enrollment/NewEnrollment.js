@@ -1,75 +1,132 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getEnrollmentDetails, updateEnrollment } from "../../services/apiEnrollment";
+import {
+  getEnrollmentDetails,
+  insertEnrollments,
+} from "../../services/apiEnrollment";
+import { getCourseDetail } from "../../services/apiCourse.js";
 import Button from "../../components/Button/Button";
+import styles from "../Profile.module.css";
+import { getStudents } from "../../services/apiStudent.js";
+import Select from "react-select";
+import formStyles from "../../components/Form/Form.module.css";
 
 function EnrollmentForm() {
-  const { EnrollmentID } = useParams();
+  const { courseNo } = useParams();
   const navigate = useNavigate();
-  const [enrollment, setEnrollment] = useState(null);
-  const [enrollmentDate, setEnrollmentDate] = useState("");
-  const [isFinished, setIsFinished] = useState(false);
+  const [students, setStudents] = useState([]);
+  const [selectedStudents, setSelectedStudents] = useState([]);
+  const [enrollmentDate, setEnrollmentDate] = useState(new Date().toISOString().split('T')[0]); // Current date
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [course, setCourse] = useState(null);
 
   useEffect(() => {
-    const fetchEnrollment = async () => {
+    async function fetchStudents() {
       try {
-        const data = await getEnrollmentDetails(EnrollmentID);
-        setEnrollment(data);
-        setEnrollmentDate(data.EnrollmentDate);
-        setIsFinished(data.isFinished);
+        const studentsData = await getStudents();
+        const options = studentsData.map((student) => ({
+          value: student.StudentID,
+          label: `${student.Users.FirstName} ${student.Users.LastName}`,
+        }));
+        setStudents(options);
       } catch (error) {
-        console.error("Error fetching enrollment details:", error);
+        console.error("Failed to fetch students:", error);
       }
-    };
-    fetchEnrollment();
-  }, [EnrollmentID]);
+    }
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
+    async function fetchCourseDetails() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const courseData = await getCourseDetail({ params: { ID: courseNo } });
+        setCourse(courseData);
+
+        // Fetch enrolled students for the course
+        const enrolledStudents = await getEnrollmentDetails({ params: { CourseID: courseData.CourseID } });
+        const preselectedStudents = enrolledStudents.map(student => ({
+          value: student.StudentID,
+          label: `${student.Users.FirstName} ${student.Users.LastName}`,
+        }));
+        setSelectedStudents(preselectedStudents); // Set preselected students
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchStudents();
+    fetchCourseDetails();
+  }, [courseNo]);
+
+  const handleSave = async (event) => {
+    event.preventDefault(); 
     try {
-      await updateEnrollment(EnrollmentID, enrollmentDate, isFinished);
-      alert("Enrollment updated successfully!");
-      navigate("/enrollments/enrollment-list");
+      const newEnrollmentData = selectedStudents.map((student) => ({
+        CourseID: course.CourseID,
+        EnrollmentDate: enrollmentDate,
+        StudentID: student.value,
+      }));
+      console.log("Enrollment data is:", newEnrollmentData);
+      await insertEnrollments(newEnrollmentData);
+      alert("Enrollment created successfully!");
+      navigate("/courses/course-list");
     } catch (error) {
-      console.error("Error updating enrollment:", error);
-      alert("Failed to update enrollment.");
+      alert("Failed to create enrollment: " + error.message);
     }
   };
 
-  const handleCancel = () => {
-    navigate("/enrollments/enrollment-list");
+  const handleStudentChange = (selectedOptions) => {
+    setSelectedStudents(selectedOptions || []);
   };
 
-  if (!enrollment) return <div>Loading...</div>;
-
   return (
-    <div>
-      <h1>Student Name : {`${enrollment.Students.Users.FirstName} ${enrollment.Students.Users.LastName}`}</h1>
-      <h2>Course Name : {`${enrollment.Courses.CourseName}`}</h2>
-      <form onSubmit={handleUpdate}>
-        <div>
-          <label>
-            Enrollment Date:
+    <div className={styles.enrollmentForm}>
+      <h1 className={styles.title}>Enroll Students in {course?.CourseName || ''}</h1>
+
+      <form>
+        <div className={formStyles.formRow}>
+          <div className={formStyles.formItem}>
+            <label htmlFor="courseName" className={formStyles.formLabel}>
+              Course Name
+            </label>
             <input
-              type="date"
-              value={enrollmentDate}
-              onChange={(e) => setEnrollmentDate(e.target.value)}
-              required
+              type="text"
+              id="courseName"
+              name="CourseName"
+              value={course?.CourseName || ''}
+              readOnly
+              className={formStyles.formInput}
             />
-          </label>
-        </div>
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={isFinished}
-              onChange={() => setIsFinished((prev) => !prev)}
+          </div>
+
+          <div className={formStyles.formItem}>
+            <label htmlFor="Students" className={formStyles.formLabel}>
+              Select Students
+            </label>
+            <Select
+              options={students}
+              value={selectedStudents}
+              onChange={handleStudentChange}
+              isMulti
+              placeholder="Select students"
+              className={formStyles.formInput}
             />
-            Is Finished
-          </label>
+          </div>
         </div>
-        <Button type="submit">Update</Button>
-        <Button type="button" onClick={handleCancel}>Cancel</Button>
+
+        <div className={styles.formActions}>
+          <Button onClickBtn={handleSave} className={styles.saveButton}>
+            Save
+          </Button>
+          <Button
+            onClickBtn={() => navigate("/courses/course-list")}
+            className={styles.backButton}
+          >
+            Back to List
+          </Button>
+        </div>
       </form>
     </div>
   );

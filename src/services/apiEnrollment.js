@@ -44,6 +44,17 @@ export async function insertEnrollment(studentId, courseId, enrollmentDate, isFi
   }
   return data;
 }
+//multiple
+export async function insertEnrollments(enrollmentData) {
+  const { data, error } = await supabase
+  .from("Enrollments")
+  .insert(enrollmentData); // Pass the array of enrollment objects
+
+if (error) {
+  throw new Error("Error inserting enrollments: " + error.message);
+}
+return data;
+}
 // New update function for multiple IDs
 export async function updateEnrollments(EnrollmentIDs, isFinished, enrollmentDate) {
   const { data, error } = await supabase

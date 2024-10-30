@@ -22,6 +22,7 @@ import Error from "./ui/Error.js";
 import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
 import EnrollCourseForm from "./components/Form/EnrollCourseForm";
+import AddCourseForTeacher from "./components/Form/AddCourseForTeacher";
 import { getTeachers } from "./services/apiTeacher.js";
 import { getTeacherByNo } from "./services/apiTeacher.js";
 import { generateUserNo } from "./services/apiUser.js";
@@ -40,6 +41,7 @@ import icons from "./ui/Icons/icons.js";
 import { UserProvider } from "./contexts/UserContext.js";
 import BulkEditEnrollmentForm from "./features/Enrollment/BulkEditEnrollmentForm.js";
 import Calendar from "./features/Calendar/Calendar.js";
+import EnrollmentForm from "./features/Enrollment/NewEnrollment.js";
 
 function App() {
   const routes = [
@@ -193,7 +195,7 @@ function App() {
             },
             {
               path: "/courses/newEnrollment/:courseNo",
-              element: <NewEnrollment />,
+              element: <EnrollmentForm />,
               title: "New Enrollment",
               hideInSidebar: true,
             },
@@ -223,37 +225,43 @@ function App() {
               title: "View Teacher",
               hideInSidebar: true,
             },
+            {
+              path: "/teachers/:userNo/addCourse",
+              element: <AddCourseForTeacher />,
+              title: "Add Course",
+            }
           ],
         },
         {
           path: "programs",
           element: <Outlet />,
-          title: "Programs",
+          title: "Course Category",
           icon: icons.ProgramIcon,
           children: [
             {
               index: true,
               element: <ProgramList />,
               loader: getProgramList,
-              title: "Program List",
+              title: "Course Category",
             },
             {
               path: "/programs/program-list",
               element: <ProgramList />,
               loader: getProgramList,
-              title: "Program List",
+              title: "Course Category List",
             },
             {
               path: "/programs/:programCode",
               element: <ViewProgram />,
-              title: "View Program",
+              title: "View Course Category",
               hideInSidebar: true,
             },
 
             {
               path: "/programs/new-program",
               element: <NewProgram />,
-              title: "New Program",
+              title: "New Course Category",
+              hideInSidebar: true,
             },
           ],
         },

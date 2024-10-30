@@ -6,9 +6,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const CourseCard = ({
-  title,
+  CourseName,
   image,
-  instructorName,
+  teacherName,
   instructorAvtar,
   classRoom,
   classTime,
@@ -27,7 +27,7 @@ const CourseCard = ({
   return (
     <div className={styles["course-card"]}>
       <div className={styles["course-banner"]}>
-        <img src={image} alt="course banner" />
+        <img src={image} alt="Retrieve course banner from database" />
 
         {/* <div className={styles["course-tag-box"]}>
           <a href="#" className={`${styles["badge-tag"]} ${styles.orange} `}>
@@ -41,23 +41,22 @@ const CourseCard = ({
 
       <div className={styles["course-content"]}>
         <Link>
-          <h3 className={styles["card-title"]}>{title}</h3>
+          <h3 className={styles["card-title"]}>{CourseName}</h3>
         </Link>
 
         <div className={`${styles["border-bottom"]} ${styles.wrapper} `}>
           <div className={styles.location}>
             <RiMapPinLine className={styles.icon} />
 
-            <p>{classRoom}</p>
+            <p>ClassRoom</p>
           </div>
 
           <div className={styles.time}>
             <RiTimeLine className={styles.icon} />
 
-            <p>{classTime}</p>
+            <p>{classTime ? classTime : "TBD"}</p>
           </div>
         </div>
-
         <div className={styles.wrapper}>
           <div className={styles.teacher}>
             <img
@@ -66,7 +65,7 @@ const CourseCard = ({
               className={styles["teacher-img"]}
             />
             <a href="#home" className={styles["teacher-name"]}>
-              {instructorName}
+              {teacherName}
             </a>
           </div>
 

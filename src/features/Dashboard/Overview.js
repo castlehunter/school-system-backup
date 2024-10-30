@@ -11,6 +11,8 @@ import { getCourses } from "../../services/apiCourse";
 import { getEnrollments } from "../../services/apiEnrollment";
 import EditContainer from "../../ui/Layout/EditContainer";
 import MainTitle from "../../ui/MainTitle/MainTitle";
+import { getTeacherCoursesByUserID } from "../../services/apiTeacher";
+import { getStudentCoursesByUserID } from "../../services/apiStudent";
 
 function Overview() {
   const [loginRole, setLoginRole] = useState("");
@@ -20,6 +22,8 @@ function Overview() {
   const [teacherCount, setTeacherCount] = useState(0);
   const [courseCount, setCourseCount] = useState(0);
   const [enrollmentCount, setEnrollmentCount] = useState(0);
+  const [teacherCourses, setTeacherCourses] = useState([]);
+  const [studentCourses, setStudentCourses] = useState([]);
 
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
@@ -50,6 +54,21 @@ function Overview() {
     }
 
     fetchCounts();
+  }, []);
+
+  useEffect(() => {
+    async function fetchTeacherCourses() {
+      const storedUserID = localStorage.getItem("UserID");
+      const storedRole = localStorage.getItem("role");
+      if (storedRole === "Teacher") {
+        const teachercourses = await getTeacherCoursesByUserID(storedUserID);
+        setTeacherCourses(teachercourses);
+      } else if (storedRole === "Student") {
+        const studentcourses = await getStudentCoursesByUserID(storedUserID);
+        setStudentCourses(studentcourses);
+      }
+    }
+    fetchTeacherCourses();
   }, []);
 
   // Render Stat Cards
@@ -91,18 +110,21 @@ function Overview() {
       return (
         <>
           <StatCard
-            number="2"
+            number={teacherCourses.length}
             unit="My Courses"
             icon={icons.StudentIcon(styles.largeIcon)}
             bgcolor="bgcolor1"
           />
-          <StatCard
-            number="17"
-            unit="My Students"
-            icon={icons.TeacherIcon(styles.largeIcon)}
-            bgcolor="bgcolor2"
-          />
         </>
+      );
+    } else {
+      return (
+        <StatCard
+          number={studentCourses.length}
+          unit="My Courses"
+          icon={icons.StudentIcon(styles.largeIcon)}
+          bgcolor="bgcolor1"
+        />
       );
     }
   }

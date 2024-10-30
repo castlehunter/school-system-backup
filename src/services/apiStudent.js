@@ -186,14 +186,16 @@ export async function getStudentEnrollments(userNo) {
   // get enrollments by studentID
   const { data, error } = await supabase
     .from("Enrollments")
-    .select(`
+    .select(
+      `
       CourseID,
       Courses (
         CourseName,
         StartDate,
         EndDate
       )
-    `)
+    `
+    )
     .eq("StudentID", studentID);
 
   if (error) {
@@ -207,4 +209,47 @@ export async function getStudentEnrollments(userNo) {
     StartDate: enrollment.Courses.StartDate,
     EndDate: enrollment.Courses.EndDate,
   }));
+}
+
+export async function getStudentCoursesByUserID(userID) {
+  try {
+    const { data: studentData, error: studentError } = await supabase
+      .from("Students")
+      .select("StudentID")
+      .eq("UserID", userID)
+      .single();
+
+    if (studentError) {
+      throw new Error("Failed to fetch student data: " + studentError.message);
+    }
+
+    const studentID = studentData.StudentID;
+
+    const { data: enrollmentData, error: enrollmentError } = await supabase
+      .from("Enrollments")
+      .select("CourseID")
+      .eq("StudentID", studentID);
+
+    if (enrollmentError) {
+      throw new Error(
+        "Failed to fetch enrollment data: " + enrollmentError.message
+      );
+    }
+
+    const courseIDs = enrollmentData.map((enrollment) => enrollment.CourseID);
+
+    const { data: coursesData, error: coursesError } = await supabase
+      .from("Courses")
+      .select("*")
+      .in("CourseID", courseIDs);
+
+    if (coursesError) {
+      throw new Error("Failed to fetch courses data: " + coursesError.message);
+    }
+
+    return coursesData;
+  } catch (error) {
+    console.error("Error fetching student courses:", error);
+    throw error;
+  }
 }

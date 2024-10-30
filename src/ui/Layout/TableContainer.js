@@ -4,6 +4,8 @@ import styles from "./TableContainer.module.css";
 import Pagination from "../../components/Pagination/Pagination";
 import Button from "../../components/Button/Button";
 import Search from "../../components/Search/Search";
+import Selection from "../../components/Selection/Selection";
+
 function TableContainer({
   children,
   title,
@@ -18,6 +20,9 @@ function TableContainer({
   onClickEditBtn,
   itemsNums = [5, 10, 15, 20, 25, 30],
 }) {
+  const handleSelect = (selectedOption) => {
+    console.log("Selected:", selectedOption);
+  };
   return (
     <div className={generalStyles.container}>
       {title && (
@@ -28,10 +33,18 @@ function TableContainer({
         </div>
       )}
       <div className={styles.tableFeatures}>
-        {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
-        {showEditBtn && <Button onClickEditBtn={onClickEditBtn}>Edit</Button>}
-        <button>Sort by xyz</button>
-        <Search colorType="light" />{" "}
+        <div className={styles.tableFeaturesLeftBox}>
+          {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
+          {showEditBtn && <Button onClickEditBtn={onClickEditBtn}>Edit</Button>}
+          <div>
+            <Selection
+              options={["Option 1", "Optoin 2"]}
+              onSelect={handleSelect}
+              label="Sort By"
+            />
+          </div>
+          <Search colorType="light" />
+        </div>
         <div className={styles.entriesPerPage}>
           <span>Showing</span>
           <select value={rowsPerPage} onChange={onRowsPerPageChange}>

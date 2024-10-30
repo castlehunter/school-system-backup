@@ -29,13 +29,15 @@ function SidebarNew() {
     setLoginRole(storedRole);
   }, []);
 
-  useEffect(() => {
-    console.log("current role is", loginRole);
-  }, [loginRole]);
+  // useEffect(() => {
+  //   console.log("current role is", loginRole);
+  // }, [loginRole]);
 
   const filteredMenuItems = menuItems.filter((menuObj) => {
     if (loginRole === "Admin") {
-      return !(menuObj.title === "My Grades");
+      return (
+        !(menuObj.title === "My Grades") && !(menuObj.title === "My Courses")
+      );
     } else if (loginRole === "Advisor") {
       return (
         menuObj.title === "Dashboard" ||

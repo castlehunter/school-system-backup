@@ -21,6 +21,33 @@ export async function getUsers() {
   return data;
 }
 
+export async function getUserByID(userID) {
+  const { data, error } = await supabase
+    .from("Users")
+    .select(
+      `
+      UserName,
+      FirstName,
+      LastName,
+      Email,
+      CreatedAt,
+      HomeAddress,
+      DateOfBirth,
+      PhoneNumber,
+      Roles(RoleName)
+    `
+    )
+    .eq("UserID", userID)
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Failed to load user");
+  }
+
+  return data;
+}
+
 // export async function generateUserNo() {
 //   try {
 //     const { data, error } = await supabase
