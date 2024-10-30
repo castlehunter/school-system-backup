@@ -83,18 +83,29 @@ export async function deleteCourse(courseID) {
 }
 
 export async function updateCourse(courseNo, updatedData) {
-  const { data, error } = await supabase
-    .from("Courses")
-    .update(updatedData)
-    .eq("CourseNo", courseNo);
+  console.log('Updating course with courseNo:', courseNo);
+  console.log('Data being updated:', updatedData);
 
-  if (error) {
-    console.error(error.message);
-    throw new Error("Failed to update course");
+  try {
+    const { data, error } = await supabase
+      .from("Courses")
+      .update(updatedData)
+      .eq("CourseNo", courseNo);
+
+    if (error) {
+      console.error("Supabase update error:", error);
+      throw new Error("Failed to update course: " + error.message);
+    }
+
+    console.log("Update successful, returned data:", data);
+    return data;
+  } catch (error) {
+    console.error("General update error:", error);
+    throw error;
   }
-
-  return data;
 }
+
+
 
 export async function addCourse(courseData) {
   const {

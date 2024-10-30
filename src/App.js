@@ -40,6 +40,7 @@ import icons from "./ui/Icons/icons.js";
 import { UserProvider } from "./contexts/UserContext.js";
 import BulkEditEnrollmentForm from "./features/Enrollment/BulkEditEnrollmentForm.js";
 import Calendar from "./features/Calendar/Calendar.js";
+import EnrollmentForm from "./features/Enrollment/NewEnrollment.js";
 
 function App() {
   const routes = [
@@ -193,7 +194,7 @@ function App() {
             },
             {
               path: "/courses/newEnrollment/:courseNo",
-              element: <NewEnrollment />,
+              element: <EnrollmentForm />,
               title: "New Enrollment",
               hideInSidebar: true,
             },

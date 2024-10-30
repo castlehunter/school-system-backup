@@ -16,7 +16,7 @@ import { getTeachers } from "../../services/apiTeacher";
 import formStyles from "../../components/Form/Form.module.css";
 
 function CourseDetail() {
-  const { courseNo, courseName } = useParams(); // Extract both courseNo and courseName
+  const { courseNo, courseID } = useParams(); // Extract courseNo and courseID from params
   const navigate = useNavigate();
   const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +30,7 @@ function CourseDetail() {
         const teacherData = await getTeachers();
         setTeachers(teacherData);
       } catch (error) {
-        console.error('Failed to fetch teachers:', error);
+        console.error("Failed to fetch teachers:", error);
       }
     }
     fetchData();
@@ -39,11 +39,10 @@ function CourseDetail() {
   useEffect(() => {
     async function fetchCourseDetails() {
       try {
-       
         setIsLoading(true);
         setError(null);
         const courseData = await getCourseDetail({ params: { ID: courseNo } });
-        console.log(courseData);
+        console.log("Fetched course data:", courseData);
         setCourse(courseData);
       } catch (err) {
         setError(err.message);
@@ -57,15 +56,15 @@ function CourseDetail() {
   const handleDeleteCourse = async () => {
     try {
       await deleteCourse(course.CourseID);
-      alert('Course deleted successfully!');
-      navigate('/courses/course-list');
+      alert("Course deleted successfully!");
+      navigate("/courses/course-list");
     } catch (err) {
-      alert('Failed to delete the course: ' + err.message);
+      alert("Failed to delete the course: " + err.message);
     }
   };
 
   const handleBack = () => {
-    navigate('/courses/course-list');
+    navigate("/courses/course-list");
   };
 
   const handleCancelEdit = () => {
@@ -76,22 +75,25 @@ function CourseDetail() {
     try {
       // Create a copy of the course and exclude unwanted fields
       const { Programs, TeacherUser, Teachers, ...cleanedCourse } = course;
-  
-      console.log('Cleaned course data:', cleanedCourse); // Debugging line
-  
+
+      console.log("Cleaned course data:", cleanedCourse); // Debugging line
+      console.log("Updating course with courseNo:", courseNo);
+
       const res = await updateCourse(courseNo, cleanedCourse);
+      console.log("res = ",res)
       setIsEditing(false);
-  
+
       if (res) {
-        alert('Course information updated successfully!');
+
+        alert("Course information updated successfully!");
         const courseData = await getCourseDetail({ params: { ID: courseNo } });
         setCourse(courseData); // Refresh course data
       } else {
-        alert('Failed to update course information.');
+        alert("Failed to update course information.");
       }
     } catch (error) {
-      console.error('Error saving course data:', error);
-      alert('An error occurred while saving the course data.');
+      console.error("Error saving course data:", error);
+      alert("An error occurred while saving the course data.");
     }
   };
 
@@ -122,7 +124,7 @@ function CourseDetail() {
       {course ? (
         <EditContainer
           title={course.CourseName}
-          isEdit={isEditing} // Use the isEditing state here
+          isEdit={isEditing}
           onClickEdit={handleEditBtn}
           onClickSave={handleClickSave}
           onClickCancel={handleCancelEdit}
@@ -308,12 +310,16 @@ function CourseDetail() {
                 <Button onClickBtn={handleCancelEdit}>Cancel</Button>
               </>
             )}
-            <Button onClickBtn={handleDeleteCourse}>Delete Course</Button>
-            <Button onClickBtn={handleBack}>Back To List</Button>
+            <Button onClickBtn={handleDeleteCourse} className={styles.deleteBtn}>
+              Delete Course
+            </Button>
+            <Button onClickBtn={handleBack} className={generalStyles.secondaryBtn}>
+              Back to List
+            </Button>
           </div>
         </EditContainer>
       ) : (
-        <p>No course data found.</p>
+        <div>No course data found.</div>
       )}
     </div>
   );
