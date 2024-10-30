@@ -6,8 +6,7 @@ import EditContainer from "../../ui/Layout/EditContainer.js";
 import ModalBox from "../ModalBox/ModalBox.js";
 import * as XLSX from "xlsx";
 
-function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
-  const [inputData, setInputData] = useState({
+const initialInputData = {
     UserName: "",
     PasswordHash: "",
     FirstName: "",
@@ -19,7 +18,22 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     RoleName: "",
     SecurityQuestion:"",
     SecurityAnswer: "",
-  });
+};
+
+function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
+  const [inputData, setInputData] = useState( initialInputData/*{
+    UserName: "",
+    PasswordHash: "",
+    FirstName: "",
+    LastName: "",
+    DateOfBirth: "",
+    PhoneNumber: "",
+    HomeAddress: "",
+    IsAdmin: Boolean,
+    RoleName: "",
+    SecurityQuestion:"",
+    SecurityAnswer: "",
+  }*/);
 
   const [excelData, setExcelData] = useState([]);
 
@@ -35,8 +49,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
         HomeAddress: formData.Users.HomeAddress || "",
         IsAdmin: formData.Users.IsAdmin || false,
         RoleName: formData.Users.RoleName || "",
-        SecurityQusetion: formData.Users.SecurityQusetion || "",
-        SecurityAnswer: formData.Users.SecurityQusetion || "",
+        SecurityQuestion: formData.Users.SecurityQuestion || "",
+        SecurityAnswer: formData.Users.SecurityAnswer || "",
       });
     }
   }, [formData]);
@@ -115,7 +129,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     console.log(excelData);
     CreateMultipleUsers(excelData)
       .then((response) => {
-        handleOpenModal();
+        if(response == true)
+          handleOpenModal();
       })
       .catch((error) => {
         console.error("Error inserting data:", error);
@@ -345,7 +360,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
         <div className={styles.buttonLayout}>
           <div className={styles.buttons}>
             <Button onClickBtn={handleSubmit}>Create</Button>
-            <Button>Cancel</Button>
+            <Button onClickBtn={() => setInputData(initialInputData)}>Cancel</Button>
           </div>
         </div>
       </form>

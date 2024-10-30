@@ -39,7 +39,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
             />
           </th>
           <th>S/N</th>
-          <th>Student ID</th>
+          <th>User ID</th>
           <th>Student Name</th>
           <th>Start Date</th>
           <th>Active</th>
@@ -63,7 +63,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
               </td>
 
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
-              <td>{student.StudentID}</td>
+              <td>{student.Users.UserNo}</td>
               <td>{`${student.Users.FirstName} ${student.Users.LastName}`}</td>
               <td>{student.StartDate}</td>
               <td>{student.Active ? "Yes" : "No"}</td>

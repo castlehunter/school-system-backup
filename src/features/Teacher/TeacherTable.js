@@ -72,6 +72,13 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
               >
                 View/Edit
               </Link>
+              <span> | </span>
+              <Link
+                to={`/teachers/${Teacher.Users.UserNo}/add-course`}
+                className={generalStyles.link}
+              >
+                Add Course
+              </Link>
             </td>
           </tr>
         ))}

@@ -4,17 +4,65 @@ import styles from "../Profile.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import PersonalInfoForm from "../../components/Form/PersonalInfoForm";
 import MainTitle from "../../ui/MainTitle/MainTitle";
+
+import formStyles from "../../components/Form/Form.module.css";
+import { getTeacherCoursesByUserID } from "../../services/apiTeacher";
 import { getProfileInfoByNo } from "../../services/apiUser";
+import AddCourseForTeacher from "../../components/Form/AddCourseForTeacher";
 
 function ViewTeacher() {
   const { userNo } = useParams();
+  const [courses, setCourses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchCourses() {
+      try {
+        const data = await getTeacherCoursesByUserID(userNo);
+        setCourses(data);
+      } catch (error) {
+        setError("Failed to fetch courses.");
+        console.error("Error fetching courses:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchCourses();
+  }, [userNo]);
+
   return (
     <>
       <MainTitle title="Teacher Detail" />
       <div className={styles.profileLayout}>
         <div className={styles.mainColumn}>
           <PersonalInfoForm userNo={userNo} />
-          <EditContainer title="Additional Information"></EditContainer>
+          {/* <EditContainer title="Additional Information"></EditContainer> */}
+          <EditContainer title="Courses">
+          <div className={formStyles.formContainer}>
+            <table className={formStyles.courseTable}>
+              <thead>
+                <tr>
+                  <th>Course Name</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {courses.map((course) => (
+                  <tr key={course.CourseID}>
+                    <td>{course.CourseName}</td>
+                    <td>{new Date(course.StartDate).toLocaleDateString()}</td>
+                    <td>{new Date(course.EndDate).toLocaleDateString()}</td>
+                    <td>{course.Time}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </EditContainer>
         </div>
         <div className={styles.secondaryColumn}>
           <EditContainer title="Some charts here">
@@ -43,6 +91,7 @@ function ViewTeacher() {
             pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
             culpa qui officia deserunt mollit anim id est laborum.
           </EditContainer>
+            
         </div>
       </div>
     </>

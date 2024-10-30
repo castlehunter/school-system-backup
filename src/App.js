@@ -22,6 +22,7 @@ import Error from "./ui/Error.js";
 import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
 import EnrollCourseForm from "./components/Form/EnrollCourseForm";
+import AddCourseForTeacher from "./components/Form/AddCourseForTeacher";
 import { getTeachers } from "./services/apiTeacher.js";
 import { getTeacherByNo } from "./services/apiTeacher.js";
 import { generateUserNo } from "./services/apiUser.js";
@@ -224,6 +225,11 @@ function App() {
               title: "View Teacher",
               hideInSidebar: true,
             },
+            {
+              path: "/teachers/:userNo/addCourse",
+              element: <AddCourseForTeacher />,
+              title: "Add Course",
+            }
           ],
         },
         {
