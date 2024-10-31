@@ -69,7 +69,9 @@ const icons = {
   ),
   EyeOpen: <RiEyeLine style={{ fill: "black" }} />,
   EyeOff: <RiEyeOffLine style={{ fill: "black" }} />,
-  ArrowDownIcon: <RiArrowDownSFill />,
+  ArrowDownIcon: (className = "", style = {}) => (
+    <RiArrowDownSFill className={className} style={style} />
+  ),
 };
 
 export default icons;
