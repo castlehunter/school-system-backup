@@ -131,7 +131,6 @@ function CourseDetail() {
         >
           <div className={formStyles.sectionLayout}>
             <form>
-              {/* Course ID */}
               <div className={formStyles.formRow}>
                 <div className={formStyles.formItem}>
                   <label htmlFor="courseID" className={formStyles.formLabel}>
@@ -149,7 +148,6 @@ function CourseDetail() {
                 </div>
               </div>
 
-              {/* Course Name and Description */}
               <div className={formStyles.formRow}>
                 <div className={formStyles.formItem}>
                   <label htmlFor="courseName" className={formStyles.formLabel}>
@@ -181,7 +179,6 @@ function CourseDetail() {
                 </div>
               </div>
 
-              {/* Start Date and End Date */}
               <div className={formStyles.formRow}>
                 <div className={formStyles.formItem}>
                   <label htmlFor="startDate" className={formStyles.formLabel}>
@@ -228,7 +225,6 @@ function CourseDetail() {
                 </div>
               </div>
 
-              {/* Teacher Selection */}
               <div className={formStyles.formRow}>
                 <div className={formStyles.formItem}>
                   <label htmlFor="teacherName" className={formStyles.formLabel}>
@@ -268,7 +264,6 @@ function CourseDetail() {
                 </div>
               </div>
 
-              {/* Program Details (Read-only) */}
               <div className={formStyles.formRow}>
                 <div className={formStyles.formItem}>
                   <label htmlFor="programName" className={formStyles.formLabel}>
