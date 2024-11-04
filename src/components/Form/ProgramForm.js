@@ -77,9 +77,11 @@ const ProgramForm = ({ data, mode }) => {
 
   return (
     <EditContainer
-      title={mode === "view" ? inputData.ProgramName : "Create a new Course Category"}
+      title={
+        mode === "view" ? inputData.ProgramName : "Create a new Course Category"
+      }
       isEdit={isEdit}
-      editBtnText={mode === "view" ? "Edit Category" : false}
+      editButtonText={mode === "view" ? "Edit Category" : false}
       onClickEdit={handleClickEdit}
       onClickSave={handleClickSave}
       onClickCancel={handleClickCancel}
@@ -87,7 +89,7 @@ const ProgramForm = ({ data, mode }) => {
       <div className={formStyles.formRow}>
         <div className={formStyles.formItem}>
           <label htmlFor="ProgramCode" className={formStyles.formLabel}>
-          Course Category Code
+            Course Category Code
           </label>
           <input
             type="text"
@@ -102,7 +104,7 @@ const ProgramForm = ({ data, mode }) => {
 
         <div className={formStyles.formItem}>
           <label htmlFor="ProgramName" className={formStyles.formLabel}>
-          Course Category Name
+            Course Category Name
           </label>
           <input
             type="text"
@@ -119,7 +121,7 @@ const ProgramForm = ({ data, mode }) => {
       <div className={formStyles.formRow}>
         <div className={formStyles.formItem}>
           <label htmlFor="ProgramDescription" className={formStyles.formLabel}>
-          Course Category Description
+            Course Category Description
           </label>
           <input
             type="text"

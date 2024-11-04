@@ -42,12 +42,14 @@
 
 // export default StudentDetailForm;
 
-
 import React, { useState, useEffect } from "react";
 import formStyles from "./Form.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import Button from "../Button/Button";
-import { updateStudent, getStudentEnrollments } from "../../services/apiStudent";
+import {
+  updateStudent,
+  getStudentEnrollments,
+} from "../../services/apiStudent";
 import avatar from "../../assets/user-avatar-account.jpg";
 
 import { useParams } from "react-router-dom";
@@ -132,156 +134,154 @@ function StudentDetailForm({ studentData, data, showEditButton }) {
 
   return (
     <>
-    <EditContainer
-      title="Personal Information"
-      editBtnText="Edit"
-      isEdit={isEdit}
-      onClickEdit={handleClickEdit}
-      onClickSave={handleClickSave}
-      onClickCancel={handleClickCancel}
-      showEditButton={showEditButton}
-    >
-      {console.log("prprpr", data)}
-      <div className={formStyles.sectionLayout}>
-        <div className={formStyles.avatar}>
-          <img src={avatar} alt="user avatar" />
-          <Button>Upload Picture</Button>
+      <EditContainer
+        title="Personal Information"
+        editButtonText="Edit"
+        isEdit={isEdit}
+        onClickEdit={handleClickEdit}
+        onClickSave={handleClickSave}
+        onClickCancel={handleClickCancel}
+        showEditButton={showEditButton}
+      >
+        {console.log("prprpr", data)}
+        <div className={formStyles.sectionLayout}>
+          <div className={formStyles.avatar}>
+            <img src={avatar} alt="user avatar" />
+            <Button>Upload Picture</Button>
+          </div>
+          <form>
+            <div className={formStyles.formRow}>
+              {" "}
+              <div className={formStyles.formItem}>
+                <label htmlFor="role" className={formStyles.formLabel}>
+                  Role
+                </label>
+                <input
+                  type="text"
+                  id="role"
+                  name="role"
+                  className={formStyles.formInput}
+                  readOnly
+                  disabled
+                  value={inputData.RoleName}
+                />
+              </div>
+            </div>
+            <div className={formStyles.formRow}>
+              <div className={formStyles.formItem}>
+                <label htmlFor="firstName" className={formStyles.formLabel}>
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="FirstName"
+                  className={formStyles.formInput}
+                  disabled={!isEdit}
+                  value={inputData.FirstName}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={formStyles.formItem}>
+                <label htmlFor="lastName" className={formStyles.formLabel}>
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="LastName"
+                  className={formStyles.formInput}
+                  disabled={!isEdit}
+                  value={inputData.LastName}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className={formStyles.formRow}>
+              <div className={formStyles.formItem}>
+                <label htmlFor="phone" className={formStyles.formLabel}>
+                  Phone
+                </label>
+                <input
+                  type="phone"
+                  id="phone"
+                  name="PhoneNumber"
+                  className={formStyles.formInput}
+                  disabled={!isEdit}
+                  value={inputData.PhoneNumber}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={formStyles.formItem}>
+                <label htmlFor="email" className={formStyles.formLabel}>
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="Email"
+                  className={formStyles.formInput}
+                  disabled={!isEdit}
+                  value={inputData.Email}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className={formStyles.formItem}>
+              <label htmlFor="dob" className={formStyles.formLabel}>
+                Date of Birth
+              </label>
+              <input
+                type="date"
+                id="dob"
+                name="DateOfBirth"
+                className={formStyles.formInput}
+                disabled={!isEdit}
+                value={inputData.DateOfBirth}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={formStyles.formItem}>
+              <label htmlFor="address" className={formStyles.formLabel}>
+                Home Address
+              </label>
+              <input
+                type="text"
+                id="address"
+                name="HomeAddress"
+                className={formStyles.formInput}
+                disabled={!isEdit}
+                value={inputData.HomeAddress}
+                onChange={handleChange}
+              />
+            </div>
+          </form>
         </div>
-        <form>
-          <div className={formStyles.formRow}>
-            {" "}
-            <div className={formStyles.formItem}>
-              <label htmlFor="role" className={formStyles.formLabel}>
-                Role
-              </label>
-              <input
-                type="text"
-                id="role"
-                name="role"
-                className={formStyles.formInput}
-                readOnly
-                disabled
-                value={inputData.RoleName}
-              />
-            </div>
-          </div>
-          <div className={formStyles.formRow}>
-            <div className={formStyles.formItem}>
-              <label htmlFor="firstName" className={formStyles.formLabel}>
-                First Name
-              </label>
-              <input
-                type="text"
-                id="firstName"
-                name="FirstName"
-                className={formStyles.formInput}
-                disabled={!isEdit}
-                value={inputData.FirstName}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={formStyles.formItem}>
-              <label htmlFor="lastName" className={formStyles.formLabel}>
-                Last Name
-              </label>
-              <input
-                type="text"
-                id="lastName"
-                name="LastName"
-                className={formStyles.formInput}
-                disabled={!isEdit}
-                value={inputData.LastName}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className={formStyles.formRow}>
-            <div className={formStyles.formItem}>
-              <label htmlFor="phone" className={formStyles.formLabel}>
-                Phone
-              </label>
-              <input
-                type="phone"
-                id="phone"
-                name="PhoneNumber"
-                className={formStyles.formInput}
-                disabled={!isEdit}
-                value={inputData.PhoneNumber}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={formStyles.formItem}>
-              <label htmlFor="email" className={formStyles.formLabel}>
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="Email"
-                className={formStyles.formInput}
-                disabled={!isEdit}
-                value={inputData.Email}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className={formStyles.formItem}>
-            <label htmlFor="dob" className={formStyles.formLabel}>
-              Date of Birth
-            </label>
-            <input
-              type="date"
-              id="dob"
-              name="DateOfBirth"
-              className={formStyles.formInput}
-              disabled={!isEdit}
-              value={inputData.DateOfBirth}
-              onChange={handleChange}
-            />
-          </div>
-          <div className={formStyles.formItem}>
-            <label htmlFor="address" className={formStyles.formLabel}>
-              Home Address
-            </label>
-            <input
-              type="text"
-              id="address"
-              name="HomeAddress"
-              className={formStyles.formInput}
-              disabled={!isEdit}
-              value={inputData.HomeAddress}
-              onChange={handleChange}
-            />
-          </div>
-        </form>
-      </div>
-    </EditContainer>
-    <br />
-    <EditContainer
-      title="Enrolled Courses"
-    >
-    <div className={formStyles.formContainer}>
-    <table className={formStyles.courseTable}>
-      <thead>
-        <tr>
-          <th>Course Name</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        {enrollments.map((enrollment) => (
-          <tr key={enrollment.CourseID}>
-            <td>{enrollment.CourseName}</td>
-            <td>{new Date(enrollment.StartDate).toLocaleDateString()}</td>
-            <td>{new Date(enrollment.EndDate).toLocaleDateString()}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-  </EditContainer>
-  </>
+      </EditContainer>
+      <br />
+      <EditContainer title="Enrolled Courses">
+        <div className={formStyles.formContainer}>
+          <table className={formStyles.courseTable}>
+            <thead>
+              <tr>
+                <th>Course Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {enrollments.map((enrollment) => (
+                <tr key={enrollment.CourseID}>
+                  <td>{enrollment.CourseName}</td>
+                  <td>{new Date(enrollment.StartDate).toLocaleDateString()}</td>
+                  <td>{new Date(enrollment.EndDate).toLocaleDateString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </EditContainer>
+    </>
   );
 }
 
