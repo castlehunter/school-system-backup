@@ -3,11 +3,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   getEnrollmentDetails,
   insertEnrollments,
+  getEnrollments, // Import your new function
 } from "../../services/apiEnrollment";
 import { getCourseDetail } from "../../services/apiCourse.js";
 import Button from "../../components/Button/Button";
 import styles from "../Profile.module.css";
-import { getStudents } from "../../services/apiStudent.js";
+import {
+  getStudents,
+  getStudentNameForCourse,
+} from "../../services/apiStudent.js";
 import Select from "react-select";
 import formStyles from "../../components/Form/Form.module.css";
 
@@ -16,11 +20,14 @@ function EnrollmentForm() {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
-  const [enrollmentDate, setEnrollmentDate] = useState(new Date().toISOString().split('T')[0]); // Current date
+  const [enrollmentDate, setEnrollmentDate] = useState(
+    new Date().toISOString().split("T")[0]
+  ); // Current date
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [course, setCourse] = useState(null);
-
+  const [enrolledStudents, setEnrolledStudents] = useState([]); // New state for enrolled students
+  console.log(courseNo); 
   useEffect(() => {
     async function fetchStudents() {
       try {
@@ -34,7 +41,9 @@ function EnrollmentForm() {
         console.error("Failed to fetch students:", error);
       }
     }
-
+    if (courseNo) {
+      fetchEnrollments(courseNo); // Call fetchEnrollments once courseNo is set
+    }
     async function fetchCourseDetails() {
       try {
         setIsLoading(true);
@@ -43,12 +52,15 @@ function EnrollmentForm() {
         setCourse(courseData);
 
         // Fetch enrolled students for the course
-        const enrolledStudents = await getEnrollmentDetails({ params: { CourseID: courseData.CourseID } });
-        const preselectedStudents = enrolledStudents.map(student => ({
+        const enrolledStudentsData = await getEnrollmentDetails({
+          params: { CourseID: courseData.CourseID },
+        });
+        const preselectedStudents = enrolledStudentsData.map((student) => ({
           value: student.StudentID,
           label: `${student.Users.FirstName} ${student.Users.LastName}`,
         }));
         setSelectedStudents(preselectedStudents); // Set preselected students
+        setEnrolledStudents(enrolledStudentsData); // Set enrolled students
       } catch (err) {
         setError(err.message);
       } finally {
@@ -56,12 +68,46 @@ function EnrollmentForm() {
       }
     }
 
+      async function fetchEnrollments(courseNo) {
+        try {
+          console.log("courseNo = ",courseNo);
+          setIsLoading(true);
+          // Get course details using courseNo to retrieve the courseID
+          const courseDetails = await getCourseDetail({ params: { ID: courseNo } });
+          console.log("coursedetails = ",courseDetails);
+          const courseID = courseDetails.CourseID; // Extract courseID from course details
+      
+          // Get all enrollments
+          const enrollments = await getEnrollments(); 
+      
+          // Filter enrollments by matching CourseID
+          const filteredEnrollments = enrollments.filter((enrollment) => enrollment.CourseID === courseID);
+      
+          // Enrich filtered enrollments with student info
+          const enrichedEnrollments = await Promise.all(filteredEnrollments.map(async (enrollment) => {
+            const studentInfo = await getStudentNameForCourse(enrollment.StudentID); // Get student info
+            return {
+              ...enrollment,
+              studentName: `${studentInfo.Users.FirstName} ${studentInfo.Users.LastName}`, // Enrich with student name
+            };
+          }));
+      
+          setEnrolledStudents(enrichedEnrollments); // Set enriched enrollments
+        } catch (error) {
+          console.error("Failed to fetch enrollments:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    
+
     fetchStudents();
     fetchCourseDetails();
+    fetchEnrollments(); // Fetch enrollments when the component mounts
   }, [courseNo]);
 
   const handleSave = async (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     try {
       const newEnrollmentData = selectedStudents.map((student) => ({
         CourseID: course.CourseID,
@@ -83,7 +129,9 @@ function EnrollmentForm() {
 
   return (
     <div className={styles.enrollmentForm}>
-      <h1 className={styles.title}>Enroll Students in {course?.CourseName || ''}</h1>
+      <h1 className={styles.title}>
+        Enroll Students in {course?.CourseName || ""}
+      </h1>
 
       <form>
         <div className={formStyles.formRow}>
@@ -95,7 +143,7 @@ function EnrollmentForm() {
               type="text"
               id="courseName"
               name="CourseName"
-              value={course?.CourseName || ''}
+              value={course?.CourseName || ""}
               readOnly
               className={formStyles.formInput}
             />
@@ -113,6 +161,24 @@ function EnrollmentForm() {
               placeholder="Select students"
               className={formStyles.formInput}
             />
+          </div>
+        </div>
+
+        {/* Display Enrolled Students */}
+        <div className={formStyles.formRow}>
+          <div className={formStyles.formItem}>
+            <label className={formStyles.formLabel}>Enrolled Students</label>
+            {enrolledStudents.length > 0 ? (
+              <ul>
+                {enrolledStudents.map((enrollment) => (
+                  <li key={enrollment.StudentID}>
+                    {enrollment.studentName} - {enrollment.Courses.CourseName}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No students enrolled yet.</p>
+            )}
           </div>
         </div>
 
