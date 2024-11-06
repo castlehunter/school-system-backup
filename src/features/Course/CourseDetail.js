@@ -16,8 +16,10 @@ import { getTeachers } from "../../services/apiTeacher";
 import formStyles from "../../components/Form/Form.module.css";
 
 function CourseDetail() {
-  const { courseNo, courseID } = useParams(); // Extract courseNo and courseID from params
+  const { courseNo } = useParams(); 
   const navigate = useNavigate();
+  const [originalCourse, setOriginalCourse] = useState(null); 
+
   const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -44,6 +46,7 @@ function CourseDetail() {
         const courseData = await getCourseDetail({ params: { ID: courseNo } });
         console.log("Fetched course data:", courseData);
         setCourse(courseData);
+        setOriginalCourse(courseData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -68,15 +71,15 @@ function CourseDetail() {
   };
 
   const handleCancelEdit = () => {
+    setCourse(originalCourse); 
     setIsEditing(false);
   };
 
   const handleClickSave = async () => {
     try {
-      // Create a copy of the course and exclude unwanted fields
       const { Programs, TeacherUser, Teachers, ...cleanedCourse } = course;
 
-      console.log("Cleaned course data:", cleanedCourse); // Debugging line
+      console.log("Cleaned course data:", cleanedCourse); 
       console.log("Updating course with courseNo:", courseNo);
 
       const res = await updateCourse(courseNo, cleanedCourse);
@@ -99,7 +102,7 @@ function CourseDetail() {
 
   const handleEditBtn = (e) => {
     e.preventDefault();
-    setIsEditing((prev) => !prev); // Toggle isEditing state
+    setIsEditing((prev) => !prev); 
   };
 
   const handleChange = (e) => {
@@ -216,7 +219,7 @@ function CourseDetail() {
                   <input
                     type="text"
                     id="time"
-                    name="time"
+                    name="Time"
                     className={formStyles.formInput}
                     disabled={!isEditing}
                     value={course.Time}
@@ -295,7 +298,6 @@ function CourseDetail() {
             </form>
           </div>
 
-          {/* Action Buttons */}
           <div className={formStyles.buttons}>
             {!isEditing ? (
               <Button onClickBtn={handleEditBtn}>Edit Course</Button>

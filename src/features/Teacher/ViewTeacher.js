@@ -6,9 +6,8 @@ import PersonalInfoForm from "../../components/Form/PersonalInfoForm";
 import MainTitle from "../../ui/MainTitle/MainTitle";
 
 import formStyles from "../../components/Form/Form.module.css";
-import { getTeacherCoursesByUserID } from "../../services/apiTeacher";
+import { getTeacherCourses } from "../../services/apiTeacher";
 import { getProfileInfoByNo } from "../../services/apiUser";
-import AddCourseForTeacher from "../../components/Form/AddCourseForTeacher";
 
 function ViewTeacher() {
   const { userNo } = useParams();
@@ -19,7 +18,7 @@ function ViewTeacher() {
   useEffect(() => {
     async function fetchCourses() {
       try {
-        const data = await getTeacherCoursesByUserID(userNo);
+        const data = await getTeacherCourses(userNo);
         setCourses(data);
       } catch (error) {
         setError("Failed to fetch courses.");
