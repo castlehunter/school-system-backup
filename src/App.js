@@ -42,6 +42,7 @@ import { UserProvider } from "./contexts/UserContext.js";
 import BulkEditEnrollmentForm from "./features/Enrollment/BulkEditEnrollmentForm.js";
 import Calendar from "./features/Calendar/Calendar.js";
 import EnrollmentForm from "./features/Enrollment/NewEnrollment.js";
+import Announcements from "./features/Dashboard/Announcements.js";
 // import HelpAndSupport from "./features/HelpAndSupport/HelpAndSupport.js";
 
 function App() {
@@ -80,6 +81,11 @@ function App() {
               element: <ResetPassword />,
               title: "Reset Password",
               hideInSidebar: true,
+            },
+            {
+              path: "/dashboard/announcements",
+              element: <Announcements />,
+              title: "Announcements",
             },
             // { If Time permits, we can add this module, only admin can edit the content
             //   path: "/dashboard/help-and-support",

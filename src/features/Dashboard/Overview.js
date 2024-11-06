@@ -1,8 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import styles from "./Overview.module.css";
-import generalStyles from "../../generalStyles.module.css";
 import StatCard from "../../components/StatCard/StatCard";
 import icons from "../../ui/Icons/icons";
 import { getStudents } from "../../services/apiStudent";
@@ -13,8 +11,9 @@ import EditContainer from "../../ui/Layout/EditContainer";
 import MainTitle from "../../ui/MainTitle/MainTitle";
 import { getTeacherCoursesByUserID } from "../../services/apiTeacher";
 import { getStudentCoursesByUserID } from "../../services/apiStudent";
-import { getSchoolInformation } from "../../services/apiSchool";
 import ContactForm from "../../components/Form/ContactForm";
+import { getAnnouncements } from "../../services/apiAnnouncements";
+import ModalContainer from "../../ui/Layout/ModalContainer";
 
 function Overview() {
   const [loginRole, setLoginRole] = useState("");
@@ -26,7 +25,8 @@ function Overview() {
   const [enrollmentCount, setEnrollmentCount] = useState(0);
   const [teacherCourses, setTeacherCourses] = useState([]);
   const [studentCourses, setStudentCourses] = useState([]);
-
+  const [announcements, setAnnouncements] = useState([]);
+  const [openedAnnouncement, setOpenedAnnouncement] = useState(null);
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
     const storedFirstName = localStorage.getItem("firstName");
@@ -175,7 +175,60 @@ function Overview() {
   //   }
   // }
 
-  function handleEditMainContact() {}
+  useEffect(() => {
+    async function fetchAnnouncements() {
+      try {
+        const data = await getAnnouncements();
+        setAnnouncements(data.slice(0, 5));
+      } catch (error) {
+        console.error("Error fetching announcements", error);
+      }
+    }
+
+    fetchAnnouncements();
+  }, []);
+
+  function handleClickAnnouncement(announcement) {
+    setOpenedAnnouncement(announcement);
+  }
+
+  function renderAnnouncements() {
+    return (
+      <>
+        <div className={styles.announcementsContainer}>
+          {announcements.map((announcement) => {
+            const maxLength = 250;
+            return (
+              <div
+                key={announcement.Id}
+                className={styles.announcementItem}
+                onClick={() => handleClickAnnouncement(announcement)}
+              >
+                <h4 className={styles.announcementTitle}>
+                  {announcement.Title}
+                </h4>
+                <p className={styles.announcementContent}>
+                  {announcement.Content.length > maxLength ? (
+                    <>
+                      {announcement.Content.substring(0, maxLength)}...
+                      &nbsp;&nbsp;
+                      <span className={styles.readMore}>Read more</span>
+                    </>
+                  ) : (
+                    announcement.Content
+                  )}
+                </p>
+
+                <span className={styles.announcementDate}>
+                  {new Date(announcement.CreatedAt).toLocaleDateString()}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -187,16 +240,17 @@ function Overview() {
             title="Announcement"
             editButtonText={loginRole === "Admin" ? "Edit" : false}
           >
-            Navigate through the menu to explore features and tools that
-            simplify and enhance your tasks within the school system. Add more
-            textsAdd more textsAdd more textsAdd more textsAdd more texts
-            <br></br>Add more texts
-            <br></br>Add more texts<br></br>Add more texts<br></br>Add more
-            texts
-            <br></br>Add more texts<br></br>Add more texts<br></br>Add more
-            texts
-            <br></br>Add more texts
+            {renderAnnouncements()}
           </EditContainer>
+          {/* Only show Modal if there's an active announcement */}
+          {openedAnnouncement && (
+            <ModalContainer
+              title={openedAnnouncement.Title}
+              onClose={() => setOpenedAnnouncement(null)}
+            >
+              {openedAnnouncement.Content}
+            </ModalContainer>
+          )}
           <EditContainer title="TBD">d</EditContainer>
         </div>
 
