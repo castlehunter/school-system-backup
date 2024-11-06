@@ -233,7 +233,7 @@ function App() {
               hideInSidebar: true,
             },
             {
-              path: "/teachers/:userNo/addCourse",
+              path: "/teachers/:userNo/add-Course",
               element: <AddCourseForTeacher />,
               title: "Add Course",
             },

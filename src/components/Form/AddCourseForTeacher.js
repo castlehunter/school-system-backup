@@ -3,10 +3,11 @@ import formStyles from "./Form.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import Button from "../Button/Button";
 import { getCourses } from "../../services/apiCourse";
-import { addCourse } from "../../services/apiCourse";
+import { addCourseToTeacher } from "../../services/apiTeacher";
 import { useNavigate, useParams } from "react-router-dom";
 
-function AddCourseForTeacher({ userNo }) {
+function AddCourseForTeacher() {
+  const { userNo } = useParams();
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(null);
@@ -27,7 +28,7 @@ function AddCourseForTeacher({ userNo }) {
 
   const handleAddCourse = async (course) => {
     try {
-      await addCourse({ ...course, TeacherID: userNo });
+      await addCourseToTeacher({ CourseID: course.CourseID, TeacherID: userNo });
       alert("Course added successfully!");
       navigate(`/teachers/${userNo}`);
     } catch (error) {
@@ -48,7 +49,7 @@ function AddCourseForTeacher({ userNo }) {
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Time</th>
-                <th></th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
