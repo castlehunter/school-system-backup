@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import supabase from "../../config/supabaseClient.js";
+
+import EditContainer from "../../ui/Layout/EditContainer.js";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   getEnrollmentDetails,
@@ -7,6 +10,7 @@ import {
 } from "../../services/apiEnrollment";
 import { getCourseDetail } from "../../services/apiCourse.js";
 import Button from "../../components/Button/Button";
+
 import styles from "../Profile.module.css";
 import {
   getStudents,
@@ -26,8 +30,8 @@ function EnrollmentForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [course, setCourse] = useState(null);
-  const [enrolledStudents, setEnrolledStudents] = useState([]); // New state for enrolled students
-  console.log(courseNo); 
+  const [enrolledStudents, setEnrolledStudents] = useState([]); 
+  console.log(courseNo);
   useEffect(() => {
     async function fetchStudents() {
       try {
@@ -42,7 +46,7 @@ function EnrollmentForm() {
       }
     }
     if (courseNo) {
-      fetchEnrollments(courseNo); // Call fetchEnrollments once courseNo is set
+      fetchEnrollments(courseNo); 
     }
     async function fetchCourseDetails() {
       try {
@@ -51,7 +55,6 @@ function EnrollmentForm() {
         const courseData = await getCourseDetail({ params: { ID: courseNo } });
         setCourse(courseData);
 
-        // Fetch enrolled students for the course
         const enrolledStudentsData = await getEnrollmentDetails({
           params: { CourseID: courseData.CourseID },
         });
@@ -59,8 +62,8 @@ function EnrollmentForm() {
           value: student.StudentID,
           label: `${student.Users.FirstName} ${student.Users.LastName}`,
         }));
-        setSelectedStudents(preselectedStudents); // Set preselected students
-        setEnrolledStudents(enrolledStudentsData); // Set enrolled students
+        setSelectedStudents(preselectedStudents); 
+        setEnrolledStudents(enrolledStudentsData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -68,42 +71,45 @@ function EnrollmentForm() {
       }
     }
 
-      async function fetchEnrollments(courseNo) {
-        try {
-          console.log("courseNo = ",courseNo);
-          setIsLoading(true);
-          // Get course details using courseNo to retrieve the courseID
-          const courseDetails = await getCourseDetail({ params: { ID: courseNo } });
-          console.log("coursedetails = ",courseDetails);
-          const courseID = courseDetails.CourseID; // Extract courseID from course details
-      
-          // Get all enrollments
-          const enrollments = await getEnrollments(); 
-      
-          // Filter enrollments by matching CourseID
-          const filteredEnrollments = enrollments.filter((enrollment) => enrollment.CourseID === courseID);
-      
-          // Enrich filtered enrollments with student info
-          const enrichedEnrollments = await Promise.all(filteredEnrollments.map(async (enrollment) => {
-            const studentInfo = await getStudentNameForCourse(enrollment.StudentID); // Get student info
+    async function fetchEnrollments(courseNo) {
+      try {
+        console.log("courseNo = ", courseNo);
+        setIsLoading(true);
+        const courseDetails = await getCourseDetail({
+          params: { ID: courseNo },
+        });
+        console.log("coursedetails = ", courseDetails);
+        const courseID = courseDetails.CourseID; 
+
+        const enrollments = await getEnrollments();
+
+        const filteredEnrollments = enrollments.filter(
+          (enrollment) => enrollment.CourseID === courseID
+        );
+
+        const enrichedEnrollments = await Promise.all(
+          filteredEnrollments.map(async (enrollment) => {
+            const studentInfo = await getStudentNameForCourse(
+              enrollment.StudentID
+            ); 
             return {
               ...enrollment,
               studentName: `${studentInfo.Users.FirstName} ${studentInfo.Users.LastName}`, // Enrich with student name
             };
-          }));
-      
-          setEnrolledStudents(enrichedEnrollments); // Set enriched enrollments
-        } catch (error) {
-          console.error("Failed to fetch enrollments:", error);
-        } finally {
-          setIsLoading(false);
-        }
+          })
+        );
+
+        setEnrolledStudents(enrichedEnrollments); 
+      } catch (error) {
+        console.error("Failed to fetch enrollments:", error);
+      } finally {
+        setIsLoading(false);
       }
-    
+    }
 
     fetchStudents();
     fetchCourseDetails();
-    fetchEnrollments(); // Fetch enrollments when the component mounts
+    fetchEnrollments(); 
   }, [courseNo]);
 
   const handleSave = async (event) => {
@@ -117,7 +123,9 @@ function EnrollmentForm() {
       console.log("Enrollment data is:", newEnrollmentData);
       await insertEnrollments(newEnrollmentData);
       alert("Enrollment created successfully!");
-      navigate("/courses/course-list");
+      window.location.reload();
+
+     // navigate("/courses/course-list");
     } catch (error) {
       alert("Failed to create enrollment: " + error.message);
     }
@@ -127,74 +135,127 @@ function EnrollmentForm() {
     setSelectedStudents(selectedOptions || []);
   };
 
+
+  const handleUnenroll = async (studentID) => {
+    try {
+      setIsLoading(true);  
+      setError(null);  
+  
+      await unenrollStudentFromCourse(studentID, course.CourseID);
+  
+      const updatedEnrollments = enrolledStudents.filter(
+        (enrollment) => enrollment.StudentID !== studentID
+      );
+  
+      setEnrolledStudents(updatedEnrollments);  
+  
+      alert("Student unenrolled successfully!");  
+    } catch (error) {
+      setError(error.message);  
+      console.error("Failed to unenroll student:", error);
+    } finally {
+      setIsLoading(false); 
+    }
+  };
+  
+  const unenrollStudentFromCourse = async (studentID, courseID) => {
+    const { error } = await supabase
+      .from("Enrollments")
+      .delete()
+      .eq("StudentID", studentID)
+      .eq("CourseID", courseID); 
+  
+    if (error) {
+      throw new Error("Failed to unenroll student: " + error.message);
+    }
+  };
+
   return (
-    <div className={styles.enrollmentForm}>
-      <h1 className={styles.title}>
-        Enroll Students in {course?.CourseName || ""}
-      </h1>
+    <EditContainer>
+      <div className={styles.enrollmentForm}>
+        <h1 className={styles.title}>
+          Enroll Students in {course?.CourseName || ""}
+        </h1>
 
-      <form>
-        <div className={formStyles.formRow}>
-          <div className={formStyles.formItem}>
-            <label htmlFor="courseName" className={formStyles.formLabel}>
-              Course Name
-            </label>
-            <input
-              type="text"
-              id="courseName"
-              name="CourseName"
-              value={course?.CourseName || ""}
-              readOnly
-              className={formStyles.formInput}
-            />
+        <form>
+          <div className={formStyles.formRow}>
+            <div className={formStyles.formItem}>
+              <label htmlFor="courseName" className={formStyles.formLabel}>
+                Course Name
+              </label>
+              <input
+                type="text"
+                id="courseName"
+                name="CourseName"
+                value={course?.CourseName || ""}
+                readOnly
+                className={formStyles.formInput}
+              />
+            </div>
+
+            <div className={formStyles.formItem}>
+              <label htmlFor="Students" className={formStyles.formLabel}>
+                Select Students
+              </label>
+              <Select
+                options={students}
+                value={selectedStudents}
+                onChange={handleStudentChange}
+                isMulti
+                placeholder="Select students"
+                className={formStyles.formInput}
+              />
+            </div>
           </div>
 
-          <div className={formStyles.formItem}>
-            <label htmlFor="Students" className={formStyles.formLabel}>
-              Select Students
-            </label>
-            <Select
-              options={students}
-              value={selectedStudents}
-              onChange={handleStudentChange}
-              isMulti
-              placeholder="Select students"
-              className={formStyles.formInput}
-            />
+          {/* Display Enrolled Students */}
+          <div className={formStyles.formRow}>
+            <div className={formStyles.formItem}>
+              <label className={formStyles.formLabel}>Enrolled Students</label>
+              {enrolledStudents.length > 0 ? (
+                <table className={formStyles.courseTable}>
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {enrolledStudents.map((enrollment) => (
+                      <tr key={enrollment.StudentID}>
+                        <td>{enrollment.studentName}</td>
+                        <td>
+                          <Button
+                          onClickBtn={() => handleUnenroll(enrollment.StudentID)}
+                          size="small"
+                          >
+                            Unenroll
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>No students enrolled yet.</p>
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* Display Enrolled Students */}
-        <div className={formStyles.formRow}>
-          <div className={formStyles.formItem}>
-            <label className={formStyles.formLabel}>Enrolled Students</label>
-            {enrolledStudents.length > 0 ? (
-              <ul>
-                {enrolledStudents.map((enrollment) => (
-                  <li key={enrollment.StudentID}>
-                    {enrollment.studentName} - {enrollment.Courses.CourseName}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No students enrolled yet.</p>
-            )}
+          <div className={styles.formActions}>
+            <Button onClickBtn={handleSave} className={styles.saveButton}>
+              Save
+            </Button>
+            <Button
+              onClickBtn={() => navigate("/courses/course-list")}
+              className={styles.backButton}
+            >
+              Back to List
+            </Button>
           </div>
-        </div>
-
-        <div className={styles.formActions}>
-          <Button onClickBtn={handleSave} className={styles.saveButton}>
-            Save
-          </Button>
-          <Button
-            onClickBtn={() => navigate("/courses/course-list")}
-            className={styles.backButton}
-          >
-            Back to List
-          </Button>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </EditContainer>
   );
 }
 
