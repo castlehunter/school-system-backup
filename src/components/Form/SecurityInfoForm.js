@@ -35,7 +35,7 @@ function SecurityInfoForm({ userNo, showEditButton }) {
   return (
     <EditContainer
       title="Security Information"
-      editBtnText="Reset Password"
+      editButtonText="Reset Password"
       onClickEdit={resetPassword}
       showEditButton={showEditButton}
     >

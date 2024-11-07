@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import icons from "../../ui/Icons/icons";
-import styles from "./Selection.module.css";
-import Button from "../Button/Button";
+import styles from "./Button.module.css";
+import Button from "./Button";
+
 const Dropdown = ({ options, onSelect }) => {
   return (
     <div className={styles.dropdown}>
@@ -18,7 +19,7 @@ const Dropdown = ({ options, onSelect }) => {
   );
 };
 
-const Selection = ({ options, onSelect, label }) => {
+function SelectButton({ options, onSelect, label }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleButtonClick = () => {
@@ -33,11 +34,18 @@ const Selection = ({ options, onSelect, label }) => {
   return (
     <div className={styles.dropdownContainer}>
       <Button className={styles.sortButton} onClickBtn={handleButtonClick}>
-        {label} {icons.ArrowDownIcon}
+        {label}&nbsp;&nbsp;
+        {icons.ArrowDownIcon(styles.arrowDown)}
       </Button>
-      {isDropdownOpen && <Dropdown options={options} onSelect={handleSelect} />}
+      {isDropdownOpen && (
+        <Dropdown
+          className={styles.dropDown}
+          options={options}
+          onSelect={handleSelect}
+        />
+      )}
     </div>
   );
-};
+}
 
-export default Selection;
+export default SelectButton;

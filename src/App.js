@@ -92,6 +92,17 @@ function App() {
               title: "Reset Password",
               hideInSidebar: true,
             },
+            {
+              path: "/dashboard/announcements",
+              element: <Announcements />,
+              title: "Announcements",
+            },
+            // { If Time permits, we can add this module, only admin can edit the content
+            //   path: "/dashboard/help-and-support",
+            //   element: <HelpAndSupport />,
+            //   title: "Help and Support",
+            //   hideInSidebar: true,
+            // },
           ],
         },
         {
@@ -238,10 +249,10 @@ function App() {
               hideInSidebar: true,
             },
             {
-              path: "/teachers/:userNo/addCourse",
+              path: "/teachers/:userNo/add-Course",
               element: <AddCourseForTeacher />,
               title: "Add Course",
-            }
+            },
           ],
         },
         {

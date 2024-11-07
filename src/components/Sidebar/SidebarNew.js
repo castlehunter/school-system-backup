@@ -77,7 +77,7 @@ function SidebarNew() {
 
   return (
     <div className={styles.sidebar}>
-      <Link to="/" className={styles.logoLink}>
+      <Link to="/dashboard" className={styles.logoLink}>
         <div className={styles.logoContainer}>
           <img src={logo} alt="logo" className={styles.logoImage} />
         </div>

@@ -90,7 +90,8 @@ export async function updateCourse(courseNo, updatedData) {
     const { data, error } = await supabase
       .from("Courses")
       .update(updatedData)
-      .eq("CourseNo", courseNo);
+      .eq("CourseNo", courseNo)
+      .select('*'); 
 
     if (error) {
       console.error("Supabase update error:", error);
@@ -98,12 +99,13 @@ export async function updateCourse(courseNo, updatedData) {
     }
 
     console.log("Update successful, returned data:", data);
-    return data;
+    return data; 
   } catch (error) {
     console.error("General update error:", error);
     throw error;
   }
 }
+
 
 
 
@@ -139,7 +141,6 @@ export async function addCourse(courseData) {
 }
 
 export async function getTeacherFullNameByCourseID(courseID) {
-  // Step 1: Get course data by CourseID to retrieve TeacherID
   const { data: courseData, error: courseError } = await supabase
     .from("Courses")
     .select("TeacherID")
@@ -153,7 +154,6 @@ export async function getTeacherFullNameByCourseID(courseID) {
 
   const teacherID = courseData.TeacherID;
 
-  // Step 2: Get Teacher data by TeacherID to retrieve UserID
   const { data: teacherData, error: teacherError } = await supabase
     .from("Teachers")
     .select("UserID")
@@ -167,7 +167,6 @@ export async function getTeacherFullNameByCourseID(courseID) {
 
   const userID = teacherData.UserID;
 
-  // Step 3: Get User data by UserID to retrieve FullName
   const { data: userData, error: userError } = await supabase
     .from("Users")
     .select("FirstName, LastName")
@@ -179,7 +178,6 @@ export async function getTeacherFullNameByCourseID(courseID) {
     throw new Error("Failed to fetch user data");
   }
 
-  // Construct the full name
   const fullName = `${userData.FirstName} ${userData.LastName}`;
   return fullName;
 }

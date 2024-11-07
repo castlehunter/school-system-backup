@@ -79,7 +79,7 @@ function PersonalInfoForm({ userNo }) {
   return (
     <EditContainer
       title="Personal Information"
-      editBtnText="Edit"
+      editButtonText="Edit"
       isEdit={isEdit}
       onClickEdit={handleClickEdit}
       onClickSave={handleClickSave}

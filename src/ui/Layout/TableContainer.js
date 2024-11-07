@@ -4,7 +4,7 @@ import styles from "./TableContainer.module.css";
 import Pagination from "../../components/Pagination/Pagination";
 import Button from "../../components/Button/Button";
 import Search from "../../components/Search/Search";
-import Selection from "../../components/Selection/Selection";
+import SelectButton from "../../components/Button/SelectButton";
 
 function TableContainer({
   children,
@@ -19,6 +19,7 @@ function TableContainer({
   showEditBtn,
   onClickEditBtn,
   itemsNums = [5, 10, 15, 20, 25, 30],
+  options,
 }) {
   const handleSelect = (selectedOption) => {
     console.log("Selected:", selectedOption);
@@ -37,8 +38,8 @@ function TableContainer({
           {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
           {showEditBtn && <Button onClickEditBtn={onClickEditBtn}>Edit</Button>}
           <div>
-            <Selection
-              options={["Option 1", "Optoin 2"]}
+            <SelectButton
+              options={options}
               onSelect={handleSelect}
               label="Sort By"
             />

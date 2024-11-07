@@ -1,5 +1,4 @@
 import styles from "./Layout.module.css";
-// import generalStyles from "../../generalStyles.module.css";
 import SidebarNew from "../../components/Sidebar/SidebarNew";
 import { RiMegaphoneLine } from "@remixicon/react";
 import avatar from "../../assets/user-avatar-header.jpg";
@@ -92,7 +91,7 @@ function Layout({ children, breadcrumb, userNo }) {
               {/* dropdown menu */}
               {isOpen && (
                 <div className={styles["dropdown-menu"]}>
-                  <p>test</p>
+                  <p>{fullName}</p>
                   <ul>
                     <Link
                       to="/dashboard/my-account"
@@ -100,6 +99,12 @@ function Layout({ children, breadcrumb, userNo }) {
                     >
                       <li>My Account</li>
                     </Link>
+                    {/* <Link
+                      to="/dashboard/help-and-support"
+                      onClick={handleMenuItemClick}
+                    >
+                      <li>Help/Support</li>
+                    </Link> */}
                     <Link to="/" onClick={handleMenuItemClick}>
                       <li>Sign Out</li>
                     </Link>
@@ -110,7 +115,7 @@ function Layout({ children, breadcrumb, userNo }) {
           </div>
         </div>
 
-        {/* The main content */}
+        {/* ================== The main content ================*/}
         <div className={styles.mainContent}>{children}</div>
       </section>
     </main>

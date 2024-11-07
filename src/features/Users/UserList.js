@@ -33,6 +33,7 @@ function UserList() {
         currPage={currPage}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
+        options={["Role", "First Name", "Last Name"]}
       >
         <UserTable
           data={userData}

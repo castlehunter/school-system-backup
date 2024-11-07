@@ -92,3 +92,9 @@ sidebar item hover background:  #e91f63
   button font-size: 1.4rem(general style)
   regular button padding: 0.8rem 2rem;
   small button padding: 0.5rem 1rem;
+
+
+  ===========================================
+  Stat card 
+  ==========================================
+  border-radius: 0.8rem;
