@@ -42,8 +42,9 @@ import { UserProvider } from "./contexts/UserContext.js";
 import BulkEditEnrollmentForm from "./features/Enrollment/BulkEditEnrollmentForm.js";
 import Calendar from "./features/Calendar/Calendar.js";
 import EnrollmentForm from "./features/Enrollment/NewEnrollment.js";
+import ForgotPassword from "./features/Login/ForgotPassword.js";
+import ResetPasswordLogin from "./features/Login/ResetPasswordLogin.js";
 import Announcements from "./features/Dashboard/Announcements.js";
-// import HelpAndSupport from "./features/HelpAndSupport/HelpAndSupport.js";
 
 function App() {
   const routes = [
@@ -51,6 +52,16 @@ function App() {
       path: "/",
       element: <Login />,
       title: "Home",
+    },
+    {
+      path: "/login/forgot-password",
+      element: <ForgotPassword/>,
+      title: "Forgot Password",
+    },
+    {
+      path: "/login/reset-password",
+      element: <ResetPasswordLogin/>,
+      title: "Reset Password",
     },
     {
       element: <AppLayout />,

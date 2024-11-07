@@ -4,23 +4,21 @@ import generalStyles from "../../generalStyles.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import Button from "../../components/Button/Button.js";
 import icons from "../../ui/Icons/icons.js";
-import { updatePassword } from "../../services/apiUser.js";
+import { updateLoginPassword } from "../../services/apiUser.js";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-function ResetPasswordForm({ data }) {
+function ResetPasswordWithoutCurrent() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { username } = location.state || data;
+  const { username } = location.state;
 
   const [error, setError] = useState("");
   const [inputData, setInputData] = useState({
-    currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
 
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -30,11 +28,7 @@ function ResetPasswordForm({ data }) {
       return;
     }
     try {
-      const response = await updatePassword(
-        username,
-        inputData.currentPassword,
-        inputData.newPassword
-      );
+      const response = await updateLoginPassword(username, null, inputData.newPassword);
 
       console.log("response", response);
       if (response && response.error) {
@@ -80,30 +74,6 @@ function ResetPasswordForm({ data }) {
           </div>
         </div>
 
-        <div className={formStyles.formRow}>
-          <div className={formStyles.formItem}>
-            <label htmlFor="currentPassword" className={formStyles.formLabel}>
-              Current Password
-            </label>
-            <div className={formStyles.passwordContainer}>
-              <input
-                type={showCurrentPassword ? "text" : "password"}
-                id="currentPassword"
-                name="currentPassword"
-                className={formStyles.formInput}
-                value={inputData.currentPassword}
-                autoComplete="off"
-                onChange={handleUpdate}
-              />
-              <span
-                className={formStyles.eyeIcon}
-                onClick={() => setShowCurrentPassword((prev) => !prev)}
-              >
-                {showCurrentPassword ? icons.EyeOff : icons.EyeOpen}
-              </span>
-            </div>
-          </div>
-        </div>
         <div className={formStyles.formRow}>
           <div className={formStyles.formItem}>
             <label htmlFor="newPassword" className={formStyles.formLabel}>
@@ -159,4 +129,4 @@ function ResetPasswordForm({ data }) {
   );
 }
 
-export default ResetPasswordForm;
+export default ResetPasswordWithoutCurrent;
