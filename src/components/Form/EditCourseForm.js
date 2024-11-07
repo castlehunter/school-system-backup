@@ -69,7 +69,8 @@ function EditCourseForm({ course, onSubmit, onCancel, teachers }) {
 
       <div>
         <label>Time:</label>
-        <textarea
+        <input
+          type="text"
           value={time}
           onChange={(e) => setTime(e.target.value)}
           

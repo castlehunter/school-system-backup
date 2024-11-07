@@ -108,3 +108,60 @@ export async function getTeacherCoursesByUserID(userID) {
     throw error;
   }
 }
+
+// get teacher's courses by userID
+export async function getTeacherCourses(userNo) {
+  try {
+    // get userID
+    const { data: userData, error: userError } = await supabase
+      .from("Users")
+      .select("UserID")
+      .eq("UserNo", userNo)
+      .single();
+    if (userError) {
+      console.error("Failed to fetch user:", userError);
+      throw userError;
+    }
+    const userID = userData.UserID;
+
+    // get teacherID
+    const { data: teacherData, error: teacherError } = await supabase
+      .from("Teachers")
+      .select("TeacherID")
+      .eq("UserID", userID)
+      .single();
+    if (teacherError) {
+      console.error("Error retrieving TeacherID:", teacherError);
+      throw new Error("Failed to load TeacherID");
+    }
+    const teacherID = teacherData.TeacherID;
+
+    // get courses
+    const { data: coursesData, error: coursesError } = await supabase
+      .from("Courses")
+      .select("*")
+      .eq("TeacherID", teacherID);
+    if (coursesError) {
+      console.error("Error fetching courses:", coursesError);
+      throw new Error("Failed to fetch courses");
+    }
+    return coursesData;
+  } catch (error) {
+    console.error(error.message);
+    throw error;
+  }
+}
+
+export async function addCourseToTeacher(courseData) {
+  const { CourseID, TeacherID } = courseData;
+  const { data, error } = await supabase
+    .from("Courses")
+    .update({ TeacherID })
+    .eq("CourseID", CourseID);
+
+  if (error) {
+    console.error("Error adding course to teacher:", error);
+    throw new Error("Failed to add course to teacher");
+  }
+  return data;
+}
