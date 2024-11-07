@@ -116,6 +116,7 @@ function Overview() {
             unit="My Courses"
             icon={icons.StudentIcon(styles.largeIcon)}
             bgcolor="bgcolor1"
+            link="/my-courses"
           />
         </>
       );
@@ -126,6 +127,7 @@ function Overview() {
           unit="My Courses"
           icon={icons.StudentIcon(styles.largeIcon)}
           bgcolor="bgcolor1"
+          link="/my-courses"
         />
       );
     }
@@ -179,7 +181,7 @@ function Overview() {
     async function fetchAnnouncements() {
       try {
         const data = await getAnnouncements();
-        setAnnouncements(data.slice(0, 5));
+        setAnnouncements(data.slice(0, 3));
       } catch (error) {
         console.error("Error fetching announcements", error);
       }
@@ -255,7 +257,7 @@ function Overview() {
         </div>
 
         <div className={styles.secondaryColumn}>
-          <ContactForm />
+          <ContactForm role={loginRole} />
         </div>
       </div>
     </>

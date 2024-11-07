@@ -27,8 +27,13 @@ const CourseCard = ({
   return (
     <div className={styles["course-card"]}>
       <div className={styles["course-banner"]}>
-        <img src={image} alt="Retrieve course banner from database" />
-
+        {" "}
+        <Link>
+          <img
+            src="https://llcccnztkkxlkzblokbt.supabase.co/storage/v1/object/public/ProfileImage/living-with-cats-dogs-689902.jpg"
+            alt="Retrieve course banner from database"
+          />
+        </Link>
         {/* <div className={styles["course-tag-box"]}>
           <a href="#" className={`${styles["badge-tag"]} ${styles.orange} `}>
             Business
@@ -75,16 +80,15 @@ const CourseCard = ({
             onMouseLeave={handleMouseLeave}
           >
             <RiInformationLine className={styles.icon} />
+            {showInfo && (
+              <div className={styles.tooltip}>
+                <h3>Course Information</h3>
+                <p>
+                  <strong>Description:</strong> {description}
+                </p>
+              </div>
+            )}
           </div>
-
-          {showInfo && (
-            <div className={styles.tooltip}>
-              <h3>Course Information</h3>
-              <p>
-                <strong>Description:</strong> {description}
-              </p>
-            </div>
-          )}
         </div>
       </div>
     </div>

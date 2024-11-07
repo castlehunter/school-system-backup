@@ -9,7 +9,7 @@ import formStyles from "./Form.module.css";
 import generalStyles from "../../generalStyles.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 
-function ContactForm() {
+function ContactForm({ role }) {
   const [contactInfo, setContactInfo] = useState("");
   const [originalContactInfo, setOriginalContactInfo] = useState(""); // to store the original data
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -56,7 +56,7 @@ function ContactForm() {
     <div>
       <EditContainer
         title="Main Contact"
-        editButtonText="Edit"
+        editButtonText={role === "Admin" ? "Edit" : false}
         onClickEdit={handleClickEdit}
         onClickSave={handleClickSave}
         onClickCancel={handleClickCancel}
