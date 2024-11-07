@@ -114,7 +114,7 @@ function Login() {
               <input type="checkbox" />
               <span>Remember me</span>
             </div>
-            <Link className={generalStyles.link}>Forgot password</Link>
+            <Link to="/login/forgot-password" className={generalStyles.link}>Forgot password</Link>
           </div>
 
           <div className={styles.loginFormItem}>

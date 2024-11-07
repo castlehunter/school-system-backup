@@ -144,6 +144,20 @@ export async function getSecurityInfoByNo(userNo) {
   return { ...userData };
 }
 
+export async function getSecurityInfoByUserName(user) {
+  const { data: userdata, error: userError } = await supabase
+    .from("Users")
+    .select(`PasswordHash, SecurityQuestion, SecurityAnswer`)
+    .eq("UserName", user)
+    .single();
+  if (userError) {
+    console.error(userError);
+    throw new Error("Falied to load user information");
+  }
+
+  return { ...userdata};
+}
+
 export async function getAccountInfoByNo(userNo) {
   const { data: userData, error: userError } = await supabase
     .from("Users")
@@ -343,6 +357,36 @@ export async function updatePassword(username, currentPassword, newPassword) {
 
     if (currentPassword !== userData.PasswordHash) {
       throw new Error("Current password is incorrect.");
+    }
+
+    // const newPasswordHash = await hashPassword(newPassword);
+    const newPasswordHash = newPassword;
+    const { data, error } = await supabase
+      .from("Users")
+      .update({ PasswordHash: newPasswordHash })
+      .eq("UserName", username);
+
+    if (error) {
+      throw new Error("Failed to update password: " + error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error updating password:", error);
+    throw error;
+  }
+}
+
+export async function updateLoginPassword(username, newPassword) {
+  try {
+    const { data: userData, error: fetchError } = await supabase
+      .from("Users")
+      .select("PasswordHash")
+      .eq("UserName", username)
+      .single();
+
+    if (fetchError) {
+      throw new Error("Failed to fetch user: " + fetchError.message);
     }
 
     // const newPasswordHash = await hashPassword(newPassword);
