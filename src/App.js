@@ -45,6 +45,7 @@ import EnrollmentForm from "./features/Enrollment/NewEnrollment.js";
 import ForgotPassword from "./features/Login/ForgotPassword.js";
 import ResetPasswordLogin from "./features/Login/ResetPasswordLogin.js";
 import Announcements from "./features/Dashboard/Announcements.js";
+import NewAnnouncement from "./features/Dashboard/NewAnnouncement.js";
 
 function App() {
   const routes = [
@@ -55,12 +56,12 @@ function App() {
     },
     {
       path: "/login/forgot-password",
-      element: <ForgotPassword/>,
+      element: <ForgotPassword />,
       title: "Forgot Password",
     },
     {
       path: "/login/reset-password",
-      element: <ResetPasswordLogin/>,
+      element: <ResetPasswordLogin />,
       title: "Reset Password",
     },
     {
@@ -98,6 +99,13 @@ function App() {
               element: <Announcements />,
               title: "Announcements",
             },
+            {
+              path: "/dashboard/announcements/new-announcement",
+              element: <NewAnnouncement />,
+              title: "New Announcement",
+              hideInSidebar: true,
+            },
+
             // { If Time permits, we can add this module, only admin can edit the content
             //   path: "/dashboard/help-and-support",
             //   element: <HelpAndSupport />,

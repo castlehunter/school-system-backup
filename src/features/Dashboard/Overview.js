@@ -54,7 +54,6 @@ function Overview() {
         console.error("Error fetching data", error);
       }
     }
-
     fetchCounts();
   }, []);
 
@@ -73,7 +72,6 @@ function Overview() {
     fetchTeacherCourses();
   }, []);
 
-  // Render Stat Cards
   function renderStatCards() {
     if (loginRole === "Admin" || loginRole === "Advisor") {
       return (
@@ -238,10 +236,7 @@ function Overview() {
       <div className={styles.statcards}>{renderStatCards()}</div>
       <div className={styles.overviewLayout}>
         <div className={styles.mainColumn}>
-          <EditContainer
-            title="Announcement"
-            editButtonText={loginRole === "Admin" ? "Edit" : false}
-          >
+          <EditContainer title="Announcement">
             {renderAnnouncements()}
           </EditContainer>
           {/* Only show Modal if there's an active announcement */}
@@ -253,7 +248,6 @@ function Overview() {
               {openedAnnouncement.Content}
             </ModalContainer>
           )}
-          <EditContainer title="TBD">d</EditContainer>
         </div>
 
         <div className={styles.secondaryColumn}>

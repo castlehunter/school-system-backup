@@ -14,16 +14,12 @@ function TableContainer({
   currPage,
   onPageChange,
   onRowsPerPageChange,
-  onClickBtn,
-  showAddBtn,
-  showEditBtn,
+  onClickAddBtn,
   onClickEditBtn,
   itemsNums = [5, 10, 15, 20, 25, 30],
   options,
+  onClickSort,
 }) {
-  const handleSelect = (selectedOption) => {
-    console.log("Selected:", selectedOption);
-  };
   return (
     <div className={generalStyles.container}>
       {title && (
@@ -35,12 +31,14 @@ function TableContainer({
       )}
       <div className={styles.tableFeatures}>
         <div className={styles.tableFeaturesLeftBox}>
-          {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
-          {showEditBtn && <Button onClickEditBtn={onClickEditBtn}>Edit</Button>}
+          {onClickAddBtn && <Button onClickBtn={onClickAddBtn}>Add</Button>}
+          {onClickEditBtn && (
+            <Button onClickEditBtn={onClickEditBtn}>Bulk Edit</Button>
+          )}
           <div>
             <SelectButton
               options={options}
-              onSelect={handleSelect}
+              onSelect={onClickSort}
               label="Sort By"
             />
           </div>

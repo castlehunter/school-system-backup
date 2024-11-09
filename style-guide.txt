@@ -82,6 +82,7 @@ main section background-color: #fff;
 ------------Link colors --------------
 link text: #e91f63
 sidebar item hover background:  #e91f63
+link background color(optional): #dbdbdb
 
 
 

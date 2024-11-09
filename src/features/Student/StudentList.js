@@ -3,7 +3,7 @@ import StudentTable from "./StudentTable";
 import TableContainer from "../../ui/Layout/TableContainer";
 import Loader from "../../ui/Loader";
 import MainTitle from "../../ui/MainTitle/MainTitle";
-import { useLoaderData, useNavigation } from "react-router-dom";
+import { useLoaderData, useNavigate, useNavigation } from "react-router-dom";
 import { getStudents } from "../../services/apiStudent";
 function StudentList() {
   const initialStudentData = useLoaderData() || [];
@@ -12,7 +12,7 @@ function StudentList() {
   const isLoading = navigation.state === "loading";
   const [currPage, setCurrPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchData() {
       try {

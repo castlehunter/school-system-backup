@@ -21,7 +21,11 @@ function BulkEditEnrollmentForm() {
         updates.isFinished = isFinished;
       }
       if (Object.keys(updates).length) {
-        await updateEnrollments(selectedIds, updates.isFinished, updates.EnrollmentDate);
+        await updateEnrollments(
+          selectedIds,
+          updates.isFinished,
+          updates.EnrollmentDate
+        );
         alert("Enrollments updated successfully!");
       } else {
         alert("No changes to update.");
@@ -62,13 +66,17 @@ function BulkEditEnrollmentForm() {
             <input
               type="checkbox"
               checked={isFinished}
-              onChange={() => setIsFinished((prev) => (prev === null ? true : !prev))} // Update to handle null state
+              onChange={() =>
+                setIsFinished((prev) => (prev === null ? true : !prev))
+              } // Update to handle null state
             />
             Is Finished
           </label>
         </div>
         <Button type="submit">Update</Button>
-        <Button type="button" onClick={handleCancel}>Cancel</Button>
+        <Button type="button" onClick={handleCancel}>
+          Cancel
+        </Button>
       </form>
     </div>
   );

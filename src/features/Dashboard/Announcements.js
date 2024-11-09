@@ -6,8 +6,9 @@ import MainTitle from "../../ui/MainTitle/MainTitle";
 import { useLoaderData, useNavigation } from "react-router-dom";
 import { getAnnouncements } from "../../services/apiAnnouncements";
 import Loader from "../../ui/Loader";
+import { useNavigate } from "react-router-dom";
 
-function AnnouncementList() {
+function Announcements() {
   const initialAnnouncementData = useLoaderData() || [];
   const [announcementData, setAnnouncementData] = useState(
     initialAnnouncementData
@@ -16,6 +17,7 @@ function AnnouncementList() {
   const isLoading = navigation.state === "loading";
   const [currPage, setCurrPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -41,6 +43,10 @@ function AnnouncementList() {
     setCurrPage(1);
   }
 
+  function handleAddBtn() {
+    navigate("/dashboard/announcements/new-announcement");
+  }
+
   return (
     <>
       <MainTitle title="Announcements" />
@@ -50,6 +56,8 @@ function AnnouncementList() {
         currPage={currPage}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
+        onClickBtn={handleAddBtn}
+        showAddBtn
       >
         {isLoading ? (
           <Loader />
@@ -65,4 +73,4 @@ function AnnouncementList() {
   );
 }
 
-export default AnnouncementList;
+export default Announcements;

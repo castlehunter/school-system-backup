@@ -155,7 +155,7 @@ export async function getSecurityInfoByUserName(user) {
     throw new Error("Falied to load user information");
   }
 
-  return { ...userdata};
+  return { ...userdata };
 }
 
 export async function getAccountInfoByNo(userNo) {
@@ -295,24 +295,17 @@ export async function CreateUser(newUser) {
 
 //function to create multiplt users
 export async function CreateMultipleUsers(excelData) {
-  
-  if (excelData.length > 0)
-  {
-    const {data, error} = await supabase
-      .from("Users")
-      .insert(excelData);
-  
+  if (excelData.length > 0) {
+    const { data, error } = await supabase.from("Users").insert(excelData);
 
-  if(error) {
-    console.error("Error inserting dat:", error)
-    return false;
+    if (error) {
+      console.error("Error inserting dat:", error);
+      return false;
+    } else {
+      console.log("data inserted successfully", data);
+      return true;
+    }
   }
-  else{
-    console.log("data inserted successfully", data)
-    return true;
-  }
-}
-
 }
 
 export async function UpdatePersonalInfo(userNo, userInfo) {
@@ -403,6 +396,52 @@ export async function updateLoginPassword(username, newPassword) {
     return data;
   } catch (error) {
     console.error("Error updating password:", error);
+    throw error;
+  }
+}
+
+export async function sortUsersBy(fieldName = "UserNo", ascending = true) {
+  try {
+    // Validate the field name to prevent SQL injection
+    const validFields = [
+      "RoleName",
+      "FirstName",
+      "LastName",
+      "UserNo",
+      "CreatedAt",
+    ];
+    if (!validFields.includes(fieldName)) {
+      throw new Error(`Invalid field name for sorting: ${fieldName}`);
+    }
+
+    // Fetch sorted data
+    const { data, error } = await supabase
+      .from("Users")
+      .select(
+        `
+        UserNo,
+        UserName,
+        FirstName,
+        LastName,
+        Email,
+        CreatedAt,
+        HomeAddress,
+        DateOfBirth,
+        PhoneNumber,
+        Roles(RoleName)
+      `
+      )
+      .order(fieldName, { ascending });
+
+    if (error) {
+      console.error("Error fetching sorted users:", error);
+      throw new Error("Failed to load sorted users");
+    }
+
+    console.log("API Sort Users By", data);
+    return data;
+  } catch (error) {
+    console.error("Unexpected error in sortUsersBy:", error);
     throw error;
   }
 }

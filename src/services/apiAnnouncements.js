@@ -11,10 +11,16 @@ export async function getAnnouncements() {
   return data;
 }
 
-export async function addAnnouncement({ title, content, user_id }) {
-  const { data, error } = await supabase
-    .from("Announcements")
-    .insert([{ title, content, user_id }]);
+export async function addAnnouncement(newData) {
+  const { Title, Content, CreatedAt, UserID } = newData;
+  const { data, error } = await supabase.from("Announcements").insert([
+    {
+      Title,
+      Content,
+      CreatedAt,
+      UserID,
+    },
+  ]);
 
   if (error) console.error("Error adding announcement:", error);
   return data;

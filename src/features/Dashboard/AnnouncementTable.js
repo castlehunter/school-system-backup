@@ -1,5 +1,5 @@
 // src/components/AnnouncementTable.js
-import React from "react";
+import React, { useEffect, useState } from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
@@ -19,11 +19,16 @@ function AnnouncementTable({
     handleSelectAll,
   } = useCheckbox();
 
+  const [role, setRole] = useState("");
   const currData = announcementData.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
 
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role");
+    setRole(storedRole);
+  }, []);
   return (
     <table className={styles.table}>
       <thead>
@@ -42,7 +47,6 @@ function AnnouncementTable({
           <th>Title</th>
           <th>Content</th>
           <th>Created At</th>
-          <th>User ID</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -63,9 +67,12 @@ function AnnouncementTable({
 
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{announcement.Title}</td>
-              <td>{announcement.Content}</td>
-              <td>{new Date(announcement.created_at).toLocaleString()}</td>
-              <td>{announcement.user_id}</td>
+              <td>
+                {announcement.Content.length > 100
+                  ? `${announcement.Content.substring(0, 100)} ...`
+                  : announcement.Content}
+              </td>
+              <td>{new Date(announcement.CreatedAt).toLocaleString()}</td>
               <td>
                 <Link
                   to={`/announcements/${announcement.id}`}
@@ -73,13 +80,18 @@ function AnnouncementTable({
                 >
                   View
                 </Link>
-                <span> | </span>
-                <Link
-                  to={`/announcements/${announcement.id}/edit`}
-                  className={generalStyles.link}
-                >
-                  Edit
-                </Link>
+                {role === "Admin" && (
+                  <>
+                    <span> | </span>
+
+                    <Link
+                      to={`/announcements/${announcement.id}/edit`}
+                      className={generalStyles.link}
+                    >
+                      Edit
+                    </Link>
+                  </>
+                )}
               </td>
             </tr>
           ))

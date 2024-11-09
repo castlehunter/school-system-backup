@@ -7,7 +7,12 @@ import icons from "../../ui/Icons/icons";
 
 function SidebarNew() {
   const routes = useLoaderData();
-  const menuItems = routes[1].children.filter((e) => e.path !== "*");
+
+  const menuItemWithChildren = routes.find((route) => route.children);
+
+  const menuItems = menuItemWithChildren
+    ? menuItemWithChildren.children.filter((e) => e.path !== "*")
+    : [];
 
   const [openMenus, setOpenMenus] = useState({
     dashboard: true,
@@ -17,7 +22,7 @@ function SidebarNew() {
     students: true,
     courses: true,
     teachers: true,
-    programs: true,
+    "course category": true,
     enrollments: true,
     "my calendar": true,
   });
@@ -28,10 +33,6 @@ function SidebarNew() {
     const storedRole = localStorage.getItem("role");
     setLoginRole(storedRole);
   }, []);
-
-  // useEffect(() => {
-  //   console.log("current role is", loginRole);
-  // }, [loginRole]);
 
   const filteredMenuItems = menuItems.filter((menuObj) => {
     if (loginRole === "Admin") {
@@ -44,7 +45,7 @@ function SidebarNew() {
         menuObj.title === "Students" ||
         menuObj.title === "Courses" ||
         menuObj.title === "Teachers" ||
-        menuObj.title === "Programs" ||
+        menuObj.title === "Course Category" ||
         menuObj.title === "Enrollments"
       );
     } else if (loginRole === "Teacher") {
