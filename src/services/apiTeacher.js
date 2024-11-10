@@ -165,3 +165,55 @@ export async function addCourseToTeacher(courseData) {
   }
   return data;
 }
+
+export async function sortTeachersBy(fieldName = "UserNo", ascending = true) {
+  try {
+    // Define valid fields for sorting to prevent SQL injection
+    const validFields = [
+      "UserNo",
+      "UserName",
+      "FirstName",
+      "LastName",
+      "Email",
+      "HomeAddress",
+      "DateOfBirth",
+      "PhoneNumber",
+    ];
+
+    // Validate that fieldName is one of the valid fields
+    if (!validFields.includes(fieldName)) {
+      throw new Error(`Invalid field name for sorting: ${fieldName}`);
+    }
+
+    // Fetch sorted teacher data
+    const { data, error } = await supabase
+      .from("Teachers")
+      .select(
+        `
+        *,
+        Users (
+          UserNo,
+          UserName,
+          FirstName,
+          LastName,
+          Email,
+          HomeAddress,
+          DateOfBirth,
+          PhoneNumber
+        )
+      `
+      )
+      .order(`Users.${fieldName}`, { ascending }); // Order by field in Users table
+
+    if (error) {
+      console.error("Error fetching sorted teachers:", error);
+      throw new Error("Failed to load sorted teachers");
+    }
+
+    console.log("Sorted Teachers:", data);
+    return data;
+  } catch (error) {
+    console.error("Unexpected error in sortTeachersBy:", error);
+    throw error;
+  }
+}

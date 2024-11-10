@@ -5,6 +5,8 @@ import { useState } from "react";
 import UserTable from "./UserTable";
 import MainTitle from "../../ui/MainTitle/MainTitle";
 import { sortUsersBy } from "../../services/apiUser";
+import { FilterUsersByRole } from "../../services/apiUser";
+import { getUsers } from "../../services/apiUser";
 
 function UserList() {
   const initialUserData = useLoaderData() || [];
@@ -37,6 +39,16 @@ function UserList() {
     }
   }
 
+  async function handleFilter(roleName) {
+    if (roleName === "All" || roleName === "") {
+      const allUsers = await getUsers();
+      setUserData(allUsers);
+    } else {
+      const filteredUsers = await FilterUsersByRole(roleName);
+      setUserData(filteredUsers);
+    }
+  }
+
   return (
     <>
       <MainTitle title="User List" />
@@ -48,6 +60,15 @@ function UserList() {
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
         onClickSort={handleSort}
+        sortOptions={[
+          "User No",
+          "First Name",
+          "Last Name",
+          "Date Of Birth",
+          "Created At",
+        ]}
+        onClickFilter={handleFilter}
+        filterOptions={["All", "Admin", "Advisor", "Teacher", "Student"]}
       >
         {/*  */}
         <UserTable

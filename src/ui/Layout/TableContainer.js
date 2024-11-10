@@ -5,6 +5,7 @@ import Pagination from "../../components/Pagination/Pagination";
 import Button from "../../components/Button/Button";
 import Search from "../../components/Search/Search";
 import SelectButton from "../../components/Button/SelectButton";
+import icons from "../Icons/icons";
 
 function TableContainer({
   children,
@@ -17,8 +18,10 @@ function TableContainer({
   onClickAddBtn,
   onClickEditBtn,
   itemsNums = [5, 10, 15, 20, 25, 30],
-  options,
+  sortOptions,
   onClickSort,
+  filterOptions,
+  onClickFilter,
 }) {
   return (
     <div className={generalStyles.container}>
@@ -31,17 +34,29 @@ function TableContainer({
       )}
       <div className={styles.tableFeatures}>
         <div className={styles.tableFeaturesLeftBox}>
-          {onClickAddBtn && <Button onClickBtn={onClickAddBtn}>Add</Button>}
+          {onClickAddBtn && <Button onClickBtn={onClickAddBtn}>Add New</Button>}
           {onClickEditBtn && (
             <Button onClickEditBtn={onClickEditBtn}>Bulk Edit</Button>
           )}
-          <div>
-            <SelectButton
-              options={options}
-              onSelect={onClickSort}
-              label="Sort By"
-            />
-          </div>
+          {sortOptions && (
+            <div>
+              <SelectButton
+                options={sortOptions}
+                onSelect={onClickSort}
+                label="Sort By"
+              />
+            </div>
+          )}
+          {filterOptions && (
+            <div>
+              <SelectButton
+                options={filterOptions}
+                onSelect={onClickFilter}
+                label="Filter By"
+              />
+            </div>
+          )}
+
           <Search colorType="light" />
         </div>
         <div className={styles.entriesPerPage}>

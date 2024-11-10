@@ -38,7 +38,7 @@ function ProgramList() {
 
   function handleRowsPerPageChange(event) {
     setRowsPerPage(Number(event.target.value));
-    setCurrPage(1); // Reset to first page when rows per page changes
+    setCurrPage(1);
   }
 
   function handleAddBtn() {

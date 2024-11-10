@@ -4,14 +4,16 @@ import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import TeacherTable from "./TeacherTable";
 import MainTitle from "../../ui/MainTitle/MainTitle";
+import { getTeachers, sortTeachersBy } from "../../services/apiTeacher";
 
 function TeacherList() {
-  const teachersData = useLoaderData() || [];
+  const initialTeachersData = useLoaderData() || [];
+  const [teacherData, setTeacherData] = useState(initialTeachersData);
   const [currPage, setCurrPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const totalPages = Math.ceil(teachersData.length / rowsPerPage);
+  const totalPages = Math.ceil(initialTeachersData.length / rowsPerPage);
 
-  if (!teachersData || teachersData.length === 0) {
+  if (!initialTeachersData || initialTeachersData.length === 0) {
     return <p>No teachers found.</p>;
   }
 
@@ -24,6 +26,15 @@ function TeacherList() {
     setCurrPage(1);
   }
 
+  async function handleSort(fieldName) {
+    try {
+      const sortedData = await sortTeachersBy(fieldName);
+      setTeacherData(sortedData);
+    } catch (error) {
+      console.error("Error sorting user table:", error);
+    }
+  }
+
   return (
     <>
       <MainTitle title="Teacher List" />
@@ -33,9 +44,17 @@ function TeacherList() {
         currPage={currPage}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
+        onClickSort={handleSort}
+        sortOptions={[
+          "User No",
+          "First Name",
+          "Last Name",
+          "Date Of Birth",
+          "Created At",
+        ]}
       >
         <TeacherTable
-          data={teachersData}
+          data={teacherData}
           rowsPerPage={rowsPerPage}
           currPage={currPage}
         />
