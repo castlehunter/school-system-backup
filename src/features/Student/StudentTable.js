@@ -74,9 +74,9 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
                   //onClick={() => handleViewClick(student.Users.UserNo)}
                   className={generalStyles.link}
                 >
-                  View
+                  View/Edit
                 </Link>
-                <span> | </span>
+                <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                 <Link
                   to={`/students/${student.Users.UserNo}/enroll`}
                   className={generalStyles.link}

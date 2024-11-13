@@ -40,6 +40,7 @@ export async function getUserByID(userID) {
     .eq("UserID", userID)
     .single();
 
+  console.log("API getUsersByID", data);
   if (error) {
     console.error(error);
     throw new Error("Failed to load user");
@@ -142,6 +143,20 @@ export async function getSecurityInfoByNo(userNo) {
   }
 
   return { ...userData };
+}
+
+export async function getSecurityInfoByUserName(user) {
+  const { data: userdata, error: userError } = await supabase
+    .from("Users")
+    .select(`PasswordHash, SecurityQuestion, SecurityAnswer`)
+    .eq("UserName", user)
+    .single();
+  if (userError) {
+    console.error(userError);
+    throw new Error("Falied to load user information");
+  }
+
+  return { ...userdata };
 }
 
 export async function getAccountInfoByNo(userNo) {
@@ -281,24 +296,17 @@ export async function CreateUser(newUser) {
 
 //function to create multiplt users
 export async function CreateMultipleUsers(excelData) {
-  
-  if (excelData.length > 0)
-  {
-    const {data, error} = await supabase
-      .from("Users")
-      .insert(excelData);
-  
+  if (excelData.length > 0) {
+    const { data, error } = await supabase.from("Users").insert(excelData);
 
-  if(error) {
-    console.error("Error inserting dat:", error)
-    return false;
+    if (error) {
+      console.error("Error inserting dat:", error);
+      return false;
+    } else {
+      console.log("data inserted successfully", data);
+      return true;
+    }
   }
-  else{
-    console.log("data inserted successfully", data)
-    return true;
-  }
-}
-
 }
 
 export async function UpdatePersonalInfo(userNo, userInfo) {
@@ -359,6 +367,114 @@ export async function updatePassword(username, currentPassword, newPassword) {
     return data;
   } catch (error) {
     console.error("Error updating password:", error);
+    throw error;
+  }
+}
+
+export async function updateLoginPassword(username, newPassword) {
+  try {
+    const { data: userData, error: fetchError } = await supabase
+      .from("Users")
+      .select("PasswordHash")
+      .eq("UserName", username)
+      .single();
+
+    if (fetchError) {
+      throw new Error("Failed to fetch user: " + fetchError.message);
+    }
+
+    // const newPasswordHash = await hashPassword(newPassword);
+    const newPasswordHash = newPassword;
+    const { data, error } = await supabase
+      .from("Users")
+      .update({ PasswordHash: newPasswordHash })
+      .eq("UserName", username);
+
+    if (error) {
+      throw new Error("Failed to update password: " + error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error updating password:", error);
+    throw error;
+  }
+}
+
+export async function sortUsersBy(fieldName = "UserNo", ascending = true) {
+  try {
+    const { data, error } = await supabase
+      .from("Users")
+      .select(
+        `
+        UserNo,
+        UserName,
+        FirstName,
+        LastName,
+        Email,
+        CreatedAt,
+        HomeAddress,
+        DateOfBirth,
+        PhoneNumber,
+        Roles(RoleName)
+      `
+      )
+      .order(fieldName, { ascending });
+
+    if (error) {
+      console.error("Error fetching sorted users:", error);
+      throw new Error("Failed to load sorted users");
+    }
+
+    console.log("Sorted Users:", data);
+    return data;
+  } catch (error) {
+    console.error("Unexpected error in sortUsersBy:", error);
+    throw error;
+  }
+}
+
+export async function FilterUsersByRole(roleName) {
+  try {
+    // Validate the role name to prevent SQL injection
+    const validRoles = ["Admin", "Advisor", "Teacher", "Student"];
+
+    if (!validRoles.includes(roleName)) {
+      throw new Error(`Invalid role name for filtering: ${roleName}`);
+    }
+
+    // Fetch users filtered by role name using LEFT JOIN
+    const { data, error } = await supabase
+      .from("Users")
+      .select(
+        `
+        UserNo,
+        UserName,
+        FirstName,
+        LastName,
+        Email,
+        CreatedAt,
+        HomeAddress,
+        DateOfBirth,
+        PhoneNumber,
+        Roles(RoleName)
+      `
+      )
+      .eq("Roles.RoleName", roleName); // Filtering by the role name in the Roles table
+
+    if (error) {
+      console.error("Error fetching users by role:", error);
+      throw new Error("Failed to load users by role");
+    }
+
+    // Filter the data to only include records where Roles is not null
+    const filteredData = data.filter(
+      (user) => user.Roles !== null && user.Roles.RoleName === roleName
+    );
+
+    return filteredData;
+  } catch (error) {
+    console.error("Unexpected error in FilterUsersByRole:", error);
     throw error;
   }
 }

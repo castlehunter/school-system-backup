@@ -4,7 +4,7 @@ import Button from "../../components/Button/Button";
 function EditContainer({
   children,
   title,
-  editBtnText,
+  editButtonText,
   isEdit = false,
   onClickEdit,
   onClickSave,
@@ -15,7 +15,7 @@ function EditContainer({
       {title && (
         <div className={generalStyles.containerHeader}>
           <div className={generalStyles.containerHeading}>{title}</div>
-          {editBtnText && (
+          {editButtonText && (
             <div>
               {isEdit ? (
                 <>
@@ -30,7 +30,7 @@ function EditContainer({
                 </>
               ) : (
                 <Button onClickBtn={onClickEdit} size="small">
-                  {editBtnText}
+                  {editButtonText}
                 </Button>
               )}
             </div>

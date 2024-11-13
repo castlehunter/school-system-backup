@@ -7,33 +7,21 @@ import ModalBox from "../ModalBox/ModalBox.js";
 import * as XLSX from "xlsx";
 
 const initialInputData = {
-    UserName: "",
-    PasswordHash: "",
-    FirstName: "",
-    LastName: "",
-    DateOfBirth: "",
-    PhoneNumber: "",
-    HomeAddress: "",
-    IsAdmin: Boolean,
-    RoleName: "",
-    SecurityQuestion:"",
-    SecurityAnswer: "",
+  UserName: "",
+  PasswordHash: "",
+  FirstName: "",
+  LastName: "",
+  DateOfBirth: "",
+  PhoneNumber: "",
+  HomeAddress: "",
+  IsAdmin: Boolean,
+  RoleName: "",
+  SecurityQuestion: "",
+  SecurityAnswer: "",
 };
 
 function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
-  const [inputData, setInputData] = useState( initialInputData/*{
-    UserName: "",
-    PasswordHash: "",
-    FirstName: "",
-    LastName: "",
-    DateOfBirth: "",
-    PhoneNumber: "",
-    HomeAddress: "",
-    IsAdmin: Boolean,
-    RoleName: "",
-    SecurityQuestion:"",
-    SecurityAnswer: "",
-  }*/);
+  const [inputData, setInputData] = useState(initialInputData);
 
   const [excelData, setExcelData] = useState([]);
 
@@ -83,27 +71,30 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       console.error("No file selected");
       return;
     }
-  
+
     //console.log("File selected:", file); // Debug: Check the selected file
-  
+
     var reader = new FileReader();
     reader.onload = (event) => {
       const arrayBuffer = event.target.result;
-      const workbook = XLSX.read(arrayBuffer, { type: "array", cellDates: true });
-  
+      const workbook = XLSX.read(arrayBuffer, {
+        type: "array",
+        cellDates: true,
+      });
+
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
-  
+
       const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
       if (rawData.length < 2) {
         console.error("No data rows found in Excel file.");
         return;
       }
-  
+
       const headers = rawData[0];
       const dataRows = rawData.slice(1);
-  
+
       // Map each row to an object using the headers
       const formattedData = dataRows.map((row) => {
         const rowObj = {};
@@ -114,13 +105,12 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       });
       setExcelData(formattedData);
     };
-  
+
     reader.onerror = () => {
       console.error("Failed to read file");
     };
 
     reader.readAsArrayBuffer(file);
-
   }
 
   function insertDataExcel(e) {
@@ -129,12 +119,11 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     console.log(excelData);
     CreateMultipleUsers(excelData)
       .then((response) => {
-        if(response == true)
-          handleOpenModal();
+        if (response == true) handleOpenModal();
       })
       .catch((error) => {
         console.error("Error inserting data:", error);
-      })
+      });
   }
 
   function handleSubmit(e) {
@@ -156,17 +145,15 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       SecurityAnswer: inputData.SecurityAnswer,
     };
     console.log(newUser);
-    // Call CreateUser from apiUser.js
     CreateUser(newUser)
       .then((response) => {
-        if(response == true)
-          handleOpenModal();
+        if (response == true) handleOpenModal();
       })
       .catch((error) => {
         console.error("Error creating user:", error);
       });
   }
-  //
+
   return (
     <EditContainer>
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -304,8 +291,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               disabled={isModalOpen}
             />
           </div>
-          </div>
-          <div className={styles.formRow}>
+        </div>
+        <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="SecurityAnswer" className={styles.formLabel}>
               Security Answer
@@ -319,7 +306,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               disabled={isModalOpen}
             />
           </div>
-          </div>
+        </div>
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="RoleName" className={styles.formLabel}>
@@ -356,25 +343,25 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
             </select>
           </div>
         </div>
-        
+
         <div className={styles.buttonLayout}>
           <div className={styles.buttons}>
             <Button onClickBtn={handleSubmit}>Create</Button>
-            <Button onClickBtn={() => setInputData(initialInputData)}>Cancel</Button>
+            <Button onClickBtn={() => setInputData(initialInputData)}>
+              Cancel
+            </Button>
           </div>
         </div>
       </form>
 
       <div>
-          <h1>Insert Data from Excel to Supabase</h1>
+        <h1>Insert Data from Excel to Supabase</h1>
 
-          {/* File input for Excel upload */}
-          <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
+        {/* File input for Excel upload */}
+        <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
 
-          <Button onClickBtn={insertDataExcel}>
-             Insert data
-          </Button>
-        </div>
+        <Button onClickBtn={insertDataExcel}>Insert data</Button>
+      </div>
 
       {isModalOpen && (
         <div className={styles.modal}>

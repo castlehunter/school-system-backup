@@ -50,3 +50,65 @@
 .outline:active {
   background-color: #f8cdd2;
 } */
+
+/* Select Button */
+.dropdownContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.sortButton {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sortButton:hover {
+  background-color: #f2f2f2;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  z-index: 10;
+  min-width: 160px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 8px 0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.dropdown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.dropdownItem {
+  padding: 10px 16px;
+  cursor: pointer;
+  color: #333;
+}
+
+.dropdownItem:hover {
+  background-color: #dbdbdb;
+}
+
+.arrowDown {
+  width: 1.6rem;
+  height: 1.3rem;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+}

@@ -77,7 +77,6 @@ function EnrollmentList() {
         currPage={currPage}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
-        showEditBtn
         onClickEditBtn={handleBulkEdit}
       >
         <EnrollmentTable

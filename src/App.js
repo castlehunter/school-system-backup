@@ -42,6 +42,11 @@ import { UserProvider } from "./contexts/UserContext.js";
 import BulkEditEnrollmentForm from "./features/Enrollment/BulkEditEnrollmentForm.js";
 import Calendar from "./features/Calendar/Calendar.js";
 import EnrollmentForm from "./features/Enrollment/NewEnrollment.js";
+import ForgotPassword from "./features/Login/ForgotPassword.js";
+import ResetPasswordLogin from "./features/Login/ResetPasswordLogin.js";
+import Announcements from "./features/Dashboard/Announcements.js";
+import NewAnnouncement from "./features/Dashboard/NewAnnouncement.js";
+import AnnouncementDetail from "./features/Dashboard/AnnouncementDetail.js";
 
 function App() {
   const routes = [
@@ -49,6 +54,16 @@ function App() {
       path: "/",
       element: <Login />,
       title: "Home",
+    },
+    {
+      path: "/login/forgot-password",
+      element: <ForgotPassword />,
+      title: "Forgot Password",
+    },
+    {
+      path: "/login/reset-password",
+      element: <ResetPasswordLogin />,
+      title: "Reset Password",
     },
     {
       element: <AppLayout />,
@@ -80,6 +95,30 @@ function App() {
               title: "Reset Password",
               hideInSidebar: true,
             },
+            {
+              path: "/dashboard/announcements",
+              element: <Announcements />,
+              title: "Announcements",
+            },
+            {
+              path: "/dashboard/announcements/:id",
+              element: <AnnouncementDetail />,
+              title: "Announcement Detail",
+              hideInSidebar: true,
+            },
+            {
+              path: "/dashboard/announcements/new-announcement",
+              element: <NewAnnouncement />,
+              title: "New Announcement",
+              hideInSidebar: true,
+            },
+
+            // { If Time permits, we can add this module, only admin can edit the content
+            //   path: "/dashboard/help-and-support",
+            //   element: <HelpAndSupport />,
+            //   title: "Help and Support",
+            //   hideInSidebar: true,
+            // },
           ],
         },
         {
@@ -226,10 +265,10 @@ function App() {
               hideInSidebar: true,
             },
             {
-              path: "/teachers/:userNo/addCourse",
+              path: "/teachers/:userNo/add-Course",
               element: <AddCourseForTeacher />,
               title: "Add Course",
-            }
+            },
           ],
         },
         {

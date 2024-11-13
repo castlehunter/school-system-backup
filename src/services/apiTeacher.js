@@ -108,3 +108,112 @@ export async function getTeacherCoursesByUserID(userID) {
     throw error;
   }
 }
+
+// get teacher's courses by userID
+export async function getTeacherCourses(userNo) {
+  try {
+    // get userID
+    const { data: userData, error: userError } = await supabase
+      .from("Users")
+      .select("UserID")
+      .eq("UserNo", userNo)
+      .single();
+    if (userError) {
+      console.error("Failed to fetch user:", userError);
+      throw userError;
+    }
+    const userID = userData.UserID;
+
+    // get teacherID
+    const { data: teacherData, error: teacherError } = await supabase
+      .from("Teachers")
+      .select("TeacherID")
+      .eq("UserID", userID)
+      .single();
+    if (teacherError) {
+      console.error("Error retrieving TeacherID:", teacherError);
+      throw new Error("Failed to load TeacherID");
+    }
+    const teacherID = teacherData.TeacherID;
+
+    // get courses
+    const { data: coursesData, error: coursesError } = await supabase
+      .from("Courses")
+      .select("*")
+      .eq("TeacherID", teacherID);
+    if (coursesError) {
+      console.error("Error fetching courses:", coursesError);
+      throw new Error("Failed to fetch courses");
+    }
+    return coursesData;
+  } catch (error) {
+    console.error(error.message);
+    throw error;
+  }
+}
+
+export async function addCourseToTeacher(courseData) {
+  const { CourseID, TeacherID } = courseData;
+  const { data, error } = await supabase
+    .from("Courses")
+    .update({ TeacherID })
+    .eq("CourseID", CourseID);
+
+  if (error) {
+    console.error("Error adding course to teacher:", error);
+    throw new Error("Failed to add course to teacher");
+  }
+  return data;
+}
+
+export async function sortTeachersBy(fieldName = "UserNo", ascending = true) {
+  try {
+    // Define valid fields for sorting to prevent SQL injection
+    const validFields = [
+      "UserNo",
+      "UserName",
+      "FirstName",
+      "LastName",
+      "Email",
+      "HomeAddress",
+      "DateOfBirth",
+      "PhoneNumber",
+    ];
+
+    // Validate that fieldName is one of the valid fields
+    if (!validFields.includes(fieldName)) {
+      throw new Error(`Invalid field name for sorting: ${fieldName}`);
+    }
+
+    // Fetch sorted teacher data
+    const { data, error } = await supabase
+      .from("Teachers")
+      .select(
+        `
+        *,
+        Users (
+          UserNo,
+          UserName,
+          FirstName,
+          LastName,
+          Email,
+          HomeAddress,
+          DateOfBirth,
+          PhoneNumber
+        )
+      `
+      )
+      .order(`Users.${fieldName}`, { ascending }); // Order by field in Users table
+
+    if (error) {
+      console.error("Error fetching sorted teachers:", error);
+      throw new Error("Failed to load sorted teachers");
+    }
+
+    console.log("Sorted Teachers:", data);
+    return data;
+  } catch (error) {
+    console.error("Unexpected error in sortTeachersBy:", error);
+    throw error;
+  }
+}

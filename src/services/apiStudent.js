@@ -155,6 +155,40 @@ function handleError(error, message) {
   throw new Error(message);
 }
 
+export async function getStudentNameForCourse(studentID) {
+  // Get student by StudentID
+  const { data, error } = await supabase
+    .from("Students")
+    .select(
+      `*,
+      Users (
+        UserNo,
+        UserID,
+        UserName,
+        FirstName,
+        LastName,
+        Email,
+        HomeAddress,
+        DateOfBirth,
+        PhoneNumber,
+        RoleID,
+        Roles: Roles (
+          RoleID,
+          RoleName
+        )
+      )`
+    )
+    .eq("StudentID", studentID) // Query by StudentID instead of UserID
+    .single();
+
+  if (error) {
+    console.error("Failed to fetch student:", error);
+    throw error;
+  }
+
+  return data;
+}
+
 // get student enrollments
 export async function getStudentEnrollments(userNo) {
   // get userID by userNo
@@ -192,7 +226,8 @@ export async function getStudentEnrollments(userNo) {
       Courses (
         CourseName,
         StartDate,
-        EndDate
+        EndDate,
+        Time
       )
     `
     )
@@ -208,6 +243,7 @@ export async function getStudentEnrollments(userNo) {
     CourseName: enrollment.Courses.CourseName,
     StartDate: enrollment.Courses.StartDate,
     EndDate: enrollment.Courses.EndDate,
+    Time: enrollment.Courses.Time,
   }));
 }
 

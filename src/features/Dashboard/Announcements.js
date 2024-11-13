@@ -1,32 +1,39 @@
+// src/components/AnnouncementList.js
 import React, { useState, useEffect } from "react";
-import StudentTable from "./StudentTable";
+import AnnouncementTable from "./AnnouncementTable";
 import TableContainer from "../../ui/Layout/TableContainer";
-import Loader from "../../ui/Loader";
 import MainTitle from "../../ui/MainTitle/MainTitle";
-import { useLoaderData, useNavigate, useNavigation } from "react-router-dom";
-import { getStudents } from "../../services/apiStudent";
-function StudentList() {
-  const initialStudentData = useLoaderData() || [];
-  const [studentData, setStudentData] = useState(initialStudentData);
+import { useLoaderData, useNavigation } from "react-router-dom";
+import { getAnnouncements } from "../../services/apiAnnouncements";
+import Loader from "../../ui/Loader";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button/Button";
+
+function Announcements() {
+  const initialAnnouncementData = useLoaderData() || [];
+  const [announcementData, setAnnouncementData] = useState(
+    initialAnnouncementData
+  );
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
   const [currPage, setCurrPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const navigate = useNavigate();
+
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getStudents();
-        setStudentData(data);
+        const data = await getAnnouncements();
+        setAnnouncementData(data);
       } catch (error) {
-        console.error("Failed to fetch student data:", error);
+        console.error("Failed to fetch announcement data:", error);
       }
     }
 
     fetchData();
   }, []);
 
-  const totalPages = Math.ceil(studentData.length / rowsPerPage);
+  const totalPages = Math.ceil(announcementData.length / rowsPerPage);
 
   function handlePageChange(page) {
     setCurrPage(page);
@@ -37,21 +44,27 @@ function StudentList() {
     setCurrPage(1);
   }
 
+  function handleAddBtn() {
+    navigate("/dashboard/announcements/new-announcement");
+  }
+
   return (
     <>
-      <MainTitle title="Student List" />
+      <MainTitle title="Announcements" />
       <TableContainer
         rowsPerPage={rowsPerPage}
         totalPages={totalPages}
         currPage={currPage}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
+        onClickBtn={handleAddBtn}
+        showAddBtn
       >
         {isLoading ? (
           <Loader />
         ) : (
-          <StudentTable
-            studentData={studentData}
+          <AnnouncementTable
+            announcementData={announcementData}
             rowsPerPage={rowsPerPage}
             currPage={currPage}
           />
@@ -61,4 +74,4 @@ function StudentList() {
   );
 }
 
-export default StudentList;
+export default Announcements;

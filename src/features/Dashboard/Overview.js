@@ -1,8 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import styles from "./Overview.module.css";
-import generalStyles from "../../generalStyles.module.css";
 import StatCard from "../../components/StatCard/StatCard";
 import icons from "../../ui/Icons/icons";
 import { getStudents } from "../../services/apiStudent";
@@ -13,6 +11,9 @@ import EditContainer from "../../ui/Layout/EditContainer";
 import MainTitle from "../../ui/MainTitle/MainTitle";
 import { getTeacherCoursesByUserID } from "../../services/apiTeacher";
 import { getStudentCoursesByUserID } from "../../services/apiStudent";
+import ContactForm from "../../components/Form/ContactForm";
+import { getAnnouncements } from "../../services/apiAnnouncements";
+import ModalContainer from "../../ui/Layout/ModalContainer";
 
 function Overview() {
   const [loginRole, setLoginRole] = useState("");
@@ -24,7 +25,8 @@ function Overview() {
   const [enrollmentCount, setEnrollmentCount] = useState(0);
   const [teacherCourses, setTeacherCourses] = useState([]);
   const [studentCourses, setStudentCourses] = useState([]);
-
+  const [announcements, setAnnouncements] = useState([]);
+  const [openedAnnouncement, setOpenedAnnouncement] = useState(null);
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
     const storedFirstName = localStorage.getItem("firstName");
@@ -52,7 +54,6 @@ function Overview() {
         console.error("Error fetching data", error);
       }
     }
-
     fetchCounts();
   }, []);
 
@@ -71,7 +72,6 @@ function Overview() {
     fetchTeacherCourses();
   }, []);
 
-  // Render Stat Cards
   function renderStatCards() {
     if (loginRole === "Admin" || loginRole === "Advisor") {
       return (
@@ -114,6 +114,7 @@ function Overview() {
             unit="My Courses"
             icon={icons.StudentIcon(styles.largeIcon)}
             bgcolor="bgcolor1"
+            link="/my-courses"
           />
         </>
       );
@@ -124,43 +125,109 @@ function Overview() {
           unit="My Courses"
           icon={icons.StudentIcon(styles.largeIcon)}
           bgcolor="bgcolor1"
+          link="/my-courses"
         />
       );
     }
   }
 
-  function renderQuickLinks() {
-    if (loginRole === "Admin") {
-      return (
-        <ul>
-          <li>
-            <Link to="/users/new-user" className={generalStyles.link}>
-              Add New User
-            </Link>
-          </li>
-        </ul>
-      );
-    } else if (loginRole === "Advisor") {
-      return (
-        <ul>
-          <li>
-            <Link to="/courses/new-course" className={generalStyles.link}>
-              Add New Course
-            </Link>
-          </li>
-        </ul>
-      );
-    } else if (loginRole === "Teacher" || loginRole === "Student") {
-      return (
-        <ul>
-          <li>
-            <Link to="/my-courses" className={generalStyles.link}>
-              My Courses
-            </Link>
-          </li>
-        </ul>
-      );
+  // function renderQuickLinks() {
+  //   if (loginRole === "Admin") {
+  //     return (
+  //       <ul>
+  //         <li>
+  //           <Link to="/users/new-user" className={generalStyles.link}>
+  //             Add New User
+  //           </Link>{" "}
+  //           <li>
+  //             <Link to="/courses/new-course" className={generalStyles.link}>
+  //               Add New Course
+  //             </Link>
+  //           </li>
+  //         </li>
+  //       </ul>
+  //     );
+  //   } else if (loginRole === "Advisor") {
+  //     return (
+  //       <ul>
+  //         <li>
+  //           <Link to="/courses/new-course" className={generalStyles.link}>
+  //             Add New Course
+  //           </Link>
+  //         </li>
+  //       </ul>
+  //     );
+  //   } else if (loginRole === "Teacher" || loginRole === "Student") {
+  //     return (
+  //       <ul>
+  //         <li>
+  //           <Link to="/my-courses/my-courses" className={generalStyles.link}>
+  //             My Courses
+  //           </Link>
+  //         </li>
+  //         <li>
+  //           <Link to="/my-calendar/my-calendar" className={generalStyles.link}>
+  //             My Calendar
+  //           </Link>
+  //         </li>
+  //       </ul>
+  //     );
+  //   }
+  // }
+
+  useEffect(() => {
+    async function fetchAnnouncements() {
+      try {
+        const data = await getAnnouncements();
+        setAnnouncements(data.slice(0, 3));
+      } catch (error) {
+        console.error("Error fetching announcements", error);
+      }
     }
+
+    fetchAnnouncements();
+  }, []);
+
+  function handleClickAnnouncement(announcement) {
+    setOpenedAnnouncement(announcement);
+  }
+
+  function renderAnnouncements() {
+    return (
+      <>
+        <div className={styles.announcementsContainer}>
+          {announcements.map((announcement) => {
+            const maxLength = 250;
+            return (
+              <div
+                key={announcement.Id}
+                className={styles.announcementItem}
+                onClick={() => handleClickAnnouncement(announcement)}
+              >
+                <h4 className={styles.announcementTitle}>
+                  {announcement.Title}
+                </h4>
+                <p className={styles.announcementContent}>
+                  {announcement.Content.length > maxLength ? (
+                    <>
+                      {announcement.Content.substring(0, maxLength)}...
+                      &nbsp;&nbsp;
+                      <span className={styles.readMore}>Read more</span>
+                    </>
+                  ) : (
+                    announcement.Content
+                  )}
+                </p>
+
+                <span className={styles.announcementDate}>
+                  {new Date(announcement.CreatedAt).toLocaleDateString()}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </>
+    );
   }
 
   return (
@@ -169,61 +236,22 @@ function Overview() {
       <div className={styles.statcards}>{renderStatCards()}</div>
       <div className={styles.overviewLayout}>
         <div className={styles.mainColumn}>
-          <EditContainer title="Announcement" showEditButton={false}>
-            Navigate through the menu to explore features and tools that
-            simplify and enhance your tasks within the school system. Add more
-            textsAdd more textsAdd more textsAdd more textsAdd more texts
-            <br></br>Add more texts
-            <br></br>Add more texts<br></br>Add more texts<br></br>Add more
-            texts
-            <br></br>Add more texts<br></br>Add more texts<br></br>Add more
-            texts
-            <br></br>Add more texts
+          <EditContainer title="Announcement">
+            {renderAnnouncements()}
           </EditContainer>
-          <EditContainer title="Quick Links" showEditButton={false}>
-            {renderQuickLinks()}
-          </EditContainer>
+          {/* Only show Modal if there's an active announcement */}
+          {openedAnnouncement && (
+            <ModalContainer
+              title={openedAnnouncement.Title}
+              onClose={() => setOpenedAnnouncement(null)}
+            >
+              {openedAnnouncement.Content}
+            </ModalContainer>
+          )}
         </div>
 
         <div className={styles.secondaryColumn}>
-          <EditContainer title="Main Office Contact" showEditButton={false}>
-            <p>
-              For inquiries related to enrolled students, including class
-              adjustments, withdrawals, and general support:
-            </p>
-            <br />
-            <p>Address: 123 Learning Avenue, Education City, XYZ 45678 </p>
-            <p>Phone: (123) 456-7890 </p>
-            <p>Email: info@abc-learn.edu</p>
-            <p>Website: www.abc-learn.edu</p>
-            <br />
-            <p> General Office Hours</p>
-            Monday to Friday: 8:00 AM - 4:00 PM <br />
-            Saturday & Sunday: Closed
-          </EditContainer>
-          <EditContainer
-            title="Admission Office Contact"
-            showEditButton={false}
-          >
-            <p>
-              For all admissions-related inquiries, including application and
-              enrollment procedures:
-            </p>
-            <p>Phone: (123) 456-7890 </p>
-            <p>Email: admissions@abc-learn.edu</p>
-          </EditContainer>
-          <EditContainer
-            title="Technical Support / IT Helpdesk"
-            showEditButton={false}
-          >
-            <p>
-              For issues related to school system or technical difficulties:
-            </p>
-            <p>Phone: (416) 666-0000 </p>
-            <p>Email: tech@abc-learn.edu</p>
-            <p>Website: www.abc-learn.edu</p>
-            <br />
-          </EditContainer>
+          <ContactForm role={loginRole} />
         </div>
       </div>
     </>

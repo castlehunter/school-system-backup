@@ -4,7 +4,8 @@ import styles from "./TableContainer.module.css";
 import Pagination from "../../components/Pagination/Pagination";
 import Button from "../../components/Button/Button";
 import Search from "../../components/Search/Search";
-import Selection from "../../components/Selection/Selection";
+import SelectButton from "../../components/Button/SelectButton";
+import icons from "../Icons/icons";
 
 function TableContainer({
   children,
@@ -14,15 +15,14 @@ function TableContainer({
   currPage,
   onPageChange,
   onRowsPerPageChange,
-  onClickBtn,
-  showAddBtn,
-  showEditBtn,
+  onClickAddBtn,
   onClickEditBtn,
   itemsNums = [5, 10, 15, 20, 25, 30],
+  sortOptions,
+  onClickSort,
+  filterOptions,
+  onClickFilter,
 }) {
-  const handleSelect = (selectedOption) => {
-    console.log("Selected:", selectedOption);
-  };
   return (
     <div className={generalStyles.container}>
       {title && (
@@ -34,15 +34,29 @@ function TableContainer({
       )}
       <div className={styles.tableFeatures}>
         <div className={styles.tableFeaturesLeftBox}>
-          {showAddBtn && <Button onClickBtn={onClickBtn}>Add</Button>}
-          {showEditBtn && <Button onClickEditBtn={onClickEditBtn}>Edit</Button>}
-          <div>
-            <Selection
-              options={["Option 1", "Optoin 2"]}
-              onSelect={handleSelect}
-              label="Sort By"
-            />
-          </div>
+          {onClickAddBtn && <Button onClickBtn={onClickAddBtn}>Add New</Button>}
+          {onClickEditBtn && (
+            <Button onClickEditBtn={onClickEditBtn}>Bulk Edit</Button>
+          )}
+          {sortOptions && (
+            <div>
+              <SelectButton
+                options={sortOptions}
+                onSelect={onClickSort}
+                label="Sort By"
+              />
+            </div>
+          )}
+          {filterOptions && (
+            <div>
+              <SelectButton
+                options={filterOptions}
+                onSelect={onClickFilter}
+                label="Filter By"
+              />
+            </div>
+          )}
+
           <Search colorType="light" />
         </div>
         <div className={styles.entriesPerPage}>
