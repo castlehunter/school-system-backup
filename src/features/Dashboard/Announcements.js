@@ -7,6 +7,7 @@ import { useLoaderData, useNavigation } from "react-router-dom";
 import { getAnnouncements } from "../../services/apiAnnouncements";
 import Loader from "../../ui/Loader";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button/Button";
 
 function Announcements() {
   const initialAnnouncementData = useLoaderData() || [];

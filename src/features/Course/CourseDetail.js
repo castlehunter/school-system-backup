@@ -16,9 +16,9 @@ import { getTeachers } from "../../services/apiTeacher";
 import formStyles from "../../components/Form/Form.module.css";
 
 function CourseDetail() {
-  const { courseNo } = useParams(); 
+  const { courseNo } = useParams();
   const navigate = useNavigate();
-  const [originalCourse, setOriginalCourse] = useState(null); 
+  const [originalCourse, setOriginalCourse] = useState(null);
 
   const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -71,7 +71,7 @@ function CourseDetail() {
   };
 
   const handleCancelEdit = () => {
-    setCourse(originalCourse); 
+    setCourse(originalCourse);
     setIsEditing(false);
   };
 
@@ -79,15 +79,14 @@ function CourseDetail() {
     try {
       const { Programs, TeacherUser, Teachers, ...cleanedCourse } = course;
 
-      console.log("Cleaned course data:", cleanedCourse); 
+      console.log("Cleaned course data:", cleanedCourse);
       console.log("Updating course with courseNo:", courseNo);
 
       const res = await updateCourse(courseNo, cleanedCourse);
-      console.log("res = ",res)
+      console.log("res = ", res);
       setIsEditing(false);
 
       if (res) {
-
         alert("Course information updated successfully!");
         const courseData = await getCourseDetail({ params: { ID: courseNo } });
         setCourse(courseData); // Refresh course data
@@ -102,7 +101,7 @@ function CourseDetail() {
 
   const handleEditBtn = (e) => {
     e.preventDefault();
-    setIsEditing((prev) => !prev); 
+    setIsEditing((prev) => !prev);
   };
 
   const handleChange = (e) => {
@@ -307,12 +306,13 @@ function CourseDetail() {
                 <Button onClickBtn={handleCancelEdit}>Cancel</Button>
               </>
             )}
-            <Button onClickBtn={handleDeleteCourse} className={styles.deleteBtn}>
+            <Button
+              onClickBtn={handleDeleteCourse}
+              className={styles.deleteBtn}
+            >
               Delete Course
             </Button>
-            <Button onClickBtn={handleBack} className={generalStyles.secondaryBtn}>
-              Back to List
-            </Button>
+            <Button onClickBtn={handleBack}>Back to List</Button>
           </div>
         </EditContainer>
       ) : (
