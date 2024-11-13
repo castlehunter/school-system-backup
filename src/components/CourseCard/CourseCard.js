@@ -60,7 +60,7 @@ const CourseCard = ({
         <div className={styles.wrapper}>
           <div className={styles.teacher}>
             <img
-              src={instructorAvtar}
+              src="https://llcccnztkkxlkzblokbt.supabase.co/storage/v1/object/public/ProfileImage/living-with-cats-dogs-689902.jpg"
               alt="course instructor avatar"
               className={styles["teacher-img"]}
             />
