@@ -155,7 +155,6 @@ function handleError(error, message) {
   throw new Error(message);
 }
 
-
 export async function getStudentNameForCourse(studentID) {
   // Get student by StudentID
   const { data, error } = await supabase
@@ -189,8 +188,6 @@ export async function getStudentNameForCourse(studentID) {
 
   return data;
 }
-
-
 
 // get student enrollments
 export async function getStudentEnrollments(userNo) {
@@ -229,7 +226,8 @@ export async function getStudentEnrollments(userNo) {
       Courses (
         CourseName,
         StartDate,
-        EndDate
+        EndDate,
+        Time
       )
     `
     )
@@ -245,6 +243,7 @@ export async function getStudentEnrollments(userNo) {
     CourseName: enrollment.Courses.CourseName,
     StartDate: enrollment.Courses.StartDate,
     EndDate: enrollment.Courses.EndDate,
+    Time: enrollment.Courses.Time,
   }));
 }
 
