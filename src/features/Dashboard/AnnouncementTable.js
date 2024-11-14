@@ -29,6 +29,7 @@ function AnnouncementTable({
     const storedRole = localStorage.getItem("role");
     setRole(storedRole);
   }, []);
+
   return (
     <table className={styles.table}>
       <thead>
@@ -38,7 +39,7 @@ function AnnouncementTable({
               type="checkbox"
               checked={isAllSelected}
               onChange={() =>
-                handleSelectAll(currData.map((announcement) => announcement.id))
+                handleSelectAll(currData.map((announcement) => announcement.Id))
               }
               className={styles.checkbox}
             />
@@ -55,12 +56,12 @@ function AnnouncementTable({
           <Loader />
         ) : (
           currData.map((announcement, index) => (
-            <tr key={announcement.id} className={styles.tr}>
+            <tr key={announcement.Id} className={styles.tr}>
               <td>
                 <input
                   type="checkbox"
-                  checked={selectedCheckboxes.includes(announcement.id)}
-                  onChange={() => handleCheckboxes(announcement.id)}
+                  checked={selectedCheckboxes.includes(announcement.Id)}
+                  onChange={() => handleCheckboxes(announcement.Id)}
                   className={styles.checkbox}
                 />
               </td>
@@ -74,24 +75,19 @@ function AnnouncementTable({
               </td>
               <td>{new Date(announcement.CreatedAt).toLocaleString()}</td>
               <td>
-                <Link
-                  to={`/announcements/${announcement.id}`}
-                  className={generalStyles.link}
-                >
-                  View
-                </Link>
-                {role === "Admin" && (
-                  <>
-                    <span> | </span>
-
-                    <Link
-                      to={`/announcements/${announcement.id}/edit`}
-                      className={generalStyles.link}
-                    >
-                      Edit
-                    </Link>
-                  </>
-                )}
+                {role === "Admin" ||
+                  (role === "Advisor" ? (
+                    <>
+                      <Link
+                        to={`/dashboard/announcements/${announcement.Id}`}
+                        className={generalStyles.link}
+                      >
+                        View/Edit
+                      </Link>
+                    </>
+                  ) : (
+                    "View"
+                  ))}
               </td>
             </tr>
           ))

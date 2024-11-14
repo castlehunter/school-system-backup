@@ -46,6 +46,7 @@ import ForgotPassword from "./features/Login/ForgotPassword.js";
 import ResetPasswordLogin from "./features/Login/ResetPasswordLogin.js";
 import Announcements from "./features/Dashboard/Announcements.js";
 import NewAnnouncement from "./features/Dashboard/NewAnnouncement.js";
+import AnnouncementDetail from "./features/Dashboard/AnnouncementDetail.js";
 
 function App() {
   const routes = [
@@ -98,6 +99,12 @@ function App() {
               path: "/dashboard/announcements",
               element: <Announcements />,
               title: "Announcements",
+            },
+            {
+              path: "/dashboard/announcements/:id",
+              element: <AnnouncementDetail />,
+              title: "Announcement Detail",
+              hideInSidebar: true,
             },
             {
               path: "/dashboard/announcements/new-announcement",

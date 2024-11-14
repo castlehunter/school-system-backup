@@ -18,7 +18,7 @@ function ContactForm({ role }) {
     async function fetchSchoolInformation() {
       const data = await getSchoolContact();
       setContactInfo(data);
-      setOriginalContactInfo(data); // Save original data
+      setOriginalContactInfo(data);
     }
     fetchSchoolInformation();
   }, []);

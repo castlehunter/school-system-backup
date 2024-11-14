@@ -21,21 +21,7 @@ const initialInputData = {
 };
 
 function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
-  const [inputData, setInputData] = useState(
-    initialInputData /*{
-    UserName: "",
-    PasswordHash: "",
-    FirstName: "",
-    LastName: "",
-    DateOfBirth: "",
-    PhoneNumber: "",
-    HomeAddress: "",
-    IsAdmin: Boolean,
-    RoleName: "",
-    SecurityQuestion:"",
-    SecurityAnswer: "",
-  }*/
-  );
+  const [inputData, setInputData] = useState(initialInputData);
 
   const [excelData, setExcelData] = useState([]);
 
