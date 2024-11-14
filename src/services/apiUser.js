@@ -401,6 +401,42 @@ export async function updateLoginPassword(username, newPassword) {
   }
 }
 
+export async function UploadProfileImage(image) {
+  try {
+    if (!image) return null;
+
+    const { data, error } = await supabase
+      .storage
+      .from("ProfileImage") // replace with your storage bucket name
+      .upload(`public/${image.name}`, image, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+      return true;
+  
+  } catch (error) {
+    console.error("Unexpected error during image upload:", error.message);
+    return null;
+  }
+}
+
+export async function GetImageURL(image) {
+  try{
+
+    const { publicURL, error } = await supabase
+      .storage
+      .from("ProfileImage")
+      .getPublicUrl(`public/${image.name}`);
+
+      console.log(publicURL);
+    return publicURL;
+  } catch (error) {
+    console.error("Error generating public URL:", error.message);
+      return null;
+  }
+  
+}
+
 export async function sortUsersBy(fieldName = "UserNo", ascending = true) {
   try {
     const { data, error } = await supabase

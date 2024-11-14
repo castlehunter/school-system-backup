@@ -1,11 +1,12 @@
 import EditContainer from "../../ui/Layout/EditContainer";
 import formStyles from "./Form.module.css";
-import avatar from "../../assets/user-avatar-account.jpg";
+import avatar from "../../assets/User-avatar-default.jpg";
 import { useState, useEffect } from "react";
 import Button from "../Button/Button";
 import { getProfileInfoByNo } from "../../services/apiUser";
 import { UpdatePersonalInfo } from "../../services/apiUser";
 import Loader from "../../ui/Loader";
+import { UploadProfileImage, GetImageURL } from "../../services/apiUser";
 
 function PersonalInfoForm({ userNo }) {
   const [personalInfoData, setPersonalInfoData] = useState({
@@ -16,9 +17,11 @@ function PersonalInfoForm({ userNo }) {
     Email: "",
     HomeAddress: "",
     DateOfBirth: "",
+    AvatarURL: "",
   });
   const [isEdit, setIsEdit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -34,6 +37,7 @@ function PersonalInfoForm({ userNo }) {
           Email: profileData.Email || "",
           HomeAddress: profileData.HomeAddress || "",
           DateOfBirth: profileData.DateOfBirth || "",
+          AvatarURL: profileData.AvatarURL || "",
         });
       } catch (error) {
         console.error("Error fetching profile info:", error);
@@ -81,6 +85,34 @@ function PersonalInfoForm({ userNo }) {
     }
   }
 
+  const handleFileChange = (event) => {
+    setImageFile(event.target.files[0]);
+  };
+
+  const handleImageUpload = async () => {
+    if (imageFile) {
+      const avatarUrl = await UploadProfileImage(imageFile);
+      if (avatarUrl) {
+        const url = await GetImageURL(imageFile);
+        console.log(url);
+        if (!url) {
+          setPersonalInfoData({
+            ...personalInfoData,
+            AvatarURL: url,
+          });
+        } else {
+          alert("Couldn't fetch the URL");
+        }
+
+        alert("Image uploaded successfully!");
+      } else {
+        alert("Image upload failed.");
+      }
+    } else {
+      alert("Please select an image to upload.");
+    }
+  };
+
   return (
     <EditContainer
       title="Personal Information"
@@ -95,8 +127,9 @@ function PersonalInfoForm({ userNo }) {
       ) : (
         <div className={formStyles.sectionLayout}>
           <div className={formStyles.avatar}>
-            <img src={avatar} alt="user avatar" />
-            <Button>Upload Picture</Button>
+            <img src={personalInfoData.AvatarURL || avatar} alt="user avatar" />
+            <input type="file" accept="image/*" onChange={handleFileChange} />
+            <Button onClickBtn={handleImageUpload}>Upload Picture</Button>
           </div>
           <form>
             <div className={formStyles.formRow}>
