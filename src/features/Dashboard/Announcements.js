@@ -57,8 +57,7 @@ function Announcements() {
         currPage={currPage}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
-        onClickBtn={handleAddBtn}
-        showAddBtn
+        onClickAddBtn={handleAddBtn}
       >
         {isLoading ? (
           <Loader />

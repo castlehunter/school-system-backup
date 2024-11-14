@@ -3,11 +3,11 @@ import icons from "../Icons/icons";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 
-function MainTitle({ title, prevPath }) {
+function MainTitle({ title, goBack }) {
   const navigate = useNavigate();
   return (
     <div className={styles.mainTitle}>
-      {prevPath && (
+      {goBack && (
         <div className={styles.back} onClick={() => navigate(-1)}>
           {icons.ArrowBack(styles.arrowBack)}
         </div>

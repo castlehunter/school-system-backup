@@ -91,13 +91,12 @@ svg {
   display: flex;
   flex-direction: column;
   max-height: 0;
-  opacity: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  transition: max-height 0.3s ease-out;
 }
 
 .menuContent.open {
-  max-height: 15rem;
+  max-height: 18rem;
   opacity: 1;
 }
 
@@ -122,6 +121,7 @@ svg {
 .logout span:hover {
   color: #ffffff;
 }
+
 .menuItem:active,
 .menuItem.current {
   background-color: #e91f63;

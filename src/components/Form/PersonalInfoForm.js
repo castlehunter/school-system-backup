@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Button from "../Button/Button";
 import { getProfileInfoByNo } from "../../services/apiUser";
 import { UpdatePersonalInfo } from "../../services/apiUser";
+import Loader from "../../ui/Loader";
 
 function PersonalInfoForm({ userNo }) {
   const [personalInfoData, setPersonalInfoData] = useState({
@@ -17,10 +18,12 @@ function PersonalInfoForm({ userNo }) {
     DateOfBirth: "",
   });
   const [isEdit, setIsEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
+        setIsLoading(true);
         const profileData = await getProfileInfoByNo(userNo);
 
         setPersonalInfoData({
@@ -34,6 +37,8 @@ function PersonalInfoForm({ userNo }) {
         });
       } catch (error) {
         console.error("Error fetching profile info:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -85,30 +90,32 @@ function PersonalInfoForm({ userNo }) {
       onClickSave={handleClickSave}
       onClickCancel={handleClickCancel}
     >
-      <div className={formStyles.sectionLayout}>
-        <div className={formStyles.avatar}>
-          <img src={avatar} alt="user avatar" />
-          <Button>Upload Picture</Button>
-        </div>
-        <form>
-          <div className={formStyles.formRow}>
-            {" "}
-            <div className={formStyles.formItem}>
-              <label htmlFor="role" className={formStyles.formLabel}>
-                Role
-              </label>
-              <input
-                type="text"
-                id="role"
-                name="role"
-                className={formStyles.formInput}
-                readOnly
-                disabled
-                value={personalInfoData.RoleName}
-              />
-            </div>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className={formStyles.sectionLayout}>
+          <div className={formStyles.avatar}>
+            <img src={avatar} alt="user avatar" />
+            <Button>Upload Picture</Button>
           </div>
-          {/* <div className={formStyles.formRow}>
+          <form>
+            <div className={formStyles.formRow}>
+              <div className={formStyles.formItem}>
+                <label htmlFor="role" className={formStyles.formLabel}>
+                  Role
+                </label>
+                <input
+                  type="text"
+                  id="role"
+                  name="role"
+                  className={formStyles.formInput}
+                  readOnly
+                  disabled
+                  value={personalInfoData.RoleName}
+                />
+              </div>
+            </div>
+            {/* <div className={formStyles.formRow}>
             {" "}
             <div className={formStyles.formItem}>
               <label htmlFor="userNo" className={formStyles.formLabel}>
@@ -125,96 +132,97 @@ function PersonalInfoForm({ userNo }) {
               />
             </div>
           </div> */}
-          <div className={formStyles.formRow}>
+            <div className={formStyles.formRow}>
+              <div className={formStyles.formItem}>
+                <label htmlFor="firstName" className={formStyles.formLabel}>
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="FirstName"
+                  className={formStyles.formInput}
+                  disabled={!isEdit}
+                  value={personalInfoData.FirstName}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={formStyles.formItem}>
+                <label htmlFor="lastName" className={formStyles.formLabel}>
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="LastName"
+                  className={formStyles.formInput}
+                  disabled={!isEdit}
+                  value={personalInfoData.LastName}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className={formStyles.formRow}>
+              <div className={formStyles.formItem}>
+                <label htmlFor="phone" className={formStyles.formLabel}>
+                  Phone
+                </label>
+                <input
+                  type="phone"
+                  id="phone"
+                  name="PhoneNumber"
+                  className={formStyles.formInput}
+                  disabled={!isEdit}
+                  value={personalInfoData.PhoneNumber}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={formStyles.formItem}>
+                <label htmlFor="email" className={formStyles.formLabel}>
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="Email"
+                  className={formStyles.formInput}
+                  disabled={!isEdit}
+                  value={personalInfoData.Email}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
             <div className={formStyles.formItem}>
-              <label htmlFor="firstName" className={formStyles.formLabel}>
-                First Name
+              <label htmlFor="dob" className={formStyles.formLabel}>
+                Date of Birth
+              </label>
+              <input
+                type="date"
+                id="dob"
+                name="DateOfBirth"
+                className={formStyles.formInput}
+                disabled={!isEdit}
+                value={personalInfoData.DateOfBirth}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={formStyles.formItem}>
+              <label htmlFor="address" className={formStyles.formLabel}>
+                Home Address
               </label>
               <input
                 type="text"
-                id="firstName"
-                name="FirstName"
+                id="address"
+                name="HomeAddress"
                 className={formStyles.formInput}
                 disabled={!isEdit}
-                value={personalInfoData.FirstName}
+                value={personalInfoData.HomeAddress}
                 onChange={handleChange}
               />
             </div>
-            <div className={formStyles.formItem}>
-              <label htmlFor="lastName" className={formStyles.formLabel}>
-                Last Name
-              </label>
-              <input
-                type="text"
-                id="lastName"
-                name="LastName"
-                className={formStyles.formInput}
-                disabled={!isEdit}
-                value={personalInfoData.LastName}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className={formStyles.formRow}>
-            <div className={formStyles.formItem}>
-              <label htmlFor="phone" className={formStyles.formLabel}>
-                Phone
-              </label>
-              <input
-                type="phone"
-                id="phone"
-                name="PhoneNumber"
-                className={formStyles.formInput}
-                disabled={!isEdit}
-                value={personalInfoData.PhoneNumber}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={formStyles.formItem}>
-              <label htmlFor="email" className={formStyles.formLabel}>
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="Email"
-                className={formStyles.formInput}
-                disabled={!isEdit}
-                value={personalInfoData.Email}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className={formStyles.formItem}>
-            <label htmlFor="dob" className={formStyles.formLabel}>
-              Date of Birth
-            </label>
-            <input
-              type="date"
-              id="dob"
-              name="DateOfBirth"
-              className={formStyles.formInput}
-              disabled={!isEdit}
-              value={personalInfoData.DateOfBirth}
-              onChange={handleChange}
-            />
-          </div>
-          <div className={formStyles.formItem}>
-            <label htmlFor="address" className={formStyles.formLabel}>
-              Home Address
-            </label>
-            <input
-              type="text"
-              id="address"
-              name="HomeAddress"
-              className={formStyles.formInput}
-              disabled={!isEdit}
-              value={personalInfoData.HomeAddress}
-              onChange={handleChange}
-            />
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
+      )}
     </EditContainer>
   );
 }

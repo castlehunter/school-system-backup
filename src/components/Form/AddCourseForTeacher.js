@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import { getCourses } from "../../services/apiCourse";
 import { addCourseToTeacher } from "../../services/apiTeacher";
 import { useNavigate, useParams } from "react-router-dom";
+import MainTitle from "../../ui/MainTitle/MainTitle";
 
 function AddCourseForTeacher() {
   const { userNo } = useParams();
@@ -28,7 +29,10 @@ function AddCourseForTeacher() {
 
   const handleAddCourse = async (course) => {
     try {
-      await addCourseToTeacher({ CourseID: course.CourseID, TeacherID: userNo });
+      await addCourseToTeacher({
+        CourseID: course.CourseID,
+        TeacherID: userNo,
+      });
       alert("Course added successfully!");
       navigate(`/teachers/${userNo}`);
     } catch (error) {
@@ -39,6 +43,7 @@ function AddCourseForTeacher() {
 
   return (
     <>
+      <MainTitle title={`Add courses for`} goBack={true} />
       <EditContainer title="Add Course for Teacher">
         <div className={formStyles.formContainer}>
           {error && <div className={formStyles.error}>{error}</div>}
@@ -72,11 +77,6 @@ function AddCourseForTeacher() {
               ))}
             </tbody>
           </table>
-          <div className={formStyles.buttonContainer}>
-            <Button onClickBtn={() => navigate(`/teachers/${userNo}`)} size="large">
-              Back
-            </Button>
-          </div>
         </div>
       </EditContainer>
     </>

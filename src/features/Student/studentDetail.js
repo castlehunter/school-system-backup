@@ -1,21 +1,26 @@
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { getStudentByStudentNo } from "../../services/apiStudent";
+import { getStudentByUserNo } from "../../services/apiStudent";
 import StudentDetailForm from "../../components/Form/StudentDetailForm";
 import MainTitle from "../../ui/MainTitle/MainTitle";
+import Loader from "../../ui/Loader";
 
 function StudentDetail() {
   const { userNo } = useParams();
   const [studentData, setStudentData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getStudentByStudentNo(userNo);
+        setIsLoading(true);
+        const data = await getStudentByUserNo(userNo);
         setStudentData(data);
       } catch (error) {
         console.error("Failed to fetch student data:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchData();
@@ -24,17 +29,21 @@ function StudentDetail() {
   return (
     <>
       <MainTitle
-        title={`Student Detail: ${studentData?.Users?.FirstName} ${studentData?.Users?.LastName}`}
-        prevPath={() => navigate("/students/student-list")}
+        title={
+          isLoading
+            ? `Student Detail`
+            : `Student Detail: ${studentData?.Users?.FirstName} ${studentData?.Users?.LastName}`
+        }
+        goBack={true}
       />
       <div>
-        {studentData ? (
+        {isLoading ? (
+          <Loader />
+        ) : (
           <StudentDetailForm
             studentData={studentData}
             onCancel={() => setStudentData(studentData)}
           />
-        ) : (
-          <div>Loading...</div>
         )}
       </div>
     </>

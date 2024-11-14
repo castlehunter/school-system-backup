@@ -6,10 +6,11 @@ import Button from "../../components/Button/Button.js";
 import { updateProgram } from "../../services/apiProgram.js";
 import { addProgram } from "../../services/apiProgram.js";
 import { useNavigate } from "react-router-dom";
-
-const ProgramForm = ({ data, mode }) => {
+import Loader from "../../ui/Loader.js";
+const ProgramForm = ({ data, mode, isLoading }) => {
   const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
+
   const [error, setError] = useState("");
   const [inputData, setInputData] = useState({
     ProgramCode: "",
@@ -75,6 +76,9 @@ const ProgramForm = ({ data, mode }) => {
     }
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <EditContainer
       title={

@@ -3,7 +3,7 @@ import supabase from "../config/supabaseClient.js";
 export async function getAnnouncements() {
   const { data, error } = await supabase
     .from("Announcements")
-    .select("*")
+    .select("*, Users(FirstName, LastName)")
     .order("CreatedAt", { ascending: false });
 
   console.log("API fetchAnnouncements", data);
@@ -29,7 +29,15 @@ export async function addAnnouncement(newData) {
 export async function getAnnouncementById(id) {
   const { data, error } = await supabase
     .from("Announcements")
-    .select("*")
+    .select(
+      `
+      *,
+      Users (
+        FirstName,
+        LastName
+      )
+    `
+    )
     .eq("Id", id)
     .single();
 
@@ -37,6 +45,7 @@ export async function getAnnouncementById(id) {
     console.error("Error fetching announcement by ID:", error);
     return null;
   }
+
   return data;
 }
 

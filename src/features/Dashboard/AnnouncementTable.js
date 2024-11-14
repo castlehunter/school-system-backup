@@ -1,4 +1,3 @@
-// src/components/AnnouncementTable.js
 import React, { useEffect, useState } from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
@@ -48,6 +47,7 @@ function AnnouncementTable({
           <th>Title</th>
           <th>Content</th>
           <th>Created At</th>
+          <th>Publisher</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -75,19 +75,21 @@ function AnnouncementTable({
               </td>
               <td>{new Date(announcement.CreatedAt).toLocaleString()}</td>
               <td>
-                {role === "Admin" ||
-                  (role === "Advisor" ? (
-                    <>
-                      <Link
-                        to={`/dashboard/announcements/${announcement.Id}`}
-                        className={generalStyles.link}
-                      >
-                        View/Edit
-                      </Link>
-                    </>
-                  ) : (
-                    "View"
-                  ))}
+                {announcement.Users
+                  ? `${announcement.Users.FirstName} ${announcement.Users.LastName}`
+                  : "Unknown Publisher"}
+              </td>
+              <td>
+                {role === "Admin" || role === "Advisor" ? (
+                  <Link
+                    to={`/dashboard/announcements/${announcement.Id}`}
+                    className={generalStyles.link}
+                  >
+                    View/Edit
+                  </Link>
+                ) : (
+                  "View"
+                )}
               </td>
             </tr>
           ))
