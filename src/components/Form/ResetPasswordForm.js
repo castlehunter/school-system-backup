@@ -57,7 +57,7 @@ function ResetPasswordForm({ data }) {
     const { name, value } = e.target;
     setInputData((prevInputData) => ({ ...prevInputData, [name]: value }));
   }
-
+  //
   return (
     <EditContainer>
       <div className={formStyles.form}>
