@@ -38,7 +38,6 @@ function UserTable({ data, currPage, rowsPerPage }) {
               onChange={() =>
                 handleSelectAll(currData.map((element) => element.UserNo))
               }
-              className={styles.checkbox}
             />
           </th>
           <th>S/N</th>
@@ -64,7 +63,6 @@ function UserTable({ data, currPage, rowsPerPage }) {
                 type="checkbox"
                 checked={selectedCheckboxes.includes(user.UserNo)}
                 onChange={() => handleCheckboxes(user.UserNo)}
-                className={styles.checkbox}
               />
             </td>
             <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>

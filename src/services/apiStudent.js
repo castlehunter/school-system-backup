@@ -141,7 +141,7 @@ export async function getStudentByUserNo(userNo) {
     .eq("UserID", userID)
     .single();
 
-  console.log("API getStudentByStudentNo", data);
+  console.log("API getStudentByUserNo", data);
   if (error) {
     console.error("Failed to fetch student:", error);
     throw error;

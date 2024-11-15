@@ -12,17 +12,37 @@ function EnrollCourseForm() {
   const { userNo } = useParams();
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [studentData, setStudentData] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
+        setIsLoading(true);
         const courseData = await getCourses();
         setCourses(courseData);
       } catch (error) {
         console.error("Failed to fetch courses:", error);
         setError("Failed to fetch courses.");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+
+        const data = await getStudentByUserNo(userNo);
+        setStudentData(data);
+      } catch (error) {
+        setError("Failed to fetch student data.");
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -31,11 +51,7 @@ function EnrollCourseForm() {
 
   async function handleEnroll(courseId) {
     try {
-      const data = await getStudentByUserNo(userNo);
-
-      setStudentData(data);
-      const studentId = data.StudentID;
-
+      const studentId = studentData.StudentID;
       await insertEnrollment(
         studentId,
         courseId,
@@ -51,9 +67,12 @@ function EnrollCourseForm() {
 
   return (
     <>
-      {console.log("getstudentbystudentno", studentData)}
       <MainTitle
-        title={`Course enrollment for: ${studentData?.Users?.FirstName} ${studentData?.Users?.LastName}`}
+        title={
+          isLoading || !studentData
+            ? `Course Enrollment`
+            : `Course Enrollment: ${studentData?.Users?.FirstName} ${studentData?.Users?.LastName}`
+        }
         goBack={true}
       />
       <EditContainer>
