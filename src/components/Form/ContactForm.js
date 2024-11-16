@@ -78,7 +78,7 @@ function ContactForm({ role }) {
         )}
 
         <div>
-          <p style={{ whiteSpace: "pre-line" }}>{contactInfo}</p>
+          <pre>{contactInfo}</pre>
         </div>
       </EditContainer>
     </div>

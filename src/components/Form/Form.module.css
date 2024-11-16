@@ -190,3 +190,9 @@
   margin-top: 4rem;
   gap: 5rem;
 }
+
+.preStyle {
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-size: inherit;
+}

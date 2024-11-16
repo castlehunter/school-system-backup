@@ -7,7 +7,6 @@ import {
 import Loader from "../../ui/Loader";
 import EditContainer from "../../ui/Layout/EditContainer";
 import styles from "../../components/Form/Form.module.css";
-import Button from "../../components/Button/Button";
 import MainTitle from "../../ui/MainTitle/MainTitle";
 
 function AnnouncementDetail() {
@@ -138,7 +137,7 @@ function AnnouncementDetail() {
                     onChange={handleChange}
                   />
                 ) : (
-                  <span>{inputData.Content}</span>
+                  <pre className={styles.preStyle}>{inputData.Content}</pre>
                 )}
               </div>
             </div>

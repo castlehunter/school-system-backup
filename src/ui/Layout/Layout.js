@@ -5,6 +5,7 @@ import avatar from "../../assets/user-avatar-header.jpg";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getRoleNameByNo, getFullNameByNo } from "../../services/apiUser";
+import { useUnreadCount } from "../../contexts/UnreadContext"; // 引入 useUnreadCount
 
 function Layout({ children, breadcrumb, userNo }) {
   const [isOpen, setIsOpen] = useState(false); // Manager menu display status
@@ -12,11 +13,13 @@ function Layout({ children, breadcrumb, userNo }) {
   const [roleName, setRoleName] = useState(null);
   const [fullName, setFullName] = useState(null);
 
+  const { unreadCount } = useUnreadCount(); // 从 UnreadContext 获取 unreadCount
+
   const toggleMenu = () => {
     setIsOpen((isOpen) => !isOpen);
   };
 
-  // Close the menu when clicking on elsewhere on the page
+  // Close the menu when clicking elsewhere on the page
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -44,7 +47,6 @@ function Layout({ children, breadcrumb, userNo }) {
         console.error("Error fetching role name:", error);
       }
     };
-
     getRoleName();
   }, [userNo]);
 
@@ -69,14 +71,14 @@ function Layout({ children, breadcrumb, userNo }) {
       </aside>
 
       <section>
-        {/* ================ The top section ===============*/}
+        {/* ================= The top section ===============*/}
         <div className={styles.header}>
           <div className={styles.breadcrumb}>{breadcrumb}</div>
 
           <div className={styles["user-section"]}>
             <div className={styles.announcement}>
               <RiMegaphoneLine className={styles["announcement-icon"]} />
-              <div className={styles["announcement-count"]}>1</div>
+              <div className={styles["announcement-count"]}>{unreadCount}</div>
             </div>
 
             <div className={styles.nameRole}>
@@ -99,12 +101,6 @@ function Layout({ children, breadcrumb, userNo }) {
                     >
                       <li>My Account</li>
                     </Link>
-                    {/* <Link
-                      to="/dashboard/help-and-support"
-                      onClick={handleMenuItemClick}
-                    >
-                      <li>Help/Support</li>
-                    </Link> */}
                     <Link to="/" onClick={handleMenuItemClick}>
                       <li>Sign Out</li>
                     </Link>

@@ -13,7 +13,7 @@ export const UserProvider = ({ children }) => {
     if (userNo) {
       localStorage.setItem("loginUserNo", JSON.stringify(userNo));
     } else {
-      localStorage.removeItem("loginUserNo"); // 用户登出时移除
+      localStorage.removeItem("loginUserNo");
     }
   }, [userNo]);
 

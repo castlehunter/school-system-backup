@@ -47,9 +47,9 @@ function Login() {
     console.log("Login page data " + JSON.stringify(data));
     const userRole = data.Roles.RoleName;
     localStorage.setItem("UserID", data.UserID);
-    localStorage.setItem("firstName", data.FirstName);
-    localStorage.setItem("lastName", data.LastName);
+
     localStorage.setItem("role", userRole);
+    localStorage.setItem("UserNo", data.UserNo);
 
     setUserNo(data.UserNo);
     navigate("/dashboard");

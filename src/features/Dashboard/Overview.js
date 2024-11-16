@@ -236,7 +236,7 @@ function Overview() {
       <div className={styles.statcards}>{renderStatCards()}</div>
       <div className={styles.overviewLayout}>
         <div className={styles.mainColumn}>
-          <EditContainer title="Announcement">
+          <EditContainer title="Announcements">
             {renderAnnouncements()}
           </EditContainer>
           {/* Only show Modal if there's an active announcement */}
@@ -245,7 +245,14 @@ function Overview() {
               title={openedAnnouncement.Title}
               onClose={() => setOpenedAnnouncement(null)}
             >
-              {openedAnnouncement.Content}
+              <pre
+                style={{
+                  whiteSpace: "pre-wrap",
+                  wordWrap: "break-word",
+                }}
+              >
+                {openedAnnouncement.Content}
+              </pre>
             </ModalContainer>
           )}
         </div>

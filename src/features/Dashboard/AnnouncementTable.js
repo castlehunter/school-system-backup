@@ -4,6 +4,9 @@ import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
 import Loader from "../../ui/Loader";
 import useCheckbox from "../../hooks/useCheckbox";
+import { markUserAsRead } from "../../services/apiAnnouncements";
+import { useUnreadCount } from "../../contexts/UnreadContext";
+import { getUnreadAnnouncementsCount } from "../../services/apiAnnouncements";
 
 function AnnouncementTable({
   announcementData,
@@ -18,6 +21,8 @@ function AnnouncementTable({
     handleSelectAll,
   } = useCheckbox();
 
+  const { unreadCount, setUnreadCount } = useUnreadCount();
+
   const [role, setRole] = useState("");
   const currData = announcementData.slice(
     (currPage - 1) * rowsPerPage,
@@ -28,6 +33,25 @@ function AnnouncementTable({
     const storedRole = localStorage.getItem("role");
     setRole(storedRole);
   }, []);
+
+  async function handleClickAnnouncement(id) {
+    const userNo = localStorage.getItem("UserNo");
+    if (!userNo) {
+      console.error("User No is not available.");
+      return;
+    }
+
+    try {
+      const success = await markUserAsRead(id, userNo);
+      if (success) {
+        const count = await getUnreadAnnouncementsCount(userNo);
+        console.log("Fetched unread count from API:", count);
+        setUnreadCount(count);
+      }
+    } catch (error) {
+      console.error("Failed to mark as read:", error);
+    }
+  }
 
   return (
     <table className={styles.table}>
@@ -84,11 +108,17 @@ function AnnouncementTable({
                   <Link
                     to={`/dashboard/announcements/${announcement.Id}`}
                     className={generalStyles.link}
+                    onClick={() => handleClickAnnouncement(announcement.Id)}
                   >
                     View/Edit
                   </Link>
                 ) : (
-                  "View"
+                  <span
+                    className={generalStyles.link}
+                    onClick={() => handleClickAnnouncement(announcement.Id)}
+                  >
+                    View
+                  </span>
                 )}
               </td>
             </tr>
