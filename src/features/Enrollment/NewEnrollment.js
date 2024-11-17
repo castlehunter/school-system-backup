@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import supabase from "../../config/supabaseClient.js";
-
 import EditContainer from "../../ui/Layout/EditContainer.js";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -21,6 +20,7 @@ import formStyles from "../../components/Form/Form.module.css";
 import MainTitle from "../../ui/MainTitle/MainTitle.js";
 
 function EnrollmentForm() {
+  console.log('EnrollmentForm');
   const { courseNo } = useParams();
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
@@ -175,6 +175,7 @@ function EnrollmentForm() {
       <MainTitle
         title={`Enroll Students in ${course?.CourseName || ""}`}
         prevPath={"/courses/course-list"}
+        goBack={true}
       />
       <EditContainer>
         <div className={styles.enrollmentForm}>
