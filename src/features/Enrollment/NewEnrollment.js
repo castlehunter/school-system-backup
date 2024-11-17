@@ -18,6 +18,7 @@ import {
 } from "../../services/apiStudent.js";
 import Select from "react-select";
 import formStyles from "../../components/Form/Form.module.css";
+import MainTitle from "../../ui/MainTitle/MainTitle.js";
 
 function EnrollmentForm() {
   const { courseNo } = useParams();
@@ -30,7 +31,7 @@ function EnrollmentForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [course, setCourse] = useState(null);
-  const [enrolledStudents, setEnrolledStudents] = useState([]); 
+  const [enrolledStudents, setEnrolledStudents] = useState([]);
   console.log(courseNo);
   useEffect(() => {
     async function fetchStudents() {
@@ -46,7 +47,7 @@ function EnrollmentForm() {
       }
     }
     if (courseNo) {
-      fetchEnrollments(courseNo); 
+      fetchEnrollments(courseNo);
     }
     async function fetchCourseDetails() {
       try {
@@ -62,7 +63,7 @@ function EnrollmentForm() {
           value: student.StudentID,
           label: `${student.Users.FirstName} ${student.Users.LastName}`,
         }));
-        setSelectedStudents(preselectedStudents); 
+        setSelectedStudents(preselectedStudents);
         setEnrolledStudents(enrolledStudentsData);
       } catch (err) {
         setError(err.message);
@@ -79,7 +80,7 @@ function EnrollmentForm() {
           params: { ID: courseNo },
         });
         console.log("coursedetails = ", courseDetails);
-        const courseID = courseDetails.CourseID; 
+        const courseID = courseDetails.CourseID;
 
         const enrollments = await getEnrollments();
 
@@ -91,7 +92,7 @@ function EnrollmentForm() {
           filteredEnrollments.map(async (enrollment) => {
             const studentInfo = await getStudentNameForCourse(
               enrollment.StudentID
-            ); 
+            );
             return {
               ...enrollment,
               studentName: `${studentInfo.Users.FirstName} ${studentInfo.Users.LastName}`, // Enrich with student name
@@ -99,7 +100,7 @@ function EnrollmentForm() {
           })
         );
 
-        setEnrolledStudents(enrichedEnrollments); 
+        setEnrolledStudents(enrichedEnrollments);
       } catch (error) {
         console.error("Failed to fetch enrollments:", error);
       } finally {
@@ -109,7 +110,7 @@ function EnrollmentForm() {
 
     fetchStudents();
     fetchCourseDetails();
-    fetchEnrollments(); 
+    fetchEnrollments();
   }, [courseNo]);
 
   const handleSave = async (event) => {
@@ -125,7 +126,7 @@ function EnrollmentForm() {
       alert("Enrollment created successfully!");
       window.location.reload();
 
-     // navigate("/courses/course-list");
+      // navigate("/courses/course-list");
     } catch (error) {
       alert("Failed to create enrollment: " + error.message);
     }
@@ -135,127 +136,132 @@ function EnrollmentForm() {
     setSelectedStudents(selectedOptions || []);
   };
 
-
   const handleUnenroll = async (studentID) => {
     try {
-      setIsLoading(true);  
-      setError(null);  
-  
+      setIsLoading(true);
+      setError(null);
+
       await unenrollStudentFromCourse(studentID, course.CourseID);
-  
+
       const updatedEnrollments = enrolledStudents.filter(
         (enrollment) => enrollment.StudentID !== studentID
       );
-  
-      setEnrolledStudents(updatedEnrollments);  
-  
-      alert("Student unenrolled successfully!");  
+
+      setEnrolledStudents(updatedEnrollments);
+
+      alert("Student unenrolled successfully!");
     } catch (error) {
-      setError(error.message);  
+      setError(error.message);
       console.error("Failed to unenroll student:", error);
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
-  
+
   const unenrollStudentFromCourse = async (studentID, courseID) => {
     const { error } = await supabase
       .from("Enrollments")
       .delete()
       .eq("StudentID", studentID)
-      .eq("CourseID", courseID); 
-  
+      .eq("CourseID", courseID);
+
     if (error) {
       throw new Error("Failed to unenroll student: " + error.message);
     }
   };
 
   return (
-    <EditContainer>
-      <div className={styles.enrollmentForm}>
-        <h1 className={styles.title}>
-          Enroll Students in {course?.CourseName || ""}
-        </h1>
+    <>
+      <MainTitle
+        title={`Enroll Students in ${course?.CourseName || ""}`}
+        prevPath={"/courses/course-list"}
+      />
+      <EditContainer>
+        <div className={styles.enrollmentForm}>
+          <form>
+            <div className={formStyles.formRow}>
+              <div className={formStyles.formItem}>
+                <label htmlFor="courseName" className={formStyles.formLabel}>
+                  Course Name
+                </label>
+                <input
+                  type="text"
+                  id="courseName"
+                  name="CourseName"
+                  value={course?.CourseName || ""}
+                  readOnly
+                  className={formStyles.formInput}
+                />
+              </div>
 
-        <form>
-          <div className={formStyles.formRow}>
-            <div className={formStyles.formItem}>
-              <label htmlFor="courseName" className={formStyles.formLabel}>
-                Course Name
-              </label>
-              <input
-                type="text"
-                id="courseName"
-                name="CourseName"
-                value={course?.CourseName || ""}
-                readOnly
-                className={formStyles.formInput}
-              />
+              <div className={formStyles.formItem}>
+                <label htmlFor="Students" className={formStyles.formLabel}>
+                  Select Students
+                </label>
+                <Select
+                  options={students}
+                  value={selectedStudents}
+                  onChange={handleStudentChange}
+                  isMulti
+                  placeholder="Select students"
+                  className={formStyles.formInput}
+                />
+              </div>
             </div>
 
-            <div className={formStyles.formItem}>
-              <label htmlFor="Students" className={formStyles.formLabel}>
-                Select Students
-              </label>
-              <Select
-                options={students}
-                value={selectedStudents}
-                onChange={handleStudentChange}
-                isMulti
-                placeholder="Select students"
-                className={formStyles.formInput}
-              />
-            </div>
-          </div>
-
-          {/* Display Enrolled Students */}
-          <div className={formStyles.formRow}>
-            <div className={formStyles.formItem}>
-              <label className={formStyles.formLabel}>Enrolled Students</label>
-              {enrolledStudents.length > 0 ? (
-                <table className={formStyles.courseTable}>
-                  <thead>
-                    <tr>
-                      <th>Student</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {enrolledStudents.map((enrollment) => (
-                      <tr key={enrollment.StudentID}>
-                        <td>{enrollment.studentName}</td>
-                        <td>
-                          <Button
-                          onClickBtn={() => handleUnenroll(enrollment.StudentID)}
-                          size="small"
-                          >
-                            Unenroll
-                          </Button>
-                        </td>
+            {/* Display Enrolled Students */}
+            <div className={formStyles.formRow}>
+              <div className={formStyles.formItem}>
+                <label className={formStyles.formLabel}>
+                  Enrolled Students
+                </label>
+                {enrolledStudents.length > 0 ? (
+                  <table className={formStyles.courseTable}>
+                    <thead>
+                      <tr>
+                        <th>Student</th>
+                        <th>Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <p>No students enrolled yet.</p>
-              )}
+                    </thead>
+                    <tbody>
+                      {enrolledStudents.map((enrollment) => (
+                        <tr key={enrollment.StudentID}>
+                          <td>{enrollment.studentName}</td>
+                          <td>
+                            <Button
+                              onClickBtn={() =>
+                                handleUnenroll(enrollment.StudentID)
+                              }
+                              size="small"
+                            >
+                              Unenroll
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>No students enrolled yet.</p>
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className={styles.formActions}>
-            <Button onClickBtn={handleSave} className={styles.saveButton}>
-              Save
-            </Button>
-            <Button
-              onClickBtn={() => navigate("/courses/course-list")}
-              className={styles.backButton}
-            >
-              Back to List
-            </Button>
-          </div>
-        </form>
-      </div>
-    </EditContainer>
+            <div className={styles.formActions}>
+              <Button onClickBtn={handleSave} className={styles.saveButton}>
+                Save
+              </Button>
+              <Button
+                onClickBtn={() => navigate("/courses/course-list")}
+                className={styles.backButton}
+              >
+                Back to List
+              </Button>
+            </div>
+          </form>
+        </div>
+      </EditContainer>
+    </>
   );
 }
 

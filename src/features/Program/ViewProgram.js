@@ -41,8 +41,15 @@ function ViewProgram() {
   };
   return (
     <div>
-      <MainTitle title="Course Category Detail" />
-      <ProgramForm mode="view" data={programData} />
+      <MainTitle
+        title={
+          isLoading
+            ? `Course Category Detail`
+            : `Course Category Detail: ${programData.ProgramName}`
+        }
+        goBack={true}
+      />
+      <ProgramForm mode="view" data={programData} isLoading={isLoading} />
     </div>
   );
 }

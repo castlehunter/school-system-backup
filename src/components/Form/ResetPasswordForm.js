@@ -53,12 +53,11 @@ function ResetPasswordForm({ data }) {
   function handleClickCancel() {
     navigate(-1);
   }
-
   function handleUpdate(e) {
     const { name, value } = e.target;
     setInputData((prevInputData) => ({ ...prevInputData, [name]: value }));
   }
-
+  //
   return (
     <EditContainer>
       <div className={formStyles.form}>

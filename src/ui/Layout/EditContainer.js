@@ -12,31 +12,29 @@ function EditContainer({
 }) {
   return (
     <div className={generalStyles.container}>
-      {title && (
-        <div className={generalStyles.containerHeader}>
-          <div className={generalStyles.containerHeading}>{title}</div>
-          {editButtonText && (
-            <div>
-              {isEdit ? (
-                <>
-                  <Button onClickBtn={onClickSave} size="small">
-                    Save
-                  </Button>
-                  <span style={{ marginLeft: "1rem" }}>
-                    <Button onClickBtn={onClickCancel} size="small">
-                      Cancel
-                    </Button>
-                  </span>
-                </>
-              ) : (
-                <Button onClickBtn={onClickEdit} size="small">
-                  {editButtonText}
+      <div className={generalStyles.containerHeader}>
+        {title && <div className={generalStyles.containerHeading}>{title}</div>}
+        {editButtonText && (
+          <div>
+            {isEdit ? (
+              <>
+                <Button onClickBtn={onClickSave} size="small">
+                  Save
                 </Button>
-              )}
-            </div>
-          )}
-        </div>
-      )}
+                <span style={{ marginLeft: "2rem" }}>
+                  <Button onClickBtn={onClickCancel} size="small">
+                    Cancel
+                  </Button>
+                </span>
+              </>
+            ) : (
+              <Button onClickBtn={onClickEdit} size="small">
+                {editButtonText}
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
       <div>{children}</div>
     </div>
   );

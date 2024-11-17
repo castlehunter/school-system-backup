@@ -42,3 +42,11 @@ svg {
   margin: 0;
   padding: 0;
 }
+input,
+textarea,
+select,
+button {
+  font-family: inherit; /* Uses the font-family of the parent */
+  font-size: inherit; /* Uses the font-size of the parent */
+  line-height: inherit;
+}

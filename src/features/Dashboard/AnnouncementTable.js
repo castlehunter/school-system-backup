@@ -1,10 +1,12 @@
-// src/components/AnnouncementTable.js
 import React, { useEffect, useState } from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
 import Loader from "../../ui/Loader";
 import useCheckbox from "../../hooks/useCheckbox";
+import { markUserAsRead } from "../../services/apiAnnouncements";
+import { useUnreadCount } from "../../contexts/UnreadContext";
+import { getUnreadAnnouncementsCount } from "../../services/apiAnnouncements";
 
 function AnnouncementTable({
   announcementData,
@@ -19,6 +21,8 @@ function AnnouncementTable({
     handleSelectAll,
   } = useCheckbox();
 
+  const { unreadCount, setUnreadCount } = useUnreadCount();
+
   const [role, setRole] = useState("");
   const currData = announcementData.slice(
     (currPage - 1) * rowsPerPage,
@@ -29,6 +33,25 @@ function AnnouncementTable({
     const storedRole = localStorage.getItem("role");
     setRole(storedRole);
   }, []);
+
+  async function handleClickAnnouncement(id) {
+    const userNo = localStorage.getItem("UserNo");
+    if (!userNo) {
+      console.error("User No is not available.");
+      return;
+    }
+
+    try {
+      const success = await markUserAsRead(id, userNo);
+      if (success) {
+        const count = await getUnreadAnnouncementsCount(userNo);
+        console.log("Fetched unread count from API:", count);
+        setUnreadCount(count);
+      }
+    } catch (error) {
+      console.error("Failed to mark as read:", error);
+    }
+  }
 
   return (
     <table className={styles.table}>
@@ -48,6 +71,7 @@ function AnnouncementTable({
           <th>Title</th>
           <th>Content</th>
           <th>Created At</th>
+          <th>Publisher</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -75,19 +99,27 @@ function AnnouncementTable({
               </td>
               <td>{new Date(announcement.CreatedAt).toLocaleString()}</td>
               <td>
-                {role === "Admin" ||
-                  (role === "Advisor" ? (
-                    <>
-                      <Link
-                        to={`/dashboard/announcements/${announcement.Id}`}
-                        className={generalStyles.link}
-                      >
-                        View/Edit
-                      </Link>
-                    </>
-                  ) : (
-                    "View"
-                  ))}
+                {announcement.Users
+                  ? `${announcement.Users.FirstName} ${announcement.Users.LastName}`
+                  : "Unknown Publisher"}
+              </td>
+              <td>
+                {role === "Admin" || role === "Advisor" ? (
+                  <Link
+                    to={`/dashboard/announcements/${announcement.Id}`}
+                    className={generalStyles.link}
+                    onClick={() => handleClickAnnouncement(announcement.Id)}
+                  >
+                    View/Edit
+                  </Link>
+                ) : (
+                  <span
+                    className={generalStyles.link}
+                    onClick={() => handleClickAnnouncement(announcement.Id)}
+                  >
+                    View
+                  </span>
+                )}
               </td>
             </tr>
           ))
