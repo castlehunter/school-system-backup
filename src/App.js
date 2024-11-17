@@ -323,7 +323,7 @@ function App() {
               title: "Enrollment List",
             },
             {
-              path: "/enrollments/edit/:EnrollmentID",
+              path: "/enrollments/:EnrollmentID",
               element: <NewEnrollment />,
               //loader: getProgramList,
               title: "Update Enrollment",

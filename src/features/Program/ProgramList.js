@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProgramTable from "./ProgramTable.js";
 import TableContainer from "../../ui/Layout/TableContainer";
-import { getProgramList } from "../../services/apiProgram.js";
+import { getProgramList, sortProgramsBy } from "../../services/apiProgram.js";
 import { useNavigate, useParams } from "react-router-dom";
 import MainTitle from "../../ui/MainTitle/MainTitle.js";
 function ProgramList() {
@@ -45,6 +45,25 @@ function ProgramList() {
     navigate("/programs/new-program");
   }
 
+  async function handleSort(fieldName) {
+    try { 
+      const sortedData = await sortProgramsBy(fieldName);
+      setProgramData(sortedData);
+    } catch (error) {
+      console.error("Error sorting user table:", error);
+    }
+  }
+
+  // async function handleFilter(fieldName) {
+  //   if (fieldName === "All" || fieldName === "") {
+  //     const allPrograms = await getProgramList();
+  //     setProgramData(allPrograms);
+  //   } else {
+  //     const filteredPrograms = await FilterProgramByField(fieldName);
+  //     setProgramData(filteredPrograms);
+  //   }
+  // }
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -59,6 +78,13 @@ function ProgramList() {
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
         onClickAddBtn={handleAddBtn}
+        onClickSort={handleSort}
+        sortOptions={[
+          "Course Category Code",
+          "Course Category Name"      
+        ]}
+        // onClickFilter={handleFilter}
+        // filterOptions={["All", "ENG", "COMP"]}
       >
         <ProgramTable
           programData={programData}

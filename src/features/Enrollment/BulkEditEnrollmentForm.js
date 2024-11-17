@@ -46,7 +46,7 @@ function BulkEditEnrollmentForm() {
   }
 
   return (
-    <div>
+    <div className="generalStyles_container__RvMgt">
       <h1>Bulk Edit Enrollments</h1>
       <p>(Keep unchanged to maintain current state)</p>
       <form onSubmit={handleUpdate}>
@@ -58,6 +58,7 @@ function BulkEditEnrollmentForm() {
               value={enrollmentDate}
               onChange={(e) => setEnrollmentDate(e.target.value)}
               placeholder="Keep"
+              className="Form_formInput__xdpGx"
             />
           </label>
         </div>
