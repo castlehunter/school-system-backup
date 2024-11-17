@@ -42,6 +42,8 @@ svg {
   margin: 0;
   padding: 0;
 }
+
+pre,
 input,
 textarea,
 select,
@@ -49,4 +51,9 @@ button {
   font-family: inherit; /* Uses the font-family of the parent */
   font-size: inherit; /* Uses the font-size of the parent */
   line-height: inherit;
+}
+pre {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
 }

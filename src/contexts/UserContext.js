@@ -1,4 +1,4 @@
-// UserContext.js is used to stroe login userNo data
+// UserContext.js is used to store login userNo data
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const UserContext = createContext();

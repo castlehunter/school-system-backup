@@ -49,7 +49,6 @@ function Login() {
     localStorage.setItem("UserID", data.UserID);
 
     localStorage.setItem("role", userRole);
-    localStorage.setItem("UserNo", data.UserNo);
 
     setUserNo(data.UserNo);
     navigate("/dashboard");

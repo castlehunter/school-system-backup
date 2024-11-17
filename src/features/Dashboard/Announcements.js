@@ -21,17 +21,27 @@ function Announcements() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getAnnouncements();
-        setAnnouncementData(data);
-      } catch (error) {
-        console.error("Failed to fetch announcement data:", error);
-      }
-    }
+    const fetchData = async () => {
+      const userNo = localStorage.getItem("UserNo");
+      const data = await getAnnouncements(userNo);
+      setAnnouncementData(data);
+    };
 
     fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const data = await getAnnouncements();
+  //       setAnnouncementData(data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch announcement data:", error);
+  //     }
+  //   }
+
+  //   fetchData();
+  // }, []);
 
   const totalPages = Math.ceil(announcementData.length / rowsPerPage);
 

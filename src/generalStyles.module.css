@@ -11,7 +11,7 @@
 .link:active {
   color: #e91f63;
   text-decoration: underline;
-  text-underline-offset: 0.4rem;
+  /* text-underline-offset: 0.4rem; */
 }
 .noStyleLink {
   color: inherit;

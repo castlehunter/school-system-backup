@@ -53,7 +53,7 @@ function ContactForm({ role }) {
   }
 
   return (
-    <div>
+    <div className={formStyles.contactForm}>
       <EditContainer
         title="Main Contact"
         editButtonText={role === "Admin" ? "Edit" : false}
@@ -78,7 +78,7 @@ function ContactForm({ role }) {
         )}
 
         <div>
-          <pre>{contactInfo}</pre>
+          <p className={formStyles.contact}>{contactInfo}</p>
         </div>
       </EditContainer>
     </div>

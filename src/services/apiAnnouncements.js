@@ -1,14 +1,27 @@
 import supabase from "../config/supabaseClient.js";
 
-export async function getAnnouncements() {
+export async function getAnnouncements(userNo) {
   const { data, error } = await supabase
     .from("Announcements")
-    .select("*, Users(FirstName, LastName)")
+    .select("*, Users(FirstName, LastName), ReadBy")
     .order("CreatedAt", { ascending: false });
 
-  console.log("API fetchAnnouncements", data);
-  if (error) console.error("Error fetching announcements:", error);
-  return data;
+  if (error) {
+    console.error("Error fetching announcements:", error);
+    return [];
+  }
+
+  const processedData = data.map((announcement) => {
+    let readBy = announcement.ReadBy || [];
+    if (typeof readBy === "string") {
+      readBy = [readBy];
+    }
+    const isUnread = !readBy.includes(userNo);
+
+    return { ...announcement, isUnread };
+  });
+  console.log("announcements::::", processedData);
+  return processedData;
 }
 
 export async function addAnnouncement(newData) {
@@ -64,7 +77,7 @@ export async function updateAnnouncement(updatedAnnouncement) {
   return data[0];
 }
 
-export async function markUserAsRead(announcementId, userNo) {
+export async function addUserNoToReadBy(announcementId, userNo) {
   const { data, error } = await supabase
     .from("Announcements")
     .select("ReadBy")
@@ -95,7 +108,6 @@ export async function markUserAsRead(announcementId, userNo) {
   return true;
 }
 
-// services/apiAnnouncements.js
 export async function getUnreadAnnouncementsCount(userNo) {
   console.log("USERNO", userNo);
   userNo = String(userNo);
@@ -128,18 +140,13 @@ export async function getUnreadAnnouncementsCount(userNo) {
 
       const isUnread = !readBy.includes(userNo);
 
-      console.log(
-        `Announcement ID: ${announcement.Id}, User: ${userNo}, ReadBy: ${readBy}, Unread: ${isUnread}`
-      );
+      // console.log(
+      //   `Announcement ID: ${announcement.Id}, User: ${userNo}, ReadBy: ${readBy}, Unread: ${isUnread}`
+      // );
 
       return isUnread;
     }).length;
 
-    console.log("Unread announcements count:", unreadCount);
-
-    console.log("Unread announcements count:", unreadCount);
-
-    console.log("API getUnread ==>", unreadCount);
     return unreadCount;
   } catch (error) {
     console.error("Error in getUnreadAnnouncementsCount:", error);

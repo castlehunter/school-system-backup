@@ -12,7 +12,7 @@ export function UnreadProvider({ children }) {
 
   useEffect(() => {
     const fetchUnreadCount = async () => {
-      const userNo = localStorage.getItem("UserNo");
+      const userNo = localStorage.getItem("loginUserNo");
       if (userNo) {
         try {
           const count = await getUnreadAnnouncementsCount(userNo);

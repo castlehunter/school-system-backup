@@ -4,7 +4,7 @@ import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
 import Loader from "../../ui/Loader";
 import useCheckbox from "../../hooks/useCheckbox";
-import { markUserAsRead } from "../../services/apiAnnouncements";
+import { addUserNoToReadBy } from "../../services/apiAnnouncements";
 import { useUnreadCount } from "../../contexts/UnreadContext";
 import { getUnreadAnnouncementsCount } from "../../services/apiAnnouncements";
 
@@ -22,8 +22,8 @@ function AnnouncementTable({
   } = useCheckbox();
 
   const { unreadCount, setUnreadCount } = useUnreadCount();
-
   const [role, setRole] = useState("");
+
   const currData = announcementData.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
@@ -34,7 +34,7 @@ function AnnouncementTable({
     setRole(storedRole);
   }, []);
 
-  async function handleClickAnnouncement(id) {
+  async function handleClickAnnouncement(announcementId) {
     const userNo = localStorage.getItem("UserNo");
     if (!userNo) {
       console.error("User No is not available.");
@@ -42,10 +42,9 @@ function AnnouncementTable({
     }
 
     try {
-      const success = await markUserAsRead(id, userNo);
+      const success = await addUserNoToReadBy(announcementId, userNo);
       if (success) {
         const count = await getUnreadAnnouncementsCount(userNo);
-        console.log("Fetched unread count from API:", count);
         setUnreadCount(count);
       }
     } catch (error) {
@@ -68,6 +67,7 @@ function AnnouncementTable({
             />
           </th>
           <th>S/N</th>
+          <th>Status</th>
           <th>Title</th>
           <th>Content</th>
           <th>Created At</th>
@@ -89,8 +89,18 @@ function AnnouncementTable({
                   className={styles.checkbox}
                 />
               </td>
-
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
+              <td>
+                <span
+                  className={
+                    announcement.isUnread
+                      ? styles.unreadBadge
+                      : styles.readBadge
+                  }
+                >
+                  {announcement.isUnread ? "Unread" : "Read"}
+                </span>
+              </td>
               <td>{announcement.Title}</td>
               <td>
                 {announcement.Content.length > 100
