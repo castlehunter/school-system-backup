@@ -40,6 +40,20 @@ export async function getProgramByCode(programCode) {
   return data;
 }
 
+export async function getCoursesByProgramID(programID) {
+  const { data, error } = await supabase
+    .from("Courses")
+    .select(`*`)
+    .eq("ProgramID", programID);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Failed to load courses for the program");
+  }
+
+  return data;
+}
+
 export async function updateProgram(updatedData) {
   // console.log("updatedData" + JSON.stringify(updatedData));
   const { data, error } = await supabase

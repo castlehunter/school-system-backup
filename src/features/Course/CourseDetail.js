@@ -282,7 +282,7 @@ function CourseDetail() {
               <div className={formStyles.formRow}>
                 <div className={formStyles.formItem}>
                   <label htmlFor="programName" className={formStyles.formLabel}>
-                    Program Name
+                    Course Category
                   </label>
                   <input
                     type="text"
@@ -295,7 +295,7 @@ function CourseDetail() {
                 </div>
                 <div className={formStyles.formItem}>
                   <label htmlFor="programCode" className={formStyles.formLabel}>
-                    Program Code
+                    Course Category Code
                   </label>
                   <input
                     type="text"

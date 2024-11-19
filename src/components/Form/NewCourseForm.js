@@ -158,7 +158,7 @@ function NewCourseForm({ type }) {
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="ProgramID" className={styles.formLabel}>
-              Program
+              Course Category
             </label>
             <select
               name="ProgramID"
@@ -167,7 +167,7 @@ function NewCourseForm({ type }) {
               className={styles.formInput}
               required
             >
-              <option value="">Select a Program</option>
+              <option value="">Select a Category</option>
               {programs.map((program) => (
                 <option key={program.ProgramID} value={program.ProgramID}>
                   {" "}

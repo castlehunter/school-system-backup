@@ -20,7 +20,7 @@ import formStyles from "../../components/Form/Form.module.css";
 import MainTitle from "../../ui/MainTitle/MainTitle.js";
 
 function EnrollmentForm() {
-  console.log('EnrollmentForm');
+  console.log("EnrollmentForm");
   const { courseNo } = useParams();
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
@@ -32,6 +32,8 @@ function EnrollmentForm() {
   const [error, setError] = useState(null);
   const [course, setCourse] = useState(null);
   const [enrolledStudents, setEnrolledStudents] = useState([]);
+  const [successMessage, setSuccessMessage] = useState(null);
+
   console.log(courseNo);
   useEffect(() => {
     async function fetchStudents() {
@@ -115,6 +117,10 @@ function EnrollmentForm() {
 
   const handleSave = async (event) => {
     event.preventDefault();
+    if (!selectedStudents.length) {
+      alert("Please select at least one student to enroll.");
+      return;
+    }
     try {
       const newEnrollmentData = selectedStudents.map((student) => ({
         CourseID: course.CourseID,
@@ -140,15 +146,13 @@ function EnrollmentForm() {
     try {
       setIsLoading(true);
       setError(null);
-
+  
       await unenrollStudentFromCourse(studentID, course.CourseID);
-
-      const updatedEnrollments = enrolledStudents.filter(
-        (enrollment) => enrollment.StudentID !== studentID
+  
+      setEnrolledStudents((prevEnrollments) =>
+        prevEnrollments.filter((enrollment) => enrollment.StudentID !== studentID)
       );
-
-      setEnrolledStudents(updatedEnrollments);
-
+  
       alert("Student unenrolled successfully!");
     } catch (error) {
       setError(error.message);
@@ -157,6 +161,7 @@ function EnrollmentForm() {
       setIsLoading(false);
     }
   };
+  
 
   const unenrollStudentFromCourse = async (studentID, courseID) => {
     const { error } = await supabase
