@@ -18,8 +18,9 @@ import formStyles from "../../components/Form/Form.module.css";
 function CourseDetail() {
   const { courseNo } = useParams();
   const navigate = useNavigate();
-  const [originalCourse, setOriginalCourse] = useState(null);
+  const [originalCourse, setOriginalCourse] = useState(null); 
   const [enrollments, setEnrollments] = useState([]);
+
   const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -82,6 +83,7 @@ function CourseDetail() {
   };
 
   const handleCancelEdit = () => {
+    setCourse(originalCourse);
     setCourse(originalCourse);
     setIsEditing(false);
   };

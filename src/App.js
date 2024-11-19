@@ -46,6 +46,8 @@ import ForgotPassword from "./features/Login/ForgotPassword.js";
 import ResetPasswordLogin from "./features/Login/ResetPasswordLogin.js";
 import Announcements from "./features/Dashboard/Announcements.js";
 import NewAnnouncement from "./features/Dashboard/NewAnnouncement.js";
+import AnnouncementDetail from "./features/Dashboard/AnnouncementDetail.js";
+import { UnreadProvider } from "./contexts/UnreadContext.js";
 
 function App() {
   const routes = [
@@ -98,6 +100,12 @@ function App() {
               path: "/dashboard/announcements",
               element: <Announcements />,
               title: "Announcements",
+            },
+            {
+              path: "/dashboard/announcements/:id",
+              element: <AnnouncementDetail />,
+              title: "Announcement Detail",
+              hideInSidebar: true,
             },
             {
               path: "/dashboard/announcements/new-announcement",
@@ -315,7 +323,7 @@ function App() {
               title: "Enrollment List",
             },
             {
-              path: "/enrollments/edit/:EnrollmentID",
+              path: "/enrollments/:EnrollmentID",
               element: <NewEnrollment />,
               //loader: getProgramList,
               title: "Update Enrollment",
@@ -369,9 +377,11 @@ function App() {
 
   // return <RouterProvider router={router} />;
   return (
-    <UserProvider>
-      <RouterProvider router={router} />
-    </UserProvider>
+    <UnreadProvider>
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
+    </UnreadProvider>
   );
 }
 

@@ -14,6 +14,11 @@ import { getStudentCoursesByUserID } from "../../services/apiStudent";
 import ContactForm from "../../components/Form/ContactForm";
 import { getAnnouncements } from "../../services/apiAnnouncements";
 import ModalContainer from "../../ui/Layout/ModalContainer";
+import { addUserNoToReadBy } from "../../services/apiAnnouncements";
+import { getUnreadAnnouncementsCount } from "../../services/apiAnnouncements";
+import { useUnreadCount } from "../../contexts/UnreadContext";
+import { Link } from "react-router-dom";
+import generalStyles from "../../generalStyles.module.css";
 
 function Overview() {
   const [loginRole, setLoginRole] = useState("");
@@ -27,6 +32,8 @@ function Overview() {
   const [studentCourses, setStudentCourses] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
   const [openedAnnouncement, setOpenedAnnouncement] = useState(null);
+  const { unreadCount, setUnreadCount } = useUnreadCount();
+
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
     const storedFirstName = localStorage.getItem("firstName");
@@ -179,7 +186,7 @@ function Overview() {
     async function fetchAnnouncements() {
       try {
         const data = await getAnnouncements();
-        setAnnouncements(data.slice(0, 3));
+        setAnnouncements(data.slice(0, 5));
       } catch (error) {
         console.error("Error fetching announcements", error);
       }
@@ -188,8 +195,24 @@ function Overview() {
     fetchAnnouncements();
   }, []);
 
-  function handleClickAnnouncement(announcement) {
+  async function handleClickAnnouncement(announcement) {
     setOpenedAnnouncement(announcement);
+
+    const userNo = localStorage.getItem("UserNo");
+    if (!userNo) {
+      console.error("UserNo is not available.");
+      return;
+    }
+
+    try {
+      const success = await addUserNoToReadBy(announcement.Id, userNo);
+      if (success) {
+        const count = await getUnreadAnnouncementsCount(userNo);
+        setUnreadCount(count);
+      }
+    } catch (error) {
+      console.error("Error marking announcement as read:", error);
+    }
   }
 
   function renderAnnouncements() {
@@ -236,7 +259,24 @@ function Overview() {
       <div className={styles.statcards}>{renderStatCards()}</div>
       <div className={styles.overviewLayout}>
         <div className={styles.mainColumn}>
-          <EditContainer title="Announcement">
+          <EditContainer
+            title={
+              <>
+                Announcements&nbsp;&nbsp;
+                <Link
+                  to="/dashboard/announcements"
+                  className={generalStyles.link}
+                  style={{
+                    fontSize: "1.6rem",
+                    fontWeight: "500",
+                    textDecoration: "none",
+                  }}
+                >
+                  (View all)
+                </Link>
+              </>
+            }
+          >
             {renderAnnouncements()}
           </EditContainer>
           {/* Only show Modal if there's an active announcement */}
@@ -245,7 +285,14 @@ function Overview() {
               title={openedAnnouncement.Title}
               onClose={() => setOpenedAnnouncement(null)}
             >
-              {openedAnnouncement.Content}
+              <pre
+                style={{
+                  whiteSpace: "pre-wrap",
+                  wordWrap: "break-word",
+                }}
+              >
+                {openedAnnouncement.Content}
+              </pre>
             </ModalContainer>
           )}
         </div>

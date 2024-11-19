@@ -3,68 +3,67 @@ import React, { useEffect, useState } from "react";
 import styles from "../Profile.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import PersonalInfoForm from "../../components/Form/PersonalInfoForm";
+import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
+import AccountInfoForm from "../../components/Form/AccountInfoForm";
+import { getRoleNameByNo } from "../../services/apiUser";
+import { getProfileInfoByNo } from "../../services/apiUser";
 import MainTitle from "../../ui/MainTitle/MainTitle";
 
-import formStyles from "../../components/Form/Form.module.css";
-import { getTeacherCourses } from "../../services/apiTeacher";
-import { getProfileInfoByNo } from "../../services/apiUser";
-
-function TeacherDetail() {
+function UserDetail() {
   const { userNo } = useParams();
-  const [courses, setCourses] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [profileData, setProfileData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchCourses() {
+    async function fetchData() {
       try {
-        const data = await getTeacherCourses(userNo);
-        setCourses(data);
+        setIsLoading(true);
+        const data = await getProfileInfoByNo(userNo);
+        setProfileData(data);
       } catch (error) {
-        setError("Failed to fetch courses.");
-        console.error("Error fetching courses:", error);
+        console.error("Failed to fetch student data:", error);
       } finally {
         setIsLoading(false);
       }
     }
-
-    fetchCourses();
+    fetchData();
   }, [userNo]);
 
   return (
     <>
-      <MainTitle title="Teacher Detail" goBack={true} />
+      <MainTitle
+        title={
+          isLoading
+            ? `User Detail`
+            : `User Detail: ${profileData?.FirstName} ${profileData?.LastName}`
+        }
+        goBack={true}
+      />
       <div className={styles.profileLayout}>
         <div className={styles.mainColumn}>
           <PersonalInfoForm userNo={userNo} />
-          {/* <EditContainer title="Additional Information"></EditContainer> */}
-          <EditContainer title="Courses">
-            <div className={formStyles.formContainer}>
-              <table className={formStyles.courseTable}>
-                <thead>
-                  <tr>
-                    <th>Course Name</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {courses.map((course) => (
-                    <tr key={course.CourseID}>
-                      <td>{course.CourseName}</td>
-                      <td>{new Date(course.StartDate).toLocaleDateString()}</td>
-                      <td>{new Date(course.EndDate).toLocaleDateString()}</td>
-                      <td>{course.Time}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+
+          {(profileData?.Roles?.RoleName === "Teacher" ||
+            profileData?.Roles?.RoleName === "Student") && (
+            <EditContainer title="Course Information">
+              <div className={styles.detail}>
+                This part displays only when role === teacher || role ===
+                student
+              </div>
+            </EditContainer>
+          )}
+          <EditContainer title="Additional Information">
+            <div className={styles.detail}></div>
+          </EditContainer>
+          <EditContainer title="Additional Information">
+            <div className={styles.detail}></div>
           </EditContainer>
         </div>
         <div className={styles.secondaryColumn}>
+          <SecurityInfoForm userNo={userNo} />
+          <AccountInfoForm userNo={userNo} />
           <EditContainer title="Some charts here">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -97,4 +96,4 @@ function TeacherDetail() {
   );
 }
 
-export default TeacherDetail;
+export default UserDetail;

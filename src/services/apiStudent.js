@@ -102,7 +102,7 @@ export async function deleteStudent(StudentNo) {
 //   return data;
 // }
 // get student by student number
-export async function getStudentByStudentNo(userNo) {
+export async function getStudentByUserNo(userNo) {
   // get userID by userNo
   const { data: userData, error: userError } = await supabase
     .from("Users")
@@ -141,6 +141,7 @@ export async function getStudentByStudentNo(userNo) {
     .eq("UserID", userID)
     .single();
 
+  console.log("API getStudentByUserNo", data);
   if (error) {
     console.error("Failed to fetch student:", error);
     throw error;

@@ -70,7 +70,6 @@ function UserList() {
         onClickFilter={handleFilter}
         filterOptions={["All", "Admin", "Advisor", "Teacher", "Student"]}
       >
-        {/*  */}
         <UserTable
           data={userData}
           rowsPerPage={rowsPerPage}

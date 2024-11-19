@@ -7,6 +7,7 @@ import { useLoaderData, useNavigation } from "react-router-dom";
 import { getAnnouncements } from "../../services/apiAnnouncements";
 import Loader from "../../ui/Loader";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button/Button";
 
 function Announcements() {
   const initialAnnouncementData = useLoaderData() || [];
@@ -20,17 +21,27 @@ function Announcements() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getAnnouncements();
-        setAnnouncementData(data);
-      } catch (error) {
-        console.error("Failed to fetch announcement data:", error);
-      }
-    }
+    const fetchData = async () => {
+      const userNo = localStorage.getItem("UserNo");
+      const data = await getAnnouncements(userNo);
+      setAnnouncementData(data);
+    };
 
     fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const data = await getAnnouncements();
+  //       setAnnouncementData(data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch announcement data:", error);
+  //     }
+  //   }
+
+  //   fetchData();
+  // }, []);
 
   const totalPages = Math.ceil(announcementData.length / rowsPerPage);
 
@@ -56,8 +67,7 @@ function Announcements() {
         currPage={currPage}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
-        onClickBtn={handleAddBtn}
-        showAddBtn
+        onClickAddBtn={handleAddBtn}
       >
         {isLoading ? (
           <Loader />

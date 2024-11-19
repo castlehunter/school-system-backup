@@ -47,8 +47,7 @@ function Login() {
     console.log("Login page data " + JSON.stringify(data));
     const userRole = data.Roles.RoleName;
     localStorage.setItem("UserID", data.UserID);
-    localStorage.setItem("firstName", data.FirstName);
-    localStorage.setItem("lastName", data.LastName);
+
     localStorage.setItem("role", userRole);
 
     setUserNo(data.UserNo);
@@ -66,7 +65,7 @@ function Login() {
         </div>
 
         <form className={styles.loginForm} onSubmit={handleLogin}>
-          <div className={styles.loginFormItem}>
+          {/* <div className={styles.loginFormItem}>
             <label className={styles.loginFormLabel} htmlFor="loginAs">
               Login As
             </label>
@@ -81,7 +80,7 @@ function Login() {
               <option value="Teacher">Teacher</option>
               <option value="Student">Student</option>
             </select>
-          </div>
+          </div> */}
 
           <div className={styles.loginFormItem}>
             <label className={styles.loginFormLabel} htmlFor="username">
@@ -114,7 +113,9 @@ function Login() {
               <input type="checkbox" />
               <span>Remember me</span>
             </div>
-            <Link to="/login/forgot-password" className={generalStyles.link}>Forgot password</Link>
+            <Link to="/login/forgot-password" className={generalStyles.link}>
+              Forgot password
+            </Link>
           </div>
 
           <div className={styles.loginFormItem}>

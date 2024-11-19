@@ -18,7 +18,7 @@ function ContactForm({ role }) {
     async function fetchSchoolInformation() {
       const data = await getSchoolContact();
       setContactInfo(data);
-      setOriginalContactInfo(data); // Save original data
+      setOriginalContactInfo(data);
     }
     fetchSchoolInformation();
   }, []);
@@ -53,7 +53,7 @@ function ContactForm({ role }) {
   }
 
   return (
-    <div>
+    <div className={formStyles.contactForm}>
       <EditContainer
         title="Main Contact"
         editButtonText={role === "Admin" ? "Edit" : false}
@@ -78,7 +78,7 @@ function ContactForm({ role }) {
         )}
 
         <div>
-          <p style={{ whiteSpace: "pre-line" }}>{contactInfo}</p>
+          <p className={formStyles.contact}>{contactInfo}</p>
         </div>
       </EditContainer>
     </div>

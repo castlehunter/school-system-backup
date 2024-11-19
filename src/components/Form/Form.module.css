@@ -3,6 +3,11 @@
   position: relative;
 }
 
+.contact {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
+}
 .avatar {
   display: flex;
   flex-direction: column;
@@ -181,4 +186,18 @@
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1000;
+}
+
+.bottomButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+  gap: 5rem;
+}
+
+.preStyle {
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-size: inherit;
 }

@@ -60,11 +60,13 @@ function EnrollmentTable({
               <td>{enrollment.Students.Users.FirstName}</td>
               <td>{enrollment.Students.Users.LastName}</td>
               <td>{enrollment.Courses.CourseName}</td>
-              <td>{new Date(enrollment.EnrollmentDate).toLocaleDateString()}</td>
+              <td>
+                {new Date(enrollment.EnrollmentDate).toLocaleDateString()}
+              </td>
               <td>{enrollment.isFinished ? "Yes" : "No"}</td>
               <td>
                 <Link
-                  to={`/enrollments/edit/${enrollment.EnrollmentID}`}
+                  to={`/enrollments/${enrollment.EnrollmentID}`}
                   className={generalStyles.link}
                   style={{ paddingRight: 15 + "px" }}
                 >

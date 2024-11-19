@@ -4,7 +4,7 @@ import MainTitle from "../../ui/MainTitle/MainTitle";
 function ResetPassword() {
   return (
     <div>
-      <MainTitle title={"Reset Password"} />
+      <MainTitle title={"Reset Password"} g={true} />
       <ResetPasswordForm />
     </div>
   );

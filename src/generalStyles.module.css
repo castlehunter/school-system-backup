@@ -11,7 +11,7 @@
 .link:active {
   color: #e91f63;
   text-decoration: underline;
-  text-underline-offset: 0.4rem;
+  /* text-underline-offset: 0.4rem; */
 }
 .noStyleLink {
   color: inherit;
@@ -30,7 +30,7 @@
   justify-content: center;
   border-radius: 0.8rem;
   background-color: #fff;
-  padding: 3rem;
+  padding: 2rem 3rem 3rem 3rem;
   /* border: 1px solid rgba(0, 0, 0, 0.1);
   border-right: 1px solid rgba(192, 192, 192, 0.5);
   border-bottom: 1px solid rgba(177, 177, 177, 0.5); */
@@ -39,17 +39,9 @@
 }
 
 .containerHeader {
-  height: 4rem;
+  max-height: 4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-}
-
-.bottomButtons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 4rem;
-  gap: 5rem;
 }
