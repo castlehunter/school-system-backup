@@ -31,6 +31,10 @@ function TeacherDetail() {
 
     fetchCourses();
   }, [userNo]);
+  
+  function handleAddCourse() {
+    navigate(`/teachers/${userNo}/add-course`); // Navigate to the enroll course form
+  }
 
   return (
     <>
@@ -39,7 +43,11 @@ function TeacherDetail() {
         <div className={styles.mainColumn}>
           <PersonalInfoForm userNo={userNo} hideUpload={true}/>
           {/* <EditContainer title="Additional Information"></EditContainer> */}
-          <EditContainer title="Courses">
+          <EditContainer 
+            title="Courses"
+            editButtonText="Add Course"
+            onClickEdit={handleAddCourse}
+            >
             <div className={formStyles.formContainer}>
               <table className={formStyles.courseTable}>
                 <thead>
