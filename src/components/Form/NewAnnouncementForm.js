@@ -93,7 +93,7 @@ function NewAnnouncementForm({ type }) {
             type="button"
             onClickBtn={() => {
               console.log("Cancel button clicked");
-              navigate("/courses/course-list");
+              navigate("/dashboard/announcements");
             }}
           >
             Cancel

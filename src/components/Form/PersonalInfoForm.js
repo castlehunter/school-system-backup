@@ -128,7 +128,14 @@ function PersonalInfoForm({ userNo }) {
         <div className={formStyles.sectionLayout}>
           <div className={formStyles.avatar}>
             <img src={personalInfoData.AvatarURL || avatar} alt="user avatar" />
-            <input type="file" accept="image/*" onChange={handleFileChange} />
+            <div className={formStyles.upload}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className={formStyles.uploadInput}
+              />
+            </div>
             <Button onClickBtn={handleImageUpload}>Upload Picture</Button>
           </div>
           <form>
