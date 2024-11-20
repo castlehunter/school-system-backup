@@ -147,7 +147,7 @@ function StudentDetailForm({ studentData, data, showEditButton }) {
         <div className={formStyles.sectionLayout}>
           <div className={formStyles.avatar}>
             <img src={avatar} alt="user avatar" />
-            <Button>Upload Picture</Button>
+            {/* <Button>Upload Picture</Button> */}
           </div>
           <form>
             <div className={formStyles.formRow}>

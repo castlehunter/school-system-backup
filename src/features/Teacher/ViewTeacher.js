@@ -37,7 +37,7 @@ function TeacherDetail() {
       <MainTitle title="Teacher Detail" goBack={true} />
       <div className={styles.profileLayout}>
         <div className={styles.mainColumn}>
-          <PersonalInfoForm userNo={userNo} />
+          <PersonalInfoForm userNo={userNo} hideUpload={true}/>
           {/* <EditContainer title="Additional Information"></EditContainer> */}
           <EditContainer title="Courses">
             <div className={formStyles.formContainer}>
