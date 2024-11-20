@@ -34,7 +34,7 @@ function AnnouncementTable({
 
   async function handleClickAnnouncement(announcementId) {
     navigate(`/dashboard/announcements/${announcementId}`);
-    const userNo = localStorage.getItem("UserNo");
+    const userNo = localStorage.getItem("loginUserNo");
     if (!userNo) {
       console.error("User No is not available.");
       return;

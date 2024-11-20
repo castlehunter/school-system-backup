@@ -5,17 +5,18 @@
 }
 
 section {
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   flex: 1;
 }
 
 .header {
   display: flex;
+  position: relative;
+  /* height: 5rem; */
   align-items: center;
   justify-content: space-between;
   background-color: #f9f9f9;
-  /* background-color: #ffffff; */
-  padding: 0 1rem;
+  padding: 0.2rem 2rem;
   border-radius: 3rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 3rem;
@@ -56,7 +57,7 @@ section {
   color: #fff;
   font-size: 1.2rem;
   line-height: 1rem;
-  background-color: rgb(168, 85, 247);
+  background-color: #e91f63;
   border-radius: 9999px;
   width: 1.8rem;
   height: 1.8rem;
@@ -84,6 +85,10 @@ section {
 }
 
 .user-avatar-container {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
   position: relative;
   flex: 1;
 }
@@ -101,6 +106,7 @@ section {
   max-width: 100%;
   margin: 0;
   transition: box-shadow 0.3s ease;
+  border: 0.4rem solid #e91f63;
 }
 
 .user-avatar img:hover {

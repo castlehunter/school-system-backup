@@ -198,7 +198,7 @@ function Overview() {
   async function handleClickAnnouncement(announcement) {
     setOpenedAnnouncement(announcement);
 
-    const userNo = localStorage.getItem("UserNo");
+    const userNo = localStorage.getItem("loginUserNo");
     if (!userNo) {
       console.error("UserNo is not available.");
       return;
