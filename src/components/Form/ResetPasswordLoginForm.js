@@ -28,7 +28,7 @@ function ResetPasswordWithoutCurrent() {
       return;
     }
     try {
-      const response = await updateLoginPassword(username, null, inputData.newPassword);
+      const response = await updateLoginPassword(username, inputData.newPassword);
 
       console.log("response", response);
       if (response && response.error) {
@@ -37,6 +37,7 @@ function ResetPasswordWithoutCurrent() {
       } else {
         alert("Password updated successfully!");
         console.log("Password updated successfully!", response);
+        navigate('/');
       }
     } catch (error) {
       console.error("Error saving password data:", error);
