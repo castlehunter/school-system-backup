@@ -116,7 +116,8 @@ export async function getProfileInfoByNo(userNo) {
       PhoneNumber,
       FirstName,
       LastName,
-      UserNo
+      UserNo,
+      AvatarURL
     `
     )
     .eq("UserNo", userNo)
@@ -319,7 +320,7 @@ export async function UpdatePersonalInfo(userNo, userInfo) {
         Email: userInfo.Email,
         DateOfBirth: userInfo.DateOfBirth,
         PhoneNumber: userInfo.PhoneNumber,
-        HomeAddress: userInfo.HomeAddress,
+        HomeAddress: userInfo.HomeAddress
       })
       .eq("UserNo", userNo)
       .select();
@@ -411,26 +412,41 @@ export async function UploadProfileImage(image) {
         cacheControl: "3600",
         upsert: false,
       });
-    return true;
+
+    if (error) {
+      console.error("Unexpected error during image upload:", error.message);
+      return null;
+    }
+
+    console.log("Image uploaded successfully:", data);
+    return data;
   } catch (error) {
     console.error("Unexpected error during image upload:", error.message);
     return null;
   }
 }
 
-export async function GetImageURL(image) {
+export async function uploadImageURL(userNo, url) {
   try {
-    const { publicURL, error } = await supabase.storage
-      .from("ProfileImage")
-      .getPublicUrl(`public/${image.name}`);
+    const { data, error } = await supabase
+      .from("Users")
+      .update({
+        AvatarURL: url,
+      })
+      .eq("UserNo", userNo)
+      .select();
 
-    console.log(publicURL);
-    return publicURL;
+    if (error) {
+      console.error("Error updating image URL:", error.message);
+      return null;
+    }
+    return data;
   } catch (error) {
-    console.error("Error generating public URL:", error.message);
+    console.error("Error updating image URL", error.message);
     return null;
   }
 }
+  
 
 export async function sortUsersBy(fieldName = "UserNo", ascending = true) {
   try {

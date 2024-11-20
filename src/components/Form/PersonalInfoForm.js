@@ -7,7 +7,7 @@ import {
   getProfileInfoByNo,
   UpdatePersonalInfo,
   UploadProfileImage,
-  GetImageURL,
+  uploadImageURL,
 } from "../../services/apiUser";
 import Loader from "../../ui/Loader";
 
@@ -70,6 +70,10 @@ function PersonalInfoForm({ userNo, hideUpload }) {
 
   async function handleClickSave() {
     try {
+      if(imageFile)
+      {
+        const imageres = await handleImageUpload();
+      }
       const response = await UpdatePersonalInfo(userNo, personalInfoData);
       setIsEdit(false);
       if (response) {
@@ -87,20 +91,27 @@ function PersonalInfoForm({ userNo, hideUpload }) {
     setImageFile(event.target.files[0]);
   };
 
+  function generateManualUrl(imagePath)
+  {
+    const url = `https://llcccnztkkxlkzblokbt.supabase.co/storage/v1/object/public/ProfileImage/${imagePath}`;
+    console.log(url);
+    return url;
+  }
+
   const handleImageUpload = async () => {
     if (imageFile) {
-      const avatarUrl = await UploadProfileImage(imageFile);
-      if (avatarUrl) {
-        const url = await GetImageURL(imageFile);
+      const uploadData = await UploadProfileImage(imageFile);
+      if (uploadData) {
+        const manualUrl = await generateManualUrl(uploadData.path)
+        const url = await uploadImageURL(userNo, manualUrl);
         if (url) {
           setPersonalInfoData((prevData) => ({
             ...prevData,
             AvatarURL: url,
           }));
           alert("Image uploaded successfully!");
-        } else {
-          alert("Couldn't fetch the URL");
-        }
+          window.location.reload();
+        } 
       } else {
         alert("Image upload failed.");
       }
