@@ -1,9 +1,10 @@
 import React from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../ui/Loader";
 import useCheckbox from "../../hooks/useCheckbox";
+import Button from "../../components/Button/Button";
 
 function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
   const currData = programData.slice(
@@ -11,6 +12,7 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
     currPage * rowsPerPage
   );
 
+  const navigate = useNavigate();
   const {
     isAllSelected,
     handleSelectAll,
@@ -57,13 +59,11 @@ function ProgramTable({ programData, rowsPerPage, currPage, isLoading }) {
             <td>{program.ProgramCode}</td>
             <td>{program.ProgramName}</td>
             <td>
-              <Link
-                to={`/programs/${program.ProgramCode}`}
-                className={generalStyles.link}
-                style={{ paddingRight: "15px" }}
+              <Button
+                onClickBtn={() => navigate(`/programs/${program.ProgramCode}`)}
               >
                 View/Edit
-              </Link>
+              </Button>
             </td>
           </tr>
         ))}

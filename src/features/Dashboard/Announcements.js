@@ -8,6 +8,8 @@ import { getAnnouncements } from "../../services/apiAnnouncements";
 import Loader from "../../ui/Loader";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import useCheckbox from "../../hooks/useCheckbox";
+import { deleteAnnouncements } from "../../services/apiAnnouncements";
 
 function Announcements() {
   const initialAnnouncementData = useLoaderData() || [];
@@ -22,7 +24,7 @@ function Announcements() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userNo = localStorage.getItem("UserNo");
+      const userNo = localStorage.getItem("loginUserNo");
       const data = await getAnnouncements(userNo);
       setAnnouncementData(data);
     };
@@ -30,18 +32,12 @@ function Announcements() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const data = await getAnnouncements();
-  //       setAnnouncementData(data);
-  //     } catch (error) {
-  //       console.error("Failed to fetch announcement data:", error);
-  //     }
-  //   }
-
-  //   fetchData();
-  // }, []);
+  const {
+    selectedCheckboxes,
+    handleCheckboxes,
+    isAllSelected,
+    handleSelectAll,
+  } = useCheckbox();
 
   const totalPages = Math.ceil(announcementData.length / rowsPerPage);
 
@@ -58,6 +54,35 @@ function Announcements() {
     navigate("/dashboard/announcements/new-announcement");
   }
 
+  function handleBulkDelete() {
+    const selectedIds = selectedCheckboxes;
+
+    if (selectedIds.length === 0) {
+      alert("Please select at least one announcement to delete.");
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete the selected announcements?"
+    );
+
+    if (confirmDelete) {
+      deleteAnnouncements(selectedIds)
+        .then(() => {
+          setAnnouncementData((prevData) =>
+            prevData.filter(
+              (announcement) => !selectedIds.includes(announcement.Id)
+            )
+          );
+          alert("Selected announcements deleted successfully.");
+        })
+        .catch((error) => {
+          console.error("Failed to delete announcements:", error);
+          alert("Failed to delete selected announcements.");
+        });
+    }
+  }
+
   return (
     <>
       <MainTitle title="Announcements" />
@@ -68,6 +93,7 @@ function Announcements() {
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
         onClickAddBtn={handleAddBtn}
+        onClickBulkDeleteBtn={handleBulkDelete}
       >
         {isLoading ? (
           <Loader />
@@ -76,6 +102,10 @@ function Announcements() {
             announcementData={announcementData}
             rowsPerPage={rowsPerPage}
             currPage={currPage}
+            isAllSelected={isAllSelected}
+            handleSelectAll={handleSelectAll}
+            selectedCheckboxes={selectedCheckboxes}
+            handleCheckboxes={handleCheckboxes}
           />
         )}
       </TableContainer>

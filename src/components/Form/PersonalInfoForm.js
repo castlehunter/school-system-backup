@@ -3,7 +3,12 @@ import EditContainer from "../../ui/Layout/EditContainer";
 import formStyles from "./Form.module.css";
 import avatar from "../../assets/User-avatar-default.jpg";
 import Button from "../Button/Button";
-import { getProfileInfoByNo, UpdatePersonalInfo, UploadProfileImage, uploadImageURL } from "../../services/apiUser";
+import {
+  getProfileInfoByNo,
+  UpdatePersonalInfo,
+  UploadProfileImage,
+  uploadImageURL,
+} from "../../services/apiUser";
 import Loader from "../../ui/Loader";
 
 function PersonalInfoForm({ userNo, hideUpload }) {
@@ -130,12 +135,15 @@ function PersonalInfoForm({ userNo, hideUpload }) {
         <div className={formStyles.sectionLayout}>
           <div className={formStyles.avatar}>
             <img src={personalInfoData.AvatarURL || avatar} alt="user avatar" />
-            {!hideUpload && (
-              <>
-                <input type="file" accept="image/*"  onChange={handleFileChange} />
-                <Button onClickBtn={handleImageUpload}>Upload Picture</Button>
-              </>
-            )}
+            <div className={formStyles.upload}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className={formStyles.uploadInput}
+              />
+            </div>
+            <Button onClickBtn={handleImageUpload}>Upload Picture</Button>
           </div>
           <form>
             <div className={formStyles.formRow}>

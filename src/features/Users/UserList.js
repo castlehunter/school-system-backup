@@ -72,6 +72,7 @@ function UserList() {
       >
         <UserTable
           data={userData}
+          setData={setUserData}
           rowsPerPage={rowsPerPage}
           currPage={currPage}
         />

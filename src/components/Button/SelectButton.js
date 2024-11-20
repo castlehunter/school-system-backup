@@ -12,7 +12,11 @@ function SelectButton({ options, onSelect, label }) {
 
   return (
     <div className={styles.dropdownContainer}>
-      <Button className={styles.sortButton} onClickBtn={handleButtonClick}>
+      <Button
+        className={styles.sortButton}
+        onClickBtn={handleButtonClick}
+        size="large"
+      >
         {label}&nbsp;&nbsp;
         {icons.ArrowDownIcon(styles.arrowDown)}
       </Button>

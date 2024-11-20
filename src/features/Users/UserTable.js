@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useCheckbox from "../../hooks/useCheckbox";
+import Button from "../../components/Button/Button";
+import { deleteUser } from "../../services/apiUser";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleDateString();
 }
 
-function UserTable({ data, currPage, rowsPerPage }) {
+function UserTable({ data, setData, currPage, rowsPerPage }) {
   const {
     selectedCheckboxes,
     handleCheckboxes,
     isAllSelected,
     handleSelectAll,
   } = useCheckbox();
+
+  const navigate = useNavigate();
 
   const currData = data.slice(
     (currPage - 1) * rowsPerPage,
@@ -26,6 +30,24 @@ function UserTable({ data, currPage, rowsPerPage }) {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
+
+  async function handleDelete(userNo) {
+    try {
+      const confirmed = window.confirm(
+        "Are you sure you want to delete this user?"
+      );
+      if (confirmed) {
+        const result = await deleteUser(userNo);
+        setData((prev) => prev.filter((e) => e.UserNo !== userNo));
+        if (result) {
+          alert("User deleted successfully");
+        }
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      alert("There was an error deleting the user.");
+    }
+  }
 
   return (
     <table className={styles.table}>
@@ -81,9 +103,15 @@ function UserTable({ data, currPage, rowsPerPage }) {
             <td>{user.HomeAddress}</td>
             <td>{formatDate(user.CreatedAt)}</td>
             <td>
-              <Link to={`/users/${user.UserNo}`} className={generalStyles.link}>
-                view
-              </Link>
+              <div className={styles.recordButtons}>
+                <Button
+                  onClickBtn={() => navigate(`/users/${user.UserNo}`)}
+                  size="small"
+                  color="rose"
+                >
+                  View/Edit
+                </Button>{" "}
+              </div>
             </td>
           </tr>
         ))}

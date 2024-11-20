@@ -406,8 +406,7 @@ export async function UploadProfileImage(image) {
   try {
     if (!image) return null;
 
-    const { data, error } = await supabase
-      .storage
+    const { data, error } = await supabase.storage
       .from("ProfileImage") // replace with your storage bucket name
       .upload(`public/${image.name}`, image, {
         cacheControl: "3600",
@@ -523,6 +522,27 @@ export async function FilterUsersByRole(roleName) {
     return filteredData;
   } catch (error) {
     console.error("Unexpected error in FilterUsersByRole:", error);
+    throw error;
+  }
+}
+
+export async function deleteUser(userNo) {
+  try {
+    // Delete the user record from the "Users" table using the userNo
+    const { data, error } = await supabase
+      .from("Users")
+      .delete()
+      .eq("UserNo", userNo);
+
+    if (error) {
+      console.error("Error deleting user:", error);
+      throw new Error("Failed to delete user");
+    }
+
+    console.log("User deleted successfully:", data);
+    return true; // Successfully deleted the user
+  } catch (error) {
+    console.error("Unexpected error during user deletion:", error);
     throw error;
   }
 }

@@ -14,23 +14,31 @@ function ViewUser() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   async function getRoleName() {
-  //     try {
-  //       setIsLoading(true);
-  //       setError("");
-  //       const res = await getRoleNameByNo(userNo);
-  //       setRoleName(res);
-  //     } catch (error) {
-  //       setError(error);
-  //     }
-  //   }
-  //   getRoleName();
-  // }, []);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const data = await getProfileInfoByNo(userNo);
+        setProfileData(data);
+      } catch (error) {
+        console.error("Failed to fetch student data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, [userNo]);
 
   return (
     <>
-      <MainTitle title="User Detail" />
+      <MainTitle
+        title={
+          isLoading
+            ? `User Detail`
+            : `User Detail: ${profileData?.FirstName} ${profileData?.LastName}`
+        }
+        goBack={true}
+      />
       <div className={styles.profileLayout}>
         <div className={styles.mainColumn}>
           <PersonalInfoForm userNo={userNo} />

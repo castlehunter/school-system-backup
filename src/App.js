@@ -269,6 +269,7 @@ function App() {
               path: "/teachers/:userNo/add-Course",
               element: <AddCourseForTeacher />,
               title: "Add Course",
+              hideInSidebar: true,
             },
           ],
         },

@@ -1,8 +1,9 @@
 import React from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../ui/Loader";
+import Button from "../../components/Button/Button";
 
 function EnrollmentTable({
   enrollmentData,
@@ -18,6 +19,7 @@ function EnrollmentTable({
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
+  const navigate = useNavigate();
 
   return (
     <table className={styles.table}>
@@ -65,13 +67,13 @@ function EnrollmentTable({
               </td>
               <td>{enrollment.isFinished ? "Yes" : "No"}</td>
               <td>
-                <Link
-                  to={`/enrollments/${enrollment.EnrollmentID}`}
-                  className={generalStyles.link}
-                  style={{ paddingRight: 15 + "px" }}
+                <Button
+                  onClickBtn={() =>
+                    navigate(`/enrollments/${enrollment.EnrollmentID}`)
+                  }
                 >
                   Update Status
-                </Link>
+                </Button>
               </td>
             </tr>
           ))

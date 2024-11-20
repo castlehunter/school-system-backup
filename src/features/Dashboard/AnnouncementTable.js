@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
-import { Link } from "react-router-dom";
 import Loader from "../../ui/Loader";
 import useCheckbox from "../../hooks/useCheckbox";
 import { addUserNoToReadBy } from "../../services/apiAnnouncements";
 import { useUnreadCount } from "../../contexts/UnreadContext";
 import { getUnreadAnnouncementsCount } from "../../services/apiAnnouncements";
+import Button from "../../components/Button/Button";
+import { useNavigate } from "react-router-dom";
 
 function AnnouncementTable({
   announcementData,
   rowsPerPage,
   currPage,
   isLoading,
+  selectedCheckboxes,
+  handleCheckboxes,
+  isAllSelected,
+  handleSelectAll,
 }) {
-  const {
-    selectedCheckboxes,
-    handleCheckboxes,
-    isAllSelected,
-    handleSelectAll,
-  } = useCheckbox();
-
   const { unreadCount, setUnreadCount } = useUnreadCount();
   const [role, setRole] = useState("");
-
+  const navigate = useNavigate();
   const currData = announcementData.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
@@ -35,6 +33,7 @@ function AnnouncementTable({
   }, []);
 
   async function handleClickAnnouncement(announcementId) {
+    navigate(`/dashboard/announcements/${announcementId}`);
     const userNo = localStorage.getItem("UserNo");
     if (!userNo) {
       console.error("User No is not available.");
@@ -104,7 +103,7 @@ function AnnouncementTable({
               <td>{announcement.Title}</td>
               <td>
                 {announcement.Content.length > 100
-                  ? `${announcement.Content.substring(0, 100)} ...`
+                  ? `${announcement.Content.substring(0, 70)} ...`
                   : announcement.Content}
               </td>
               <td>{new Date(announcement.CreatedAt).toLocaleString()}</td>
@@ -115,17 +114,22 @@ function AnnouncementTable({
               </td>
               <td>
                 {role === "Admin" || role === "Advisor" ? (
-                  <Link
-                    to={`/dashboard/announcements/${announcement.Id}`}
-                    className={generalStyles.link}
-                    onClick={() => handleClickAnnouncement(announcement.Id)}
-                  >
-                    View/Edit
-                  </Link>
+                  <div className={styles.recordButtons}>
+                    <Button
+                      onClickBtn={() =>
+                        handleClickAnnouncement(announcement.Id)
+                      }
+                      size="small"
+                      color="rose"
+                    >
+                      View/Edit
+                    </Button>
+                  </div>
                 ) : (
                   <span
                     className={generalStyles.link}
                     onClick={() => handleClickAnnouncement(announcement.Id)}
+                    color
                   >
                     View
                   </span>

@@ -3,9 +3,9 @@ import SidebarNew from "../../components/Sidebar/SidebarNew";
 import { RiMegaphoneLine } from "@remixicon/react";
 import avatar from "../../assets/user-avatar-header.jpg";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getRoleNameByNo, getFullNameByNo } from "../../services/apiUser";
-import { useUnreadCount } from "../../contexts/UnreadContext"; // 引入 useUnreadCount
+import { useUnreadCount } from "../../contexts/UnreadContext";
 
 function Layout({ children, breadcrumb, userNo }) {
   const [isOpen, setIsOpen] = useState(false); // Manager menu display status
@@ -13,7 +13,8 @@ function Layout({ children, breadcrumb, userNo }) {
   const [roleName, setRoleName] = useState(null);
   const [fullName, setFullName] = useState(null);
 
-  const { unreadCount } = useUnreadCount(); // 从 UnreadContext 获取 unreadCount
+  const navigate = useNavigate();
+  const { unreadCount } = useUnreadCount();
 
   const toggleMenu = () => {
     setIsOpen((isOpen) => !isOpen);
@@ -76,7 +77,10 @@ function Layout({ children, breadcrumb, userNo }) {
           <div className={styles.breadcrumb}>{breadcrumb}</div>
 
           <div className={styles["user-section"]}>
-            <div className={styles.announcement}>
+            <div
+              className={styles.announcement}
+              onClick={() => navigate("/dashboard/announcements")}
+            >
               <RiMegaphoneLine className={styles["announcement-icon"]} />
               <div className={styles["announcement-count"]}>{unreadCount}</div>
             </div>
