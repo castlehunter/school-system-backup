@@ -146,13 +146,15 @@ function EnrollmentForm() {
     try {
       setIsLoading(true);
       setError(null);
-  
+
       await unenrollStudentFromCourse(studentID, course.CourseID);
-  
+
       setEnrolledStudents((prevEnrollments) =>
-        prevEnrollments.filter((enrollment) => enrollment.StudentID !== studentID)
+        prevEnrollments.filter(
+          (enrollment) => enrollment.StudentID !== studentID
+        )
       );
-  
+
       alert("Student unenrolled successfully!");
     } catch (error) {
       setError(error.message);
@@ -161,7 +163,6 @@ function EnrollmentForm() {
       setIsLoading(false);
     }
   };
-  
 
   const unenrollStudentFromCourse = async (studentID, courseID) => {
     const { error } = await supabase
@@ -182,91 +183,91 @@ function EnrollmentForm() {
         prevPath={"/courses/course-list"}
         goBack={true}
       />
-      <EditContainer>
-        <div className={styles.enrollmentForm}>
-          <form>
-            <div className={formStyles.formRow}>
-              <div className={formStyles.formItem}>
-                <label htmlFor="courseName" className={formStyles.formLabel}>
-                  Course Name
-                </label>
-                <input
-                  type="text"
-                  id="courseName"
-                  name="CourseName"
-                  value={course?.CourseName || ""}
-                  readOnly
-                  className={formStyles.formInput}
-                />
+      <div className={styles.mainColumn}>
+        <EditContainer title="Select Students">
+          <div className={styles.enrollmentForm}>
+            <form>
+              <div className={formStyles.formRow}>
+                <div className={formStyles.formItem}>
+                  <label htmlFor="courseName" className={formStyles.formLabel}>
+                    Course Name
+                  </label>
+                  <input
+                    type="text"
+                    id="courseName"
+                    name="CourseName"
+                    value={course?.CourseName || ""}
+                    disabled={true}
+                    className={formStyles.formInput}
+                  />
+                </div>
+
+                <div className={formStyles.formItem}>
+                  <label htmlFor="Students" className={formStyles.formLabel}>
+                    Select Students
+                  </label>
+                  <Select
+                    options={students}
+                    value={selectedStudents}
+                    onChange={handleStudentChange}
+                    isMulti
+                    placeholder="Select students"
+                  />
+                </div>
               </div>
 
-              <div className={formStyles.formItem}>
-                <label htmlFor="Students" className={formStyles.formLabel}>
-                  Select Students
-                </label>
-                <Select
-                  options={students}
-                  value={selectedStudents}
-                  onChange={handleStudentChange}
-                  isMulti
-                  placeholder="Select students"
-                  className={formStyles.formInput}
-                />
-              </div>
-            </div>
-
-            {/* Display Enrolled Students */}
-            <div className={formStyles.formRow}>
-              <div className={formStyles.formItem}>
-                <label className={formStyles.formLabel}>
-                  Enrolled Students
-                </label>
-                {enrolledStudents.length > 0 ? (
-                  <table className={formStyles.courseTable}>
-                    <thead>
-                      <tr>
-                        <th>Student</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {enrolledStudents.map((enrollment) => (
-                        <tr key={enrollment.StudentID}>
-                          <td>{enrollment.studentName}</td>
-                          <td>
-                            <Button
-                              onClickBtn={() =>
-                                handleUnenroll(enrollment.StudentID)
-                              }
-                              size="small"
-                            >
-                              Unenroll
-                            </Button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                ) : (
-                  <p>No students enrolled yet.</p>
-                )}
-              </div>
-            </div>
-
-            <div className={styles.formActions}>
-              <Button onClickBtn={handleSave} className={styles.saveButton}>
-                Save
-              </Button>
-              <Button
+              <div className={formStyles.bottomButtons}>
+                <Button onClickBtn={handleSave} className={styles.saveButton}>
+                  Enroll
+                </Button>
+                {/* <Button
                 onClickBtn={() => navigate("/courses/course-list")}
                 className={styles.backButton}
               >
                 Back to List
-              </Button>
+              </Button> */}
+              </div>
+            </form>
+          </div>
+        </EditContainer>
+        <EditContainer title="Enrolled Students">
+          {" "}
+          {/* Display Enrolled Students */}
+          <div className={formStyles.formRow}>
+            <div className={formStyles.formItem}>
+              {enrolledStudents.length > 0 ? (
+                <table className={formStyles.courseTable}>
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {enrolledStudents.map((enrollment) => (
+                      <tr key={enrollment.StudentID}>
+                        <td>{enrollment.studentName}</td>
+                        <td>
+                          <Button
+                            onClickBtn={() =>
+                              handleUnenroll(enrollment.StudentID)
+                            }
+                            size="small"
+                          >
+                            Unenroll
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>No students enrolled yet.</p>
+              )}
             </div>
-          </form>
-        </div>
-      </EditContainer>
+          </div>
+        </EditContainer>
+      </div>
     </>
   );
 }

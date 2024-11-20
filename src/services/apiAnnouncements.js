@@ -153,3 +153,31 @@ export async function getUnreadAnnouncementsCount(userNo) {
     return 0;
   }
 }
+
+export const deleteAnnouncements = async (announcementIds) => {
+  const { error } = await supabase
+    .from("Announcements")
+    .delete()
+    .in("Id", announcementIds);
+
+  if (error) {
+    console.error("Failed to delete announcements:", error);
+    throw new Error("Failed to delete announcements");
+  }
+
+  return { message: "Announcements deleted successfully" };
+};
+
+export async function deleteAnnouncement(announcementId) {
+  const { error } = await supabase
+    .from("Announcements")
+    .delete()
+    .eq("Id", announcementId);
+
+  if (error) {
+    console.error("Error deleting announcement:", error);
+    throw new Error("Failed to delete announcement");
+  }
+
+  return { message: "Announcement deleted successfully" };
+}

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Loader from "../../ui/Loader";
 import { useNavigate } from "react-router-dom";
 import useCheckbox from "../../hooks/useCheckbox";
+import Button from "../../components/Button/Button";
 
 function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
   const {
@@ -69,20 +70,26 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
               <td>{student.Active ? "Yes" : "No"}</td>
               <td>{student.Programs.ProgramName}</td>
               <td>
-                <Link
-                  to={`/students/${student.Users.UserNo}`}
-                  //onClick={() => handleViewClick(student.Users.UserNo)}
-                  className={generalStyles.link}
-                >
-                  View/Edit
-                </Link>
-                <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                <Link
-                  to={`/students/${student.Users.UserNo}/enroll`}
-                  className={generalStyles.link}
-                >
-                  Enroll
-                </Link>
+                <div className={styles.recordButtons}>
+                  <Button
+                    onClickBtn={() =>
+                      navigate(`/students/${student.Users.UserNo}`)
+                    }
+                    size="small"
+                    color="rose"
+                  >
+                    View/Edit
+                  </Button>
+                  <Button
+                    onClickBtn={() =>
+                      navigate(`/students/${student.Users.UserNo}/enroll`)
+                    }
+                    size="small"
+                    color="green"
+                  >
+                    Enroll
+                  </Button>
+                </div>
               </td>
             </tr>
           ))

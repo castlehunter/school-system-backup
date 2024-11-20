@@ -9,13 +9,14 @@ function EditContainer({
   onClickEdit,
   onClickSave,
   onClickCancel,
+  onClickDelete,
 }) {
   return (
     <div className={generalStyles.container}>
       <div className={generalStyles.containerHeader}>
         {title && <div className={generalStyles.containerHeading}>{title}</div>}
         {editButtonText && (
-          <div>
+          <div className={generalStyles.editContainerButtons}>
             {isEdit ? (
               <>
                 <Button onClickBtn={onClickSave} size="small">
@@ -30,6 +31,11 @@ function EditContainer({
             ) : (
               <Button onClickBtn={onClickEdit} size="small">
                 {editButtonText}
+              </Button>
+            )}
+            {onClickDelete && (
+              <Button onClickBtn={onClickDelete} color="blue">
+                Delete
               </Button>
             )}
           </div>

@@ -1,8 +1,9 @@
 import React from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useCheckbox from "../../hooks/useCheckbox";
+import Button from "../../components/Button/Button";
 
 function CourseTable({ data, rowsPerPage, currPage }) {
   const {
@@ -17,6 +18,7 @@ function CourseTable({ data, rowsPerPage, currPage }) {
     currPage * rowsPerPage
   );
 
+  const navigate = useNavigate();
   return (
     <table className={styles.table}>
       <thead>
@@ -60,20 +62,26 @@ function CourseTable({ data, rowsPerPage, currPage }) {
             <td>{course.Time}</td>
             <td>{course.Description}</td>
             <td>
-              <Link
-                to={`/courses/${course.CourseNo}`}
-                className={generalStyles.link}
-              >
-                View/Edit
-              </Link>
+              <div className={styles.recordButtons}>
+                <Button
+                  onClickBtn={() => navigate(`/courses/${course.CourseNo}`)}
+                  className={generalStyles.link}
+                  size="small"
+                  color="rose"
+                >
+                  View/Edit
+                </Button>
 
-              <Link
-                to={`/courses/newEnrollment/${course.CourseNo}`}
-                className={generalStyles.link}
-                style={{ marginLeft: "10px" }}
-              >
-                Enroll
-              </Link>
+                <Button
+                  onClickBtn={() =>
+                    navigate(`/courses/newEnrollment/${course.CourseNo}`)
+                  }
+                  size="small"
+                  color="green"
+                >
+                  Add Students
+                </Button>
+              </div>
             </td>
           </tr>
         ))}

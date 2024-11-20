@@ -179,9 +179,9 @@ function NewCourseForm({ type }) {
         </div>
 
         <div className={styles.buttons}>
-          <Button type="submit">Submit</Button>
+          <Button size="large">Submit</Button>
           <Button
-            type="button"
+            size="large"
             onClickBtn={() => {
               console.log("Cancel button clicked");
               navigate("/courses/course-list");

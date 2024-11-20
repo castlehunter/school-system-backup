@@ -1,8 +1,9 @@
 import React from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useCheckbox from "../../hooks/useCheckbox";
+import Button from "../../components/Button/Button";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -22,6 +23,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
     currPage * rowsPerPage
   );
 
+  const navigate = useNavigate();
   return (
     <table className={styles.table}>
       <thead>
@@ -66,19 +68,26 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
             <td>{Teacher.Users.PhoneNumber}</td>
             <td>{Teacher.Users.HomeAddress}</td>
             <td>
-              <Link
-                to={`/teachers/${Teacher.Users.UserNo}`}
-                className={generalStyles.link}
-              >
-                View/Edit
-              </Link>
-              <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-              <Link
-                to={`/teachers/${Teacher.Users.UserNo}/add-course`}
-                className={generalStyles.link}
-              >
-                Add Course
-              </Link>
+              <div className={styles.recordButtons}>
+                <Button
+                  onClickBtn={() =>
+                    navigate(`/teachers/${Teacher.Users.UserNo}`)
+                  }
+                  size="small"
+                  color="rose"
+                >
+                  View/Edit
+                </Button>
+                <Button
+                  onClickBtn={() =>
+                    navigate(`/teachers/${Teacher.Users.UserNo}/add-course`)
+                  }
+                  size="small"
+                  color="green"
+                >
+                  Add Course
+                </Button>
+              </div>
             </td>
           </tr>
         ))}

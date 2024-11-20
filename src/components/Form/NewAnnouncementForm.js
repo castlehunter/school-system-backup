@@ -88,9 +88,8 @@ function NewAnnouncementForm({ type }) {
         </div>
 
         <div className={styles.buttons}>
-          <Button type="submit">Submit</Button>
+          <Button>Submit</Button>
           <Button
-            type="button"
             onClickBtn={() => {
               console.log("Cancel button clicked");
               navigate("/dashboard/announcements");

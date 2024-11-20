@@ -17,6 +17,7 @@ function TableContainer({
   onRowsPerPageChange,
   onClickAddBtn,
   onClickEditBtn,
+  onClickBulkDeleteBtn,
   itemsNums = [5, 10, 15, 20, 25, 30],
   sortOptions,
   onClickSort,
@@ -34,15 +35,31 @@ function TableContainer({
       )}
       <div className={styles.tableFeatures}>
         <div className={styles.tableFeaturesLeftBox}>
-          {onClickAddBtn && <Button onClickBtn={onClickAddBtn}>Add New</Button>}
+          {onClickAddBtn && (
+            <Button onClickBtn={onClickAddBtn} size="large">
+              Add New
+            </Button>
+          )}
           {onClickEditBtn && (
-            <Button onClickEditBtn={onClickEditBtn}>Bulk Edit</Button>
+            <Button onClickEditBtn={onClickEditBtn} size="large">
+              Bulk Edit
+            </Button>
+          )}
+          {onClickBulkDeleteBtn && (
+            <Button
+              size="large"
+              color="blue"
+              onClickEditBtn={onClickBulkDeleteBtn}
+            >
+              Bulk Delete
+            </Button>
           )}
           {sortOptions && (
             <div>
               <SelectButton
                 options={sortOptions}
                 onSelect={onClickSort}
+                size="large"
                 label="Sort By"
               />
             </div>
@@ -51,6 +68,7 @@ function TableContainer({
             <div>
               <SelectButton
                 options={filterOptions}
+                size="large"
                 onSelect={onClickFilter}
                 label="Filter By"
               />

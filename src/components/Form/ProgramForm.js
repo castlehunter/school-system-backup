@@ -81,6 +81,7 @@ const ProgramForm = ({ data, mode, isLoading }) => {
   }
   return (
     <EditContainer
+      title={data.ProgramName}
       isEdit={isEdit}
       editButtonText={mode === "view" ? "Edit Category" : false}
       onClickEdit={handleClickEdit}

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
   getAnnouncementById,
   updateAnnouncement,
+  deleteAnnouncement,
 } from "../../services/apiAnnouncements";
 import Loader from "../../ui/Loader";
 import EditContainer from "../../ui/Layout/EditContainer";
@@ -89,18 +90,32 @@ function AnnouncementDetail() {
     }
   }
 
+  async function handleDelete(announcementId) {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this announcement?"
+    );
+    if (confirmDelete) {
+      try {
+        await deleteAnnouncement(announcementId);
+        alert("Announcement deleted successfully.");
+        navigate("/dashboard/announcements");
+      } catch (error) {
+        console.error("Failed to delete announcement:", error);
+        alert("Failed to delete the announcement.");
+      }
+    }
+  }
+
   return (
     <div>
-      <MainTitle
-        goBack={true}
-        title={`Announcement at ${new Date(data?.CreatedAt).toLocaleString()}`}
-      />
+      <MainTitle goBack={true} title="Announcement Detail" />
       <EditContainer
         title={data?.Title}
         editButtonText="Edit"
         onClickEdit={handleEdit}
         onClickCancel={handleCancel}
         onClickSave={handleUpdate}
+        onClickDelete={() => handleDelete(data.Id)}
         isEdit={isEdit}
       >
         {isLoading ? (

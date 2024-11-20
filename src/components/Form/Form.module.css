@@ -10,6 +10,12 @@
   position: relative;
 }
 
+.profileFormLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .contact {
   word-wrap: break-word;
   white-space: pre-wrap;

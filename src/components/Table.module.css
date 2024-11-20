@@ -64,18 +64,40 @@ tr th:last-child {
   background-color: rgb(255, 248, 155);
 }
 
-.unreadBadge {
+/* .unreadBadge {
+  background: linear-gradient(145deg, #d9534f, #c12e2a);
   color: white;
-  background-color: rgb(197, 73, 73);
-  padding: 0.2em 0.5em;
-  border-radius: 4px;
+  padding: 0.3em 0.6em;
+  border-radius: 50px;
+  font-weight: 600;
 }
 
 .readBadge {
+  background: linear-gradient(145deg, #5cb85c, #4cae4c);
   color: white;
-  background-color: rgb(49, 124, 49);
-  padding: 0.2em 0.5em;
-  border-radius: 4px;
+  padding: 0.3em 0.6em;
+  border-radius: 50px;
+  font-weight: 600;
+} */
+.unreadBadge {
+  background: linear-gradient(145deg, #ca615d, #ce4944);
+  color: white;
+  padding: 0.3em 0.6em;
+  border-radius: 50px;
+  font-size: 1.3rem;
+}
+
+.readBadge {
+  font-size: 1.3rem;
+  background: linear-gradient(145deg, #5cb85c, #4cae4c);
+  color: white;
+  padding: 0.3em 0.6em;
+  border-radius: 50px;
+}
+
+.recordButtons {
+  display: flex;
+  gap: 1.2rem;
 }
 
 @media (max-width: 991px) {

@@ -1,12 +1,9 @@
 .btn {
   color: #ffffff;
   border: none;
-  padding: 0.5rem 1.2rem;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  background-color: #e53371;
-  min-width: 10rem;
 }
 
 .btn:hover {
@@ -18,38 +15,53 @@
 }
 
 .large {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  min-width: 10rem;
 }
 
 .small {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
+  padding: 0.3rem 1rem;
+  min-width: 8rem;
 }
 
-/* .rose {
+.rose {
   background-color: #e53371;
 }
 
 .rose:hover {
-  background-color: #dd2466;
+  background-color: #cf1053;
 }
 
 .rose:active {
   background-color: #e63673;
 }
 
-.outline {
-  background-color: transparent;
-  border: 1px solid #e53371;
-  color: #e53371;
+.blue {
+  background-color: #6ea3c4;
 }
 
-.outline:hover {
-  background-color: #fce4e8;
+.blue:hover {
+  background-color: #397ba5;
 }
 
-.outline:active {
-  background-color: #f8cdd2;
-} */
+.blue:active {
+  background-color: #3b779c;
+}
+
+.green {
+  background-color: #2a7430;
+}
+
+.green:hover {
+  background-color: #195a11;
+}
+
+.green:active {
+  background-color: #14af47;
+}
 
 /* Select Button */
 .dropdownContainer {
