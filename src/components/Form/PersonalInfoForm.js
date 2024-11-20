@@ -135,14 +135,17 @@ function PersonalInfoForm({ userNo, hideUpload }) {
         <div className={formStyles.sectionLayout}>
           <div className={formStyles.avatar}>
             <img src={personalInfoData.AvatarURL || avatar} alt="user avatar" />
-            <div className={formStyles.upload}>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className={formStyles.uploadInput}
-              />
-            </div>
+            {!hideUpload && (
+              <div className={formStyles.upload}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className={formStyles.uploadInput}
+                />
+                <Button onClickBtn={handleImageUpload}>Upload Picture</Button>
+              </div>
+            )}
             <Button onClickBtn={handleImageUpload}>Upload Picture</Button>
           </div>
           <form>
