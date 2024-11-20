@@ -1,14 +1,17 @@
+import React, { useState, useEffect } from "react";
 import EditContainer from "../../ui/Layout/EditContainer";
 import formStyles from "./Form.module.css";
 import avatar from "../../assets/User-avatar-default.jpg";
-import { useState, useEffect } from "react";
 import Button from "../Button/Button";
-import { getProfileInfoByNo } from "../../services/apiUser";
-import { UpdatePersonalInfo } from "../../services/apiUser";
+import {
+  getProfileInfoByNo,
+  UpdatePersonalInfo,
+  UploadProfileImage,
+  GetImageURL,
+} from "../../services/apiUser";
 import Loader from "../../ui/Loader";
-import { UploadProfileImage, GetImageURL } from "../../services/apiUser";
 
-function PersonalInfoForm({ userNo }) {
+function PersonalInfoForm({ userNo, hideUpload }) {
   const [personalInfoData, setPersonalInfoData] = useState({
     RoleName: "",
     FirstName: "",
@@ -28,7 +31,6 @@ function PersonalInfoForm({ userNo }) {
       try {
         setIsLoading(true);
         const profileData = await getProfileInfoByNo(userNo);
-
         setPersonalInfoData({
           RoleName: profileData.Roles.RoleName || "",
           FirstName: profileData.FirstName || "",
@@ -51,11 +53,10 @@ function PersonalInfoForm({ userNo }) {
 
   function handleChange(e) {
     const { name, value } = e.target;
-    const updatedData = {
-      ...personalInfoData,
+    setPersonalInfoData((prevData) => ({
+      ...prevData,
       [name]: value,
-    };
-    setPersonalInfoData(updatedData);
+    }));
   }
 
   function handleClickEdit(e) {
@@ -73,11 +74,8 @@ function PersonalInfoForm({ userNo }) {
       setIsEdit(false);
       if (response) {
         alert("User information updated successfully!");
-
-        console.log("User updated successfully!", response);
       } else {
         alert("Failed to update user information.");
-        console.error("Failed to update user information.");
       }
     } catch (error) {
       console.error("Error saving user data:", error);
@@ -94,17 +92,15 @@ function PersonalInfoForm({ userNo }) {
       const avatarUrl = await UploadProfileImage(imageFile);
       if (avatarUrl) {
         const url = await GetImageURL(imageFile);
-        console.log(url);
-        if (!url) {
-          setPersonalInfoData({
-            ...personalInfoData,
+        if (url) {
+          setPersonalInfoData((prevData) => ({
+            ...prevData,
             AvatarURL: url,
-          });
+          }));
+          alert("Image uploaded successfully!");
         } else {
           alert("Couldn't fetch the URL");
         }
-
-        alert("Image uploaded successfully!");
       } else {
         alert("Image upload failed.");
       }
@@ -147,32 +143,13 @@ function PersonalInfoForm({ userNo }) {
                 <input
                   type="text"
                   id="role"
-                  name="role"
+                  name="RoleName"
                   className={formStyles.formInput}
                   readOnly
                   disabled
                   value={personalInfoData.RoleName}
                 />
               </div>
-            </div>
-            {/* <div className={formStyles.formRow}>
-            {" "}
-            <div className={formStyles.formItem}>
-              <label htmlFor="userNo" className={formStyles.formLabel}>
-                User No.
-              </label>
-              <input
-                type="text"
-                id="userNo"
-                name="UserNo"
-                className={formStyles.formInput}
-                readOnly
-                disabled
-                value={userNo}
-              />
-            </div>
-          </div> */}
-            <div className={formStyles.formRow}>
               <div className={formStyles.formItem}>
                 <label htmlFor="firstName" className={formStyles.formLabel}>
                   First Name
