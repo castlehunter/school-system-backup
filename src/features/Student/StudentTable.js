@@ -6,6 +6,11 @@ import Loader from "../../ui/Loader";
 import { useNavigate } from "react-router-dom";
 import useCheckbox from "../../hooks/useCheckbox";
 
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString();
+}
+
 function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
   const {
     selectedCheckboxes,
@@ -39,11 +44,13 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
             />
           </th>
           <th>S/N</th>
-          <th>User ID</th>
-          <th>Student Name</th>
-          <th>Start Date</th>
-          <th>Active</th>
-          <th>Program Name</th>
+          <th>User No.</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Date of Birth</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Address</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -64,10 +71,12 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
 
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{student.Users.UserNo}</td>
-              <td>{`${student.Users.FirstName} ${student.Users.LastName}`}</td>
-              <td>{student.StartDate}</td>
-              <td>{student.Active ? "Yes" : "No"}</td>
-              <td>{student.Programs.ProgramName}</td>
+              <td>{student.Users.FirstName}</td>
+              <td>{student.Users.LastName}</td>
+              <td>{formatDate(student.Users.DateOfBirth)}</td>
+              <td>{student.Users.Email}</td>
+              <td>{student.Users.PhoneNumber}</td>
+              <td>{student.Users.HomeAddress}</td>
               <td>
                 <Link
                   to={`/students/${student.Users.UserNo}`}

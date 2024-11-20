@@ -154,16 +154,27 @@ export async function getTeacherCourses(userNo) {
 
 export async function addCourseToTeacher(courseData) {
   const { CourseID, TeacherID } = courseData;
-  const { data, error } = await supabase
-    .from("Courses")
-    .update({ TeacherID })
-    .eq("CourseID", CourseID);
 
-  if (error) {
-    console.error("Error adding course to teacher:", error);
-    throw new Error("Failed to add course to teacher");
+  if (!CourseID || !TeacherID) {
+    throw new Error('CourseID and TeacherID are required');
   }
-  return data;
+
+  try {
+    const { data, error } = await supabase
+      .from("Courses")
+      .update({ TeacherID })
+      .eq("CourseID", CourseID);
+
+    if (error) {
+      console.error('Error adding teacher to course:', error);
+      throw new Error('Failed to add teacher to course');
+    }
+
+    return { success: true, message: 'Teacher added to course successfully', data };
+  } catch (error) {
+    console.error('Error adding teacher to course:', error);
+    throw new Error('Failed to add teacher to course');
+  }
 }
 
 export async function sortTeachersBy(fieldName = "UserNo", ascending = true) {
