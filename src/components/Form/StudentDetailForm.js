@@ -45,14 +45,14 @@
 import React, { useState, useEffect } from "react";
 import formStyles from "./Form.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
-import Button from "../Button/Button";
 import {
   updateStudent,
   getStudentEnrollments,
 } from "../../services/apiStudent";
 import avatar from "../../assets/user-avatar-account.jpg";
-
 import { useParams } from "react-router-dom";
+import Button from "../Button/Button";
+import { useNavigate } from "react-router-dom"; 
 
 function StudentDetailForm({ studentData, data, showEditButton }) {
   const [inputData, setInputData] = useState({
@@ -65,9 +65,9 @@ function StudentDetailForm({ studentData, data, showEditButton }) {
   });
   const [isEdit, setIsEdit] = useState(false);
   const [error, setError] = useState(null);
-
   const { userNo } = useParams();
   const [enrollments, setEnrollments] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (studentData && studentData.Users) {
@@ -130,6 +130,10 @@ function StudentDetailForm({ studentData, data, showEditButton }) {
       console.error("Error saving user data:", error);
       alert("An error occurred while saving the user data.");
     }
+  }
+
+  function handleAddCourse() {
+    navigate(`/students/${userNo}/enroll`); // Navigate to the enroll course form
   }
 
   return (
@@ -259,7 +263,11 @@ function StudentDetailForm({ studentData, data, showEditButton }) {
         </div>
       </EditContainer>
       <br />
-      <EditContainer title="Enrolled Courses">
+      <EditContainer 
+        title="Enrolled Courses"
+        editButtonText="Add Course"
+        onClickEdit={handleAddCourse}
+        >
         <div className={formStyles.formContainer}>
           <table className={formStyles.courseTable}>
             <thead>

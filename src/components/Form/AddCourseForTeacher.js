@@ -29,12 +29,17 @@ function AddCourseForTeacher() {
 
   const handleAddCourse = async (course) => {
     try {
-      await addCourseToTeacher({
+      const response = await addCourseToTeacher({
         CourseID: course.CourseID,
         TeacherID: userNo,
       });
-      alert("Course added successfully!");
-      navigate(`/teachers/${userNo}`);
+
+      if (response.success) {
+        alert("Course added successfully!");
+        navigate(`/teachers/${userNo}`);
+      } else {
+        alert("Failed to add course.");
+      }
     } catch (error) {
       console.error("Error adding course:", error);
       alert("An error occurred while adding the course.");

@@ -161,9 +161,8 @@ export async function addCourseToTeacher(courseData) {
 
   try {
     const { data, error } = await supabase
-      .from("Courses")
-      .update({ TeacherID })
-      .eq("CourseID", CourseID);
+      .from("TeacherCourses")
+      .insert({ CourseID, TeacherID });
 
     if (error) {
       console.error('Error adding teacher to course:', error);
