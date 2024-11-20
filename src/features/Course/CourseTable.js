@@ -79,7 +79,7 @@ function CourseTable({ data, rowsPerPage, currPage }) {
                   size="small"
                   color="green"
                 >
-                  Add Students
+                  Enroll
                 </Button>
               </div>
             </td>
