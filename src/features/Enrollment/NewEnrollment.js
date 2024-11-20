@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   getEnrollmentDetails,
   insertEnrollments,
-  getEnrollments, // Import your new function
+  getEnrollments, 
 } from "../../services/apiEnrollment";
 import { getCourseDetail } from "../../services/apiCourse.js";
 import Button from "../../components/Button/Button";
@@ -117,26 +117,38 @@ function EnrollmentForm() {
 
   const handleSave = async (event) => {
     event.preventDefault();
+  
     if (!selectedStudents.length) {
       alert("Please select at least one student to enroll.");
       return;
     }
+  
+    // Filter out students who are already enrolled
+    const newEnrollmentData = selectedStudents.filter(
+      (student) =>
+        !enrolledStudents.some((enrollment) => enrollment.StudentID === student.value)
+    ).map((student) => ({
+      CourseID: course.CourseID,
+      EnrollmentDate: enrollmentDate,
+      StudentID: student.value,
+    }));
+  
+    if (newEnrollmentData.length === 0) {
+      alert("All selected students are already enrolled in this course.");
+      return;
+    }
+  
     try {
-      const newEnrollmentData = selectedStudents.map((student) => ({
-        CourseID: course.CourseID,
-        EnrollmentDate: enrollmentDate,
-        StudentID: student.value,
-      }));
       console.log("Enrollment data is:", newEnrollmentData);
       await insertEnrollments(newEnrollmentData);
+  
       alert("Enrollment created successfully!");
       window.location.reload();
-
-      // navigate("/courses/course-list");
     } catch (error) {
       alert("Failed to create enrollment: " + error.message);
     }
   };
+  
 
   const handleStudentChange = (selectedOptions) => {
     setSelectedStudents(selectedOptions || []);
@@ -232,7 +244,6 @@ function EnrollmentForm() {
         </EditContainer>
         <EditContainer title="Enrolled Students">
           {" "}
-          {/* Display Enrolled Students */}
           <div className={formStyles.formRow}>
             <div className={formStyles.formItem}>
               {enrolledStudents.length > 0 ? (
