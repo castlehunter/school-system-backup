@@ -146,7 +146,6 @@ function PersonalInfoForm({ userNo, hideUpload }) {
                 <Button onClickBtn={handleImageUpload}>Upload Picture</Button>
               </div>
             )}
-            <Button onClickBtn={handleImageUpload}>Upload Picture</Button>
           </div>
           <form>
             <div className={formStyles.formRow}>
