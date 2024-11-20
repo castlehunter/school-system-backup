@@ -22,7 +22,7 @@ function Announcements() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userNo = localStorage.getItem("UserNo");
+      const userNo = localStorage.getItem("loginUserNo");
       const data = await getAnnouncements(userNo);
       setAnnouncementData(data);
     };
