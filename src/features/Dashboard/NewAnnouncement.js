@@ -4,7 +4,7 @@ import NewAnnouncementForm from "../../components/Form/NewAnnouncementForm";
 function NewAnnouncement() {
   return (
     <div>
-      <MainTitle title="New Announcement" />
+      <MainTitle title="New Announcement" goBack={true} />
       <NewAnnouncementForm />
     </div>
   );

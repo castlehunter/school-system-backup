@@ -70,7 +70,7 @@ function ContactForm({ role }) {
               className={formStyles.formInput}
               style={{ height: "auto" }}
             />
-            <div className={generalStyles.bottomButtons}>
+            <div className={formStyles.bottomButtons}>
               <Button onClickBtn={handleClickSave}>Save</Button>
               <Button onClickBtn={handleClickCancel}>Cancel</Button>
             </div>

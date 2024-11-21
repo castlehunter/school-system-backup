@@ -17,8 +17,12 @@ import ModalContainer from "../../ui/Layout/ModalContainer";
 import { addUserNoToReadBy } from "../../services/apiAnnouncements";
 import { getUnreadAnnouncementsCount } from "../../services/apiAnnouncements";
 import { useUnreadCount } from "../../contexts/UnreadContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import generalStyles from "../../generalStyles.module.css";
+import Calendar from "@fullcalendar/react"; // Import the FullCalendar component
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
+import timeGridWeekPlugin from "@fullcalendar/timegrid";
 
 function Overview() {
   const [loginRole, setLoginRole] = useState("");
@@ -33,6 +37,7 @@ function Overview() {
   const [announcements, setAnnouncements] = useState([]);
   const [openedAnnouncement, setOpenedAnnouncement] = useState(null);
   const { unreadCount, setUnreadCount } = useUnreadCount();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
@@ -256,9 +261,11 @@ function Overview() {
   return (
     <>
       <MainTitle title="Overview" />
+      {/* ============== Stat Card ================ */}
       <div className={styles.statcards}>{renderStatCards()}</div>
       <div className={styles.overviewLayout}>
         <div className={styles.mainColumn}>
+          {/* ============= Announcements ============ */}
           <EditContainer
             title={
               <>
@@ -299,6 +306,17 @@ function Overview() {
 
         <div className={styles.secondaryColumn}>
           <ContactForm role={loginRole} />
+          <EditContainer
+            title="Calendar"
+            editButtonText="Full Calendar"
+            onClickEdit={() => navigate("/my-calendar")}
+          >
+            {/* Small calendar */}
+            <Calendar
+              plugins={[dayGridPlugin, interactionPlugin, timeGridWeekPlugin]} // Initialize plugins
+              initialView="dayGridMonth" // Display month view by default
+            />
+          </EditContainer>
         </div>
       </div>
     </>

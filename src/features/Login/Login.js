@@ -49,10 +49,9 @@ function Login() {
 
     setUserNo(data.UserNo);
 
-    // 更新 UnreadContext
     try {
       const unreadCount = await getUnreadAnnouncementsCount(data.UserNo);
-      setUnreadCount(unreadCount); // 更新未读计数
+      setUnreadCount(unreadCount);
     } catch (err) {
       console.error("Failed to fetch unread announcements:", err);
     }
@@ -108,7 +107,7 @@ function Login() {
           </div>
 
           <div className={styles.loginFormItem}>
-            <Button>Login</Button>
+            <Button size="large">Login</Button>
           </div>
         </form>
       </section>
