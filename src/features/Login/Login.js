@@ -7,19 +7,16 @@ import { useNavigate } from "react-router-dom";
 import supabase from "../../config/supabaseClient";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo-removebg-preview.png";
-
+import { useUnreadCount } from "../../contexts/UnreadContext";
+import { getUnreadAnnouncementsCount } from "../../services/apiAnnouncements";
 import { useUser } from "../../contexts/UserContext";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loginAs, setLoginAs] = useState("");
   const navigate = useNavigate();
-
-  // Share login user data
   const { setUserNo } = useUser();
-
-  const [loginRole, setLoginRole] = useState("");
+  const { setUnreadCount } = useUnreadCount();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -44,13 +41,22 @@ function Login() {
       alert("Invalid Username or Password");
       return;
     }
+
     console.log("Login page data " + JSON.stringify(data));
     const userRole = data.Roles.RoleName;
     localStorage.setItem("UserID", data.UserID);
-
     localStorage.setItem("role", userRole);
 
     setUserNo(data.UserNo);
+
+    // 更新 UnreadContext
+    try {
+      const unreadCount = await getUnreadAnnouncementsCount(data.UserNo);
+      setUnreadCount(unreadCount); // 更新未读计数
+    } catch (err) {
+      console.error("Failed to fetch unread announcements:", err);
+    }
+
     navigate("/dashboard");
   };
 
@@ -65,23 +71,6 @@ function Login() {
         </div>
 
         <form className={styles.loginForm} onSubmit={handleLogin}>
-          {/* <div className={styles.loginFormItem}>
-            <label className={styles.loginFormLabel} htmlFor="loginAs">
-              Login As
-            </label>
-            <select
-              className={styles.loginFormInput}
-              value={loginAs}
-              onChange={(e) => setLoginAs(e.target.value)}
-              required
-            >
-              <option value="Admin">Admin</option>
-              <option value="Advisor">Advisor</option>
-              <option value="Teacher">Teacher</option>
-              <option value="Student">Student</option>
-            </select>
-          </div> */}
-
           <div className={styles.loginFormItem}>
             <label className={styles.loginFormLabel} htmlFor="username">
               Username:

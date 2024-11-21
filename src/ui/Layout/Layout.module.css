@@ -42,7 +42,6 @@ section {
   cursor: pointer;
   width: 5rem;
   height: 5rem;
-  margin-right: 1rem;
 }
 .announcement-icon {
   width: 2.5rem;
@@ -53,7 +52,7 @@ section {
 .announcement-count {
   position: absolute;
   top: 0.1rem;
-  right: -0.3rem;
+  right: 1rem;
   color: #fff;
   font-size: 1.2rem;
   line-height: 1rem;
