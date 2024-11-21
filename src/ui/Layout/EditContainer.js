@@ -10,9 +10,10 @@ function EditContainer({
   onClickSave,
   onClickCancel,
   onClickDelete,
+  bgColor = "white",
 }) {
   return (
-    <div className={generalStyles.container}>
+    <div className={`${generalStyles.container} ${generalStyles[bgColor]}`}>
       <div className={generalStyles.containerHeader}>
         {title && <div className={generalStyles.containerHeading}>{title}</div>}
         {editButtonText && (

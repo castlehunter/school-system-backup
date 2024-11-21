@@ -89,11 +89,43 @@ link background color(optional): #dbdbdb
 ==============================================
                   BUTTONS
 ==============================================
-  border-radius: 0.5rem;
-  button font-size: 1.4rem(general style)
-  regular button padding: 0.8rem 2rem;
-  small button padding: 0.5rem 1rem;
+button border-radius: 0.5rem;
 
+.rose {
+  background-color: #e53371;
+}
+
+.rose:hover {
+  background-color: #cf1053;
+}
+
+.rose:active {
+  background-color: #e63673;
+}
+
+.blue {
+  background-color: #6ea3c4;
+}
+
+.blue:hover {
+  background-color: #397ba5;
+}
+
+.blue:active {
+  background-color: #3b779c;
+}
+
+.green {
+  background-color: #2a7430;
+}
+
+.green:hover {
+  background-color: #195a11;
+}
+
+.green:active {
+  background-color: #14af47;
+}
 
   ===========================================
   Stat card 

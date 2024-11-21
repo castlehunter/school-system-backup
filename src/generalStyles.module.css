@@ -29,7 +29,7 @@
   /* position: relative; */
   justify-content: center;
   border-radius: 0.8rem;
-  background-color: #fff;
+
   padding: 2rem 3rem 3rem 3rem;
   /* border: 1px solid rgba(0, 0, 0, 0.1);
   border-right: 1px solid rgba(192, 192, 192, 0.5);
@@ -49,4 +49,13 @@
 .editContainerButtons {
   display: flex;
   gap: 2rem;
+}
+
+.white {
+  background-color: #fff;
+}
+
+.highlight {
+  background-color: #fdf3dd;
+  color: #444;
 }

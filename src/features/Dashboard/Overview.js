@@ -305,18 +305,14 @@ function Overview() {
         </div>
 
         <div className={styles.secondaryColumn}>
-          <ContactForm role={loginRole} />
-          <EditContainer
-            title="Calendar"
-            editButtonText="Full Calendar"
-            onClickEdit={() => navigate("/my-calendar")}
-          >
+          <EditContainer bgColor="highlight">
             {/* Small calendar */}
             <Calendar
               plugins={[dayGridPlugin, interactionPlugin, timeGridWeekPlugin]} // Initialize plugins
               initialView="dayGridMonth" // Display month view by default
             />
           </EditContainer>
+          <ContactForm role={loginRole} />
         </div>
       </div>
     </>
