@@ -38,13 +38,14 @@
 }
 
 .upload {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
 }
 
-.uploadInput {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-30%);
+.uploadChooseFile {
+  max-width: 70%;
 }
 
 .sectionLayout form {
@@ -220,4 +221,58 @@
   white-space: pre-wrap;
   font-family: inherit;
   font-size: inherit;
+}
+
+/* Add to your existing CSS file */
+
+/* Center the form with a maximum width */
+
+/* Style for form label */
+.formLabel {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 500;
+  text-align: left;
+}
+
+/* Style for inputs */
+.formInput,
+.formText {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Focus effect */
+.formInput:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* Button style */
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Error messages */
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
 }

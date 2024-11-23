@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "./Login.module.css";
-
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import supabase from "../../config/supabaseClient";

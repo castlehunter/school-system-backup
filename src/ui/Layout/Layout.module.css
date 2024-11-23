@@ -12,7 +12,7 @@ section {
 .header {
   display: flex;
   position: relative;
-  /* height: 5rem; */
+  height: 6rem;
   align-items: center;
   justify-content: space-between;
   background-color: #f9f9f9;
@@ -23,7 +23,6 @@ section {
 }
 
 .breadcrumb {
-  height: 5rem;
   display: flex;
   align-items: center;
 }
@@ -35,24 +34,21 @@ section {
 }
 
 .announcement {
-  display: flex;
-  flex: 1;
-  align-items: center;
   position: relative;
+  margin-right: 2rem;
   cursor: pointer;
-  width: 5rem;
-  height: 5rem;
 }
+
 .announcement-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  fill: #333;
 }
 
 .announcement-count {
   position: absolute;
-  top: 0.1rem;
-  right: 1rem;
+  top: -0.5rem;
+  right: -1.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #fff;
   font-size: 1.2rem;
   line-height: 1rem;
@@ -60,19 +56,15 @@ section {
   border-radius: 9999px;
   width: 1.8rem;
   height: 1.8rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .nameRole {
   display: flex;
   flex-direction: column;
-  margin-top: auto;
 }
 
 .name {
-  line-height: 1;
+  margin-bottom: -0.7rem;
   text-align: right;
   font-weight: 500;
 }
@@ -96,13 +88,14 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
+  height: 5rem;
+  width: 5rem;
 }
 
 .user-avatar img {
   border-radius: 9999px;
-  max-width: 100%;
+  width: 100%;
+  height: 100%;
   margin: 0;
   transition: box-shadow 0.3s ease;
   border: 0.4rem solid #e91f63;

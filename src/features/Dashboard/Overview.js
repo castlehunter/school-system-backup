@@ -306,10 +306,9 @@ function Overview() {
 
         <div className={styles.secondaryColumn}>
           <EditContainer bgColor="highlight">
-            {/* Small calendar */}
             <Calendar
-              plugins={[dayGridPlugin, interactionPlugin, timeGridWeekPlugin]} // Initialize plugins
-              initialView="dayGridMonth" // Display month view by default
+              plugins={[dayGridPlugin, interactionPlugin, timeGridWeekPlugin]}
+              initialView="dayGridMonth"
             />
           </EditContainer>
           <ContactForm role={loginRole} />

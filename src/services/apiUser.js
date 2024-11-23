@@ -320,7 +320,7 @@ export async function UpdatePersonalInfo(userNo, userInfo) {
         Email: userInfo.Email,
         DateOfBirth: userInfo.DateOfBirth,
         PhoneNumber: userInfo.PhoneNumber,
-        HomeAddress: userInfo.HomeAddress
+        HomeAddress: userInfo.HomeAddress,
       })
       .eq("UserNo", userNo)
       .select();
@@ -446,7 +446,6 @@ export async function uploadImageURL(userNo, url) {
     return null;
   }
 }
-  
 
 export async function sortUsersBy(fieldName = "UserNo", ascending = true) {
   try {
@@ -543,6 +542,25 @@ export async function deleteUser(userNo) {
     return true; // Successfully deleted the user
   } catch (error) {
     console.error("Unexpected error during user deletion:", error);
+    throw error;
+  }
+}
+export async function getAvatarUrlByUserNo(userNo) {
+  try {
+    const { data, error } = await supabase
+      .from("Users")
+      .select("AvatarURL")
+      .eq("UserNo", userNo)
+      .single();
+
+    if (error) {
+      console.error("Error fetching AvatarURL:", error);
+      throw new Error("Failed to fetch avatar URL");
+    }
+
+    return data?.AvatarURL || null;
+  } catch (error) {
+    console.error("Unexpected error in getAvatarUrlByUserNo:", error);
     throw error;
   }
 }

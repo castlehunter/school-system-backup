@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import generalStyles from "../../generalStyles.module.css";
 import formStyles from "../Form/Form.module.css";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { getSecurityInfoByUserName } from "../../services/apiUser";
+import EditContainer from "../../ui/Layout/EditContainer";
 
 function ForgotPassword() {
   const [username, setUsername] = useState("");
   const [securityQuestion, setSecurityQuestion] = useState("");
   const [securityAnswer, setSecurityAnswer] = useState("");
   const [answer, setAnswer] = useState("");
+  const [error, setError] = useState(""); // For handling errors
   const navigate = useNavigate();
 
   const handleGetSecurityQuestion = async () => {
@@ -18,19 +19,19 @@ function ForgotPassword() {
       if (userData) {
         setSecurityQuestion(userData.SecurityQuestion);
         setSecurityAnswer(userData.SecurityAnswer);
+        setError(""); // Clear previous errors
       } else {
-        alert("User not found");
+        setError("User not found"); // Error if no user is found
       }
     } catch (error) {
       console.error("Error fetching security question:", error);
-      alert("Error fetching security question");
+      setError("Error fetching security question");
     }
   };
 
   const handleValidateAnswer = () => {
-    console.log(answer);
     if (securityAnswer === "" || securityAnswer !== answer) {
-      alert("Security answer is incorrect");
+      setError("Security answer is incorrect");
       return;
     }
     // Navigate to reset password form with the username as state
@@ -38,7 +39,7 @@ function ForgotPassword() {
   };
 
   return (
-    <div className={formStyles.form}>
+    <EditContainer title="Forgot Password?">
       <div className={formStyles.formItem}>
         <label htmlFor="username" className={formStyles.formLabel}>
           Enter Username:
@@ -53,7 +54,9 @@ function ForgotPassword() {
         />
       </div>
 
-      <Button onClickBtn={handleGetSecurityQuestion}>Get Security Question</Button>
+      <Button onClickBtn={handleGetSecurityQuestion}>
+        Get Security Question
+      </Button>
 
       {securityQuestion && (
         <div className={formStyles.formItem}>
@@ -71,7 +74,10 @@ function ForgotPassword() {
           <Button onClickBtn={handleValidateAnswer}>Submit Answer</Button>
         </div>
       )}
-    </div>
+
+      {/* Display error message if any */}
+      {error && <div className={formStyles.error}>{error}</div>}
+    </EditContainer>
   );
 }
 

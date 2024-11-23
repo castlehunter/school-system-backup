@@ -23,7 +23,7 @@ function EditContainer({
                 <Button onClickBtn={onClickSave} size="small">
                   Save
                 </Button>
-                <span style={{ marginLeft: "2rem" }}>
+                <span>
                   <Button onClickBtn={onClickCancel} size="small">
                     Cancel
                   </Button>

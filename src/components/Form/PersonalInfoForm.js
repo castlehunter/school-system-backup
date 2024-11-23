@@ -70,8 +70,7 @@ function PersonalInfoForm({ userNo, hideUpload }) {
 
   async function handleClickSave() {
     try {
-      if(imageFile)
-      {
+      if (imageFile) {
         const imageres = await handleImageUpload();
       }
       const response = await UpdatePersonalInfo(userNo, personalInfoData);
@@ -91,8 +90,7 @@ function PersonalInfoForm({ userNo, hideUpload }) {
     setImageFile(event.target.files[0]);
   };
 
-  function generateManualUrl(imagePath)
-  {
+  function generateManualUrl(imagePath) {
     const url = `https://llcccnztkkxlkzblokbt.supabase.co/storage/v1/object/public/ProfileImage/${imagePath}`;
     console.log(url);
     return url;
@@ -102,7 +100,7 @@ function PersonalInfoForm({ userNo, hideUpload }) {
     if (imageFile) {
       const uploadData = await UploadProfileImage(imageFile);
       if (uploadData) {
-        const manualUrl = await generateManualUrl(uploadData.path)
+        const manualUrl = await generateManualUrl(uploadData.path);
         const url = await uploadImageURL(userNo, manualUrl);
         if (url) {
           setPersonalInfoData((prevData) => ({
@@ -111,7 +109,7 @@ function PersonalInfoForm({ userNo, hideUpload }) {
           }));
           alert("Image uploaded successfully!");
           window.location.reload();
-        } 
+        }
       } else {
         alert("Image upload failed.");
       }
@@ -137,12 +135,14 @@ function PersonalInfoForm({ userNo, hideUpload }) {
             <img src={personalInfoData.AvatarURL || avatar} alt="user avatar" />
             {!hideUpload && (
               <div className={formStyles.upload}>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className={formStyles.uploadInput}
-                />
+                <div className={formStyles.uploadChooseFile}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className={formStyles.uploadInput}
+                  />
+                </div>
                 <Button onClickBtn={handleImageUpload}>Upload Picture</Button>
               </div>
             )}
