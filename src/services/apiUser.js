@@ -40,7 +40,7 @@ export async function getUserByID(userID) {
     .eq("UserID", userID)
     .single();
 
-  console.log("API getUsersByID", data);
+  //console.log("API getUsersByID", data);
   if (error) {
     console.error(error);
     throw new Error("Failed to load user");
@@ -190,7 +190,7 @@ export async function getRoleNameByNo(userNo) {
     .eq("UserNo", userNo)
     .single();
 
-  console.log("API getRoleNameByNo", roleData);
+  //console.log("API getRoleNameByNo", roleData);
 
   if (roleError) {
     console.error(roleError);

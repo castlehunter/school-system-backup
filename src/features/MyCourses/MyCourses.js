@@ -87,6 +87,7 @@ function MyCourses() {
             {currmyCourses?.map((item) => (
               <CourseCard
                 key={item.CourseID}
+                courseId={item.CourseNo}
                 CourseName={item.CourseName}
                 image={item.image}
                 teacherName={item.teacherName}
