@@ -126,13 +126,13 @@ function AnnouncementTable({
                     </Button>
                   </div>
                 ) : (
-                  <span
-                    className={generalStyles.link}
-                    onClick={() => handleClickAnnouncement(announcement.Id)}
-                    color
+                  <Button
+                    size="small"
+                    color="rose"
+                    onClickBtn={() => handleClickAnnouncement(announcement.Id)}
                   >
                     View
-                  </span>
+                  </Button>
                 )}
               </td>
             </tr>
