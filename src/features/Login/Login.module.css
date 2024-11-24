@@ -10,18 +10,56 @@
 }
 
 .bg {
-  width: 50vw;
+  width: 50%;
   height: 100%;
   background-image: url("../../assets/2244.jpg");
   background-size: cover;
 }
 
+.loginAndForgotPassword {
+  position: relative;
+  overflow: hidden;
+  width: 50%;
+  height: 100%;
+}
+
 .loginSection {
+  position: absolute;
+  left: 0;
+  top: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* padding: 2rem; */
+  transform: translateX(0);
+  transition: transform 0.5s ease;
+  width: 100%;
+  height: 100%;
+}
+.moveLeft {
+  transform: translateX(-100%);
+}
+
+.moveRight {
+  transform: translateX(100%);
+}
+
+.forgotPasswordSection {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateX(100%);
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+}
+
+.forgotPasswordSection.moveLeft {
+  transform: translateX(0);
 }
 
 .loginHeader {
