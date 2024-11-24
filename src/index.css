@@ -48,11 +48,13 @@ input,
 textarea,
 select,
 button {
-  font-family: inherit; /* Uses the font-family of the parent */
-  font-size: inherit; /* Uses the font-size of the parent */
+  font-family: inherit;
+  font-size: inherit;
   line-height: inherit;
 }
+
 pre {
+  font-family: inherit;
   word-wrap: break-word;
   white-space: pre-wrap;
   max-width: 100%;

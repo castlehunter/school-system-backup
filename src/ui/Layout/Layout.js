@@ -3,6 +3,8 @@ import SidebarNew from "../../components/Sidebar/SidebarNew";
 import { RiMegaphoneLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import DefaultAvatar from "../../assets/User-avatar-default.jpg";
+
 import {
   getRoleNameByNo,
   getFullNameByNo,
@@ -23,6 +25,10 @@ function Layout({ children, breadcrumb, userNo }) {
   const toggleMenu = () => {
     setIsOpen((isOpen) => !isOpen);
   };
+
+  useEffect(() => {
+    setAvatarUrl(DefaultAvatar);
+  }, []);
 
   // Close the menu when clicking elsewhere on the page
   useEffect(() => {
@@ -69,10 +75,20 @@ function Layout({ children, breadcrumb, userNo }) {
     getFullName();
   }, [userNo]);
 
+  //  Get Avatar
   useEffect(() => {
     async function fetchAvatarUrl() {
-      const avatar = await getAvatarUrlByUserNo(userNo);
-      setAvatarUrl(avatar);
+      try {
+        const avatar = await getAvatarUrlByUserNo(userNo);
+        if (!avatar) {
+          setAvatarUrl(DefaultAvatar);
+        } else {
+          setAvatarUrl(avatar);
+        }
+      } catch (error) {
+        console.error("Error fetching avatar URL:", error);
+        setAvatarUrl(DefaultAvatar);
+      }
     }
     fetchAvatarUrl();
   }, [userNo]);
