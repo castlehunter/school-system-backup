@@ -27,7 +27,7 @@
 .forgotPasswordSection {
   position: absolute;
   top: 0;
-  left: 0;
+  /* left: 0; */
   width: 100%;
   height: 100%;
   display: flex;
@@ -40,26 +40,13 @@
 .loginSection {
   transform: translateX(0);
 }
-.moveLeft {
-  transform: translateX(-100%);
-}
-
-.moveRight {
-  transform: translateX(100%);
-}
 
 .forgotPasswordSection {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   transform: translateX(100%);
-  width: 100%;
-  height: 100%;
-  transition: transform 0.5s ease;
+}
+
+.loginSection.moveLeft {
+  transform: translateX(-100%);
 }
 
 .forgotPasswordSection.moveLeft {

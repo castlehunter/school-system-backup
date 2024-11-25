@@ -65,7 +65,7 @@ function SidebarNew() {
     return false;
   });
 
-  const searchItems = menuItems
+  const searchItems = filteredMenuItems
     .flatMap((item) => item.children)
     .filter((e) => !e.index);
 

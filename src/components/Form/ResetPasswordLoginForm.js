@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import formStyles from "../Form/Form.module.css";
-import generalStyles from "../../generalStyles.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import Button from "../../components/Button/Button.js";
 import icons from "../../ui/Icons/icons.js";
@@ -28,7 +27,10 @@ function ResetPasswordWithoutCurrent() {
       return;
     }
     try {
-      const response = await updateLoginPassword(username, inputData.newPassword);
+      const response = await updateLoginPassword(
+        username,
+        inputData.newPassword
+      );
 
       console.log("response", response);
       if (response && response.error) {
@@ -37,7 +39,7 @@ function ResetPasswordWithoutCurrent() {
       } else {
         alert("Password updated successfully!");
         console.log("Password updated successfully!", response);
-        navigate('/');
+        navigate("/");
       }
     } catch (error) {
       console.error("Error saving password data:", error);
@@ -55,78 +57,88 @@ function ResetPasswordWithoutCurrent() {
   }
 
   return (
-    <EditContainer>
-      <div className={formStyles.form}>
-        <div className={formStyles.formRow}>
-          <div className={formStyles.formItem}>
-            <label htmlFor="userName" className={formStyles.formLabel}>
-              User Name
-            </label>
-            <div className={formStyles.passwordContainer}>
-              <input
-                type="text"
-                id="userName"
-                name="username"
-                className={formStyles.formInput}
-                value={username}
-                disabled
-              />
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        margin: 0,
+      }}
+    >
+      <EditContainer title="Reset Password">
+        <div className={formStyles.form}>
+          <div className={formStyles.formRow}>
+            <div className={formStyles.formItem}>
+              <label htmlFor="userName" className={formStyles.formLabel}>
+                User Name
+              </label>
+              <div className={formStyles.passwordContainer}>
+                <input
+                  type="text"
+                  id="userName"
+                  name="username"
+                  className={formStyles.formInput}
+                  value={username}
+                  disabled
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className={formStyles.formRow}>
-          <div className={formStyles.formItem}>
-            <label htmlFor="newPassword" className={formStyles.formLabel}>
-              New Password
-            </label>
-            <div className={formStyles.passwordContainer}>
-              <input
-                type={showNewPassword ? "text" : "password"}
-                id="newPassword"
-                name="newPassword"
-                className={formStyles.formInput}
-                value={inputData.newPassword}
-                onChange={handleUpdate}
-              />
-              <span
-                className={formStyles.eyeIcon}
-                onClick={() => setShowNewPassword((prev) => !prev)}
-              >
-                {showNewPassword ? icons.EyeOff : icons.EyeOpen}
-              </span>
+          <div className={formStyles.formRow}>
+            <div className={formStyles.formItem}>
+              <label htmlFor="newPassword" className={formStyles.formLabel}>
+                New Password
+              </label>
+              <div className={formStyles.passwordContainer}>
+                <input
+                  type={showNewPassword ? "text" : "password"}
+                  id="newPassword"
+                  name="newPassword"
+                  className={formStyles.formInput}
+                  value={inputData.newPassword}
+                  onChange={handleUpdate}
+                />
+                <span
+                  className={formStyles.eyeIcon}
+                  onClick={() => setShowNewPassword((prev) => !prev)}
+                >
+                  {showNewPassword ? icons.EyeOff : icons.EyeOpen}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className={formStyles.formRow}>
-          <div className={formStyles.formItem}>
-            <label htmlFor="confirmPassword" className={formStyles.formLabel}>
-              Confirm Password
-            </label>
-            <div className={formStyles.passwordContainer}>
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                id="confirmPassword"
-                name="confirmPassword"
-                className={formStyles.formInput}
-                value={inputData.confirmPassword}
-                onChange={handleUpdate}
-              />
-              <span
-                className={formStyles.eyeIcon}
-                onClick={() => setShowConfirmPassword((prev) => !prev)}
-              >
-                {showConfirmPassword ? icons.EyeOff : icons.EyeOpen}
-              </span>
+          <div className={formStyles.formRow}>
+            <div className={formStyles.formItem}>
+              <label htmlFor="confirmPassword" className={formStyles.formLabel}>
+                Confirm Password
+              </label>
+              <div className={formStyles.passwordContainer}>
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  className={formStyles.formInput}
+                  value={inputData.confirmPassword}
+                  onChange={handleUpdate}
+                />
+                <span
+                  className={formStyles.eyeIcon}
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+                >
+                  {showConfirmPassword ? icons.EyeOff : icons.EyeOpen}
+                </span>
+              </div>
             </div>
           </div>
+          <div className={formStyles.bottomButtons}>
+            <Button onClickBtn={handleClickReset}>Reset</Button>
+            <Button onClickBtn={handleClickCancel}>Cancel</Button>
+          </div>
         </div>
-        <div className={generalStyles.bottomButtons}>
-          <Button onClickBtn={handleClickReset}>Reset Password</Button>
-          <Button onClickBtn={handleClickCancel}>Cancel</Button>
-        </div>
-      </div>
-    </EditContainer>
+      </EditContainer>
+    </div>
   );
 }
 

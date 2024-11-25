@@ -322,7 +322,6 @@ function App() {
               path: "/programs/new-program",
               element: <NewProgram />,
               title: "New Course Category",
-              hideInSidebar: true,
             },
           ],
         },

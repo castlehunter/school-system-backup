@@ -13,7 +13,6 @@ import ForgotPassword from "./ForgotPassword";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const navigate = useNavigate();
@@ -57,7 +56,7 @@ function Login() {
       console.error("Failed to fetch unread announcements:", err);
     }
 
-    navigate("/dashboard");
+    navigate("/dashboard", { replace: true });
   };
 
   return (

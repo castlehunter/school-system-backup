@@ -25,7 +25,7 @@ function ForgotPassword({ setShowForgotPassword }) {
       }
     } catch (error) {
       console.error("Error fetching security question:", error);
-      setError("Error fetching security question");
+      setError("Error: Please enter your user name!");
     }
   };
 
@@ -53,18 +53,18 @@ function ForgotPassword({ setShowForgotPassword }) {
           className={formStyles.formInput}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-        />
+        />{" "}
+        <Button onClickBtn={handleGetSecurityQuestion}>
+          Get Security Question
+        </Button>
       </div>
-
-      <Button onClickBtn={handleGetSecurityQuestion}>
-        Get Security Question
-      </Button>
 
       {securityQuestion && (
         <div className={formStyles.formItem}>
           <label htmlFor="securityAnswer" className={formStyles.formLabel}>
-            {securityQuestion}
+            Question: {securityQuestion}
           </label>
+          Answer:
           <input
             type="text"
             id="securityAnswer"
@@ -77,8 +77,9 @@ function ForgotPassword({ setShowForgotPassword }) {
         </div>
       )}
 
+      {/* Display error message if any */}
+      {error && <div className={formStyles.error}>{error}</div>}
       <div>
-        <br />
         <Link
           className={generalStyles.link}
           onClick={() => setShowForgotPassword(false)}
@@ -86,8 +87,6 @@ function ForgotPassword({ setShowForgotPassword }) {
           Back to login
         </Link>
       </div>
-      {/* Display error message if any */}
-      {error && <div className={formStyles.error}>{error}</div>}
     </div>
   );
 }
