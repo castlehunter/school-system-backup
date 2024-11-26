@@ -77,61 +77,63 @@ function SidebarNew() {
   }
 
   return (
-    <div className={styles.sidebar}>
-      <Link to="/dashboard" className={styles.logoLink}>
-        <div className={styles.logoContainer}>
-          <img src={logo} alt="logo" className={styles.logoImage} />
-        </div>
-      </Link>
-      <Search searchItems={searchItems} colorType="dark" />
-      <div className={styles.menu}>
-        {filteredMenuItems.map((item) => (
-          <div key={item.title}>
-            <div
-              className={styles.menuTitle}
-              onClick={() => toggleMenu(item.title.toLowerCase())}
-            >
-              <div className={styles.menuText}>
-                {item.icon()}
-                {item.title}
-              </div>
-              {openMenus[item.title.toLowerCase()]
-                ? icons.MinusIcon()
-                : icons.PlusIcon()}
-            </div>
-            <div
-              className={`${styles.menuContent} ${
-                openMenus[item.title.toLowerCase()] ? styles.open : ""
-              }`}
-            >
-              {item.children
-                .filter((subItem) => subItem.hideInSidebar !== true)
-                .filter((subItem) => !subItem.index)
-                .map((subItem) => (
-                  <NavLink
-                    key={subItem.path}
-                    to={subItem.path}
-                    className={({ isActive }) =>
-                      isActive
-                        ? `${styles.menuItem} ${styles.current}`
-                        : styles.menuItem
-                    }
-                  >
-                    <div className={styles.menuText}>
-                      {icons.CircleIcon(styles.icon)}
-                      {subItem.title}
-                    </div>
-                  </NavLink>
-                ))}
-            </div>
+    <>
+      <div className={styles.sidebar}>
+        <Link to="/dashboard" className={styles.logoLink}>
+          <div className={styles.logoContainer}>
+            <img src={logo} alt="logo" className={styles.logoImage} />
           </div>
-        ))}
+        </Link>
+        <Search searchItems={searchItems} colorType="dark" />
+        <div className={styles.menu}>
+          {filteredMenuItems.map((item) => (
+            <div key={item.title}>
+              <div
+                className={styles.menuTitle}
+                onClick={() => toggleMenu(item.title.toLowerCase())}
+              >
+                <div className={styles.menuText}>
+                  {item.icon()}
+                  {item.title}
+                </div>
+                {openMenus[item.title.toLowerCase()]
+                  ? icons.MinusIcon()
+                  : icons.PlusIcon()}
+              </div>
+              <div
+                className={`${styles.menuContent} ${
+                  openMenus[item.title.toLowerCase()] ? styles.open : ""
+                }`}
+              >
+                {item.children
+                  .filter((subItem) => subItem.hideInSidebar !== true)
+                  .filter((subItem) => !subItem.index)
+                  .map((subItem) => (
+                    <NavLink
+                      key={subItem.path}
+                      to={subItem.path}
+                      className={({ isActive }) =>
+                        isActive
+                          ? `${styles.menuItem} ${styles.current}`
+                          : styles.menuItem
+                      }
+                    >
+                      <div className={styles.menuText}>
+                        {icons.CircleIcon(styles.icon)}
+                        {subItem.title}
+                      </div>
+                    </NavLink>
+                  ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <Link to="/" className={styles.logout}>
+          {icons.LogoutIcon}
+          <span>Logout</span>
+        </Link>
       </div>
-      <Link to="/" className={styles.logout}>
-        {icons.LogoutIcon}
-        <span>Logout</span>
-      </Link>
-    </div>
+    </>
   );
 }
 

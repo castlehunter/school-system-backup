@@ -6,7 +6,7 @@ main section margin: 3rem (main section is the section to the right of the sideb
 sidebar margin(except right): 3rem
 
 ......padding.........
-main section padding : 3rem;
+main section padding : --padding-medium 3rem;
 main section border-radius: 1.2rem;
 sidebar border-radius: 1.2rem;
 

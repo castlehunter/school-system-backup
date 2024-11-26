@@ -1,0 +1,44 @@
+:root {
+  --padding-small: 1.5rem;
+  --padding-medium: 3rem;
+  --padding-large: 4rem;
+  --font-size-medium: 1.4rem;
+}
+
+/* Small desktop */
+@media (max-width: 1366px) {
+  :root {
+    --padding-small: 1rem;
+    --padding-medium: 2rem;
+    --padding-large: 3.5rem;
+    --font-size-medium: 1.2rem;
+  }
+}
+
+/* Tablet: eg. ipad pro */
+@media (max-width: 1024px) {
+  :root {
+    --padding-small: 1rem;
+    --padding-medium: 2rem;
+    --padding-large: 16px;
+    --font-size-medium: 1.2rem;
+  }
+}
+
+/* smaller than small tablet or large cellphone */
+@media (max-width: 768px) {
+  :root {
+    --padding-small: 0.75rem;
+    --padding-medium: 1.5rem;
+    --padding-large: 12px;
+  }
+}
+
+/* Small cellphone */
+@media (max-width: 480px) {
+  :root {
+    --padding-small: 0.5rem;
+    --padding-medium: 1rem;
+    --padding-large: 8px;
+  }
+}

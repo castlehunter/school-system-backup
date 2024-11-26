@@ -3,26 +3,18 @@ svg {
   width: 1.5rem;
   height: 1.5rem;
   fill: #fff;
-  /* margin-right: 1rem; */
 }
 
-/* =============================== */
-/* Sidebar */
-/* =============================== */
-/* .sidebarWrapper {
-  background-color: #4f4f52; 
-}
-*/
 .icon {
   fill: #ffffffa1;
 }
+
 .sidebar {
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   width: 12vw;
   background-color: #4f4f52;
-  font-size: 1.4rem;
   margin-right: 2rem;
 }
 
@@ -34,6 +26,17 @@ svg {
   height: 1.5rem;
   background-color: #1d1d1d;
   border-radius: 0 0 1.2rem 1.2rem;
+}
+
+.burgerIcon {
+  /* position: fixed; */
+  display: none;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
 }
 
 .logoLink {
@@ -51,7 +54,7 @@ svg {
 }
 
 .logoImage {
-  width: 16rem;
+  width: 90%;
   height: auto;
 }
 
@@ -149,4 +152,53 @@ svg {
 .logout svg {
   width: 1.8rem;
   height: 1.8rem;
+}
+
+@media (max-width: 1366px) {
+  .menuTitle {
+    padding: 0.5rem 1rem;
+  }
+
+  .menuItem {
+    line-height: 2rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .burgerIcon {
+    display: block;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .menuTitle {
+    padding: 0.5rem 1rem;
+  }
+
+  .menuItem {
+    line-height: 2rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .burgerIcon {
+    display: block;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .menuTitle {
+    padding: 0.5rem 1rem;
+  }
+
+  .menuItem {
+    line-height: 2rem;
+    padding: 0.5rem 1rem;
+  }
 }

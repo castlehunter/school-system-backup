@@ -4,6 +4,8 @@ import { RiMegaphoneLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DefaultAvatar from "../../assets/User-avatar-default.jpg";
+import logo from "../../assets/logo-removebg-preview.png";
+import icons from "../../ui/Icons/icons";
 
 import {
   getRoleNameByNo,
@@ -101,6 +103,14 @@ function Layout({ children, breadcrumb, userNo }) {
 
       <section>
         {/* ================= The top section ===============*/}
+        <div className={styles.mobileHeader}>
+          <div className={styles.burgerIcon}>{icons.BurgerIcon()}</div>
+          <div className={styles.logoContainer}>
+            {/* <img src={logo} alt="logo" className={styles.logoImage} /> */}
+            dd
+          </div>
+        </div>
+
         <div className={styles.header}>
           <div className={styles.breadcrumb}>{breadcrumb}</div>
 
