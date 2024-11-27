@@ -11,8 +11,13 @@
 .link:active {
   color: #e91f63;
   text-decoration: underline;
-  /* text-underline-offset: 0.4rem; */
+  text-underline-offset: 0.2rem;
 }
+
+.deleteLink {
+  text-align: right;
+}
+
 .noStyleLink {
   color: inherit;
   text-decoration: underline;
@@ -26,6 +31,7 @@
 }
 
 .container {
+  width: 100%;
   justify-content: center;
   border-radius: 0.8rem;
   background-color: #fff;
@@ -54,10 +60,4 @@
 .highlight {
   background-color: #fdf3dd;
   color: #444;
-}
-
-@media (max-width: 480px) {
-  .container {
-    display: none;
-  }
 }

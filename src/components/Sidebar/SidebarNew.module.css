@@ -15,6 +15,7 @@ svg {
   flex-direction: column;
   /* width: 100%; */
   background-color: #4f4f52;
+  position: relative;
 }
 
 .sidebar::after {
@@ -24,6 +25,7 @@ svg {
   width: 100%;
   height: 1.5rem;
   background-color: #1d1d1d;
+  background-color: #2e2e2e;
   border-radius: 0 0 1.2rem 1.2rem;
 }
 
@@ -49,7 +51,7 @@ svg {
   align-items: center;
   justify-content: center;
   padding: 1rem 2rem;
-  background-color: #1d1d1d;
+  background-color: #2e2e2e;
 }
 
 .logoImage {
@@ -171,13 +173,12 @@ svg {
   }
 }
 
+@media (max-width: 768px) {
+}
+
 @media (max-width: 480px) {
   .burgerIcon {
     display: block;
-  }
-
-  .sidebar {
-    display: none;
   }
 
   .menuTitle {

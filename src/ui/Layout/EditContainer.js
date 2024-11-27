@@ -1,5 +1,6 @@
 import generalStyles from "../../generalStyles.module.css";
 import Button from "../../components/Button/Button";
+import { Link } from "react-router-dom";
 
 function EditContainer({
   children,
@@ -34,15 +35,21 @@ function EditContainer({
                 {editButtonText}
               </Button>
             )}
-            {onClickDelete && (
-              <Button onClickBtn={onClickDelete} color="blue">
-                Delete
-              </Button>
-            )}
           </div>
         )}
       </div>
       <div>{children}</div>
+      {onClickDelete && (
+        <div className={generalStyles.deleteLink}>
+          <Link
+            onClick={onClickDelete}
+            className={generalStyles.link}
+            color="blue"
+          >
+            Delete
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { RiMegaphoneLine } from "@remixicon/react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DefaultAvatar from "../../assets/User-avatar-default.jpg";
-import logo from "../../assets/logo-removebg-preview.png";
+import logo from "../../assets/logo.png";
 import icons from "../../ui/Icons/icons";
 
 import {
@@ -20,6 +20,7 @@ function Layout({ children, breadcrumb, userNo }) {
   const [roleName, setRoleName] = useState(null);
   const [fullName, setFullName] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState("");
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const navigate = useNavigate();
   const { unreadCount } = useUnreadCount();
@@ -95,23 +96,30 @@ function Layout({ children, breadcrumb, userNo }) {
     fetchAvatarUrl();
   }, [userNo]);
 
+  function toggleSidebar() {
+    setShowSidebar(!showSidebar);
+  }
+
   return (
     <main className={styles.layout}>
-      <aside>
+      <aside className={showSidebar ? styles.showSidebar : styles.hideSidebar}>
         <SidebarNew />
+        <div className={styles.closeButton} onClick={toggleSidebar}>
+          &times;
+        </div>
       </aside>
 
       <section>
         {/* ================= The top section ===============*/}
-        <div className={styles.mobileHeader}>
-          <div className={styles.burgerIcon}>{icons.BurgerIcon()}</div>
-          <div className={styles.logoContainer}>
-            <img src={logo} alt="logo" className={styles.logoImage} />
-            dd
-          </div>
-        </div>
-
         <div className={styles.header}>
+          {/* <div className={styles.simpleLogoContainer}>
+            <img src={logo} alt="logo" className={styles.simpleLogoImage} />
+          </div> */}
+
+          <div className={styles.burgerIcon} onClick={toggleSidebar}>
+            {icons.BurgerIcon()}
+          </div>
+
           <div className={styles.breadcrumb}>{breadcrumb}</div>
 
           <div className={styles["user-section"]}>
@@ -122,6 +130,11 @@ function Layout({ children, breadcrumb, userNo }) {
               <div className={styles["announcement-icon"]}>
                 <RiMegaphoneLine
                   style={{ fill: "#333", width: "3rem", height: "2.5rem" }}
+                />
+              </div>
+              <div className={styles["announcement-icon-mobile"]}>
+                <RiMegaphoneLine
+                  style={{ fill: "#fff", width: "3rem", height: "2.5rem" }}
                 />
               </div>
               <div className={styles["announcement-count"]}>{unreadCount}</div>

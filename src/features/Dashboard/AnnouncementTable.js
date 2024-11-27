@@ -55,21 +55,20 @@ function AnnouncementTable({
     <table className={styles.table}>
       <thead>
         <tr>
-          {role === "Admin" ||
-            (role === "Advisor" && (
-              <th>
-                <input
-                  type="checkbox"
-                  checked={isAllSelected}
-                  onChange={() =>
-                    handleSelectAll(
-                      currData.map((announcement) => announcement.Id)
-                    )
-                  }
-                  className={styles.checkbox}
-                />
-              </th>
-            ))}
+          {(role === "Admin" || role === "Advisor") && (
+            <th>
+              <input
+                type="checkbox"
+                checked={isAllSelected}
+                onChange={() =>
+                  handleSelectAll(
+                    currData.map((announcement) => announcement.Id)
+                  )
+                }
+                className={styles.checkbox}
+              />
+            </th>
+          )}
 
           <th>S/N</th>
           <th>Status</th>
@@ -86,17 +85,16 @@ function AnnouncementTable({
         ) : (
           currData.map((announcement, index) => (
             <tr key={announcement.Id} className={styles.tr}>
-              {role === "Admin" ||
-                (role === "Advisor" && (
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={selectedCheckboxes.includes(announcement.Id)}
-                      onChange={() => handleCheckboxes(announcement.Id)}
-                      className={styles.checkbox}
-                    />
-                  </td>
-                ))}
+              {(role === "Admin" || role === "Advisor") && (
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectedCheckboxes.includes(announcement.Id)}
+                    onChange={() => handleCheckboxes(announcement.Id)}
+                    className={styles.checkbox}
+                  />
+                </td>
+              )}
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>
                 <span

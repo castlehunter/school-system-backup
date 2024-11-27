@@ -3,6 +3,7 @@
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
 }
+
 .mainColumn {
   display: flex;
   flex-direction: column;
@@ -127,7 +128,9 @@
 /* Smaller tablet */
 @media (max-width: 768px) {
   .overviewLayout {
-    gap: 1rem;
+    grid-template-columns: 1fr;
+
+    gap: 2rem;
   }
 
   .largeIcon {
@@ -140,16 +143,5 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 1rem;
     margin-bottom: 2rem;
-  }
-}
-
-/* Small cellphone */
-@media (max-width: 480px) {
-  :root {
-    --padding-small: 0.25rem;
-    --padding-medium: 1rem;
-    --padding-large: 8px;
-    --line-height-large: 2rem;
-    --font-size-medium: 1rem;
   }
 }
