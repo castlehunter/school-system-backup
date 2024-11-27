@@ -137,12 +137,12 @@ const ProgramForm = ({ data, mode, isLoading }) => {
         </div>
       </div>
       {mode === "create" && (
-        <div className={styles.buttonLayout}>
+       
           <div className={styles.buttons}>
             <Button onClickBtn={handleCreate}>Create</Button>
             <Button onClickCancel={handleClickCancel}>Cancel</Button>
           </div>
-        </div>
+        
       )}
     </EditContainer>
   );
