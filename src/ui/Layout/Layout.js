@@ -106,7 +106,7 @@ function Layout({ children, breadcrumb, userNo }) {
         <div className={styles.mobileHeader}>
           <div className={styles.burgerIcon}>{icons.BurgerIcon()}</div>
           <div className={styles.logoContainer}>
-            {/* <img src={logo} alt="logo" className={styles.logoImage} /> */}
+            <img src={logo} alt="logo" className={styles.logoImage} />
             dd
           </div>
         </div>

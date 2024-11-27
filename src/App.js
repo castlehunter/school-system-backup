@@ -309,7 +309,7 @@ function App() {
               path: "/programs/program-list",
               element: <ProgramList />,
               loader: getProgramList,
-              title: "Course Category List",
+              title: "Course Categories",
             },
             {
               path: "/programs/:programCode",
@@ -321,7 +321,7 @@ function App() {
             {
               path: "/programs/new-program",
               element: <NewProgram />,
-              title: "New Course Category",
+              title: "New Category",
             },
           ],
         },

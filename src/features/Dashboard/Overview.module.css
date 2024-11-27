@@ -111,3 +111,45 @@
 .readMore {
   color: #e91f63;
 }
+
+/* Small desktop */
+@media (max-width: 1366px) {
+}
+
+/* Tablet: eg. ipad pro */
+@media (max-width: 1024px) {
+  .largeIcon {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
+/* Smaller tablet */
+@media (max-width: 768px) {
+  .overviewLayout {
+    gap: 1rem;
+  }
+
+  .largeIcon {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
+  .statcards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Small cellphone */
+@media (max-width: 480px) {
+  :root {
+    --padding-small: 0.25rem;
+    --padding-medium: 1rem;
+    --padding-large: 8px;
+    --line-height-large: 2rem;
+    --font-size-medium: 1rem;
+  }
+}

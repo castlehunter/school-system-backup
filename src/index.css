@@ -21,7 +21,7 @@ body {
   font-size: var(--font-size-medium);
   overflow-x: hidden;
   line-height: 2.4rem;
-  margin-left: calc(100vw - 100%);
+  /* margin-left: calc(100vw - 100%); */
 }
 
 a {
