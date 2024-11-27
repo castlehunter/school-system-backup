@@ -19,9 +19,9 @@ import { getUnreadAnnouncementsCount } from "../../services/apiAnnouncements";
 import { useUnreadCount } from "../../contexts/UnreadContext";
 import { Link, useNavigate } from "react-router-dom";
 import generalStyles from "../../generalStyles.module.css";
-import Calendar from "@fullcalendar/react"; // Import the FullCalendar component
+import Calendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
+import interactionPlugin from "@fullcalendar/interaction";
 import timeGridWeekPlugin from "@fullcalendar/timegrid";
 
 function Overview() {
@@ -37,7 +37,13 @@ function Overview() {
   const [announcements, setAnnouncements] = useState([]);
   const [openedAnnouncement, setOpenedAnnouncement] = useState(null);
   const { unreadCount, setUnreadCount } = useUnreadCount();
-  const navigate = useNavigate();
+
+  const formattedDate = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
@@ -305,10 +311,16 @@ function Overview() {
         </div>
 
         <div className={styles.secondaryColumn}>
-          <EditContainer bgColor="highlight">
+          <EditContainer bgColor="highlight" title={formattedDate}>
             <Calendar
               plugins={[dayGridPlugin, interactionPlugin, timeGridWeekPlugin]}
               initialView="dayGridMonth"
+              headerToolbar={{
+                left: "prev,next today",
+                center: "",
+                right: "",
+              }}
+              contentHeight="auto"
             />
           </EditContainer>
           <ContactForm role={loginRole} />

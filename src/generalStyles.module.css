@@ -11,8 +11,13 @@
 .link:active {
   color: #e91f63;
   text-decoration: underline;
-  /* text-underline-offset: 0.4rem; */
+  text-underline-offset: 0.2rem;
 }
+
+.deleteLink {
+  text-align: right;
+}
+
 .noStyleLink {
   color: inherit;
   text-decoration: underline;
@@ -26,13 +31,11 @@
 }
 
 .container {
+  width: 100%;
   justify-content: center;
   border-radius: 0.8rem;
   background-color: #fff;
-  padding: 3rem;
-  /* border: 1px solid rgba(0, 0, 0, 0.1);
-  border-right: 1px solid rgba(192, 192, 192, 0.5);
-  border-bottom: 1px solid rgba(177, 177, 177, 0.5); */
+  padding: var(--padding-medium);
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

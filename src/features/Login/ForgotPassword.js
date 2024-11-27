@@ -1,9 +1,9 @@
 import ForgotPasswordForm from "../../components/Form/ForgotPasswordFrom";
 
-function ForgotPassword() {
+function ForgotPassword({ setShowForgotPassword }) {
   return (
     <div>
-      <ForgotPasswordForm />
+      <ForgotPasswordForm setShowForgotPassword={setShowForgotPassword} />
     </div>
   );
 }

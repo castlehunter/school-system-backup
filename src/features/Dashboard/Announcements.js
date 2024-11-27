@@ -1,4 +1,3 @@
-// src/components/AnnouncementList.js
 import React, { useState, useEffect } from "react";
 import AnnouncementTable from "./AnnouncementTable";
 import TableContainer from "../../ui/Layout/TableContainer";
@@ -7,27 +6,39 @@ import { useLoaderData, useNavigation } from "react-router-dom";
 import { getAnnouncements } from "../../services/apiAnnouncements";
 import Loader from "../../ui/Loader";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button/Button";
 import useCheckbox from "../../hooks/useCheckbox";
 import { deleteAnnouncements } from "../../services/apiAnnouncements";
+import { getUnreadAnnouncementsCount } from "../../services/apiAnnouncements";
+import { useUnreadCount } from "../../contexts/UnreadContext";
 
 function Announcements() {
-  const initialAnnouncementData = useLoaderData() || [];
-  const [announcementData, setAnnouncementData] = useState(
-    initialAnnouncementData
-  );
-  const navigation = useNavigation();
-  const isLoading = navigation.state === "loading";
+  const [announcementData, setAnnouncementData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const [currPage, setCurrPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const navigate = useNavigate();
+  const { unreadCount, setUnreadCount } = useUnreadCount();
+  const [role, setRole] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
-      const userNo = localStorage.getItem("loginUserNo");
-      const data = await getAnnouncements(userNo);
-      setAnnouncementData(data);
-    };
+    const storedRole = localStorage.getItem("role");
+    setRole(storedRole);
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const userNo = localStorage.getItem("loginUserNo");
+        const data = await getAnnouncements(userNo);
+        setAnnouncementData(data);
+      } catch (error) {
+        console.error("Failed to fetch announcements:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
     fetchData();
   }, []);
@@ -54,7 +65,7 @@ function Announcements() {
     navigate("/dashboard/announcements/new-announcement");
   }
 
-  function handleBulkDelete() {
+  async function handleBulkDelete() {
     const selectedIds = selectedCheckboxes;
 
     if (selectedIds.length === 0) {
@@ -67,19 +78,22 @@ function Announcements() {
     );
 
     if (confirmDelete) {
-      deleteAnnouncements(selectedIds)
-        .then(() => {
-          setAnnouncementData((prevData) =>
-            prevData.filter(
-              (announcement) => !selectedIds.includes(announcement.Id)
-            )
-          );
-          alert("Selected announcements deleted successfully.");
-        })
-        .catch((error) => {
-          console.error("Failed to delete announcements:", error);
-          alert("Failed to delete selected announcements.");
-        });
+      try {
+        await deleteAnnouncements(selectedIds);
+        setAnnouncementData((prevData) =>
+          prevData.filter(
+            (announcement) => !selectedIds.includes(announcement.Id)
+          )
+        );
+        alert("Selected announcements deleted successfully.");
+
+        const userNo = localStorage.getItem("loginUserNo");
+        const unreadCount = await getUnreadAnnouncementsCount(userNo);
+        setUnreadCount(unreadCount);
+      } catch (error) {
+        console.error("Failed to delete announcements:", error);
+        alert("Failed to delete selected announcements.");
+      }
     }
   }
 
@@ -92,8 +106,10 @@ function Announcements() {
         currPage={currPage}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
-        onClickAddBtn={handleAddBtn}
-        onClickBulkDeleteBtn={handleBulkDelete}
+        onClickAddBtn={role === "Admin" || (role === "Advisor" && handleAddBtn)}
+        onClickBulkDeleteBtn={
+          role === "Admin" || (role === "Advisor" && handleBulkDelete)
+        }
       >
         {isLoading ? (
           <Loader />

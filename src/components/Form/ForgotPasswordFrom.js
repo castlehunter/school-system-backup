@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import formStyles from "../Form/Form.module.css";
 import Button from "../../components/Button/Button";
-import { useNavigate } from "react-router-dom";
+import generalStyles from "../../generalStyles.module.css";
+import { Link, useNavigate } from "react-router-dom";
 import { getSecurityInfoByUserName } from "../../services/apiUser";
-import EditContainer from "../../ui/Layout/EditContainer";
 
-function ForgotPassword() {
+function ForgotPassword({ setShowForgotPassword }) {
   const [username, setUsername] = useState("");
   const [securityQuestion, setSecurityQuestion] = useState("");
   const [securityAnswer, setSecurityAnswer] = useState("");
   const [answer, setAnswer] = useState("");
-  const [error, setError] = useState(""); // For handling errors
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleGetSecurityQuestion = async () => {
@@ -19,13 +19,13 @@ function ForgotPassword() {
       if (userData) {
         setSecurityQuestion(userData.SecurityQuestion);
         setSecurityAnswer(userData.SecurityAnswer);
-        setError(""); // Clear previous errors
+        setError("");
       } else {
-        setError("User not found"); // Error if no user is found
+        setError("User not found");
       }
     } catch (error) {
       console.error("Error fetching security question:", error);
-      setError("Error fetching security question");
+      setError("Error: Please enter your user name!");
     }
   };
 
@@ -39,7 +39,9 @@ function ForgotPassword() {
   };
 
   return (
-    <EditContainer title="Forgot Password?">
+    <div>
+      <h1>Forgot Password?</h1>
+      <br />
       <div className={formStyles.formItem}>
         <label htmlFor="username" className={formStyles.formLabel}>
           Enter Username:
@@ -51,18 +53,18 @@ function ForgotPassword() {
           className={formStyles.formInput}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-        />
+        />{" "}
+        <Button onClickBtn={handleGetSecurityQuestion}>
+          Get Security Question
+        </Button>
       </div>
-
-      <Button onClickBtn={handleGetSecurityQuestion}>
-        Get Security Question
-      </Button>
 
       {securityQuestion && (
         <div className={formStyles.formItem}>
           <label htmlFor="securityAnswer" className={formStyles.formLabel}>
-            {securityQuestion}
+            Question: {securityQuestion}
           </label>
+          Answer:
           <input
             type="text"
             id="securityAnswer"
@@ -77,7 +79,15 @@ function ForgotPassword() {
 
       {/* Display error message if any */}
       {error && <div className={formStyles.error}>{error}</div>}
-    </EditContainer>
+      <div>
+        <Link
+          className={generalStyles.link}
+          onClick={() => setShowForgotPassword(false)}
+        >
+          Back to login
+        </Link>
+      </div>
+    </div>
   );
 }
 

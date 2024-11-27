@@ -5,7 +5,6 @@ import Pagination from "../../components/Pagination/Pagination";
 import Button from "../../components/Button/Button";
 import Search from "../../components/Search/Search";
 import SelectButton from "../../components/Button/SelectButton";
-import icons from "../Icons/icons";
 
 function TableContainer({
   children,

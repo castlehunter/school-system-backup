@@ -7,6 +7,7 @@ import { updateProgram } from "../../services/apiProgram.js";
 import { addProgram } from "../../services/apiProgram.js";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../ui/Loader.js";
+
 const ProgramForm = ({ data, mode, isLoading }) => {
   const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
@@ -137,12 +138,10 @@ const ProgramForm = ({ data, mode, isLoading }) => {
         </div>
       </div>
       {mode === "create" && (
-       
-          <div className={styles.buttons}>
-            <Button onClickBtn={handleCreate}>Create</Button>
-            <Button onClickCancel={handleClickCancel}>Cancel</Button>
-          </div>
-        
+        <div className={formStyles.bottomButtons}>
+          <Button onClickBtn={handleCreate}>Create</Button>
+          <Button onClickCancel={handleClickCancel}>Cancel</Button>
+        </div>
       )}
     </EditContainer>
   );
