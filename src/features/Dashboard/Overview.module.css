@@ -3,6 +3,7 @@
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
 }
+
 .mainColumn {
   display: flex;
   flex-direction: column;
@@ -110,4 +111,37 @@
 }
 .readMore {
   color: #e91f63;
+}
+
+/* Small desktop */
+@media (max-width: 1366px) {
+}
+
+/* Tablet: eg. ipad pro */
+@media (max-width: 1024px) {
+  .largeIcon {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
+/* Smaller tablet */
+@media (max-width: 768px) {
+  .overviewLayout {
+    grid-template-columns: 1fr;
+
+    gap: 2rem;
+  }
+
+  .largeIcon {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
+  .statcards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
 }

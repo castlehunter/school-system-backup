@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./StatCard.module.css";
 import icons from "../../ui/Icons/icons";
+
 function StatCard({ number, unit, icon, bgcolor, link }) {
   return (
     <div className={`${styles.statcard} ${styles[bgcolor]}`}>
@@ -9,7 +10,7 @@ function StatCard({ number, unit, icon, bgcolor, link }) {
           <h3>{number}</h3>
           <p>{unit}</p>
         </div>
-        <div className={styles.icon}>{icon}</div>
+        <div>{icon}</div>
       </div>
       <div className={styles.bottom}>
         <Link to={link} className={styles.moreinfo}>

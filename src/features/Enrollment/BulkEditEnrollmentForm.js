@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { updateEnrollments } from "../../services/apiEnrollment";
 import Button from "../../components/Button/Button";
+import MainTitle from "../../ui/MainTitle/MainTitle.js";
+import styles from "../../../src/components/Form/Form.module.css";
 
 function BulkEditEnrollmentForm() {
   const location = useLocation();
@@ -46,8 +48,9 @@ function BulkEditEnrollmentForm() {
   }
 
   return (
-    <div className="generalStyles_container__RvMgt">
-      <h1>Bulk Edit Enrollments</h1>
+    <>
+    <MainTitle title="Bulk Edit Enrollments" goBack={true} />
+    <div className="generalStyles_container__RvMgt">  
       <p>(Keep unchanged to maintain current state)</p>
       <form onSubmit={handleUpdate}>
         <div>
@@ -73,13 +76,16 @@ function BulkEditEnrollmentForm() {
             />
             Is Finished
           </label>
-        </div>
-        <Button type="submit">Update</Button>
-        <Button type="button" onClick={handleCancel}>
+        </div >
+        <div className={styles.buttons}>
+        <Button size="large" type="submit">Update</Button>
+        <Button  size="large" type="button" onClick={handleCancel}>
           Cancel
         </Button>
+        </div>
       </form>
     </div>
+    </>
   );
 }
 

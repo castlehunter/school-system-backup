@@ -19,6 +19,7 @@ import {
   RiEyeLine,
   RiEyeOffLine,
   RiArrowDownSFill,
+  RiMenuLine,
 } from "@remixicon/react";
 
 const icons = {
@@ -72,6 +73,10 @@ const icons = {
   ArrowDownIcon: (className = "", style = {}) => (
     <RiArrowDownSFill className={className} style={style} />
   ),
+  BurgerIcon: (
+    className = "",
+    style = { fill: "#ffffff", width: "3rem", height: "2.5rem" }
+  ) => <RiMenuLine className={className} style={style} />,
 };
 
 export default icons;

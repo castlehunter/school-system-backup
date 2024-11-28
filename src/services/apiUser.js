@@ -40,7 +40,7 @@ export async function getUserByID(userID) {
     .eq("UserID", userID)
     .single();
 
-  console.log("API getUsersByID", data);
+  //console.log("API getUsersByID", data);
   if (error) {
     console.error(error);
     throw new Error("Failed to load user");
@@ -190,7 +190,7 @@ export async function getRoleNameByNo(userNo) {
     .eq("UserNo", userNo)
     .single();
 
-  console.log("API getRoleNameByNo", roleData);
+  //console.log("API getRoleNameByNo", roleData);
 
   if (roleError) {
     console.error(roleError);
@@ -263,20 +263,6 @@ export async function CreateUser(newUser) {
       return;
     }
 
-    // 4. Search For duplicate username
-    
-    /*const { userData , userError } = await supabase
-      .from("Users")
-      .select("UserName")
-      .eq("UserName",newUser.Username)
-      .single();
-    
-    if (userError) {
-      console.log("no same username");
-    } else {
-      alert("Username already exist");
-      return;
-    }*/
 
     // 3. Insert User record
     const { data, error } = await supabase.from("Users").insert([
@@ -335,7 +321,7 @@ export async function UpdatePersonalInfo(userNo, userInfo) {
         Email: userInfo.Email,
         DateOfBirth: userInfo.DateOfBirth,
         PhoneNumber: userInfo.PhoneNumber,
-        HomeAddress: userInfo.HomeAddress
+        HomeAddress: userInfo.HomeAddress,
       })
       .eq("UserNo", userNo)
       .select();
@@ -461,7 +447,6 @@ export async function uploadImageURL(userNo, url) {
     return null;
   }
 }
-  
 
 export async function sortUsersBy(fieldName = "UserNo", ascending = true) {
   try {
@@ -582,4 +567,20 @@ export async function checkUsernameExists(username) {
     console.error("Unexpected error during username check:", err);
     throw err;
   }
+}
+
+export async function getAvatarUrlByUserNo(userNo) {
+
+    const { data: url, error } = await supabase
+      .from("Users")
+      .select("AvatarURL")
+      .eq("UserNo", userNo)
+      .single();
+
+      if(error) {
+        console.error("Error retrieving user avatar:". error)
+      }
+    
+      return url;
+  
 }

@@ -1,13 +1,17 @@
-/* Form.module.css */
-
+/* General Layout */
 .sectionLayout {
   width: 100%;
   display: flex;
   gap: 5rem;
 }
 
+form {
+  width: 100%;
+}
+
 .form {
   position: relative;
+  width: 100%;
 }
 
 .profileFormLayout {
@@ -22,6 +26,7 @@
   max-width: 100%;
 }
 
+/* Avatar Section */
 .avatar {
   width: 30%;
   display: flex;
@@ -34,23 +39,21 @@
 .avatar img {
   width: 20rem;
   height: 20rem;
-  border-radius: 9999px;
+  border-radius: 50%;
 }
 
 .upload {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
 }
 
-.uploadInput {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-30%);
+.uploadChooseFile {
+  max-width: 70%;
 }
 
-.sectionLayout form {
-  width: 100%;
-}
-
+/* Form Layout */
 .formRow {
   width: 100%;
   display: flex;
@@ -66,46 +69,6 @@
   flex: 1;
 }
 
-.formLabel {
-  text-align: left;
-  color: #a9aec5;
-  font-weight: 500;
-}
-
-.formInput,
-.formText {
-  padding: 0.5rem;
-  border-radius: 0.4rem;
-  height: 3.5rem;
-  box-sizing: border-box;
-  width: 100%;
-}
-
-.formText {
-  padding: 0.5rem 0;
-}
-.formInput {
-  border: 0.1rem rgb(224, 224, 224) solid;
-  /* background-color: #f3f3f3; */
-}
-
-.formText {
-  border: 0rem transparent solid;
-  background-color: transparent;
-}
-
-.formInput:focus {
-  border-color: #e91f63;
-  /* outline: none; */
-}
-
-.formSelect {
-  border: 0.1rem solid #ccc;
-  /* width: 30%; */
-  background-color: #fff;
-  cursor: pointer;
-}
-
 .formActions {
   display: flex;
   justify-content: center;
@@ -113,7 +76,8 @@
   margin-top: 30px;
 }
 
-.buttons {
+.buttons,
+.bottomButtons {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,15 +85,82 @@
   gap: 5rem;
 }
 
-.modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  /* z-index: 10; */
+/* Inputs and Labels */
+.formLabel {
+  color: #555;
+  font-weight: 500;
+  text-align: left;
 }
 
-/* for EnrollCourseForm table */
+.formInput,
+.formText,
+.formSelect {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.formText {
+  background-color: transparent;
+}
+
+.formInput {
+  padding-right: 40px;
+}
+
+.formInput:focus {
+  border-color: #e91f63;
+  outline: none;
+}
+
+.formSelect {
+  cursor: pointer;
+  line-height: 1.5;
+  background-color: #fff;
+}
+
+/* Password Field */
+.passwordContainer {
+  position: relative;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Modal and Overlay */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  z-index: 1001;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+/* Table */
 .courseTable {
   width: 100%;
   border-collapse: collapse;
@@ -161,61 +192,15 @@
   text-align: right;
 }
 
+/* Error Message */
 .error {
   color: red;
   margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
 }
 
-.passwordContainer {
-  position: relative;
-}
-
-.formInput {
-  padding-right: 40px;
-}
-
-.eyeIcon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-
-/* Form.module.css */
-
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  z-index: 1001;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  width: 80%;
-  max-width: 500px;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-}
-
-.bottomButtons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 4rem;
-  gap: 5rem;
-}
-
+/* Pre-styled Text */
 .preStyle {
   white-space: pre-wrap;
   font-family: inherit;

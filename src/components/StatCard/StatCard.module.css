@@ -5,12 +5,12 @@
 }
 
 h3 {
-  font-size: 3rem;
+  font-size: var(--font-size-large);
   margin-bottom: 1rem;
 }
 
 .top {
-  padding: 2rem;
+  padding: var(--padding-medium);
   display: flex;
   justify-content: space-between;
 }

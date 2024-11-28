@@ -111,11 +111,15 @@ function AnnouncementDetail() {
       <MainTitle goBack={true} title="Announcement Detail" />
       <EditContainer
         title={data?.Title}
-        editButtonText="Edit"
+        editButtonText={role === "Admin" || role === "Advisor" ? "Edit" : false}
         onClickEdit={handleEdit}
         onClickCancel={handleCancel}
         onClickSave={handleUpdate}
-        onClickDelete={() => handleDelete(data.Id)}
+        onClickDelete={
+          role === "Admin" || role === "Advisor"
+            ? () => handleDelete(data.Id)
+            : false
+        }
         isEdit={isEdit}
       >
         {isLoading ? (

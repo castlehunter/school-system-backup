@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import generalStyles from "../../generalStyles.module.css";
 import formStyles from "../Form/Form.module.css";
 import Button from "../../components/Button/Button";
-import { useNavigate } from "react-router-dom";
+import generalStyles from "../../generalStyles.module.css";
+import { Link, useNavigate } from "react-router-dom";
 import { getSecurityInfoByUserName } from "../../services/apiUser";
 
-function ForgotPassword() {
+function ForgotPassword({ setShowForgotPassword }) {
   const [username, setUsername] = useState("");
   const [securityQuestion, setSecurityQuestion] = useState("");
   const [securityAnswer, setSecurityAnswer] = useState("");
   const [answer, setAnswer] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleGetSecurityQuestion = async () => {
@@ -18,19 +19,19 @@ function ForgotPassword() {
       if (userData) {
         setSecurityQuestion(userData.SecurityQuestion);
         setSecurityAnswer(userData.SecurityAnswer);
+        setError("");
       } else {
-        alert("User not found");
+        setError("User not found");
       }
     } catch (error) {
       console.error("Error fetching security question:", error);
-      alert("Error fetching security question");
+      setError("Error: Please enter your user name!");
     }
   };
 
   const handleValidateAnswer = () => {
-    console.log(answer);
     if (securityAnswer === "" || securityAnswer !== answer) {
-      alert("Security answer is incorrect");
+      setError("Security answer is incorrect");
       return;
     }
     // Navigate to reset password form with the username as state
@@ -38,7 +39,9 @@ function ForgotPassword() {
   };
 
   return (
-    <div className={formStyles.form}>
+    <div>
+      <h1>Forgot Password?</h1>
+      <br />
       <div className={formStyles.formItem}>
         <label htmlFor="username" className={formStyles.formLabel}>
           Enter Username:
@@ -50,16 +53,18 @@ function ForgotPassword() {
           className={formStyles.formInput}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-        />
+        />{" "}
+        <Button onClickBtn={handleGetSecurityQuestion}>
+          Get Security Question
+        </Button>
       </div>
-
-      <Button onClickBtn={handleGetSecurityQuestion}>Get Security Question</Button>
 
       {securityQuestion && (
         <div className={formStyles.formItem}>
           <label htmlFor="securityAnswer" className={formStyles.formLabel}>
-            {securityQuestion}
+            Question: {securityQuestion}
           </label>
+          Answer:
           <input
             type="text"
             id="securityAnswer"
@@ -71,6 +76,17 @@ function ForgotPassword() {
           <Button onClickBtn={handleValidateAnswer}>Submit Answer</Button>
         </div>
       )}
+
+      {/* Display error message if any */}
+      {error && <div className={formStyles.error}>{error}</div>}
+      <div>
+        <Link
+          className={generalStyles.link}
+          onClick={() => setShowForgotPassword(false)}
+        >
+          Back to login
+        </Link>
+      </div>
     </div>
   );
 }

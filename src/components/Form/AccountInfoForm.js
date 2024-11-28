@@ -52,12 +52,7 @@ function AccountInfoForm({ userNo, showEditButton }) {
   }
 
   return (
-    <EditContainer
-      title="Account Information"
-      editButtonText="Edit"
-      headingType="containerHeading"
-      showEditButton={showEditButton}
-    >
+    <EditContainer title="Account Information">
       <div>
         <form>
           <div className={formStyles.formRow}>
@@ -102,7 +97,6 @@ function AccountInfoForm({ userNo, showEditButton }) {
                 name="CreatedAt"
                 className={formStyles.formInput}
                 disabled={true}
-                readOnly
                 value={inputData.CreatedAt}
               />
             </div>
@@ -116,7 +110,6 @@ function AccountInfoForm({ userNo, showEditButton }) {
                 name="LastLoginDate"
                 className={formStyles.formInput}
                 disabled={true}
-                readOnly
                 value={inputData.LastLoginDate}
               />
             </div>{" "}

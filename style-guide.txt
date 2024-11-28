@@ -6,7 +6,7 @@ main section margin: 3rem (main section is the section to the right of the sideb
 sidebar margin(except right): 3rem
 
 ......padding.........
-main section padding : 3rem;
+main section padding : --padding-medium 3rem;
 main section border-radius: 1.2rem;
 sidebar border-radius: 1.2rem;
 
@@ -67,7 +67,7 @@ Paragraph default: 1.6
 sidebar background-color: #4F4F52;
 
 logo 
-  background-color: #1d1d1d;
+  background-color: #2e2e2e
   border-bottom: 0.1rem solid #555;
 
 submenu title
@@ -85,15 +85,52 @@ sidebar item hover background:  #e91f63
 link background color(optional): #dbdbdb
 
 
+------------- stat card ---------------
+blue background-color: #17A2B8;
+
+
+
 
 ==============================================
                   BUTTONS
 ==============================================
-  border-radius: 0.5rem;
-  button font-size: 1.4rem(general style)
-  regular button padding: 0.8rem 2rem;
-  small button padding: 0.5rem 1rem;
+button border-radius: 0.5rem;
 
+.rose {
+  background-color: #e53371;
+}
+
+.rose:hover {
+  background-color: #cf1053;
+}
+
+.rose:active {
+  background-color: #e63673;
+}
+
+.blue {
+  background-color: #17A2B8;
+}
+
+.blue:hover {
+  background-color: #397ba5;
+}
+
+.blue:active {
+  background-color: #3b779c;
+}
+
+.green {
+  background-color: #2a7430;
+}
+
+.green:hover {
+  background-color: #195a11;
+}
+
+.green:active {
+  background-color: #14af47;
+}
 
   ===========================================
   Stat card 

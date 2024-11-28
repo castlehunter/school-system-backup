@@ -15,6 +15,7 @@ import CourseEdit from "./features/Course/CourseEdit";
 import CourseConfirm from "./features/Course/CourseConfirm";
 import AppLayout from "./ui/Layout/AppLayout.js";
 import MyCourses from "./features/MyCourses/MyCourses";
+import CourseDetails from "./features/MyCourses/CourseDetails.js";
 import TestGradeList from "./features/TestGrades/TestGradeList";
 import TeacherList from "./features/Teacher/TeacherList.js";
 import NewEnrollment from "./features/Enrollment/NewEnrollment.js";
@@ -134,8 +135,27 @@ function App() {
               element: <MyCourses />,
               title: "My Courses",
             },
+            // Moved course-details into "my-courses" to avoid error in Sidebar
+            {
+              path: "course-details",
+              element: <CourseDetails />,
+              title: "Course Details",
+              children: [
+                {
+                  index: true,
+                  element: <CourseDetails />,
+                  title: "Course Details",
+                },
+                {
+                  path: ":courseNo",
+                  element: <CourseDetails />,
+                  title: "Course Details",
+                },
+              ],
+            },
           ],
         },
+
         {
           path: "my-grades",
           element: <TestGradeList />,
@@ -289,7 +309,7 @@ function App() {
               path: "/programs/program-list",
               element: <ProgramList />,
               loader: getProgramList,
-              title: "Course Category List",
+              title: "Course Categories",
             },
             {
               path: "/programs/:programCode",
@@ -301,8 +321,7 @@ function App() {
             {
               path: "/programs/new-program",
               element: <NewProgram />,
-              title: "New Course Category",
-              hideInSidebar: true,
+              title: "New Category",
             },
           ],
         },

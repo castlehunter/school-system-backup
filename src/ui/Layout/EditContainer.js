@@ -1,5 +1,6 @@
 import generalStyles from "../../generalStyles.module.css";
 import Button from "../../components/Button/Button";
+import { Link } from "react-router-dom";
 
 function EditContainer({
   children,
@@ -10,9 +11,10 @@ function EditContainer({
   onClickSave,
   onClickCancel,
   onClickDelete,
+  bgColor = "white",
 }) {
   return (
-    <div className={generalStyles.container}>
+    <div className={`${generalStyles.container} ${generalStyles[bgColor]}`}>
       <div className={generalStyles.containerHeader}>
         {title && <div className={generalStyles.containerHeading}>{title}</div>}
         {editButtonText && (
@@ -22,7 +24,7 @@ function EditContainer({
                 <Button onClickBtn={onClickSave} size="small">
                   Save
                 </Button>
-                <span style={{ marginLeft: "2rem" }}>
+                <span>
                   <Button onClickBtn={onClickCancel} size="small">
                     Cancel
                   </Button>
@@ -33,15 +35,21 @@ function EditContainer({
                 {editButtonText}
               </Button>
             )}
-            {onClickDelete && (
-              <Button onClickBtn={onClickDelete} color="blue">
-                Delete
-              </Button>
-            )}
           </div>
         )}
       </div>
       <div>{children}</div>
+      {onClickDelete && (
+        <div className={generalStyles.deleteLink}>
+          <Link
+            onClick={onClickDelete}
+            className={generalStyles.link}
+            color="blue"
+          >
+            Delete
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

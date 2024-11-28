@@ -13,6 +13,7 @@ const CourseCard = ({
   classRoom,
   classTime,
   description,
+  courseId,
 }) => {
   const [showInfo, setShowInfo] = useState(false);
 
@@ -28,7 +29,7 @@ const CourseCard = ({
     <div className={styles["course-card"]}>
       <div className={styles["course-banner"]}>
         {" "}
-        <Link>
+        <Link to={`/course-details/${courseId}`}>
           <img
             src="https://llcccnztkkxlkzblokbt.supabase.co/storage/v1/object/public/ProfileImage/living-with-cats-dogs-689902.jpg"
             alt="Retrieve course banner from database"

@@ -149,9 +149,13 @@ function ResetPasswordForm({ data }) {
             </div>
           </div>
         </div>
-        <div className={generalStyles.bottomButtons}>
-          <Button onClickBtn={handleClickReset}>Reset Password</Button>
-          <Button onClickBtn={handleClickCancel}>Cancel</Button>
+        <div className={formStyles.bottomButtons}>
+          <Button onClickBtn={handleClickReset} size="large">
+            Reset
+          </Button>
+          <Button onClickBtn={handleClickCancel} size="large">
+            Cancel
+          </Button>
         </div>
       </div>
     </EditContainer>
