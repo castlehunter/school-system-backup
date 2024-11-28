@@ -220,7 +220,7 @@ export async function getFullNameByNo(userNo) {
     : null;
 }
 
-// ============== This is a draft ============
+
 export async function CreateUser(newUser) {
   try {
     // 1. Search Role table for RoleID
@@ -262,6 +262,21 @@ export async function CreateUser(newUser) {
       console.error("SchoolID not found for the given School number.");
       return;
     }
+
+    // 4. Search For duplicate username
+    
+    /*const { userData , userError } = await supabase
+      .from("Users")
+      .select("UserName")
+      .eq("UserName",newUser.Username)
+      .single();
+    
+    if (userError) {
+      console.log("no same username");
+    } else {
+      alert("Username already exist");
+      return;
+    }*/
 
     // 3. Insert User record
     const { data, error } = await supabase.from("Users").insert([
@@ -544,5 +559,27 @@ export async function deleteUser(userNo) {
   } catch (error) {
     console.error("Unexpected error during user deletion:", error);
     throw error;
+  }
+}
+
+export async function checkUsernameExists(username) {
+  try {
+    const { data, error } = await supabase
+      .from("Users")        // Replace 'Users' with the actual name of your table
+      .select("UserName")   // You can select only the 'UserName' column to check if it exists
+      .eq("UserName", username);
+
+    if (error) {
+        console.error("Error checking username:", error);
+        throw error;
+      }
+    
+
+    // If no error and data is returned, username exists
+    return data.length > 0; // Return true if data exists, false otherwise
+
+  } catch (err) {
+    console.error("Unexpected error during username check:", err);
+    throw err;
   }
 }

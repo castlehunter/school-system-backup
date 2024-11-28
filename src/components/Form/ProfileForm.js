@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "../Button/Button.js";
 import styles from "./Form.module.css";
-import { CreateMultipleUsers, CreateUser } from "../../services/apiUser.js";
+import { CreateMultipleUsers, CreateUser, checkUsernameExists } from "../../services/apiUser.js";
 import EditContainer from "../../ui/Layout/EditContainer.js";
 import ModalBox from "../ModalBox/ModalBox.js";
 import * as XLSX from "xlsx";
@@ -126,8 +126,28 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       });
   }
 
-  function handleSubmit(e) {
+  async function handleCheckUsername(username) {
+    try {
+      const exists = await checkUsernameExists(username);
+      if (exists) {
+        alert('Username already exists. Please choose another one.');
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Failed to check username:", error);
+    }
+  }
+
+ async function handleSubmit(e) {
     e.preventDefault();
+
+    const ans = await handleCheckUsername(inputData.UserName);
+    if(ans) 
+    {
+      return;
+    }
 
     const newUser = {
       Username: inputData.UserName,
