@@ -106,9 +106,9 @@ function Announcements() {
         currPage={currPage}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
-        onClickAddBtn={role === "Admin" || (role === "Advisor" && handleAddBtn)}
+        onClickAddBtn={(role === "Admin" || role === "Advisor") && handleAddBtn}
         onClickBulkDeleteBtn={
-          role === "Admin" || (role === "Advisor" && handleBulkDelete)
+          (role === "Admin" || role === "Advisor") && handleBulkDelete
         }
       >
         {isLoading ? (

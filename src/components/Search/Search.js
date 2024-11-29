@@ -3,7 +3,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import icons from "../../ui/Icons/icons";
 
-function Search({ searchItems, colorType }) {
+function Search({ searchMenuItems, colorType, onSearch, menuSearch }) {
   const [searchBarIcon, setSearchBarIcon] = useState(icons.SearchIcon);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -13,18 +13,27 @@ function Search({ searchItems, colorType }) {
     setSearchQuery(query);
     setSearchBarIcon(query ? icons.CloseIcon : icons.SearchIcon);
 
-    const filteredResults = searchItems.filter((item) =>
-      item.title
-        .toLowerCase()
-        .replace(/\s+/g, "")
-        .includes(query.replace(/\s+/g, ""))
-    );
+    if (searchMenuItems) {
+      const filteredResults = searchMenuItems.filter((item) =>
+        item.title
+          .toLowerCase()
+          .replace(/\s+/g, "")
+          .includes(query.replace(/\s+/g, ""))
+      );
 
-    setSearchResults(filteredResults);
+      setSearchResults(filteredResults);
+    }
+
+    if (onSearch) {
+      console.log("onSearch", query);
+      onSearch(query);
+    }
   }
 
   return (
     <div className={styles.searchContainer}>
+      {" "}
+      {console.log("setSearchQuery", searchQuery)}
       <div className={styles.searchbar}>
         <input
           type="text"
@@ -43,13 +52,15 @@ function Search({ searchItems, colorType }) {
           {searchBarIcon && <>{searchBarIcon}</>}
         </div>
       </div>
-      {searchQuery && searchResults.length > 0 && (
+      {/* If searchQuery, show search results in a dropdown list */}
+      {searchQuery && menuSearch && searchResults.length > 0 && (
         <div className={styles.dropdown}>
           {searchResults.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               className={styles.dropdownItem}
+              // When clicking on one of the items, clear the search bar
               onClick={() => setSearchQuery("")}
             >
               {item.title}

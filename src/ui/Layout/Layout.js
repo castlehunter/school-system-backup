@@ -80,7 +80,7 @@ function Layout({ children, breadcrumb, userNo }) {
       try {
         const avatar = await getAvatarUrlByUserNo(userNo);
 
-        if (!avatar) {
+        if (!avatar || avatar.trim() === "") {
           setAvatarUrl(DefaultAvatar);
         } else {
           setAvatarUrl(avatar);

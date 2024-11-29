@@ -220,7 +220,6 @@ export async function getFullNameByNo(userNo) {
     : null;
 }
 
-
 export async function CreateUser(newUser) {
   try {
     // 1. Search Role table for RoleID
@@ -262,7 +261,6 @@ export async function CreateUser(newUser) {
       console.error("SchoolID not found for the given School number.");
       return;
     }
-
 
     // 3. Insert User record
     const { data, error } = await supabase.from("Users").insert([
@@ -550,19 +548,17 @@ export async function deleteUser(userNo) {
 export async function checkUsernameExists(username) {
   try {
     const { data, error } = await supabase
-      .from("Users")        // Replace 'Users' with the actual name of your table
-      .select("UserName")   // You can select only the 'UserName' column to check if it exists
+      .from("Users") // Replace 'Users' with the actual name of your table
+      .select("UserName") // You can select only the 'UserName' column to check if it exists
       .eq("UserName", username);
 
     if (error) {
-        console.error("Error checking username:", error);
-        throw error;
-      }
-    
+      console.error("Error checking username:", error);
+      throw error;
+    }
 
     // If no error and data is returned, username exists
     return data.length > 0; // Return true if data exists, false otherwise
-
   } catch (err) {
     console.error("Unexpected error during username check:", err);
     throw err;
@@ -570,17 +566,38 @@ export async function checkUsernameExists(username) {
 }
 
 export async function getAvatarUrlByUserNo(userNo) {
+  const { data: url, error } = await supabase
+    .from("Users")
+    .select("AvatarURL")
+    .eq("UserNo", userNo)
+    .single();
 
-    const { data: url, error } = await supabase
+  if (error) {
+    console.error("Error retrieving user avatar:".error);
+  }
+
+  return url.AvatarURL;
+}
+
+export async function searchUsers(keyword) {
+  try {
+    const { data, error } = await supabase
       .from("Users")
-      .select("AvatarURL")
-      .eq("UserNo", userNo)
-      .single();
+      .select(
+        `UserNo, UserName, FirstName, LastName, Email, CreatedAt, HomeAddress, DateOfBirth, PhoneNumber, Roles(RoleName)`
+      )
+      .or(
+        `UserName.ilike.%${keyword}%,FirstName.ilike.%${keyword}%,LastName.ilike.%${keyword}%,Email.ilike.%${keyword}%,HomeAddress.ilike.%${keyword}%,PhoneNumber.ilike.%${keyword}%`
+      );
 
-      if(error) {
-        console.error("Error retrieving user avatar:". error)
-      }
-    
-      return url;
-  
+    if (error) {
+      console.error("Error searching users:", error.message);
+      throw new Error("Search user fail");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("ERROR:", error.message);
+    throw error;
+  }
 }

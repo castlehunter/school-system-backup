@@ -22,6 +22,7 @@ function TableContainer({
   onClickSort,
   filterOptions,
   onClickFilter,
+  onSearch,
 }) {
   return (
     <div className={generalStyles.container}>
@@ -74,7 +75,9 @@ function TableContainer({
             </div>
           )}
 
-          <Search colorType="light" />
+          {/* ========= Search Bar ========== */}
+          <Search colorType="light" onSearch={onSearch} />
+          {/* =============================== */}
         </div>
         <div className={styles.entriesPerPage}>
           <span>Showing</span>

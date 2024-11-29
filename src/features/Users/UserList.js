@@ -7,6 +7,7 @@ import MainTitle from "../../ui/MainTitle/MainTitle";
 import { sortUsersBy } from "../../services/apiUser";
 import { FilterUsersByRole } from "../../services/apiUser";
 import { getUsers } from "../../services/apiUser";
+import { searchUsers } from "../../services/apiUser";
 
 function UserList() {
   const initialUserData = useLoaderData() || [];
@@ -17,9 +18,9 @@ function UserList() {
 
   const totalPages = Math.ceil(userData.length / rowsPerPage);
 
-  if (!userData || userData.length === 0) {
-    return <p>No users found.</p>;
-  }
+  // if (!userData || userData.length === 0) {
+  //   return <p>No users found.</p>;
+  // }
 
   function handlePageChange(page) {
     setCurrPage(page);
@@ -49,6 +50,16 @@ function UserList() {
     }
   }
 
+  async function handleSearch(query) {
+    try {
+      const results = await searchUsers(query);
+      console.log("Search Results:", results);
+      setUserData(results);
+    } catch (error) {
+      console.error("Error searching users:", error);
+    }
+  }
+
   return (
     <>
       <MainTitle title="User List" />
@@ -69,6 +80,7 @@ function UserList() {
         ]}
         onClickFilter={handleFilter}
         filterOptions={["All", "Admin", "Advisor", "Teacher", "Student"]}
+        onSearch={handleSearch}
       >
         <UserTable
           data={userData}
