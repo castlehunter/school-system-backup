@@ -12,6 +12,7 @@ function TeacherList() {
   const [currPage, setCurrPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const totalPages = Math.ceil(initialTeachersData.length / rowsPerPage);
+  const [searchQuery, setSearchQuery] = useState("");
 
   if (!initialTeachersData || initialTeachersData.length === 0) {
     return <p>No teachers found.</p>;
@@ -35,6 +36,27 @@ function TeacherList() {
     }
   }
 
+  function handleSearch(query) {
+    setSearchQuery(query);
+    if (query === "") {
+      // If query is empty, reset the teacherData to initialTeachersData
+      setTeacherData(initialTeachersData);
+    } else {
+      // Filter teacher data based on search query
+      const filteredData = teacherData.filter((teacher) => {
+        return (
+          teacher.Users.FirstName.toLowerCase().includes(query.toLowerCase()) ||
+          teacher.Users.Email.toLowerCase().includes(query.toLowerCase()) ||
+          teacher.Users.PhoneNumber.toLowerCase().includes(
+            query.toLowerCase()
+          ) ||
+          teacher.Users.LastName.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+      setTeacherData(filteredData);
+    }
+  }
+
   return (
     <>
       <MainTitle title="Teacher List" />
@@ -44,14 +66,7 @@ function TeacherList() {
         currPage={currPage}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
-        onClickSort={handleSort}
-        sortOptions={[
-          "User No",
-          "First Name",
-          "Last Name",
-          "Date Of Birth",
-          "Created At",
-        ]}
+        onSearch={handleSearch}
       >
         <TeacherTable
           data={teacherData}

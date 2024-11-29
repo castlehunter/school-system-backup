@@ -4,25 +4,27 @@ import TableContainer from "../../ui/Layout/TableContainer";
 import Loader from "../../ui/Loader";
 import MainTitle from "../../ui/MainTitle/MainTitle";
 import { useLoaderData, useNavigate, useNavigation } from "react-router-dom";
-import { getStudents } from "../../services/apiStudent";
+import { getStudents, searchStudents } from "../../services/apiStudent";
 function StudentList() {
   const initialStudentData = useLoaderData() || [];
   const [studentData, setStudentData] = useState(initialStudentData);
-  const navigation = useNavigation();
-  const isLoading = navigation.state === "loading";
+  const [isLoading, setIsLoading] = useState(true);
   const [currPage, setCurrPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const navigate = useNavigate();
+
   useEffect(() => {
     async function fetchData() {
       try {
+        setIsLoading(true);
         const data = await getStudents();
         setStudentData(data);
       } catch (error) {
         console.error("Failed to fetch student data:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
-
     fetchData();
   }, []);
 
@@ -37,6 +39,18 @@ function StudentList() {
     setCurrPage(1);
   }
 
+  function handleSearch(query) {
+    const filteredData = initialStudentData.filter((student) => {
+      return (
+        student.Users.FirstName.toLowerCase().includes(query.toLowerCase()) ||
+        student.Users.LastName.toLowerCase().includes(query.toLowerCase()) ||
+        student.Users.Email.toLowerCase().includes(query.toLowerCase()) ||
+        student.Users.PhoneNumber.toLowerCase().includes(query.toLowerCase())
+      );
+    });
+    setStudentData(filteredData);
+  }
+
   return (
     <>
       <MainTitle title="Student List" />
@@ -46,6 +60,7 @@ function StudentList() {
         currPage={currPage}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
+        onSearch={handleSearch}
       >
         {isLoading ? (
           <Loader />

@@ -4,6 +4,8 @@ import CourseTable from "./CourseTable";
 import { getCourse, getCourses } from "../../services/apiCourse";
 import MainTitle from "../../ui/MainTitle/MainTitle";
 import { useNavigate } from "react-router-dom";
+import { searchCourses } from "../../services/apiCourse";
+import { sortCoursesBy } from "../../services/apiCourse";
 function CourseList() {
   const [courseData, setCourseData] = useState([]);
   const [error, setError] = useState(null);
@@ -45,6 +47,25 @@ function CourseList() {
     navigate("/courses/new-course");
   }
 
+  async function handleSearch(query) {
+    try {
+      const results = await searchCourses(query);
+      console.log("Search Results:", results);
+      setCourseData(results);
+    } catch (error) {
+      console.error("Error searching courses:", error);
+    }
+  }
+
+  async function handleSort(fieldName) {
+    try {
+      const sortedData = await sortCoursesBy(fieldName);
+      setCourseData(sortedData);
+    } catch (error) {
+      console.error("Error sorting user table:", error);
+    }
+  }
+
   return (
     <>
       <MainTitle title="Course List" />
@@ -55,6 +76,9 @@ function CourseList() {
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleRowsPerPageChange}
         onClickAddBtn={handleAddBtn}
+        onSearch={handleSearch}
+        sortOptions={["Course No", "Course Name"]}
+        onClickSort={handleSort}
       >
         <CourseTable
           data={courseData}

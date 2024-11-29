@@ -290,3 +290,8 @@ export async function getStudentCoursesByUserID(userID) {
     throw error;
   }
 }
+
+// Search students based on a keyword
+export async function searchStudents(keyword) {
+  // Used front-end search to implement this feature
+}

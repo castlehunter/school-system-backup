@@ -83,15 +83,15 @@ export async function deleteCourse(courseID) {
 }
 
 export async function updateCourse(courseNo, updatedData) {
-  console.log('Updating course with courseNo:', courseNo);
-  console.log('Data being updated:', updatedData);
+  console.log("Updating course with courseNo:", courseNo);
+  console.log("Data being updated:", updatedData);
 
   try {
     const { data, error } = await supabase
       .from("Courses")
       .update(updatedData)
       .eq("CourseNo", courseNo)
-      .select('*'); 
+      .select("*");
 
     if (error) {
       console.error("Supabase update error:", error);
@@ -99,15 +99,12 @@ export async function updateCourse(courseNo, updatedData) {
     }
 
     console.log("Update successful, returned data:", data);
-    return data; 
+    return data;
   } catch (error) {
     console.error("General update error:", error);
     throw error;
   }
 }
-
-
-
 
 export async function addCourse(courseData) {
   const {
@@ -180,4 +177,43 @@ export async function getTeacherFullNameByCourseID(courseID) {
 
   const fullName = `${userData.FirstName} ${userData.LastName}`;
   return fullName;
+}
+
+export async function searchCourses(query) {
+  if (!query) return await getCourses();
+
+  const { data, error } = await supabase
+    .from("Courses")
+    .select("*")
+    .ilike("CourseName", `%${query}%`)
+    .or(`Description.ilike.%${query}%`)
+    .order("CourseName", { ascending: true });
+
+  if (error) {
+    console.error(error);
+    throw new Error("Failed to search courses");
+  }
+
+  return data;
+}
+
+export async function sortCoursesBy(fieldName = "CourseNo", ascending = true) {
+  try {
+    console.log("Sorting by field:", fieldName, "Ascending:", ascending);
+    const { data, error } = await supabase
+      .from("Courses")
+      .select(`*`)
+      .order(fieldName, { ascending });
+
+    if (error) {
+      console.error("Error fetching sorted courses:", error.message);
+      throw new Error("Failed to load sorted courses");
+    }
+
+    console.log("Sorted Courses:", data);
+    return data;
+  } catch (error) {
+    console.error("Unexpected error in sortCoursesBy:", error.message);
+    throw error;
+  }
 }

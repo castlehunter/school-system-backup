@@ -25,15 +25,12 @@ function Search({ searchMenuItems, colorType, onSearch, menuSearch }) {
     }
 
     if (onSearch) {
-      console.log("onSearch", query);
       onSearch(query);
     }
   }
 
   return (
     <div className={styles.searchContainer}>
-      {" "}
-      {console.log("setSearchQuery", searchQuery)}
       <div className={styles.searchbar}>
         <input
           type="text"

@@ -8,8 +8,8 @@ import useCheckbox from "../../hooks/useCheckbox";
 import Button from "../../components/Button/Button";
 
 function CourseTable({ data, rowsPerPage, currPage }) {
-  const [sortOrder, setSortOrder] = useState("asc"); 
-  const [searchTerm, setSearchTerm] = useState(""); 
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const {
     isAllSelected,
@@ -20,30 +20,30 @@ function CourseTable({ data, rowsPerPage, currPage }) {
 
   const navigate = useNavigate();
 
-  const filteredData = data
-    .filter((course) =>
-      course.CourseName.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .sort((a, b) => {
-      const nameA = a.CourseName.toLowerCase();
-      const nameB = b.CourseName.toLowerCase();
+  // const filteredData = data
+  //   .filter((course) =>
+  //     course.CourseName.toLowerCase().includes(searchTerm.toLowerCase())
+  //   )
+  //   .sort((a, b) => {
+  //     const nameA = a.CourseName.toLowerCase();
+  //     const nameB = b.CourseName.toLowerCase();
 
-      if (sortOrder === "asc") {
-        return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
-      } else {
-        return nameA > nameB ? -1 : nameA < nameB ? 1 : 0;
-      }
-    });
+  //     if (sortOrder === "asc") {
+  //       return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
+  //     } else {
+  //       return nameA > nameB ? -1 : nameA < nameB ? 1 : 0;
+  //     }
+  //   });
 
-  const currData = filteredData.slice(
+  const currData = data.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
 
   return (
     <div>
-      <div >
-      <div >
+      <div>
+        {/* <div >
         <input
           type="text"
           placeholder="Search by course name"
@@ -59,7 +59,7 @@ function CourseTable({ data, rowsPerPage, currPage }) {
         >
           Sort {sortOrder === "asc" ? "A-Z" : "Z-A"}
         </button>
-        </div>
+        </div> */}
       </div>
 
       <table className={styles.table}>
@@ -76,7 +76,7 @@ function CourseTable({ data, rowsPerPage, currPage }) {
               />
             </th>
             <th>S/N</th>
-            <th>Course Code</th>
+            <th>Course No.</th>
             <th>Course Name</th>
             <th>Start Date</th>
             <th>End Date</th>

@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import {
   getAnnouncementById,
@@ -19,6 +19,7 @@ function AnnouncementDetail() {
     Title: "",
     Content: "",
   });
+  const [notFound, setNotFound] = useState(false);
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
 
@@ -28,6 +29,10 @@ function AnnouncementDetail() {
         setIsLoading(true);
         const data = await getAnnouncementById(id);
         setData(data);
+        if (!data) {
+          setNotFound(true);
+          return;
+        }
         if (data) {
           setInputData({
             Title: data.Title,
@@ -42,6 +47,10 @@ function AnnouncementDetail() {
     }
     fetchData();
   }, [id]);
+
+  if (notFound) {
+    return <Navigate to="/notfound" replace />;
+  }
 
   function handleEdit() {
     setIsEdit(true);

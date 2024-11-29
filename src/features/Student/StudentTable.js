@@ -1,5 +1,4 @@
 import React from "react";
-import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
 import { Link } from "react-router-dom";
 import Loader from "../../ui/Loader";
@@ -26,9 +25,9 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
   );
   const navigate = useNavigate();
 
-  // function handleViewClick(StudentID) {
-  //   navigate(`/students/${StudentID}`);
-  // }
+  if (!studentData || studentData.length === 0) {
+    return <p>No students available Or Student not found!</p>;
+  }
 
   return (
     <table className={styles.table}>

@@ -9,10 +9,6 @@ import Overview from "./features/Dashboard/Overview";
 import MyAccount from "./features/Dashboard/MyAccount";
 import CourseList from "./features/Course/CourseList";
 import NewCourse from "./features/Course/NewCourse";
-import CourseDetailForm from "./features/Course/Detail";
-
-import CourseEdit from "./features/Course/CourseEdit";
-import CourseConfirm from "./features/Course/CourseConfirm";
 import AppLayout from "./ui/Layout/AppLayout.js";
 import MyCourses from "./features/MyCourses/MyCourses";
 import CourseDetails from "./features/MyCourses/CourseDetails.js";
@@ -345,17 +341,15 @@ function App() {
             {
               path: "/enrollments/:EnrollmentID",
               element: <NewEnrollment />,
-              //loader: getProgramList,
               title: "Update Enrollment",
               hideInSidebar: true,
             },
-            {
-              path: "/enrollments/edit/:EnrollmentID",
-              element: <NewEnrollment />,
-              //loader: getProgramList,
-              title: "Update Enrollment",
-              hideInSidebar: true,
-            },
+            // {
+            //   path: "/enrollments/edit/:EnrollmentID",
+            //   element: <NewEnrollment />,
+            //   title: "Update Enrollment",
+            //   hideInSidebar: true,
+            // },
             {
               path: "/enrollments/bulk-edit",
               element: <BulkEditEnrollmentForm />,
