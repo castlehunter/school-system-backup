@@ -13,10 +13,6 @@
 /* Small desktop */
 @media (max-width: 1366px) {
   :root {
-    --padding-small: 1.5rem;
-    --padding-medium: 2rem;
-    --padding-large: 3.5rem;
-
     --line-height-large: 3rem;
   }
 }
@@ -24,8 +20,8 @@
 /* Tablet: eg. ipad pro */
 @media (max-width: 1024px) {
   :root {
-    --padding-small: 1rem;
-    --padding-medium: 1.8rem;
+    --padding-small: 1.5rem;
+    --padding-medium: 2.6rem;
     --padding-large: 3rem;
 
     --font-size-large: 3rem;
@@ -37,9 +33,9 @@
 /* Smaller tablet */
 @media (max-width: 768px) {
   :root {
-    --padding-small: 0.5rem;
-    --padding-medium: 1.5rem;
-    --padding-large: 12px;
+    --padding-small: 1.5rem;
+    --padding-medium: 2.4rem;
+    --padding-large: 2.6rem;
 
     --font-size-large: 2.8rem;
 

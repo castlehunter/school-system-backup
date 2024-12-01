@@ -75,7 +75,7 @@ const icons = {
   ),
   BurgerIcon: (
     className = "",
-    style = { fill: "#ffffff", width: "3rem", height: "2.5rem" }
+    style = { fill: "#333333", width: "3rem", height: "2.5rem" }
   ) => <RiMenuLine className={className} style={style} />,
 };
 

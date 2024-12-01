@@ -38,6 +38,7 @@ function Overview() {
   const [openedAnnouncement, setOpenedAnnouncement] = useState(null);
   const { unreadCount, setUnreadCount } = useUnreadCount();
 
+  const navigate = useNavigate();
   const formattedDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
@@ -99,28 +100,28 @@ function Overview() {
             unit="Students"
             icon={icons.StudentIcon(styles.largeIcon)}
             bgcolor="bgcolor1"
-            link="/students"
+            link="/students/student-list"
           />
           <StatCard
             number={teacherCount}
             unit="Teachers"
             icon={icons.TeacherIcon(styles.largeIcon)}
             bgcolor="bgcolor2"
-            link="/teachers"
+            link="/teachers/teacher-list"
           />
           <StatCard
             number={courseCount}
             unit="Courses"
             icon={icons.CourseIcon(styles.largeIcon)}
             bgcolor="bgcolor3"
-            link="/courses"
+            link="/courses/course-list"
           />
           <StatCard
             number={enrollmentCount}
             unit="Enrollments"
             icon={icons.EnrollmentIcon(styles.largeIcon)}
             bgcolor="bgcolor4"
-            link="/enrollments"
+            link="/enrollments/enrollment-list"
           />
         </>
       );
@@ -311,7 +312,20 @@ function Overview() {
         </div>
 
         <div className={styles.secondaryColumn}>
-          <EditContainer bgColor="highlight" title={formattedDate}>
+          <EditContainer
+            bgColor="highlight"
+            title={formattedDate}
+            onClickEdit={() => {
+              if (loginRole === "Teacher" || loginRole === "Student") {
+                navigate("/my-calendar");
+              }
+              console.log(loginRole);
+            }}
+            editButtonText={
+              (loginRole === "Teacher" || loginRole === "Student") &&
+              "Full Calendar"
+            }
+          >
             <Calendar
               plugins={[dayGridPlugin, interactionPlugin, timeGridWeekPlugin]}
               initialView="dayGridMonth"
