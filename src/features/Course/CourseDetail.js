@@ -355,7 +355,7 @@ function CourseDetail() {
           <div>No course data found.</div>
         )}
 
-        <EditContainer title="Enrolled Students">
+        {/* <EditContainer title="Enrolled Students">
           <div className={formStyles.formContainer}>
             <table className={formStyles.courseTable}>
               <thead>
@@ -380,7 +380,7 @@ function CourseDetail() {
               </tbody>
             </table>
           </div>
-        </EditContainer>
+        </EditContainer> */}
       </div>
     </div>
   );
