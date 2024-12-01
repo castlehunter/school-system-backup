@@ -121,7 +121,7 @@ function AnnouncementTable({
               </td>
               <td>
                 {role === "Admin" || role === "Advisor" ? (
-                  <div className={styles.recordButtons}>
+                  <div className={styles.rowButtons}>
                     <Button
                       onClickBtn={() =>
                         handleClickAnnouncement(announcement.Id)

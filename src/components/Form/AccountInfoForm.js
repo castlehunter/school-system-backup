@@ -69,23 +69,8 @@ function AccountInfoForm({ userNo, showEditButton }) {
                 value={inputData.RoleName}
                 onChange={handleChange}
               />
-            </div>{" "}
-            <div className={formStyles.formItem}>
-              <label htmlFor="isAdmin" className={formStyles.formLabel}>
-                Is Admin
-              </label>
-              <select
-                value={inputData.IsAdmin}
-                className={formStyles.formInput}
-                name="IsAdmin"
-                disabled={!isEdit}
-              >
-                <option value={true}>Yes</option>
-                <option value={false}>No</option>
-              </select>
             </div>
           </div>
-
           <div className={formStyles.formRow}>
             <div className={formStyles.formItem}>
               <label htmlFor="created-at" className={formStyles.formLabel}>
@@ -100,21 +85,38 @@ function AccountInfoForm({ userNo, showEditButton }) {
                 value={inputData.CreatedAt}
               />
             </div>
+          </div>
+          <div className={formStyles.formRow}>
             <div className={formStyles.formItem}>
-              <label htmlFor="lastLoginDate" className={formStyles.formLabel}>
-                Last Login Date
+              <label htmlFor="isAdmin" className={formStyles.formLabel}>
+                I.D. Verified
               </label>
-              <input
-                type="date"
-                id="lastLoginDate"
-                name="LastLoginDate"
+              <select
+                value={inputData.IsAdmin}
                 className={formStyles.formInput}
-                disabled={true}
-                value={inputData.LastLoginDate}
-              />
-            </div>{" "}
+                name="IsAdmin"
+                disabled={!isEdit}
+              >
+                <option value={true}>Yes</option>
+                <option value={false}>No</option>
+              </select>
+            </div>
           </div>
 
+          {/* <div className={formStyles.formItem}>
+            <label htmlFor="lastLoginDate" className={formStyles.formLabel}>
+              Last Login Date
+            </label>
+            <input
+              type="date"
+              id="lastLoginDate"
+              name="LastLoginDate"
+              className={formStyles.formInput}
+              disabled={true}
+              value={inputData.LastLoginDate}
+            />
+          </div>{" "} */}
+          {/* 
           <div className={formStyles.formRow}>
             <div className={formStyles.formItem}>
               <label htmlFor="lock-account" className={formStyles.formLabel}>
@@ -146,7 +148,7 @@ function AccountInfoForm({ userNo, showEditButton }) {
                 disabled={!isEdit}
               />
             </div>
-          </div>
+          </div> */}
         </form>
       </div>
     </EditContainer>

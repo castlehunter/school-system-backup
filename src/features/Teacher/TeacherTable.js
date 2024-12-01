@@ -68,7 +68,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
             <td>{Teacher.Users.PhoneNumber}</td>
             <td>{Teacher.Users.HomeAddress}</td>
             <td>
-              <div className={styles.recordButtons}>
+              <div className={styles.rowButtons}>
                 <Button
                   onClickBtn={() =>
                     navigate(`/teachers/${Teacher.Users.UserNo}`)

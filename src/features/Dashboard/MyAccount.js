@@ -10,7 +10,7 @@ function MyAccount() {
     <>
       <MainTitle title="My Account" />
       <div className={styles.myAccountLayout}>
-        <PersonalInfoForm userNo={userNo} />
+        <PersonalInfoForm userNo={userNo} showDeleteButton={false} />
         <SecurityInfoForm userNo={userNo} />
         <AccountInfoForm userNo={userNo} />
       </div>

@@ -19,15 +19,17 @@ const initialInputData = {
   DateOfBirth: "",
   PhoneNumber: "",
   HomeAddress: "",
-  IsAdmin: Boolean,
+  IsAdmin: false,
   RoleName: "",
   SecurityQuestion: "",
   SecurityAnswer: "",
+  Email: "",
 };
 
 function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   const [inputData, setInputData] = useState(initialInputData);
   const [excelData, setExcelData] = useState([]);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,11 +46,12 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
         RoleName: formData.Users.RoleName || "",
         SecurityQuestion: formData.Users.SecurityQuestion || "",
         SecurityAnswer: formData.Users.SecurityAnswer || "",
+        Email: formData.Users.Email || "",
       });
     }
   }, [formData]);
 
-  // implement modal functionality
+  // Modal functionality
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function handleOpenModal() {
@@ -59,9 +62,6 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     setIsModalOpen(false);
     navigate("/users/user-list");
   }
-
-  // Debug
-  // console.log("Form Data is", formData);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -78,8 +78,6 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       return;
     }
 
-    //console.log("File selected:", file); // Debug: Check the selected file
-
     var reader = new FileReader();
     reader.onload = (event) => {
       const arrayBuffer = event.target.result;
@@ -87,10 +85,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
         type: "array",
         cellDates: true,
       });
-
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
-
       const rawData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
       if (rawData.length < 2) {
@@ -100,8 +96,6 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
 
       const headers = rawData[0];
       const dataRows = rawData.slice(1);
-
-      // Map each row to an object using the headers
       const formattedData = dataRows.map((row) => {
         const rowObj = {};
         headers.forEach((header, index) => {
@@ -111,21 +105,17 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       });
       setExcelData(formattedData);
     };
-
     reader.onerror = () => {
       console.error("Failed to read file");
     };
-
     reader.readAsArrayBuffer(file);
   }
 
   function insertDataExcel(e) {
     e.preventDefault();
-
-    console.log(excelData);
     CreateMultipleUsers(excelData)
       .then((response) => {
-        if (response == true) handleOpenModal();
+        if (response === true) handleOpenModal();
       })
       .catch((error) => {
         console.error("Error inserting data:", error);
@@ -146,9 +136,61 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     }
   }
 
+  // Validation function for all fields
+  function validateForm() {
+    const newErrors = {};
+
+    // Check for empty fields
+    if (!inputData.UserName) newErrors.UserName = "Username is required.";
+    if (!inputData.PasswordHash)
+      newErrors.PasswordHash = "Password is required.";
+    if (!inputData.FirstName) newErrors.FirstName = "First Name is required.";
+    if (!inputData.LastName) newErrors.LastName = "Last Name is required.";
+    if (!inputData.Email) newErrors.Email = "Email is required.";
+    if (!inputData.RoleName) newErrors.RoleName = "Role is required.";
+    if (!inputData.DateOfBirth)
+      newErrors.DateOfBirth = "Date of Birth is required.";
+    if (!inputData.PhoneNumber)
+      newErrors.PhoneNumber = "Phone number is required.";
+    if (!inputData.HomeAddress)
+      newErrors.HomeAddress = "Home address is required.";
+    if (!inputData.SecurityQuestion)
+      newErrors.SecurityQuestion = "Security question is required.";
+    if (!inputData.SecurityAnswer)
+      newErrors.SecurityAnswer = "Security answer is required.";
+
+    // Password length check
+    if (inputData.PasswordHash && inputData.PasswordHash.length < 6) {
+      newErrors.PasswordHash = "Password must be at least 6 characters.";
+    }
+
+    // Email format check
+    if (inputData.Email && !/\S+@\S+\.\S+/.test(inputData.Email)) {
+      newErrors.Email = "Email is not valid.";
+    }
+
+    // Check if FirstName and LastName contain only letters
+    const nameRegex = /^[A-Za-z]+$/;
+    if (inputData.FirstName && !nameRegex.test(inputData.FirstName)) {
+      newErrors.FirstName = "First Name must only contain letters.";
+    }
+
+    if (inputData.LastName && !nameRegex.test(inputData.LastName)) {
+      newErrors.LastName = "Last Name must only contain letters.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // If no errors, form is valid
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
 
+    if (!validateForm()) {
+      return; // If form is invalid, do not proceed
+    }
+
+    // Proceed with form submission logic if valid
     const ans = await handleCheckUsername(inputData.UserName);
     if (ans) {
       return;
@@ -169,49 +211,56 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       SecurityQuestion: inputData.SecurityQuestion,
       SecurityAnswer: inputData.SecurityAnswer,
     };
-    console.log(newUser);
+
     CreateUser(newUser)
       .then((response) => {
-        if (response == true) handleOpenModal();
+        if (response === true) handleOpenModal();
       })
       .catch((error) => {
         console.error("Error creating user:", error);
       });
   }
 
+  function handleCancel(e) {
+    e.preventDefault();
+    navigate("/users/user-list");
+  }
+
   return (
     <div className={styles.profileFormLayout}>
       <EditContainer>
-        <div>
-          <div className={styles.formRow}>
-            <div className={styles.formItem}>
-              <label htmlFor="UserName" className={styles.formLabel}>
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                name="UserName"
-                className={styles.formInput}
-                value={inputData.UserName}
-                onChange={handleChange}
-                disabled={isModalOpen}
-              />
-            </div>
-            <div className={styles.formItem}>
-              <label htmlFor="PasswordHash" className={styles.formLabel}>
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="PasswordHash"
-                className={styles.formInput}
-                value={inputData.PasswordHash}
-                onChange={handleChange}
-                disabled={isModalOpen}
-              />
-            </div>
+        <div className={styles.formRow}>
+          <div className={styles.formItem}>
+            <label htmlFor="UserName" className={styles.formLabel}>
+              Username
+            </label>
+            <input
+              type="text"
+              name="UserName"
+              className={styles.formInput}
+              value={inputData.UserName}
+              onChange={handleChange}
+              disabled={isModalOpen}
+            />
+            {errors.UserName && (
+              <p className={styles.error}>{errors.UserName}</p>
+            )}
+          </div>
+          <div className={styles.formItem}>
+            <label htmlFor="PasswordHash" className={styles.formLabel}>
+              Password
+            </label>
+            <input
+              type="password"
+              name="PasswordHash"
+              className={styles.formInput}
+              value={inputData.PasswordHash}
+              onChange={handleChange}
+              disabled={isModalOpen}
+            />
+            {errors.PasswordHash && (
+              <p className={styles.error}>{errors.PasswordHash}</p>
+            )}
           </div>
         </div>
       </EditContainer>
@@ -220,16 +269,19 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
           <div className={styles.formRow}>
             <div className={styles.formItem}>
               <label htmlFor="FirstName" className={styles.formLabel}>
-                FirstName
+                First Name
               </label>
               <input
                 type="text"
                 name="FirstName"
+                className={styles.formInput}
                 value={inputData.FirstName}
                 onChange={handleChange}
-                className={styles.formInput}
                 disabled={isModalOpen}
               />
+              {errors.FirstName && (
+                <p className={styles.error}>{errors.FirstName}</p>
+              )}
             </div>
             <div className={styles.formItem}>
               <label htmlFor="LastName" className={styles.formLabel}>
@@ -243,13 +295,38 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
                 onChange={handleChange}
                 disabled={isModalOpen}
               />
+              {errors.LastName && (
+                <p className={styles.error}>{errors.LastName}</p>
+              )}
             </div>
           </div>
 
           <div className={styles.formRow}>
             <div className={styles.formItem}>
+              <label htmlFor="RoleName" className={styles.formLabel}>
+                Role
+              </label>
+              <select
+                name="RoleName"
+                value={inputData.RoleName}
+                className={styles.formInput}
+                onChange={handleChange}
+                disabled={isModalOpen}
+              >
+                <option>Select a role</option>
+                <option value="Admin">Admin</option>
+                <option value="Advisor">Advisor</option>
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+              </select>
+              {errors.RoleName && (
+                <p className={styles.error}>{errors.RoleName}</p>
+              )}
+            </div>
+
+            <div className={styles.formItem}>
               <label htmlFor="DateOfBirth" className={styles.formLabel}>
-                DateOfBirth
+                Date of Birth
               </label>
               <input
                 type="date"
@@ -259,7 +336,13 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
                 onChange={handleChange}
                 disabled={isModalOpen}
               />
+              {errors.DateOfBirth && (
+                <p className={styles.error}>{errors.DateOfBirth}</p>
+              )}
             </div>
+          </div>
+
+          <div className={styles.formRow}>
             <div className={styles.formItem}>
               <label htmlFor="PhoneNumber" className={styles.formLabel}>
                 Phone Number
@@ -272,9 +355,25 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
                 onChange={handleChange}
                 disabled={isModalOpen}
               />
+              {errors.PhoneNumber && (
+                <p className={styles.error}>{errors.PhoneNumber}</p>
+              )}
+            </div>
+            <div className={styles.formItem}>
+              <label htmlFor="Email" className={styles.formLabel}>
+                Email
+              </label>
+              <input
+                type="email"
+                name="Email"
+                className={styles.formInput}
+                value={inputData.Email}
+                onChange={handleChange}
+                disabled={isModalOpen}
+              />
+              {errors.Email && <p className={styles.error}>{errors.Email}</p>}
             </div>
           </div>
-
           <div className={styles.formRow}>
             <div className={styles.formItem}>
               <label htmlFor="HomeAddress" className={styles.formLabel}>
@@ -288,21 +387,10 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
                 onChange={handleChange}
                 disabled={isModalOpen}
               />
+              {errors.HomeAddress && (
+                <p className={styles.error}>{errors.HomeAddress}</p>
+              )}
             </div>
-          </div>
-
-          <div className={styles.formItem}>
-            <label htmlFor="Email" className={styles.formLabel}>
-              Email
-            </label>
-            <input
-              type="email"
-              name="Email"
-              className={styles.formInput}
-              value={inputData.Email}
-              onChange={handleChange}
-              disabled={isModalOpen}
-            />
           </div>
 
           <div className={styles.formRow}>
@@ -313,11 +401,14 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               <input
                 type="text"
                 name="SecurityQuestion"
+                className={styles.formInput}
                 value={inputData.SecurityQuestion}
                 onChange={handleChange}
-                className={styles.formInput}
                 disabled={isModalOpen}
               />
+              {errors.SecurityQuestion && (
+                <p className={styles.error}>{errors.SecurityQuestion}</p>
+              )}
             </div>
           </div>
           <div className={styles.formRow}>
@@ -328,44 +419,29 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               <input
                 type="text"
                 name="SecurityAnswer"
+                className={styles.formInput}
                 value={inputData.SecurityAnswer}
                 onChange={handleChange}
-                className={styles.formInput}
                 disabled={isModalOpen}
               />
+              {errors.SecurityAnswer && (
+                <p className={styles.error}>{errors.SecurityAnswer}</p>
+              )}
             </div>
           </div>
+
           <div className={styles.formRow}>
             <div className={styles.formItem}>
-              <label htmlFor="RoleName" className={styles.formLabel}>
-                Role
+              <label htmlFor="IsAdmin" className={styles.formLabel}>
+                ID Verified
               </label>
               <select
-                value={inputData.RoleName}
-                className={styles.formInput}
-                name="RoleName"
-                onChange={handleChange}
-                disabled={isModalOpen}
-              >
-                <option>Select a role</option>
-                <option value={"Admin"}>Admin</option>
-                <option value={"Advisor"}>Advisor</option>
-                <option value={"Student"}>Student</option>
-                <option value={"Teacher"}>Teacher</option>
-              </select>
-            </div>{" "}
-            <div className={styles.formItem}>
-              <label htmlFor="isAdmin" className={styles.formLabel}>
-                Is Admin
-              </label>
-              <select
+                name="IsAdmin"
                 value={inputData.IsAdmin}
                 className={styles.formInput}
-                name="IsAdmin"
                 onChange={handleChange}
                 disabled={isModalOpen}
               >
-                <option>Select an option</option>
                 <option value={true}>Yes</option>
                 <option value={false}>No</option>
               </select>
@@ -377,16 +453,14 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               <Button size="large" onClickBtn={handleSubmit}>
                 Create
               </Button>
-              <Button
-                size="large"
-                onClickBtn={() => setInputData(initialInputData)}
-              >
+              <Button size="large" onClickBtn={handleCancel}>
                 Cancel
               </Button>
             </div>
           </div>
         </form>
       </EditContainer>
+
       <EditContainer title="Insert Data from Excel to Supabase">
         <div>
           <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
