@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Button from "../Button/Button.js";
 import styles from "./Form.module.css";
-import { CreateMultipleUsers, CreateUser, checkUsernameExists } from "../../services/apiUser.js";
+import {
+  CreateMultipleUsers,
+  CreateUser,
+  checkUsernameExists,
+} from "../../services/apiUser.js";
 import EditContainer from "../../ui/Layout/EditContainer.js";
 import ModalBox from "../ModalBox/ModalBox.js";
 import * as XLSX from "xlsx";
+import { useNavigate } from "react-router-dom";
 
 const initialInputData = {
   UserName: "",
@@ -22,8 +27,8 @@ const initialInputData = {
 
 function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   const [inputData, setInputData] = useState(initialInputData);
-
   const [excelData, setExcelData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (formData && formData.Users) {
@@ -52,6 +57,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
 
   function handleCloseModal() {
     setIsModalOpen(false);
+    navigate("/users/user-list");
   }
 
   // Debug
@@ -130,7 +136,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     try {
       const exists = await checkUsernameExists(username);
       if (exists) {
-        alert('Username already exists. Please choose another one.');
+        alert("Username already exists. Please choose another one.");
         return true;
       } else {
         return false;
@@ -140,12 +146,11 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     }
   }
 
- async function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     const ans = await handleCheckUsername(inputData.UserName);
-    if(ans) 
-    {
+    if (ans) {
       return;
     }
 
@@ -176,6 +181,40 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
 
   return (
     <div className={styles.profileFormLayout}>
+      <EditContainer>
+        <div>
+          <div className={styles.formRow}>
+            <div className={styles.formItem}>
+              <label htmlFor="UserName" className={styles.formLabel}>
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="UserName"
+                className={styles.formInput}
+                value={inputData.UserName}
+                onChange={handleChange}
+                disabled={isModalOpen}
+              />
+            </div>
+            <div className={styles.formItem}>
+              <label htmlFor="PasswordHash" className={styles.formLabel}>
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="PasswordHash"
+                className={styles.formInput}
+                value={inputData.PasswordHash}
+                onChange={handleChange}
+                disabled={isModalOpen}
+              />
+            </div>
+          </div>
+        </div>
+      </EditContainer>
       <EditContainer>
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formRow}>
@@ -266,38 +305,6 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
             />
           </div>
 
-          <div>
-            <div className={styles.formRow}>
-              <div className={styles.formItem}>
-                <label htmlFor="UserName" className={styles.formLabel}>
-                  Username
-                </label>
-                <input
-                  type="text"
-                  id="username"
-                  name="UserName"
-                  className={styles.formInput}
-                  value={inputData.UserName}
-                  onChange={handleChange}
-                  disabled={isModalOpen}
-                />
-              </div>
-              <div className={styles.formItem}>
-                <label htmlFor="PasswordHash" className={styles.formLabel}>
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="PasswordHash"
-                  className={styles.formInput}
-                  value={inputData.PasswordHash}
-                  onChange={handleChange}
-                  disabled={isModalOpen}
-                />
-              </div>
-            </div>
-          </div>
           <div className={styles.formRow}>
             <div className={styles.formItem}>
               <label htmlFor="SecurityQuestion" className={styles.formLabel}>
