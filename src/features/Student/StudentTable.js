@@ -78,7 +78,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
               <td>{student.Users.PhoneNumber}</td>
               <td>{student.Users.HomeAddress}</td>
               <td>
-                <div className={styles.recordButtons}>
+                <div className={styles.rowButtons}>
                   <Button
                     onClickBtn={() =>
                       navigate(`/students/${student.Users.UserNo}`)
@@ -93,7 +93,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
                       navigate(`/students/${student.Users.UserNo}/enroll`)
                     }
                     size="small"
-                    color="green"
+                    color="blue"
                   >
                     Enroll
                   </Button>

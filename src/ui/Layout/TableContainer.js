@@ -37,7 +37,7 @@ function TableContainer({
         <div className={styles.tableFeaturesLeftBox}>
           {onClickAddBtn && (
             <Button onClickBtn={onClickAddBtn} size="large">
-              Add New
+              Create New
             </Button>
           )}
           {onClickEditBtn && (

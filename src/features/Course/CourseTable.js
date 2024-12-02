@@ -104,7 +104,7 @@ function CourseTable({ data, rowsPerPage, currPage }) {
               <td>{course.Time}</td>
               <td>{course.Description}</td>
               <td>
-                <div className={styles.recordButtons}>
+                <div className={styles.rowButtons}>
                   <Button
                     onClickBtn={() => navigate(`/courses/${course.CourseNo}`)}
                     className={generalStyles.link}
@@ -119,7 +119,7 @@ function CourseTable({ data, rowsPerPage, currPage }) {
                       navigate(`/courses/newEnrollment/${course.CourseNo}`)
                     }
                     size="small"
-                    color="green"
+                    color="blue"
                   >
                     Enroll
                   </Button>

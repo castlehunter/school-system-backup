@@ -47,7 +47,7 @@ tr th:last-child {
 .role {
   text-align: center;
   border-radius: 0.5rem;
-  /* padding: 0.5rem; */
+  padding: 0 0.5rem;
   font-size: 1.2rem;
 }
 
@@ -95,9 +95,9 @@ tr th:last-child {
   border-radius: 50px;
 }
 
-.recordButtons {
+.rowButtons {
   display: flex;
-  gap: 1.2rem;
+  gap: 2rem;
 }
 
 @media (max-width: 991px) {

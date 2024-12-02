@@ -54,13 +54,13 @@ function UserTable({ data, setData, currPage, rowsPerPage }) {
       <thead>
         <tr>
           <th>
-            <input
+            {/* <input
               type="checkbox"
               checked={isAllSelected}
               onChange={() =>
                 handleSelectAll(currData.map((element) => element.UserNo))
               }
-            />
+            /> */}
           </th>
           <th>S/N</th>
           <th>User No.</th>
@@ -81,11 +81,11 @@ function UserTable({ data, setData, currPage, rowsPerPage }) {
         {currData.map((user, index) => (
           <tr key={user.UserNo} className={styles.tr}>
             <td>
-              <input
+              {/* <input
                 type="checkbox"
                 checked={selectedCheckboxes.includes(user.UserNo)}
                 onChange={() => handleCheckboxes(user.UserNo)}
-              />
+              /> */}
             </td>
             <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
             <td>{user.UserNo}</td>
@@ -103,7 +103,7 @@ function UserTable({ data, setData, currPage, rowsPerPage }) {
             <td>{user.HomeAddress}</td>
             <td>{formatDate(user.CreatedAt)}</td>
             <td>
-              <div className={styles.recordButtons}>
+              <div className={styles.rowButtons}>
                 <Button
                   onClickBtn={() => navigate(`/users/${user.UserNo}`)}
                   size="small"

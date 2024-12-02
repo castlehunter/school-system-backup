@@ -175,6 +175,14 @@ section {
   font-size: 1.1em;
   color: #f2f2f2;
 }
+.footer {
+  background-color: #f1f1f1;
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+  border-top: 1px solid #ddd;
+}
 
 a li {
   color: #333;
@@ -238,10 +246,6 @@ a li {
     transition: transform 0.3s ease-in-out;
   }
 
-  .header {
-    background-color: #2e2e2e;
-  }
-
   .simpleLogoContainer {
     flex: 1;
     display: flex;
@@ -249,7 +253,6 @@ a li {
   }
 
   .user-section {
-    color: #ffffff;
     display: flex;
     flex: 1;
     justify-content: flex-end;

@@ -41,7 +41,7 @@ function ViewUser() {
       />
       <div className={styles.profileLayout}>
         <div className={styles.mainColumn}>
-          <PersonalInfoForm userNo={userNo} />
+          <PersonalInfoForm userNo={userNo} showDeleteButton={true} />
 
           {(profileData?.Roles?.RoleName === "Teacher" ||
             profileData?.Roles?.RoleName === "Student") && (
