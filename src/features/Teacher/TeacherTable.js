@@ -11,12 +11,12 @@ function formatDate(dateString) {
 }
 
 function TeacherTable({ data, rowsPerPage, currPage }) {
-  const {
-    selectedCheckboxes,
-    handleCheckboxes,
-    isAllSelected,
-    handleSelectAll,
-  } = useCheckbox();
+  // const {
+  //   selectedCheckboxes,
+  //   handleCheckboxes,
+  //   isAllSelected,
+  //   handleSelectAll,
+  // } = useCheckbox();
 
   const currData = data.slice(
     (currPage - 1) * rowsPerPage,
@@ -28,7 +28,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
     <table className={styles.table}>
       <thead>
         <tr>
-          <th>
+          {/* <th>
             <input
               type="checkbox"
               checked={isAllSelected}
@@ -36,7 +36,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
                 handleSelectAll(currData.map((element) => element.Users.UserNo))
               }
             />
-          </th>
+          </th> */}
           <th>S/N</th>
           <th>User No.</th>
           <th>First Name</th>
@@ -52,13 +52,13 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
       <tbody>
         {currData.map((Teacher, index) => (
           <tr key={Teacher.Users.UserNo} className={styles.tr}>
-            <td>
+            {/* <td>
               <input
                 type="checkbox"
                 checked={selectedCheckboxes.includes(Teacher.Users.UserNo)}
                 onChange={() => handleCheckboxes(Teacher.Users.UserNo)}
               />
-            </td>
+            </td> */}
             <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
             <td>{Teacher.Users.UserNo}</td>
             <td>{Teacher.Users.FirstName}</td>
@@ -83,9 +83,9 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
                     navigate(`/teachers/${Teacher.Users.UserNo}/add-course`)
                   }
                   size="small"
-                  color="green"
+                  color="blue"
                 >
-                  Add Course
+                  Assign Courses
                 </Button>
               </div>
             </td>

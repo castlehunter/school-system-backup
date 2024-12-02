@@ -2,10 +2,19 @@ import supabase from "../config/supabaseClient.js";
 
 export async function getCourses() {
   const { data, error } = await supabase.from("Courses").select(`
-    *
-  `);
+      *,
+      Teachers (
+        TeacherID,
+        Users (
+          UserNo,
+          FirstName,
+          LastName
+        )
+      )
+    `);
 
   console.log(data);
+
   if (error) {
     console.error(error);
     throw new Error("Failed to load courses");
@@ -68,6 +77,7 @@ export async function getCourseDetail({ params }) {
     TeacherUser: userData,
   };
 
+  console.log("API getCourseDetail", fullCourseData);
   return fullCourseData;
 }
 
