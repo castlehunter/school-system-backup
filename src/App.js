@@ -130,28 +130,28 @@ function App() {
               path: "my-courses",
               element: <MyCourses />,
               title: "My Courses",
-            },
+            }
             // Moved course-details into "my-courses" to avoid error in Sidebar
+            
+          ],
+        },
+        {
+          path: "course-details",
+          element: <CourseDetails />,
+          title: "Course Details",
+          children: [
             {
-              path: "course-details",
+              index: true,
               element: <CourseDetails />,
               title: "Course Details",
-              children: [
-                {
-                  index: true,
-                  element: <CourseDetails />,
-                  title: "Course Details",
-                },
-                {
-                  path: ":courseNo",
-                  element: <CourseDetails />,
-                  title: "Course Details",
-                },
-              ],
+            },
+            {
+              path: ":courseNo",
+              element: <CourseDetails />,
+              title: "Course Details",
             },
           ],
         },
-
         {
           path: "my-grades",
           element: <TestGradeList />,
