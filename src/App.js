@@ -130,15 +130,16 @@ function App() {
               path: "my-courses",
               element: <MyCourses />,
               title: "My Courses",
-            }
+            },
             // Moved course-details into "my-courses" to avoid error in Sidebar
-            
           ],
         },
         {
           path: "course-details",
           element: <CourseDetails />,
           title: "Course Details",
+          // Add this line to prevent sidebar error
+          icon: icons.MyCoursesIcon,
           children: [
             {
               index: true,
