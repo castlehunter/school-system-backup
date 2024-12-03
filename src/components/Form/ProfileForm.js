@@ -12,7 +12,7 @@ import * as XLSX from "xlsx";
 import { useNavigate } from "react-router-dom";
 
 const initialInputData = {
-  UserName: "",
+  Email: "",
   PasswordHash: "",
   FirstName: "",
   LastName: "",
@@ -23,7 +23,6 @@ const initialInputData = {
   RoleName: "",
   SecurityQuestion: "",
   SecurityAnswer: "",
-  Email: "",
 };
 
 function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
@@ -35,7 +34,6 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   useEffect(() => {
     if (formData && formData.Users) {
       setInputData({
-        UserName: formData.Users.UserName || "",
         PasswordHash: formData.Users.PasswordHash || "",
         FirstName: formData.Users.FirstName || "",
         LastName: formData.Users.LastName || "",
@@ -123,17 +121,17 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   }
 
   async function handleCheckUsername(username) {
-    try {
-      const exists = await checkUsernameExists(username);
-      if (exists) {
-        alert("Username already exists. Please choose another one.");
-        return true;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      console.error("Failed to check username:", error);
-    }
+    // try {
+    //   const exists = await checkUsernameExists(username);
+    //   if (exists) {
+    //     alert("Username already exists. Please choose another one.");
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // } catch (error) {
+    //   console.error("Failed to check username:", error);
+    // }
   }
 
   // Validation function for all fields
@@ -141,7 +139,6 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     const newErrors = {};
 
     // Check for empty fields
-    if (!inputData.UserName) newErrors.UserName = "Username is required.";
     if (!inputData.PasswordHash)
       newErrors.PasswordHash = "Password is required.";
     if (!inputData.FirstName) newErrors.FirstName = "First Name is required.";
@@ -185,22 +182,23 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    console.log("handle");
+    // Validate form data before proceeding
+    // if (!validateForm()) {
+    //   return; // If form is invalid, do not proceed
+    // }
 
-    if (!validateForm()) {
-      return; // If form is invalid, do not proceed
-    }
-
-    // Proceed with form submission logic if valid
-    const ans = await handleCheckUsername(inputData.UserName);
+    // Check if email is already taken
+    const ans = await handleCheckUsername(inputData.Email); // Modify to check by email, not username
     if (ans) {
       return;
     }
-
+    console.log(inputData);
+    // Create newUser object using form data
     const newUser = {
-      Username: inputData.UserName,
-      password: inputData.PasswordHash,
+      email: inputData.Email, // Use email instead of UserName
+      password: inputData.PasswordHash, // Use password for signup
       RoleName: inputData.RoleName,
-      email: inputData.Email,
       CreateAt: new Date().toISOString(),
       isAdmin: inputData.IsAdmin,
       address: inputData.HomeAddress,
@@ -212,12 +210,16 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       SecurityAnswer: inputData.SecurityAnswer,
     };
 
+    console.log(newUser);
+
+    // Create user using CreateUser function
     CreateUser(newUser)
       .then((response) => {
-        if (response === true) handleOpenModal();
+        console.log("new user", newUser);
+        if (response === true) handleOpenModal(); // Handle success
       })
       .catch((error) => {
-        console.error("Error creating user:", error);
+        console.error("Error creating user:", error); // Handle error
       });
   }
 
@@ -228,24 +230,23 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
 
   return (
     <div className={styles.profileFormLayout}>
-      <EditContainer>
+      <EditContainer title="Login Information">
         <div className={styles.formRow}>
           <div className={styles.formItem}>
-            <label htmlFor="UserName" className={styles.formLabel}>
-              Username
+            <label htmlFor="Email" className={styles.formLabel}>
+              Email
             </label>
             <input
-              type="text"
-              name="UserName"
+              type="email"
+              name="Email"
               className={styles.formInput}
-              value={inputData.UserName}
+              value={inputData.Email}
               onChange={handleChange}
               disabled={isModalOpen}
             />
-            {errors.UserName && (
-              <p className={styles.error}>{errors.UserName}</p>
-            )}
+            {errors.Email && <p className={styles.error}>{errors.Email}</p>}
           </div>
+
           <div className={styles.formItem}>
             <label htmlFor="PasswordHash" className={styles.formLabel}>
               Password
@@ -264,7 +265,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
           </div>
         </div>
       </EditContainer>
-      <EditContainer>
+      <EditContainer title="Personal Information">
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formRow}>
             <div className={styles.formItem}>
@@ -358,20 +359,6 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               {errors.PhoneNumber && (
                 <p className={styles.error}>{errors.PhoneNumber}</p>
               )}
-            </div>
-            <div className={styles.formItem}>
-              <label htmlFor="Email" className={styles.formLabel}>
-                Email
-              </label>
-              <input
-                type="email"
-                name="Email"
-                className={styles.formInput}
-                value={inputData.Email}
-                onChange={handleChange}
-                disabled={isModalOpen}
-              />
-              {errors.Email && <p className={styles.error}>{errors.Email}</p>}
             </div>
           </div>
           <div className={styles.formRow}>
