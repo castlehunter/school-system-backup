@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 const initialInputData = {
   Email: "",
   PasswordHash: "",
+  ConfirmPassword: "",
   FirstName: "",
   LastName: "",
   DateOfBirth: "",
@@ -35,6 +36,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     if (formData && formData.Users) {
       setInputData({
         PasswordHash: formData.Users.PasswordHash || "",
+        ConfirmPassword: "",
         FirstName: formData.Users.FirstName || "",
         LastName: formData.Users.LastName || "",
         DateOfBirth: formData.Users.DateOfBirth || "",
@@ -141,6 +143,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     // Check for empty fields
     if (!inputData.PasswordHash)
       newErrors.PasswordHash = "Password is required.";
+    if (inputData.ConfirmPassword !== inputData.PasswordHash)
+      newErrors.ConfirmPassword = "Passwords do not match.";
     if (!inputData.FirstName) newErrors.FirstName = "First Name is required.";
     if (!inputData.LastName) newErrors.LastName = "Last Name is required.";
     if (!inputData.Email) newErrors.Email = "Email is required.";
@@ -184,9 +188,9 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     e.preventDefault();
     console.log("handle");
     // Validate form data before proceeding
-    // if (!validateForm()) {
-    //   return; // If form is invalid, do not proceed
-    // }
+    if (!validateForm()) {
+      return; // If form is invalid, do not proceed
+    }
 
     // Check if email is already taken
     const ans = await handleCheckUsername(inputData.Email); // Modify to check by email, not username
@@ -261,6 +265,23 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
             />
             {errors.PasswordHash && (
               <p className={styles.error}>{errors.PasswordHash}</p>
+            )}
+          </div>
+
+          <div className={styles.formItem}>
+            <label htmlFor="ConfirmPassword" className={styles.formLabel}>
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              name="ConfirmPassword"
+              className={styles.formInput}
+              value={inputData.ConfirmPassword}
+              onChange={handleChange}
+              disabled={isModalOpen}
+            />
+            {errors.ConfirmPassword && (
+              <p className={styles.error}>{errors.ConfirmPassword}</p>
             )}
           </div>
         </div>
