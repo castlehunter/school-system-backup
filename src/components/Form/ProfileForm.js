@@ -12,8 +12,9 @@ import * as XLSX from "xlsx";
 import { useNavigate } from "react-router-dom";
 
 const initialInputData = {
-  Email: "",
+  UserName: "",
   PasswordHash: "",
+  ConfirmPassword: "",
   FirstName: "",
   LastName: "",
   DateOfBirth: "",
@@ -23,6 +24,7 @@ const initialInputData = {
   RoleName: "",
   SecurityQuestion: "",
   SecurityAnswer: "",
+  Email: "",
 };
 
 function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
@@ -34,7 +36,9 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   useEffect(() => {
     if (formData && formData.Users) {
       setInputData({
+        UserName: formData.Users.UserName || "",
         PasswordHash: formData.Users.PasswordHash || "",
+        ConfirmPassword: "",
         FirstName: formData.Users.FirstName || "",
         LastName: formData.Users.LastName || "",
         DateOfBirth: formData.Users.DateOfBirth || "",
@@ -121,17 +125,17 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
   }
 
   async function handleCheckUsername(username) {
-    // try {
-    //   const exists = await checkUsernameExists(username);
-    //   if (exists) {
-    //     alert("Username already exists. Please choose another one.");
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // } catch (error) {
-    //   console.error("Failed to check username:", error);
-    // }
+    try {
+      const exists = await checkUsernameExists(username);
+      if (exists) {
+        alert("Username already exists. Please choose another one.");
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Failed to check username:", error);
+    }
   }
 
   // Validation function for all fields
@@ -139,8 +143,11 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     const newErrors = {};
 
     // Check for empty fields
+    if (!inputData.UserName) newErrors.UserName = "Username is required.";
     if (!inputData.PasswordHash)
       newErrors.PasswordHash = "Password is required.";
+    if (inputData.ConfirmPassword !== inputData.PasswordHash)
+      newErrors.ConfirmPassword = "Passwords do not match.";
     if (!inputData.FirstName) newErrors.FirstName = "First Name is required.";
     if (!inputData.LastName) newErrors.LastName = "Last Name is required.";
     if (!inputData.Email) newErrors.Email = "Email is required.";
@@ -182,23 +189,22 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("handle");
-    // Validate form data before proceeding
-    // if (!validateForm()) {
-    //   return; // If form is invalid, do not proceed
-    // }
 
-    // Check if email is already taken
-    const ans = await handleCheckUsername(inputData.Email); // Modify to check by email, not username
+    if (!validateForm()) {
+      return; // If form is invalid, do not proceed
+    }
+
+    // Proceed with form submission logic if valid
+    const ans = await handleCheckUsername(inputData.UserName);
     if (ans) {
       return;
     }
-    console.log(inputData);
-    // Create newUser object using form data
+
     const newUser = {
-      email: inputData.Email, // Use email instead of UserName
-      password: inputData.PasswordHash, // Use password for signup
+      Username: inputData.UserName,
+      password: inputData.PasswordHash,
       RoleName: inputData.RoleName,
+      email: inputData.Email,
       CreateAt: new Date().toISOString(),
       isAdmin: inputData.IsAdmin,
       address: inputData.HomeAddress,
@@ -210,16 +216,12 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       SecurityAnswer: inputData.SecurityAnswer,
     };
 
-    console.log(newUser);
-
-    // Create user using CreateUser function
     CreateUser(newUser)
       .then((response) => {
-        console.log("new user", newUser);
-        if (response === true) handleOpenModal(); // Handle success
+        if (response === true) handleOpenModal();
       })
       .catch((error) => {
-        console.error("Error creating user:", error); // Handle error
+        console.error("Error creating user:", error);
       });
   }
 
@@ -233,20 +235,21 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       <EditContainer title="Login Information">
         <div className={styles.formRow}>
           <div className={styles.formItem}>
-            <label htmlFor="Email" className={styles.formLabel}>
-              Email
+            <label htmlFor="UserName" className={styles.formLabel}>
+              Username
             </label>
             <input
-              type="email"
-              name="Email"
+              type="text"
+              name="UserName"
               className={styles.formInput}
-              value={inputData.Email}
+              value={inputData.UserName}
               onChange={handleChange}
               disabled={isModalOpen}
             />
-            {errors.Email && <p className={styles.error}>{errors.Email}</p>}
+            {errors.UserName && (
+              <p className={styles.error}>{errors.UserName}</p>
+            )}
           </div>
-
           <div className={styles.formItem}>
             <label htmlFor="PasswordHash" className={styles.formLabel}>
               Password
@@ -263,9 +266,25 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               <p className={styles.error}>{errors.PasswordHash}</p>
             )}
           </div>
+          <div className={styles.formItem}>
+            <label htmlFor="ConfirmPassword" className={styles.formLabel}>
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              name="ConfirmPassword"
+              className={styles.formInput}
+              value={inputData.ConfirmPassword}
+              onChange={handleChange}
+              disabled={isModalOpen}
+            />
+            {errors.ConfirmPassword && (
+              <p className={styles.error}>{errors.ConfirmPassword}</p>
+            )}
+          </div>
         </div>
       </EditContainer>
-      <EditContainer title="Personal Information">
+      <EditContainer title="Profile Information">
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formRow}>
             <div className={styles.formItem}>
@@ -359,6 +378,20 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               {errors.PhoneNumber && (
                 <p className={styles.error}>{errors.PhoneNumber}</p>
               )}
+            </div>
+            <div className={styles.formItem}>
+              <label htmlFor="Email" className={styles.formLabel}>
+                Email
+              </label>
+              <input
+                type="email"
+                name="Email"
+                className={styles.formInput}
+                value={inputData.Email}
+                onChange={handleChange}
+                disabled={isModalOpen}
+              />
+              {errors.Email && <p className={styles.error}>{errors.Email}</p>}
             </div>
           </div>
           <div className={styles.formRow}>

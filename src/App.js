@@ -21,14 +21,11 @@ import { getStudents } from "./services/apiStudent.js";
 import EnrollCourseForm from "./components/Form/EnrollCourseForm";
 import AddCourseForTeacher from "./features/Teacher/AddCourseForTeacher.js";
 import { getTeachers } from "./services/apiTeacher.js";
-import { getTeacherByNo } from "./services/apiTeacher.js";
-import { generateUserNo } from "./services/apiUser.js";
 import NewUser from "./features/Users/NewUser.js";
 import { getProgramList } from "./services/apiProgram.js";
 import { getUsers } from "./services/apiUser.js";
 import ProgramList from "./features/Program/ProgramList.js";
 import ViewProgram from "./features/Program/ViewProgram.js";
-import EditProgram from "./features/Program/EditProgram.js";
 import NewProgram from "./features/Program/NewProgram.js";
 import UserList from "./features/Users/UserList.js";
 import ViewUser from "./features/Users/ViewUser.js";
@@ -51,6 +48,11 @@ function App() {
     {
       path: "/",
       element: <Login />,
+      title: "Home",
+    },
+    {
+      path: "/test",
+      element: <Overview />,
       title: "Home",
     },
     {
