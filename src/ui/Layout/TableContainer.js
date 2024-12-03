@@ -76,7 +76,7 @@ function TableContainer({
           )}
 
           {/* ========= Search Bar ========== */}
-          <Search colorType="light" onSearch={onSearch} />
+          {onSearch && <Search colorType="light" onSearch={onSearch} />}
           {/* =============================== */}
         </div>
         <div className={styles.entriesPerPage}>

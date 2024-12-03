@@ -129,32 +129,36 @@ function App() {
           children: [
             { index: true, element: <MyCourses />, title: "My Courses" },
             {
-              path: "my-courses",
+              path: "/my-courses/my-courses",
               element: <MyCourses />,
               title: "My Courses",
+              children: [
+                {
+                  path: "/my-courses/my-courses/course-details",
+                  element: <CourseDetails />,
+                  title: "Course Details",
+
+                  hideInSidebar: true,
+                  children: [
+                    {
+                      index: true,
+                      element: <CourseDetails />,
+                      title: "Course Details",
+                      hideInSidebar: true,
+                    },
+                    {
+                      path: "/my-courses/my-courses/course-details/:courseNo",
+                      element: <CourseDetails />,
+                      title: "Course Details",
+                      hideInSidebar: true,
+                    },
+                  ],
+                },
+              ],
             },
-            // Moved course-details into "my-courses" to avoid error in Sidebar
           ],
         },
-        {
-          path: "course-details",
-          element: <CourseDetails />,
-          title: "Course Details",
-          // Add this line to prevent sidebar error
-          icon: icons.MyCoursesIcon,
-          children: [
-            {
-              index: true,
-              element: <CourseDetails />,
-              title: "Course Details",
-            },
-            {
-              path: ":courseNo",
-              element: <CourseDetails />,
-              title: "Course Details",
-            },
-          ],
-        },
+
         {
           path: "my-grades",
           element: <TestGradeList />,
