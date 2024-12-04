@@ -1,18 +1,28 @@
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import styles from "../Profile.module.css";
+import tableStyles from "../../components/Table.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import PersonalInfoForm from "../../components/Form/PersonalInfoForm";
 import SecurityInfoForm from "../../components/Form/SecurityInfoForm";
 import AccountInfoForm from "../../components/Form/AccountInfoForm";
-import { getRoleNameByNo } from "../../services/apiUser";
+import { getRoleNameByNo, getUserRoleByUserNo } from "../../services/apiUser";
 import { getProfileInfoByNo } from "../../services/apiUser";
 import MainTitle from "../../ui/MainTitle/MainTitle";
+import { getTeacherCourses } from "../../services/apiTeacher";
+import { getStudentEnrollments } from "../../services/apiStudent";
+import CourseCard from "../../components/CourseCard/CourseCard";
+import Loader from "../../ui/Loader";
+import TableContainer from "../../ui/Layout/TableContainer";
+
 function ViewUser() {
   const { userNo } = useParams();
   const [profileData, setProfileData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [userCourses, setUserCourses] = useState([]);
+  const [userRole, setUserRole] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -28,6 +38,45 @@ function ViewUser() {
     }
     fetchData();
   }, [userNo]);
+
+  useEffect(() => {
+    // Fetch courses based on role
+    async function fetchUserCourses() {
+      try {
+        const role = await getUserRoleByUserNo(userNo);
+        setUserRole(role);
+        console.log("userRole", role);
+        let courses = [];
+
+        if (role === "Teacher") {
+          courses = await getTeacherCourses(userNo);
+        } else if (role === "Student") {
+          courses = await getStudentEnrollments(userNo);
+        }
+
+        setUserCourses(courses);
+      } catch (error) {
+        console.error("Failed to fetch courses:", error);
+        setError("Failed to load courses.");
+      }
+    }
+
+    fetchUserCourses();
+  }, [userNo]);
+
+  function getRandomColor() {
+    const colors = ["gray", "green", "blue", "purple", "yellow"];
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
+  }
+
+  function handleManageCourses() {
+    if (userRole) {
+      const path =
+        userRole === "Teacher" ? `/teachers/${userNo}` : `/students/${userNo}`;
+      navigate(path);
+    }
+  }
 
   return (
     <>
@@ -45,11 +94,27 @@ function ViewUser() {
 
           {(profileData?.Roles?.RoleName === "Teacher" ||
             profileData?.Roles?.RoleName === "Student") && (
-            <EditContainer title="Course Information">
-              <div className={styles.detail}>
-                This part displays only when role === teacher || role ===
-                student
-              </div>
+            <EditContainer
+              title="Course Information"
+              editButtonText="Manage Courses"
+              onClickEdit={handleManageCourses}
+            >
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <div className={tableStyles.tagContainer}>
+                  {userCourses.map((course) => (
+                    <div
+                      key={course.CourseName}
+                      className={`${tableStyles.courseTag} ${
+                        tableStyles[getRandomColor()]
+                      }`}
+                    >
+                      {course.CourseName}
+                    </div>
+                  ))}
+                </div>
+              )}
             </EditContainer>
           )}
           <EditContainer title="Additional Information">

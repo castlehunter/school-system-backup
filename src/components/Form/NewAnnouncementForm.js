@@ -2,15 +2,17 @@ import React, { useState, useEffect } from "react";
 import Button from "../Button/Button.js";
 import EditContainer from "../../ui/Layout/EditContainer.js";
 import styles from "./Form.module.css";
-
 import { useNavigate } from "react-router-dom";
 import { addAnnouncement } from "../../services/apiAnnouncements.js";
+import { getUnreadAnnouncementsCount } from "../../services/apiAnnouncements.js";
+import { useUnreadCount } from "../../contexts/UnreadContext";
 
-function NewAnnouncementForm({ type }) {
+function NewAnnouncementForm() {
+  const { unreadCount, setUnreadCount } = useUnreadCount();
   const [inputData, setInputData] = useState({
     Title: "",
     Content: "",
-    CreatedAt: new Date().toISOString().split("T")[0],
+    CreatedAt: new Date().toLocaleDateString("en-CA"),
     UserID: "",
   });
 
@@ -28,8 +30,12 @@ function NewAnnouncementForm({ type }) {
     e.preventDefault();
 
     const UserID = localStorage.getItem("UserID");
+
     try {
       await addAnnouncement({ ...inputData, UserID });
+      const userNo = localStorage.getItem("loginUserNo");
+      const unreadCount = await getUnreadAnnouncementsCount(userNo);
+      setUnreadCount(unreadCount);
       navigate("/dashboard/announcements");
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -75,12 +81,12 @@ function NewAnnouncementForm({ type }) {
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="CreatedAt" className={styles.formLabel}>
-              CreatedAt
+              Created At
             </label>
             <input
               type="date"
               name="CreatedAt"
-              value={new Date().toISOString().split("T")[0]}
+              value={inputData.CreatedAt}
               onChange={handleChange}
               className={styles.formInput}
             />
@@ -88,8 +94,9 @@ function NewAnnouncementForm({ type }) {
         </div>
 
         <div className={styles.buttons}>
-          <Button>Submit</Button>
+          <Button size="large">Submit</Button>
           <Button
+            size="large"
             onClickBtn={() => {
               console.log("Cancel button clicked");
               navigate("/dashboard/announcements");

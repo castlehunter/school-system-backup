@@ -4,6 +4,7 @@ import { updateEnrollments } from "../../services/apiEnrollment";
 import Button from "../../components/Button/Button";
 import MainTitle from "../../ui/MainTitle/MainTitle.js";
 import styles from "../../../src/components/Form/Form.module.css";
+import EditContainer from "../../ui/Layout/EditContainer.js";
 
 function BulkEditEnrollmentForm() {
   const location = useLocation();
@@ -49,42 +50,46 @@ function BulkEditEnrollmentForm() {
 
   return (
     <>
-    <MainTitle title="Bulk Edit Enrollments" goBack={true} />
-    <div className="generalStyles_container__RvMgt">  
-      <p>(Keep unchanged to maintain current state)</p>
-      <form onSubmit={handleUpdate}>
+      <MainTitle title="Bulk Edit Enrollments" goBack={true} />
+      <EditContainer>
         <div>
-          <label>
-            Enrollment Date:
-            <input
-              type="date"
-              value={enrollmentDate}
-              onChange={(e) => setEnrollmentDate(e.target.value)}
-              placeholder="Keep"
-              className="Form_formInput__xdpGx"
-            />
-          </label>
+          <p>(Keep unchanged to maintain current state)</p>
+          <form onSubmit={handleUpdate}>
+            <div>
+              <label>
+                Enrollment Date:
+                <input
+                  type="date"
+                  value={enrollmentDate}
+                  onChange={(e) => setEnrollmentDate(e.target.value)}
+                  placeholder="Keep"
+                  className="Form_formInput__xdpGx"
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isFinished}
+                  onChange={() =>
+                    setIsFinished((prev) => (prev === null ? true : !prev))
+                  } // Update to handle null state
+                />
+                Is Finished
+              </label>
+            </div>
+            <div className={styles.buttons}>
+              <Button size="large" type="submit">
+                Update
+              </Button>
+              <Button size="large" type="button" onClick={handleCancel}>
+                Cancel
+              </Button>
+            </div>
+          </form>
         </div>
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={isFinished}
-              onChange={() =>
-                setIsFinished((prev) => (prev === null ? true : !prev))
-              } // Update to handle null state
-            />
-            Is Finished
-          </label>
-        </div >
-        <div className={styles.buttons}>
-        <Button size="large" type="submit">Update</Button>
-        <Button  size="large" type="button" onClick={handleCancel}>
-          Cancel
-        </Button>
-        </div>
-      </form>
-    </div>
+      </EditContainer>
     </>
   );
 }

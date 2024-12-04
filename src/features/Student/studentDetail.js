@@ -29,7 +29,7 @@ function StudentDetail() {
         setStudentData(student);
 
         const enrolled = await getStudentCoursesByUserID(student.StudentID);
-        setEnrolledCourses(enrolled.map((course) => course.CourseID)); // 存储已选课程的 CourseID
+        setEnrolledCourses(enrolled.map((course) => course.CourseID));
       } catch (error) {
         setError("Failed to fetch student data or enrolled courses.");
         console.error(error);
@@ -92,6 +92,7 @@ function StudentDetail() {
                       {new Date(enrollment.StartDate).toLocaleDateString()}
                     </td>
                     <td>{new Date(enrollment.EndDate).toLocaleDateString()}</td>
+                    <td>{enrollment.Time}</td>
                   </tr>
                 ))}
               </tbody>

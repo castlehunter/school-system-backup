@@ -105,3 +105,49 @@ tr th:last-child {
     overflow-x: auto;
   }
 }
+
+.tagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.courseTag {
+  padding: 2rem;
+  border-radius: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+}
+
+.courseTag:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+/* Used in ViewUser.js */
+.courseTag.gray {
+  background-color: #7a7a7a;
+}
+
+.courseTag.green {
+  background-color: #297537;
+}
+
+.courseTag.blue {
+  background-color: #3375ff;
+}
+
+.courseTag.purple {
+  background-color: #a233ff;
+}
+
+.courseTag.yellow {
+  background-color: #ffcc33;
+}
+
+.getRandomColor {
+  background-color: randomColor();
+}

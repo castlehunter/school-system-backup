@@ -26,10 +26,6 @@ export function UnreadProvider({ children }) {
     fetchUnreadCount();
   }, []);
 
-  useEffect(() => {
-    console.log("Unread Count in Context:", unreadCount);
-  }, [unreadCount]);
-
   return (
     <UnreadContext.Provider value={{ unreadCount, setUnreadCount }}>
       {children}
