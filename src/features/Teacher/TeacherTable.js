@@ -4,13 +4,15 @@ import styles from "../../components/Table.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import useCheckbox from "../../hooks/useCheckbox";
 import Button from "../../components/Button/Button";
+import Loader from "../../ui/Loader";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleDateString();
 }
 
-function TeacherTable({ data, rowsPerPage, currPage }) {
+function TeacherTable({ data, isLoading, rowsPerPage, currPage }) {
+  const navigate = useNavigate();
   // const {
   //   selectedCheckboxes,
   //   handleCheckboxes,
@@ -18,12 +20,19 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
   //   handleSelectAll,
   // } = useCheckbox();
 
-  const currData = data.slice(
+  if (isLoading === true) {
+    return <Loader />;
+  }
+
+  if (!data || !Array.isArray(data)) {
+    return <p>No teacher data</p>;
+  }
+
+  const currData = data?.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
 
-  const navigate = useNavigate();
   return (
     <table className={styles.table}>
       <thead>

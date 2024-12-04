@@ -132,20 +132,36 @@ function Overview() {
             number={teacherCourses.length}
             unit="My Courses"
             icon={icons.StudentIcon(styles.largeIcon)}
-            bgcolor="bgcolor1"
+            bgcolor="bgcolor3"
             link="/my-courses"
+          />{" "}
+          <StatCard
+            number={announcements.length}
+            unit="Announcements"
+            icon={icons.DashboardIcon(styles.largeIcon)}
+            bgcolor="bgcolor1"
+            link="/dashboard/announcements"
           />
         </>
       );
     } else {
       return (
-        <StatCard
-          number={studentCourses.length}
-          unit="My Courses"
-          icon={icons.StudentIcon(styles.largeIcon)}
-          bgcolor="bgcolor1"
-          link="/my-courses"
-        />
+        <>
+          <StatCard
+            number={studentCourses.length}
+            unit="My Courses"
+            icon={icons.StudentIcon(styles.largeIcon)}
+            bgcolor="bgcolor2"
+            link="/my-courses"
+          />
+          <StatCard
+            number={announcements.length}
+            unit="Announcements"
+            icon={icons.DashboardIcon(styles.largeIcon)}
+            bgcolor="bgcolor3"
+            link="/dashboard/announcements"
+          />
+        </>
       );
     }
   }

@@ -601,3 +601,23 @@ export async function searchUsers(keyword) {
     throw error;
   }
 }
+
+export async function getUserRoleByUserNo(userNo) {
+  try {
+    const { data, error } = await supabase
+      .from("Users")
+      .select(`Roles(RoleName)`)
+      .eq("UserNo", userNo)
+      .single();
+
+    if (error) {
+      console.error("Error fetching user role:", error);
+      throw new Error("Failed to load user role");
+    }
+
+    return data?.Roles?.RoleName || null;
+  } catch (error) {
+    console.error("Unexpected error fetching user role:", error);
+    throw error;
+  }
+}

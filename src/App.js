@@ -279,7 +279,6 @@ function App() {
             {
               path: "/teachers/teacher-list",
               element: <TeacherList />,
-              loader: getTeachers,
               title: "Teacher List",
             },
             {
@@ -369,7 +368,7 @@ function App() {
           path: "my-calendar",
           element: <Calendar />,
           title: "My Calendar",
-          icon: icons.MyCoursesIcon,
+          icon: icons.CalendarIcon,
           children: [
             { index: true, element: <Calendar />, title: "My Calendar" },
             {

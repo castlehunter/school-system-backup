@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TableContainer from "../../ui/Layout/TableContainer";
-import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import TeacherTable from "./TeacherTable";
 import MainTitle from "../../ui/MainTitle/MainTitle";
 import { getTeachers, sortTeachersBy } from "../../services/apiTeacher";
+import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
 
 function TeacherList() {
-  const initialTeachersData = useLoaderData() || [];
-  const [teacherData, setTeacherData] = useState(initialTeachersData);
+  const [teacherData, setTeacherData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [currPage, setCurrPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const totalPages = Math.ceil(initialTeachersData.length / rowsPerPage);
   const [searchQuery, setSearchQuery] = useState("");
 
-  if (!initialTeachersData || initialTeachersData.length === 0) {
-    return <p>No teachers found.</p>;
-  }
+  const totalPages = Math.ceil(teacherData.length / rowsPerPage);
+
+  useEffect(() => {
+    try {
+      async function fetchTeacherData() {
+        setIsLoading(true);
+        const data = await getTeachers();
+        setTeacherData(data);
+      }
+      fetchTeacherData();
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   function handlePageChange(page) {
     setCurrPage(page);
@@ -40,7 +51,7 @@ function TeacherList() {
     setSearchQuery(query);
     if (query === "") {
       // If query is empty, reset the teacherData to initialTeachersData
-      setTeacherData(initialTeachersData);
+      setTeacherData([]);
     } else {
       // Filter teacher data based on search query
       const filteredData = teacherData.filter((teacher) => {
@@ -60,6 +71,7 @@ function TeacherList() {
   return (
     <>
       <MainTitle title="Teacher List" />
+      {console.log("teacher data", teacherData)}
       <TableContainer
         rowsPerPage={rowsPerPage}
         totalPages={totalPages}
@@ -72,6 +84,7 @@ function TeacherList() {
           data={teacherData}
           rowsPerPage={rowsPerPage}
           currPage={currPage}
+          isLoading={isLoading}
         />
       </TableContainer>
     </>

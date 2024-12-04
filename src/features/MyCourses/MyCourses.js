@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styles from "./MyCourse.module.css";
-
 import instructor1 from "../../assets/instructor.jpg";
 import CourseCard from "../../components/CourseCard/CourseCard";
 import TableContainer from "../../ui/Layout/TableContainer";
