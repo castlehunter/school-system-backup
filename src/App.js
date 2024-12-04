@@ -42,6 +42,7 @@ import Announcements from "./features/Dashboard/Announcements.js";
 import NewAnnouncement from "./features/Dashboard/NewAnnouncement.js";
 import AnnouncementDetail from "./features/Dashboard/AnnouncementDetail.js";
 import { UnreadProvider } from "./contexts/UnreadContext.js";
+import { AuthProvider } from "./contexts/AuthContext.js";
 
 function App() {
   const routes = [
@@ -398,11 +399,13 @@ function App() {
 
   // return <RouterProvider router={router} />;
   return (
+    <AuthProvider>
     <UnreadProvider>
       <UserProvider>
         <RouterProvider router={router} />
       </UserProvider>
     </UnreadProvider>
+    </AuthProvider>
   );
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import styles from "./Overview.module.css";
 import StatCard from "../../components/StatCard/StatCard";
 import icons from "../../ui/Icons/icons";
@@ -24,7 +25,10 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridWeekPlugin from "@fullcalendar/timegrid";
 
+
 function Overview() {
+  const { session, loading } = useAuth();
+
   const [loginRole, setLoginRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -39,6 +43,10 @@ function Overview() {
   const { unreadCount, setUnreadCount } = useUnreadCount();
 
   const navigate = useNavigate();
+
+  if (!session) 
+    navigate("/");
+
   const formattedDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
@@ -264,6 +272,8 @@ function Overview() {
       </>
     );
   }
+
+
 
   return (
     <>
