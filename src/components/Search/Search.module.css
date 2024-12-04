@@ -1,8 +1,5 @@
-/* ====================== */
-/* Search */
-/* ====================== */
 .searchContainer {
-  margin: 1rem 1rem;
+  margin: 0rem 1rem;
   position: relative;
 }
 
@@ -17,7 +14,7 @@
   padding: 8px;
   border: none;
   border-radius: 0.3rem 0 0 0.3rem;
-  color: rgb(32, 32, 32);
+  color: rgb(138, 138, 138);
   outline: none;
 }
 

@@ -25,7 +25,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
   );
   const navigate = useNavigate();
 
-  if (!studentData || studentData.length === 0) {
+  if (!studentData) {
     return <p>No students available Or Student not found!</p>;
   }
 

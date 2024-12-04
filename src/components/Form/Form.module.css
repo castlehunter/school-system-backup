@@ -219,7 +219,6 @@ form {
   display: block;
 }
 
-/* 为错误输入添加聚焦状态 */
 .formInput.inputError:focus {
   border-color: #ff7875;
   box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);

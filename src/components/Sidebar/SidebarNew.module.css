@@ -52,6 +52,7 @@ svg {
   justify-content: center;
   padding: 1rem 2rem;
   background-color: #2e2e2e;
+  margin-bottom: 1rem;
 }
 
 .logoImage {
@@ -63,6 +64,7 @@ svg {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .menuTitle {
