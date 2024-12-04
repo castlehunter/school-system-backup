@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NavLink, Link, useLoaderData } from "react-router-dom";
+import { NavLink, Link, useLoaderData, useNavigate } from "react-router-dom";
 import styles from "./SidebarNew.module.css";
 import logo from "../../assets/logo-removebg-preview.png";
 import Search from "../Search/Search";
@@ -9,6 +9,7 @@ import supabase from "../../config/supabaseClient";
 
 function SidebarNew() {
   const routes = useLoaderData();
+  const naviagate = useNavigate();
 
   const menuItemWithChildren = routes.find((route) => route.children);
 
@@ -29,10 +30,10 @@ function SidebarNew() {
     "my calendar": true,
   });
 
-  const [loginRole, setLoginRole] = useState("");
+  const [loginRole, setLoginRole] = useState("Admin");// temp changed to admin
 
   useEffect(() => {
-    const fetchRole = async () => {
+    /*const fetchRole = async () => {
 
       const { data: session, error } = await supabase.auth.getUser();
 
@@ -54,7 +55,7 @@ function SidebarNew() {
     };
 
     fetchRole();
-    console.log(loginRole)
+    console.log(loginRole)*/
   }, []);
 
   /*async function fetchRole() {
@@ -75,7 +76,6 @@ function SidebarNew() {
   }*/
 
   const filteredMenuItems = menuItems.filter((menuObj) => {
-    console.log(loginRole)
     if (loginRole === "Admin") {
       return (
         !(menuObj.title === "My Grades") && !(menuObj.title === "My Courses")
@@ -115,6 +115,15 @@ function SidebarNew() {
       ...prevState,
       [menuName]: !prevState[menuName],
     }));
+  }
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error during logout:", error.message);
+    } else {
+      naviagate("/"); // Redirect to home or login page after logout
+    }
   }
 
   return (
@@ -172,10 +181,10 @@ function SidebarNew() {
             </div>
           ))}
         </div>
-        <Link to="/" className={styles.logout}>
+        <button onClick={handleLogout} className={styles.logout}>
           {icons.LogoutIcon}
           <span>Logout</span>
-        </Link>
+        </button>
       </div>
     </>
   );
