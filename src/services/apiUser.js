@@ -21,6 +21,22 @@ export async function getUsers() {
   return data;
 }
 
+export async function getLoginInfoByUsername(username) {
+  const { data: user, error: userError } = await supabase
+    .from("Users")
+    .select(`Email, Roles(RoleName), UserNo`)
+    .eq("UserName", username) // Match the username
+    .single();
+
+  if (userError) {
+    console.error("Error fetching user by username:", userError.message);
+    return { success: false, message: "Invalid username or password." };
+  }
+
+  return user;
+  
+}
+
 export async function getUserByID(userID) {
   const { data, error } = await supabase
     .from("Users")
@@ -262,9 +278,28 @@ export async function CreateUser(newUser) {
       return;
     }
 
-    // 3. Insert User record
+    // 3. Create a new user login
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email: newUser.email,
+      password: newUser.password,
+    });
+
+    if(authError)
+    {
+      alert("Error creating user in Auth:", authError);
+      return;
+    }
+
+    const authUserId = authData.user?.id;
+    if (!authUserId) {
+      console.error("Failed to retrieve Auth user ID");
+      return { success: false, message: "Auth user ID not found." };
+    }
+
+    // 4. Insert User record
     const { data, error } = await supabase.from("Users").insert([
       {
+        UserID: authUserId,
         UserName: newUser.Username,
         PasswordHash: newUser.password,
         RoleID: roleID,

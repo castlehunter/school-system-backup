@@ -9,6 +9,7 @@ import { useUnreadCount } from "../../contexts/UnreadContext";
 import { getUnreadAnnouncementsCount } from "../../services/apiAnnouncements";
 import { useUser } from "../../contexts/UserContext";
 import ForgotPassword from "./ForgotPassword";
+import { getUserByID, getLoginInfoByUsername } from "../../services/apiUser";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -21,33 +22,31 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const { data, error } = await supabase
-      .from("Users")
-      .select(
-        `
-        UserID,
-        UserNo,
-        UserName,
-        FirstName,
-        LastName,
-        PasswordHash,
-        Roles (RoleName)
-      `
-      )
-      .eq("UserName", username)
-      .eq("PasswordHash", password)
-      .single();
 
-    if (error || !data) {
-      alert("Invalid Username or Password");
-      return;
-    }
+      const loginData = await getLoginInfoByUsername(username);
+      console.log(loginData);
 
-    const userRole = data.Roles.RoleName;
-    localStorage.setItem("UserID", data.UserID);
-    localStorage.setItem("role", userRole);
+      const userEmail = loginData.Email;
 
-    setUserNo(data.UserNo);
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: userEmail,
+        password: password,
+      });
+
+      if( error) {
+        alert("Invalid Username or Password");
+        return;
+      }
+
+      console.log(data);
+
+      const userId = data.session.user.id;
+
+
+    localStorage.setItem("UserID", userId);
+    localStorage.setItem("role", loginData.Roles);
+
+    setUserNo(loginData.UserNo);
 
     try {
       const unreadCount = await getUnreadAnnouncementsCount(data.UserNo);
