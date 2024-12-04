@@ -74,6 +74,18 @@ function AnnouncementDetail() {
 
   async function handleUpdate(event) {
     event.preventDefault();
+
+    // Frontend validation for empty Title and Content
+    if (!inputData.Title.trim()) {
+      alert("Title cannot be empty.");
+      return; // Prevent submission if Title is empty
+    }
+
+    if (!inputData.Content.trim()) {
+      alert("Content cannot be empty.");
+      return; // Prevent submission if Content is empty
+    }
+
     try {
       const updatedAnnouncement = {
         Id: id,

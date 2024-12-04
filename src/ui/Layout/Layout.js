@@ -125,12 +125,12 @@ function Layout({ children, breadcrumb, userNo }) {
             >
               <div className={styles["announcement-icon"]}>
                 <RiMegaphoneLine
-                  style={{ fill: "#333", width: "3rem", height: "2.5rem" }}
+                  style={{ fill: "#333333", width: "3rem", height: "2.5rem" }}
                 />
               </div>
               <div className={styles["announcement-icon-mobile"]}>
                 <RiMegaphoneLine
-                  style={{ fill: "#fff", width: "3rem", height: "2.5rem" }}
+                  style={{ fill: "#333333", width: "3rem", height: "2.5rem" }}
                 />
               </div>
               <div className={styles["announcement-count"]}>{unreadCount}</div>

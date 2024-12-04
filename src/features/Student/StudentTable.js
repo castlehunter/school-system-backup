@@ -25,7 +25,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
   );
   const navigate = useNavigate();
 
-  if (!studentData || studentData.length === 0) {
+  if (!studentData) {
     return <p>No students available Or Student not found!</p>;
   }
 
@@ -33,7 +33,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
     <table className={styles.table}>
       <thead>
         <tr>
-          <th>
+          {/* <th>
             <input
               type="checkbox"
               checked={isAllSelected}
@@ -42,7 +42,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
               }
               className={styles.checkbox}
             />
-          </th>
+          </th> */}
           <th>S/N</th>
           <th>User No.</th>
           <th>First Name</th>
@@ -60,14 +60,14 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
         ) : (
           currData.map((student, index) => (
             <tr key={student.Users.UserNo} className={styles.tr}>
-              <td>
+              {/* <td>
                 <input
                   type="checkbox"
                   checked={selectedCheckboxes.includes(student.Users.UserNo)}
                   onChange={() => handleCheckboxes(student.Users.UserNo)}
                   className={styles.checkbox}
                 />
-              </td>
+              </td> */}
 
               <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
               <td>{student.Users.UserNo}</td>
@@ -78,7 +78,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
               <td>{student.Users.PhoneNumber}</td>
               <td>{student.Users.HomeAddress}</td>
               <td>
-                <div className={styles.recordButtons}>
+                <div className={styles.rowButtons}>
                   <Button
                     onClickBtn={() =>
                       navigate(`/students/${student.Users.UserNo}`)
@@ -93,7 +93,7 @@ function StudentTable({ studentData, rowsPerPage, currPage, isLoading }) {
                       navigate(`/students/${student.Users.UserNo}/enroll`)
                     }
                     size="small"
-                    color="green"
+                    color="blue"
                   >
                     Enroll
                   </Button>

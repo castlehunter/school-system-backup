@@ -4,10 +4,10 @@ import styles from "../Profile.module.css";
 import EditContainer from "../../ui/Layout/EditContainer";
 import PersonalInfoForm from "../../components/Form/PersonalInfoForm";
 import MainTitle from "../../ui/MainTitle/MainTitle";
-
 import formStyles from "../../components/Form/Form.module.css";
 import { getTeacherCourses } from "../../services/apiTeacher";
-import { getProfileInfoByNo } from "../../services/apiUser";
+import Button from "../../components/Button/Button";
+import { removeCourseFromTeacher } from "../../services/apiTeacher";
 
 function TeacherDetail() {
   const { userNo } = useParams();
@@ -31,48 +31,76 @@ function TeacherDetail() {
 
     fetchCourses();
   }, [userNo]);
-  
+
   function handleAddCourse() {
     navigate(`/teachers/${userNo}/add-course`); // Navigate to the enroll course form
+  }
+
+  function handleRemoveCourse(courseID) {
+    async function removeCourse() {
+      try {
+        const response = await removeCourseFromTeacher({
+          CourseID: courseID,
+          TeacherID: userNo,
+        });
+
+        if (response.success) {
+          setCourses((prevCourses) =>
+            prevCourses.filter((course) => course.CourseID !== courseID)
+          );
+        }
+      } catch (error) {
+        setError("Failed to remove course.");
+        console.error("Error removing course:", error);
+      }
+    }
+
+    removeCourse();
   }
 
   return (
     <>
       <MainTitle title="Teacher Detail" goBack={true} />
-      <div className={styles.profileLayout}>
-        <div className={styles.mainColumn}>
-          <PersonalInfoForm userNo={userNo} hideUpload={true}/>
-          {/* <EditContainer title="Additional Information"></EditContainer> */}
-          <EditContainer 
-            title="Courses"
-            editButtonText="Add Course"
-            onClickEdit={handleAddCourse}
-            >
-            <div className={formStyles.formContainer}>
-              <table className={formStyles.courseTable}>
-                <thead>
-                  <tr>
-                    <th>Course Name</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Time</th>
+      {/* <div className={styles.profileLayout}> */}
+      <div className={styles.mainColumn}>
+        <PersonalInfoForm userNo={userNo} hideUpload={true} />
+        {/* <EditContainer title="Additional Information"></EditContainer> */}
+        <EditContainer
+          title="Courses"
+          editButtonText="Assign Courses"
+          onClickEdit={handleAddCourse}
+        >
+          <div className={formStyles.formContainer}>
+            <table className={formStyles.courseTable}>
+              <thead>
+                <tr>
+                  <th>Course Name</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Time</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {courses.map((course) => (
+                  <tr key={course.CourseID}>
+                    <td>{course.CourseName}</td>
+                    <td>{new Date(course.StartDate).toLocaleDateString()}</td>
+                    <td>{new Date(course.EndDate).toLocaleDateString()}</td>
+                    <td>{course.Time}</td>
+                    <td>
+                      <Button color="blue" onClickBtn={handleRemoveCourse}>
+                        Remove
+                      </Button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {courses.map((course) => (
-                    <tr key={course.CourseID}>
-                      <td>{course.CourseName}</td>
-                      <td>{new Date(course.StartDate).toLocaleDateString()}</td>
-                      <td>{new Date(course.EndDate).toLocaleDateString()}</td>
-                      <td>{course.Time}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </EditContainer>
-        </div>
-        <div className={styles.secondaryColumn}>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </EditContainer>
+        {/* </div> */}
+        {/* <div className={styles.secondaryColumn}>
           <EditContainer title="Some charts here">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -99,7 +127,7 @@ function TeacherDetail() {
             pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
             culpa qui officia deserunt mollit anim id est laborum.
           </EditContainer>
-        </div>
+        </div> */}
       </div>
     </>
   );

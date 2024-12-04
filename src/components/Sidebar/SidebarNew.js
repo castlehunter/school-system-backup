@@ -65,7 +65,7 @@ function SidebarNew() {
     return false;
   });
 
-  const seaerchMenuItems = filteredMenuItems
+  const searchMenuItems = filteredMenuItems
     .flatMap((item) => item.children)
     .filter((e) => !e.index);
 
@@ -86,7 +86,7 @@ function SidebarNew() {
         </Link>
 
         {/* Search bar in the sidebar */}
-        <Search searchMenuItems={seaerchMenuItems} colorType="dark" />
+        <Search searchMenuItems={searchMenuItems} colorType="dark" menuSearch />
 
         <div className={styles.menu}>
           {filteredMenuItems.map((item) => (

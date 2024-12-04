@@ -19,16 +19,13 @@ import Error from "./ui/Error.js";
 import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
 import EnrollCourseForm from "./components/Form/EnrollCourseForm";
-import AddCourseForTeacher from "./components/Form/AddCourseForTeacher";
+import AddCourseForTeacher from "./features/Teacher/AddCourseForTeacher.js";
 import { getTeachers } from "./services/apiTeacher.js";
-import { getTeacherByNo } from "./services/apiTeacher.js";
-import { generateUserNo } from "./services/apiUser.js";
 import NewUser from "./features/Users/NewUser.js";
 import { getProgramList } from "./services/apiProgram.js";
 import { getUsers } from "./services/apiUser.js";
 import ProgramList from "./features/Program/ProgramList.js";
 import ViewProgram from "./features/Program/ViewProgram.js";
-import EditProgram from "./features/Program/EditProgram.js";
 import NewProgram from "./features/Program/NewProgram.js";
 import UserList from "./features/Users/UserList.js";
 import ViewUser from "./features/Users/ViewUser.js";
@@ -51,6 +48,11 @@ function App() {
     {
       path: "/",
       element: <Login />,
+      title: "Home",
+    },
+    {
+      path: "/test",
+      element: <Overview />,
       title: "Home",
     },
     {
@@ -127,25 +129,30 @@ function App() {
           children: [
             { index: true, element: <MyCourses />, title: "My Courses" },
             {
-              path: "my-courses",
+              path: "/my-courses/my-courses",
               element: <MyCourses />,
               title: "My Courses",
-            },
-            // Moved course-details into "my-courses" to avoid error in Sidebar
-            {
-              path: "course-details",
-              element: <CourseDetails />,
-              title: "Course Details",
               children: [
                 {
-                  index: true,
+                  path: "/my-courses/my-courses/course-details",
                   element: <CourseDetails />,
                   title: "Course Details",
-                },
-                {
-                  path: ":courseNo",
-                  element: <CourseDetails />,
-                  title: "Course Details",
+
+                  hideInSidebar: true,
+                  children: [
+                    {
+                      index: true,
+                      element: <CourseDetails />,
+                      title: "Course Details",
+                      hideInSidebar: true,
+                    },
+                    {
+                      path: "/my-courses/my-courses/course-details/:courseNo",
+                      element: <CourseDetails />,
+                      title: "Course Details",
+                      hideInSidebar: true,
+                    },
+                  ],
                 },
               ],
             },

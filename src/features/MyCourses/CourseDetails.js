@@ -61,6 +61,20 @@ function CourseDetails() {
     currPage * rowsPerPage
   );
 
+  const getVideoUrl = (courseName) => {
+    console.log('courseName ' + courseName);
+    switch (courseName.toLowerCase()) {    
+      case "math g8-f2024":
+        return "https://www.youtube.com/embed/DL3CM_EON-0?si=YURmSPmvWjiekXZV";
+      case "biology g8-f20241":
+        return "https://www.youtube.com/embed/3tisOnOkwzo?si=p1SVYB5r9sI7i4-t";
+      case "physics g8-f20241":
+        return "https://www.youtube.com/embed/ZAqIoDhornk?si=-VACM8dFlxWd8Lqu";
+      default:
+        return "https://www.youtube.com/embed/default-video-id";
+    }
+  };
+
   return (
     <>
       <MainTitle title="Course Details" />
@@ -101,10 +115,10 @@ function CourseDetails() {
                 ))}
               </ul>
             ) : (
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/3tisOnOkwzo?si=p1SVYB5r9sI7i4-t" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe width="560" height="315" src={getVideoUrl(course.CourseName)} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
             )}
 
-            <h3>Grades</h3>
+            {/* <h3>Grades</h3>
             {course.grades && course.grades.length > 0 ? (
               <ul>
                 {course.grades.map((grade) => (
@@ -113,7 +127,7 @@ function CourseDetails() {
               </ul>
             ) : (
               <p>No grades available.</p>
-            )}
+            )} */}
           </>
         )}
       </TableContainer>

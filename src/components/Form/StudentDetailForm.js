@@ -52,7 +52,7 @@ import {
 import avatar from "../../assets/user-avatar-account.jpg";
 import { useParams } from "react-router-dom";
 import Button from "../Button/Button";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 function StudentDetailForm({ studentData, data, showEditButton }) {
   const [inputData, setInputData] = useState({
@@ -263,32 +263,6 @@ function StudentDetailForm({ studentData, data, showEditButton }) {
         </div>
       </EditContainer>
       <br />
-      <EditContainer 
-        title="Enrolled Courses"
-        editButtonText="Add Course"
-        onClickEdit={handleAddCourse}
-        >
-        <div className={formStyles.formContainer}>
-          <table className={formStyles.courseTable}>
-            <thead>
-              <tr>
-                <th>Course Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {enrollments.map((enrollment) => (
-                <tr key={enrollment.CourseID}>
-                  <td>{enrollment.CourseName}</td>
-                  <td>{new Date(enrollment.StartDate).toLocaleDateString()}</td>
-                  <td>{new Date(enrollment.EndDate).toLocaleDateString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </EditContainer>
     </>
   );
 }

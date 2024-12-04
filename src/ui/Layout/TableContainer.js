@@ -37,7 +37,7 @@ function TableContainer({
         <div className={styles.tableFeaturesLeftBox}>
           {onClickAddBtn && (
             <Button onClickBtn={onClickAddBtn} size="large">
-              Add New
+              Create New
             </Button>
           )}
           {onClickEditBtn && (
@@ -76,7 +76,7 @@ function TableContainer({
           )}
 
           {/* ========= Search Bar ========== */}
-          <Search colorType="light" onSearch={onSearch} />
+          {onSearch && <Search colorType="light" onSearch={onSearch} />}
           {/* =============================== */}
         </div>
         <div className={styles.entriesPerPage}>

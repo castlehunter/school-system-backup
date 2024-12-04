@@ -8,10 +8,12 @@ import {
   UpdatePersonalInfo,
   UploadProfileImage,
   uploadImageURL,
+  deleteUser,
 } from "../../services/apiUser";
 import Loader from "../../ui/Loader";
+import { useNavigate } from "react-router-dom";
 
-function PersonalInfoForm({ userNo, hideUpload }) {
+function PersonalInfoForm({ userNo, hideUpload, showDeleteButton = false }) {
   const [personalInfoData, setPersonalInfoData] = useState({
     RoleName: "",
     FirstName: "",
@@ -22,10 +24,21 @@ function PersonalInfoForm({ userNo, hideUpload }) {
     DateOfBirth: "",
     AvatarURL: "",
   });
+
+  const [inputData, setInputData] = useState({
+    FirstName: "",
+    LastName: "",
+    PhoneNumber: "",
+    Email: "",
+    HomeAddress: "",
+    DateOfBirth: "",
+  });
   const [isEdit, setIsEdit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
-
+  const [errors, setErrors] = useState({});
+  const role = localStorage.getItem("role");
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -41,6 +54,14 @@ function PersonalInfoForm({ userNo, hideUpload }) {
           DateOfBirth: profileData.DateOfBirth || "",
           AvatarURL: profileData.AvatarURL || "",
         });
+        setInputData({
+          FirstName: profileData.FirstName || "",
+          LastName: profileData.LastName || "",
+          PhoneNumber: profileData.PhoneNumber || "",
+          Email: profileData.Email || "",
+          HomeAddress: profileData.HomeAddress || "",
+          DateOfBirth: profileData.DateOfBirth || "",
+        });
       } catch (error) {
         console.error("Error fetching profile info:", error);
       } finally {
@@ -51,9 +72,42 @@ function PersonalInfoForm({ userNo, hideUpload }) {
     fetchProfileData();
   }, [userNo]);
 
+  function validateForm() {
+    const newErrors = {};
+
+    // Check for empty fields
+    if (!inputData.FirstName) newErrors.FirstName = "First Name is required.";
+    if (!inputData.LastName) newErrors.LastName = "Last Name is required.";
+    if (!inputData.PhoneNumber)
+      newErrors.PhoneNumber = "Phone number is required.";
+    if (!inputData.Email) newErrors.Email = "Email is required.";
+    if (!inputData.DateOfBirth)
+      newErrors.DateOfBirth = "Date of Birth is required.";
+    if (!inputData.HomeAddress)
+      newErrors.HomeAddress = "Home address is required.";
+
+    // Email format check
+    if (inputData.Email && !/\S+@\S+\.\S+/.test(inputData.Email)) {
+      newErrors.Email = "Email is not valid.";
+    }
+
+    // Check if FirstName and LastName contain only letters
+    const nameRegex = /^[A-Za-z]+$/;
+    if (inputData.FirstName && !nameRegex.test(inputData.FirstName)) {
+      newErrors.FirstName = "First Name must only contain letters.";
+    }
+
+    if (inputData.LastName && !nameRegex.test(inputData.LastName)) {
+      newErrors.LastName = "Last Name must only contain letters.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // If no errors, form is valid
+  }
+
   function handleChange(e) {
     const { name, value } = e.target;
-    setPersonalInfoData((prevData) => ({
+    setInputData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -64,16 +118,23 @@ function PersonalInfoForm({ userNo, hideUpload }) {
     setIsEdit((isEdit) => !isEdit);
   }
 
-  function handleClickCancel() {
-    setIsEdit((prev) => !prev);
+  function handleClickCancel(e) {
+    e.preventDefault();
+    setInputData(personalInfoData);
+    setIsEdit(false);
+    setErrors({});
   }
 
   async function handleClickSave() {
     try {
-      if (imageFile) {
-        const imageres = await handleImageUpload();
+      if (!validateForm()) {
+        return; // If form is invalid, do not save
       }
-      const response = await UpdatePersonalInfo(userNo, personalInfoData);
+
+      if (imageFile) {
+        await handleImageUpload();
+      }
+      const response = await UpdatePersonalInfo(userNo, inputData);
       setIsEdit(false);
       if (response) {
         alert("User information updated successfully!");
@@ -118,6 +179,22 @@ function PersonalInfoForm({ userNo, hideUpload }) {
     }
   };
 
+  async function handleDelete(userNo) {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+    if (confirmDelete) {
+      try {
+        await deleteUser(userNo);
+        alert("User deleted successfully.");
+        navigate("/users/user-list");
+      } catch (error) {
+        console.error("Failed to delete user:", error);
+        alert("Failed to delete the user.");
+      }
+    }
+  }
+
   return (
     <EditContainer
       title="Personal Information"
@@ -126,6 +203,13 @@ function PersonalInfoForm({ userNo, hideUpload }) {
       onClickEdit={handleClickEdit}
       onClickSave={handleClickSave}
       onClickCancel={handleClickCancel}
+      onClickDelete={
+        showDeleteButton
+          ? role === "Admin" || role === "Advisor"
+            ? () => handleDelete(userNo)
+            : false
+          : false
+      }
     >
       {isLoading ? (
         <Loader />
@@ -172,10 +256,15 @@ function PersonalInfoForm({ userNo, hideUpload }) {
                   id="firstName"
                   name="FirstName"
                   className={formStyles.formInput}
-                  disabled={!isEdit}
-                  value={personalInfoData.FirstName}
-                  onChange={handleChange}
+                  readOnly
+                  disabled
+                  value={inputData.FirstName}
                 />
+                {errors.FirstName && (
+                  <span className={formStyles.errorText}>
+                    {errors.FirstName}
+                  </span>
+                )}
               </div>
               <div className={formStyles.formItem}>
                 <label htmlFor="lastName" className={formStyles.formLabel}>
@@ -186,10 +275,15 @@ function PersonalInfoForm({ userNo, hideUpload }) {
                   id="lastName"
                   name="LastName"
                   className={formStyles.formInput}
-                  disabled={!isEdit}
-                  value={personalInfoData.LastName}
-                  onChange={handleChange}
+                  readOnly
+                  disabled
+                  value={inputData.LastName}
                 />
+                {errors.LastName && (
+                  <span className={formStyles.errorText}>
+                    {errors.LastName}
+                  </span>
+                )}
               </div>
             </div>
             <div className={formStyles.formRow}>
@@ -203,9 +297,14 @@ function PersonalInfoForm({ userNo, hideUpload }) {
                   name="PhoneNumber"
                   className={formStyles.formInput}
                   disabled={!isEdit}
-                  value={personalInfoData.PhoneNumber}
+                  value={inputData.PhoneNumber}
                   onChange={handleChange}
                 />
+                {errors.PhoneNumber && (
+                  <span className={formStyles.errorText}>
+                    {errors.PhoneNumber}
+                  </span>
+                )}
               </div>
               <div className={formStyles.formItem}>
                 <label htmlFor="email" className={formStyles.formLabel}>
@@ -217,9 +316,12 @@ function PersonalInfoForm({ userNo, hideUpload }) {
                   name="Email"
                   className={formStyles.formInput}
                   disabled={!isEdit}
-                  value={personalInfoData.Email}
+                  value={inputData.Email}
                   onChange={handleChange}
                 />
+                {errors.Email && (
+                  <span className={formStyles.errorText}>{errors.Email}</span>
+                )}
               </div>
             </div>
             <div className={formStyles.formItem}>
@@ -232,9 +334,14 @@ function PersonalInfoForm({ userNo, hideUpload }) {
                 name="DateOfBirth"
                 className={formStyles.formInput}
                 disabled={!isEdit}
-                value={personalInfoData.DateOfBirth}
+                value={inputData.DateOfBirth}
                 onChange={handleChange}
               />
+              {errors.DateOfBirth && (
+                <span className={formStyles.errorText}>
+                  {errors.DateOfBirth}
+                </span>
+              )}
             </div>
             <div className={formStyles.formItem}>
               <label htmlFor="address" className={formStyles.formLabel}>
@@ -246,9 +353,14 @@ function PersonalInfoForm({ userNo, hideUpload }) {
                 name="HomeAddress"
                 className={formStyles.formInput}
                 disabled={!isEdit}
-                value={personalInfoData.HomeAddress}
+                value={inputData.HomeAddress}
                 onChange={handleChange}
               />
+              {errors.HomeAddress && (
+                <span className={formStyles.errorText}>
+                  {errors.HomeAddress}
+                </span>
+              )}
             </div>
           </form>
         </div>
