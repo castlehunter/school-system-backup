@@ -4,6 +4,8 @@ import styles from "./SidebarNew.module.css";
 import logo from "../../assets/logo-removebg-preview.png";
 import Search from "../Search/Search";
 import icons from "../../ui/Icons/icons";
+import { getUserByID } from "../../services/apiUser";
+import supabase from "../../config/supabaseClient";
 
 function SidebarNew() {
   const routes = useLoaderData();
@@ -27,14 +29,53 @@ function SidebarNew() {
     "my calendar": true,
   });
 
-  const [loginRole, setLoginRole] = useState(null);
+  const [loginRole, setLoginRole] = useState("");
 
   useEffect(() => {
-    const storedRole = localStorage.getItem("role");
-    setLoginRole(storedRole);
+    const fetchRole = async () => {
+
+      const { data: session, error } = await supabase.auth.getUser();
+
+      if (error) {
+        console.error("Error fetching session:", error.message);
+        return;
+      }
+      console.log(session.user.id);
+      if (session.user.id) {
+        // 2. Fetch the role using the user ID
+        const role = await getUserByID(session.user.id);
+        if (role) {
+          console.log(role.Roles)
+          const rol = role.Roles;
+          setLoginRole(rol);
+          console.log(loginRole)
+        }
+      }
+    };
+
+    fetchRole();
+    console.log(loginRole)
   }, []);
 
+  /*async function fetchRole() {
+    const { data: session, error } = await supabase.auth.getUser();
+    if (error) {
+      console.error("Error fetching session:", error.message);
+      return;
+    }
+    console.log(session.user);
+    if(session.user){
+      const data = await getUserByID(session.user.id);
+      console.log(data)
+      if(data)
+      {
+        return data.Roles;
+      }
+    }
+  }*/
+
   const filteredMenuItems = menuItems.filter((menuObj) => {
+    console.log(loginRole)
     if (loginRole === "Admin") {
       return (
         !(menuObj.title === "My Grades") && !(menuObj.title === "My Courses")
