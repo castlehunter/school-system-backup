@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import DefaultAvatar from "../../assets/User-avatar-default.jpg";
 import logo from "../../assets/logo.png";
 import icons from "../../ui/Icons/icons";
+import supabase from "../../config/supabaseClient";
 
 import {
   getRoleNameByNo,
@@ -96,6 +97,13 @@ function Layout({ children, breadcrumb, userNo }) {
     setShowSidebar(!showSidebar);
   }
 
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error during logout:", error.message);
+    }
+  }
+
   return (
     <main className={styles.layout}>
       <aside className={showSidebar ? styles.showSidebar : styles.hideSidebar}>
@@ -156,7 +164,7 @@ function Layout({ children, breadcrumb, userNo }) {
                     >
                       <li>My Account</li>
                     </Link>
-                    <Link to="/" onClick={handleMenuItemClick}>
+                    <Link to="/" onClick={handleLogout}>
                       <li>Sign Out</li>
                     </Link>
                   </ul>
