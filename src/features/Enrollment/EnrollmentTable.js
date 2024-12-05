@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import generalStyles from "../../generalStyles.module.css";
 import styles from "../../components/Table.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,11 +15,34 @@ function EnrollmentTable({
   selectedCheckboxes,
   handleCheckboxes,
 }) {
+  const [editableRow, setEditableRow] = useState(null);
+
+  const [status, setStatus] = useState(
+    enrollmentData.reduce(
+      (acc, enrollment) => ({
+        ...acc,
+        [enrollment.EnrollmentID]: enrollment.isFinished,
+      }),
+      {}
+    )
+  );
+
   const currData = enrollmentData.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
   const navigate = useNavigate();
+
+  function handleUpdateStatus(rowId) {
+    setEditableRow(rowId);
+  }
+
+  function handleToggleStatus(id) {
+    setStatus((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  }
 
   return (
     <table className={styles.table}>
@@ -63,14 +86,27 @@ function EnrollmentTable({
               <td>{enrollment.Students.Users.LastName}</td>
               <td>{enrollment.Courses.CourseName}</td>
               <td>
+                {" "}
                 {new Date(enrollment.EnrollmentDate).toLocaleDateString()}
               </td>
-              <td>{enrollment.isFinished ? "Yes" : "No"}</td>
+              {/* <td>{enrollment.isFinished ? "Yes" : "No"}</td> */}
+              <td>
+                <div className={`${styles.toggleSwitch} ${styles.editable}`}>
+                  <label className={styles.toggleSwitch}>
+                    <input
+                      type="checkbox"
+                      checked={status[enrollment.EnrollmentID]}
+                      onChange={() =>
+                        handleToggleStatus(enrollment.EnrollmentID)
+                      }
+                    />
+                    <span className={styles.slider}></span>
+                  </label>
+                </div>
+              </td>
               <td>
                 <Button
-                  onClickBtn={() =>
-                    navigate(`/enrollments/${enrollment.EnrollmentID}`)
-                  }
+                  onClickBtn={() => handleUpdateStatus(enrollment.EnrollmentID)}
                 >
                   Update Status
                 </Button>

@@ -43,6 +43,7 @@ import NewAnnouncement from "./features/Dashboard/NewAnnouncement.js";
 import AnnouncementDetail from "./features/Dashboard/AnnouncementDetail.js";
 import { UnreadProvider } from "./contexts/UnreadContext.js";
 import { AuthProvider } from "./contexts/AuthContext.js";
+import UpdateEnrollmentStatus from "./features/Enrollment/UpdateEnrollmentStatus.js";
 
 function App() {
   const routes = [
@@ -347,7 +348,7 @@ function App() {
             },
             {
               path: "/enrollments/:EnrollmentID",
-              element: <NewEnrollment />,
+              element: <UpdateEnrollmentStatus />,
               title: "Update Enrollment",
               hideInSidebar: true,
             },
@@ -399,11 +400,11 @@ function App() {
   // return <RouterProvider router={router} />;
   return (
     <AuthProvider>
-    <UnreadProvider>
-      <UserProvider>
-        <RouterProvider router={router} />
-      </UserProvider>
-    </UnreadProvider>
+      <UnreadProvider>
+        <UserProvider>
+          <RouterProvider router={router} />
+        </UserProvider>
+      </UnreadProvider>
     </AuthProvider>
   );
 }

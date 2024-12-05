@@ -25,7 +25,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridWeekPlugin from "@fullcalendar/timegrid";
 
-
 function Overview() {
   const { session, loading } = useAuth();
 
@@ -44,8 +43,7 @@ function Overview() {
 
   const navigate = useNavigate();
 
-  if (!session) 
-    navigate("/");
+  if (!session) navigate("/");
 
   const formattedDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -100,6 +98,7 @@ function Overview() {
   }, []);
 
   function renderStatCards() {
+    console.log("login role", loginRole);
     if (loginRole === "Admin" || loginRole === "Advisor") {
       return (
         <>
@@ -288,8 +287,6 @@ function Overview() {
       </>
     );
   }
-
-
 
   return (
     <>

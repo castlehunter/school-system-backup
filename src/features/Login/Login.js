@@ -23,28 +23,27 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-      const loginData = await getLoginInfoByUsername(username);
-      console.log(loginData);
+    const loginData = await getLoginInfoByUsername(username);
+    console.log(loginData);
 
-      const userEmail = loginData.Email;
+    const userEmail = loginData.Email;
 
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: userEmail,
-        password: password,
-      });
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: userEmail,
+      password: password,
+    });
 
-      if( error) {
-        alert("Invalid Username or Password");
-        return;
-      }
+    if (error) {
+      alert("Invalid Username or Password");
+      return;
+    }
 
-      console.log(data);
+    console.log(data);
 
-      const userId = data.session.user.id;
-
+    const userId = data.session.user.id;
 
     localStorage.setItem("UserID", userId);
-    localStorage.setItem("role", loginData.Roles);
+    localStorage.setItem("role", loginData.Roles.RoleName);
 
     setUserNo(loginData.UserNo);
 
