@@ -121,8 +121,6 @@ function SidebarNew() {
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.error("Error during logout:", error.message);
-    } else {
-      naviagate("/"); // Redirect to home or login page after logout
     }
   }
 
@@ -181,10 +179,10 @@ function SidebarNew() {
             </div>
           ))}
         </div>
-        <button onClick={handleLogout} className={styles.logout}>
+        <Link to={"/"} onClick={handleLogout} className={styles.logout}>
           {icons.LogoutIcon}
           <span>Logout</span>
-        </button>
+        </Link>
       </div>
     </>
   );
