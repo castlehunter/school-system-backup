@@ -347,7 +347,7 @@ function App() {
               title: "Enrollment List",
             },
             {
-              path: "/enrollments/:EnrollmentID",
+              path: "/enrollments/:enrollmentid",
               element: <UpdateEnrollmentStatus />,
               title: "Update Enrollment",
               hideInSidebar: true,

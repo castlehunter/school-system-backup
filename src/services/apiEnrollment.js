@@ -128,3 +128,24 @@ export async function getEnrollmentDetails(id) {
   }
   return data;
 }
+
+export async function updateEnrollmentStatus(EnrollmentID, isFinished) {
+  try {
+    const { data, error } = await supabase
+      .from("Enrollments")
+      .update({
+        isFinished: isFinished,
+      })
+      .eq("EnrollmentID", EnrollmentID);
+
+    if (error) {
+      throw new Error(`Error updating enrollment status: ${error.message}`);
+    }
+
+    console.log("Updated enrollment status:", data);
+    return data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
