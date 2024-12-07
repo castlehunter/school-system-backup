@@ -24,7 +24,7 @@ function Login() {
     e.preventDefault();
 
     const loginData = await getLoginInfoByUsername(username);
-    console.log(loginData);
+    console.log("loginData", loginData);
 
     const userEmail = loginData.Email;
 

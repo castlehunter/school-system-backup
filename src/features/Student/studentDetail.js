@@ -82,6 +82,7 @@ function StudentDetail() {
                   <th>Course Name</th>
                   <th>Start Date</th>
                   <th>End Date</th>
+                  <th>Course Time</th>
                 </tr>
               </thead>
               <tbody>

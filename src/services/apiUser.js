@@ -34,7 +34,6 @@ export async function getLoginInfoByUsername(username) {
   }
 
   return user;
-  
 }
 
 export async function getUserByID(userID) {
@@ -284,8 +283,7 @@ export async function CreateUser(newUser) {
       password: newUser.password,
     });
 
-    if(authError)
-    {
+    if (authError) {
       alert("Error creating user in Auth:", authError);
       return;
     }
@@ -655,4 +653,19 @@ export async function getUserRoleByUserNo(userNo) {
     console.error("Unexpected error fetching user role:", error);
     throw error;
   }
+}
+
+export async function getUserIdByUsername(username) {
+  const { data, error } = await supabase
+    .from("Users")
+    .select("UserID")
+    .eq("UserName", username)
+    .single();
+
+  if (error) {
+    console.error("Error fetching user ID:", error);
+    throw new Error("Failed to load user ID");
+  }
+
+  return data?.UserID || null; // Return UserNo or null if no user is found
 }
