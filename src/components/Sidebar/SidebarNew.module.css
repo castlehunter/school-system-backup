@@ -29,6 +29,39 @@ svg {
   border-radius: 0 0 1.2rem 1.2rem;
 }
 
+.menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.expandCollapseButtons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.2rem 0rem;
+}
+
+.expandCollapseButton {
+  background: linear-gradient(145deg, #313131, #333333);
+  /* border-radius: 0.9rem; */
+  font-size: 90%;
+  padding: 0.2rem 1rem;
+  color: #b4b4b4;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.expandCollapseButton:hover {
+  background: linear-gradient(145deg, #2b2b2b, #3d3d3d);
+}
+
+.expandCollapseButton:active {
+  background: #464646;
+  box-shadow: inset 0.5px 0.5px 1px rgba(0, 0, 0, 0.3);
+}
+
 .burgerIcon {
   /* position: fixed; */
   display: none;
@@ -52,19 +85,11 @@ svg {
   justify-content: center;
   padding: 1rem 2rem;
   background-color: #2e2e2e;
-  margin-bottom: 1rem;
 }
 
 .logoImage {
   width: 90%;
   height: auto;
-}
-
-.menu {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 1rem;
 }
 
 .menuTitle {

@@ -154,6 +154,7 @@ function SidebarNew() {
 
         <div className={styles.menu}>
           {/* Buttons for Expand All / Collapse All */}
+
           <div className={styles.expandCollapseButtons}>
             <button onClick={expandAll} className={styles.expandCollapseButton}>
               Expand All
