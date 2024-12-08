@@ -3,6 +3,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import icons from "../../ui/Icons/icons";
 
+// Removed sidebar search temporarily
 function Search({ searchMenuItems, colorType, onSearch, menuSearch }) {
   const [searchBarIcon, setSearchBarIcon] = useState(icons.SearchIcon);
   const [searchQuery, setSearchQuery] = useState("");

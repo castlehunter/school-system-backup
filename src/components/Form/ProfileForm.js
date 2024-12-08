@@ -223,7 +223,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     };
 
     try {
-      // Create the user
+      // REVERT to no supabase authentication, do not change
       const userResponse = await CreateUser(newUser);
       if (userResponse === true) {
         const userID = await getUserIdByUsername(inputData.UserName);

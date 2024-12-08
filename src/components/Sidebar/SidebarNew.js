@@ -30,50 +30,12 @@ function SidebarNew() {
     "my calendar": true,
   });
 
-  const [loginRole, setLoginRole] = useState("Admin"); // temp changed to admin
+  const [loginRole, setLoginRole] = useState(null);
 
   useEffect(() => {
-    /*const fetchRole = async () => {
-
-      const { data: session, error } = await supabase.auth.getUser();
-
-      if (error) {
-        console.error("Error fetching session:", error.message);
-        return;
-      }
-      console.log(session.user.id);
-      if (session.user.id) {
-        // 2. Fetch the role using the user ID
-        const role = await getUserByID(session.user.id);
-        if (role) {
-          console.log(role.Roles)
-          const rol = role.Roles;
-          setLoginRole(rol);
-          console.log(loginRole)
-        }
-      }
-    };
-
-    fetchRole();
-    console.log(loginRole)*/
+    const storedRole = localStorage.getItem("role");
+    setLoginRole(storedRole);
   }, []);
-
-  /*async function fetchRole() {
-    const { data: session, error } = await supabase.auth.getUser();
-    if (error) {
-      console.error("Error fetching session:", error.message);
-      return;
-    }
-    console.log(session.user);
-    if(session.user){
-      const data = await getUserByID(session.user.id);
-      console.log(data)
-      if(data)
-      {
-        return data.Roles;
-      }
-    }
-  }*/
 
   const filteredMenuItems = menuItems.filter((menuObj) => {
     if (loginRole === "Admin") {

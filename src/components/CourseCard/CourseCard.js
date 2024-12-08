@@ -31,7 +31,7 @@ const CourseCard = ({
         {" "}
         <Link to={`/course-details/${courseId}`}>
           <img
-            src="https://llcccnztkkxlkzblokbt.supabase.co/storage/v1/object/public/ProfileImage/bookcover2.png"
+            src="https://llcccnztkkxlkzblokbt.supabase.co/storage/v1/object/public/ProfileImage/public/bookcover1.png"
             alt="Retrieve course banner from database"
           />
         </Link>

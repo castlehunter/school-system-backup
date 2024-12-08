@@ -19,6 +19,7 @@ function Login() {
   const { setUserNo } = useUser();
   const { setUnreadCount } = useUnreadCount();
 
+  // REVERT to no supabase authentication, do not change
   const handleLogin = async (e) => {
     e.preventDefault();
     const { data, error } = await supabase

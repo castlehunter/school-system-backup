@@ -52,6 +52,9 @@ function UserList() {
 
   async function handleSearchUsers(query) {
     try {
+      if (query == null || query === "") {
+        setUserData(initialUserData);
+      }
       if (query) {
         const results = await searchUsers(query);
         console.log("Search Results:", results);
