@@ -4,7 +4,8 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import timeGridWeekPlugin from "@fullcalendar/timegrid";
 import { useUser } from "../../contexts/UserContext";
-import { getStudentEnrollments } from "../../services/apiStudent";
+// import { getStudentEnrollments } from "../../services/apiStudent";
+import { getTeacherCourses } from "../../services/apiTeacher";
 
 function Calendar() {
   const calendarRef = useRef(null);
@@ -18,8 +19,9 @@ function Calendar() {
   useEffect(() => {
     async function fetchEnrollments() {
       try {
-        const enrollmentData = await getStudentEnrollments(userNo);
+        const enrollmentData = await getTeacherCourses(userNo);
         setEnrollments(enrollmentData);
+        console.log(enrollmentData);
       } catch (error) {
         console.error("Failed to fetch enrollments:", error);
         setError("Failed to fetch enrollments.");
@@ -98,6 +100,7 @@ function Calendar() {
       ref={calendarRef}
       plugins={[dayGridPlugin, interactionPlugin, timeGridWeekPlugin]}
       initialView="timeGridWeek"
+      allDaySlot={false}
       // Defines the buttons and title at the top of the calendar.
       headerToolbar={{
         left: "prev,next today",
@@ -111,12 +114,24 @@ function Calendar() {
         day: "Day",
       }}
       events={events}
-      eventContent={(arg) => (
-        <div>
-          <b>{arg.event.title}</b>
-          <div>{arg.event.extendedProps.time}</div>
-        </div>
-      )}
+      eventContent={(arg) => {
+        const isTimeGridView = arg.view.type.includes("timeGrid");
+        return (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(135, 206, 235, 0.5)", // 不同视图使用不同颜色
+              position: isTimeGridView ? "absolute" : "relative",
+              zIndex: -1, // 确保背景在文字下方
+              padding: isTimeGridView ? "0" : "5px", // 调整 dayGridMonth 的间距
+            }}
+          >
+            <b>{arg.event.title}</b>
+            <div>{arg.event.extendedProps.time}</div>
+          </div>
+        );
+      }}
       eventDisplay="block"
       eventClick={handleClickEvent}
     />
