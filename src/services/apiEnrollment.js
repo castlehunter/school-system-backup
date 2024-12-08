@@ -161,7 +161,6 @@ export async function deleteEnrollment(studentId, courseId) {
     if (error) {
       throw new Error(`Error deleting enrollment: ${error.message}`);
     }
-
     console.log("Deleted enrollment:", data);
     return data;
   } catch (err) {

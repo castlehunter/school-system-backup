@@ -6,9 +6,11 @@ import { getCourseDetail, getCourses } from "../../services/apiCourse";
 import {
   assignCourseToTeacher as assignCourseToTeacher,
   getTeacherIdByCourseId,
+  removeCourseAssignment,
   getTeacherIdByUserNo,
+  removeCourseFromTeacher,
 } from "../../services/apiTeacher";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import MainTitle from "../../ui/MainTitle/MainTitle";
 import { getFullNameByNo } from "../../services/apiUser";
 import { getTeacherByNo } from "../../services/apiTeacher";
@@ -79,7 +81,12 @@ function AddCourseForTeacher() {
             c.CourseID === course.CourseID
               ? {
                   ...c,
-                  Teachers: { Users: { ...c.Teachers.Users, UserNo: userNo } },
+                  Teachers: {
+                    Users: {
+                      ...c.Teachers?.Users, // Use optional chaining to avoid error when Teachers is undefined
+                      UserNo: userNo,
+                    },
+                  },
                 }
               : c
           )
@@ -92,6 +99,23 @@ function AddCourseForTeacher() {
       alert("An error occurred while adding the course.");
     }
   };
+
+  async function handleRemoveAssignment(course) {
+    const isConfirmed = window.confirm("Do you want to remove this course?");
+    if (!isConfirmed) return;
+    try {
+      const response = await removeCourseFromTeacher(course);
+      setCourses((prevCourses) =>
+        prevCourses.map((c) =>
+          c.CourseID === course.CourseID
+            ? { ...c, Teachers: null } // Remove the teacher assignment
+            : c
+        )
+      );
+    } catch (error) {
+      console.error("Error removing course from teacher:", error);
+    }
+  }
 
   return (
     <>
@@ -118,12 +142,24 @@ function AddCourseForTeacher() {
                   <td>{new Date(course.EndDate).toLocaleDateString()}</td>
                   <td>{course.Time}</td>
                   <td>
-                    {course.Teachers.Users.FirstName}{" "}
-                    {course.Teachers.Users.LastName}
+                    {course.Teachers
+                      ? `${course.Teachers.Users.FirstName} ${course.Teachers.Users.LastName}`
+                      : "No teacher assigned"}
                   </td>
+
                   <td>
-                    {course.Teachers.Users.UserNo == userNo ? (
-                      "Assigned"
+                    {course.Teachers &&
+                    course.Teachers.Users.UserNo == userNo ? (
+                      <span>
+                        Assigned (
+                        <Link
+                          onClick={() => handleRemoveAssignment(course)}
+                          style={{ color: "red" }}
+                        >
+                          Remove
+                        </Link>
+                        )
+                      </span>
                     ) : (
                       <Button
                         type="button"
