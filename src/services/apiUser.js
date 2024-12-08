@@ -1,6 +1,10 @@
 import supabase from "../config/supabaseClient.js";
+
 export async function getUsers() {
-  const { data, error } = await supabase.from("Users").select(`
+  const { data, error } = await supabase
+    .from("Users")
+    .select(
+      `
    UserNo,
    UserName,
    FirstName,
@@ -11,7 +15,9 @@ export async function getUsers() {
    DateOfBirth,
    PhoneNumber,
    Roles(RoleName)
-  `);
+  `
+    )
+    .order("UserNo", { ascending: true });
 
   if (error) {
     console.error(error);

@@ -72,7 +72,7 @@ function StudentDetail() {
         <PersonalInfoForm userNo={userNo} hideUpload={true} />
         <EditContainer
           title="Enrolled Courses"
-          editButtonText="Add Course"
+          editButtonText="Manage Enrolled Courses"
           onClickEdit={handleAddCourse}
         >
           <div className={formStyles.formContainer}>

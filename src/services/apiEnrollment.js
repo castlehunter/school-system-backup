@@ -149,3 +149,22 @@ export async function updateEnrollmentStatus(EnrollmentID, isFinished) {
     throw err;
   }
 }
+
+// Delete enrollment by StudentID and CourseID
+export async function deleteEnrollment(studentId, courseId) {
+  try {
+    const { data, error } = await supabase.from("Enrollments").delete().match({
+      StudentID: studentId,
+      CourseID: courseId,
+    });
+
+    if (error) {
+      throw new Error(`Error deleting enrollment: ${error.message}`);
+    }
+    console.log("Deleted enrollment:", data);
+    return data;
+  } catch (err) {
+    console.error("Failed to delete enrollment:", err);
+    throw err;
+  }
+}

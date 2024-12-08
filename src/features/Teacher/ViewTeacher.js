@@ -67,7 +67,7 @@ function TeacherDetail() {
         {/* <EditContainer title="Additional Information"></EditContainer> */}
         <EditContainer
           title="Courses"
-          editButtonText="Assign Courses"
+          editButtonText="Manage Assigned Courses"
           onClickEdit={handleAddCourse}
         >
           <div className={formStyles.formContainer}>
@@ -78,7 +78,6 @@ function TeacherDetail() {
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Time</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -88,11 +87,6 @@ function TeacherDetail() {
                     <td>{new Date(course.StartDate).toLocaleDateString()}</td>
                     <td>{new Date(course.EndDate).toLocaleDateString()}</td>
                     <td>{course.Time}</td>
-                    <td>
-                      <Button color="blue" onClickBtn={handleRemoveCourse}>
-                        Remove
-                      </Button>
-                    </td>
                   </tr>
                 ))}
               </tbody>

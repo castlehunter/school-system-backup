@@ -192,15 +192,18 @@ export async function assignCourseToTeacher(courseid, teacherid) {
 export async function removeCourseFromTeacher(courseData) {
   const { CourseID, TeacherID } = courseData;
 
+  // Check if CourseID and TeacherID are provided
   if (!CourseID || !TeacherID) {
     throw new Error("CourseID and TeacherID are required");
   }
 
   try {
+    // Update the Courses table to remove the TeacherID
     const { data, error } = await supabase
-      .from("TeacherCourses")
-      .delete()
-      .match({ CourseID, TeacherID });
+      .from("Courses")
+      .update({ TeacherID: null })
+      .eq("CourseID", CourseID)
+      .eq("TeacherID", TeacherID);
 
     if (error) {
       console.error("Error removing teacher from course:", error);
@@ -210,7 +213,7 @@ export async function removeCourseFromTeacher(courseData) {
     return {
       success: true,
       message: "Teacher removed from course successfully",
-      data,
+      data, // Return the updated course data
     };
   } catch (error) {
     console.error("Error removing teacher from course:", error);

@@ -3,8 +3,9 @@ import icons from "../../ui/Icons/icons";
 import styles from "./Button.module.css";
 import Button from "./Button";
 
-function SelectButton({ options, onSelect, label }) {
+function SelectButton({ options, onSelect, label = "Sort By" }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(options[0]);
 
   const handleButtonClick = () => {
     setIsDropdownOpen((prev) => !prev);
@@ -17,7 +18,7 @@ function SelectButton({ options, onSelect, label }) {
         onClickBtn={handleButtonClick}
         size="large"
       >
-        {label}&nbsp;&nbsp;
+        {`${label}: ${selectedOption}`}&nbsp;&nbsp;
         {icons.ArrowDownIcon(styles.arrowDown)}
       </Button>
 
@@ -31,8 +32,14 @@ function SelectButton({ options, onSelect, label }) {
             {options.map((option, index) => (
               <div
                 key={index}
-                className={styles.dropdownItem}
-                onClick={() => onSelect(option.replace(/\s/g, ""))}
+                className={`${styles.dropdownItem} ${
+                  selectedOption === option ? styles.selected : ""
+                }`}
+                onClick={() => {
+                  setSelectedOption(option);
+                  setIsDropdownOpen(false);
+                  onSelect(option.replace(/\s/g, ""));
+                }}
               >
                 {option}
               </div>
