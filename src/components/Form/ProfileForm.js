@@ -5,12 +5,7 @@ import {
   CreateMultipleUsers,
   CreateUser,
   checkUsernameExists,
-  getUserIdByUsername,
 } from "../../services/apiUser.js";
-import {
-  addStudent,
-  createStudentByUserId,
-} from "../../services/apiStudent.js";
 import EditContainer from "../../ui/Layout/EditContainer.js";
 import ModalBox from "../ModalBox/ModalBox.js";
 import * as XLSX from "xlsx";
@@ -221,33 +216,13 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       SecurityAnswer: inputData.SecurityAnswer,
     };
 
-    try {
-      // Create the user
-      const userResponse = await CreateUser(newUser);
-      if (userResponse === true) {
-        const userID = await getUserIdByUsername(inputData.UserName);
-        console.log("username", inputData.UserName);
-        console.log("GetUserIdByUserName", userID);
-        if (!userID) {
-          console.error("UserID not found for the created user");
-          return;
-        }
-
-        if (inputData.RoleName === "Student") {
-          const studentResponse = await createStudentByUserId(userID);
-          handleOpenModal();
-          if (studentResponse) {
-            console.log("Student created successfully");
-          } else {
-            console.error("Error creating student");
-          }
-        } else {
-          handleOpenModal();
-        }
-      }
-    } catch (error) {
-      console.error("Error creating user:", error);
-    }
+    CreateUser(newUser)
+      .then((response) => {
+        if (response === true) handleOpenModal();
+      })
+      .catch((error) => {
+        console.error("Error creating user:", error);
+      });
   }
 
   function handleCancel(e) {

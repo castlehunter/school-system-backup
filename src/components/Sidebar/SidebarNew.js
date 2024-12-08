@@ -30,7 +30,7 @@ function SidebarNew() {
     "my calendar": true,
   });
 
-  const [loginRole, setLoginRole] = useState("Admin");// temp changed to admin
+  const [loginRole, setLoginRole] = useState("Admin"); // temp changed to admin
 
   useEffect(() => {
     /*const fetchRole = async () => {
@@ -117,12 +117,28 @@ function SidebarNew() {
     }));
   }
 
+  const expandAll = () => {
+    const expandedState = Object.keys(openMenus).reduce((acc, menu) => {
+      acc[menu] = true;
+      return acc;
+    }, {});
+    setOpenMenus(expandedState);
+  };
+
+  const collapseAll = () => {
+    const collapsedState = Object.keys(openMenus).reduce((acc, menu) => {
+      acc[menu] = false;
+      return acc;
+    }, {});
+    setOpenMenus(collapsedState);
+  };
+
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.error("Error during logout:", error.message);
     }
-  }
+  };
 
   return (
     <>
@@ -134,9 +150,21 @@ function SidebarNew() {
         </Link>
 
         {/* Search bar in the sidebar */}
-        <Search searchMenuItems={searchMenuItems} colorType="dark" menuSearch />
+        {/* <Search searchMenuItems={searchMenuItems} colorType="dark" menuSearch /> */}
 
         <div className={styles.menu}>
+          {/* Buttons for Expand All / Collapse All */}
+          <div className={styles.expandCollapseButtons}>
+            <button onClick={expandAll} className={styles.expandCollapseButton}>
+              Expand All
+            </button>
+            <button
+              onClick={collapseAll}
+              className={styles.expandCollapseButton}
+            >
+              Collapse All
+            </button>
+          </div>
           {filteredMenuItems.map((item) => (
             <div key={item.title}>
               <div

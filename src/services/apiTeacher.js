@@ -293,3 +293,24 @@ export async function getTeacherIdByCourseId(courseId) {
     throw new Error("An unexpected error occurred while fetching TeacherID");
   }
 }
+
+// Create Student By User ID
+export async function createTeacherByUserId(UserId) {
+  try {
+    const defaultProgramID = "9af2aea3-0f6f-44e9-a6df-63d47f7a8e74"; // Default ProgramID
+
+    // Proceed to insert the student with the default ProgramID
+    const { data, error } = await supabase
+      .from("Teachers")
+      .insert([{ UserID: UserId, ProgramID: defaultProgramID }]); // Use default ProgramID
+
+    if (error) {
+      throw new Error("Failed to add teacher: " + error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error creating teacher by UserId:", error);
+    throw error;
+  }
+}

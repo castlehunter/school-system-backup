@@ -53,11 +53,6 @@ function App() {
       title: "Home",
     },
     {
-      path: "/test",
-      element: <Overview />,
-      title: "Home",
-    },
-    {
       path: "/login/forgot-password",
       element: <ForgotPassword />,
       title: "Forgot Password",

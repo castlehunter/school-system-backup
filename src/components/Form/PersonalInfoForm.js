@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EditContainer from "../../ui/Layout/EditContainer";
 import formStyles from "./Form.module.css";
-import avatar from "../../assets/User-avatar-default.jpg";
+import defaultAvatar from "../../assets/User-avatar-default.jpg";
 import Button from "../Button/Button";
 import {
   getProfileInfoByNo,
@@ -39,6 +39,7 @@ function PersonalInfoForm({ userNo, hideUpload, showDeleteButton = false }) {
   const [errors, setErrors] = useState({});
   const role = localStorage.getItem("role");
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -52,7 +53,7 @@ function PersonalInfoForm({ userNo, hideUpload, showDeleteButton = false }) {
           Email: profileData.Email || "",
           HomeAddress: profileData.HomeAddress || "",
           DateOfBirth: profileData.DateOfBirth || "",
-          AvatarURL: profileData.AvatarURL || "",
+          AvatarURL: profileData.AvatarURL || defaultAvatar,
         });
         setInputData({
           FirstName: profileData.FirstName || "",
@@ -216,7 +217,10 @@ function PersonalInfoForm({ userNo, hideUpload, showDeleteButton = false }) {
       ) : (
         <div className={formStyles.sectionLayout}>
           <div className={formStyles.avatar}>
-            <img src={personalInfoData.AvatarURL || avatar} alt="user avatar" />
+            <img
+              src={personalInfoData.AvatarURL || defaultAvatar}
+              alt="user avatar"
+            />
             {!hideUpload && (
               <div className={formStyles.upload}>
                 <div className={formStyles.uploadChooseFile}>

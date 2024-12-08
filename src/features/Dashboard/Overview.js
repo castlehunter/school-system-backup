@@ -26,8 +26,6 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridWeekPlugin from "@fullcalendar/timegrid";
 
 function Overview() {
-  const { session, loading } = useAuth();
-
   const [loginRole, setLoginRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -42,8 +40,6 @@ function Overview() {
   const { unreadCount, setUnreadCount } = useUnreadCount();
 
   const navigate = useNavigate();
-
-  if (!session) navigate("/");
 
   const formattedDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -339,15 +335,9 @@ function Overview() {
             bgColor="highlight"
             title={formattedDate}
             onClickEdit={() => {
-              if (loginRole === "Teacher" || loginRole === "Student") {
-                navigate("/my-calendar");
-              }
-              console.log(loginRole);
+              navigate("/my-calendar");
             }}
-            editButtonText={
-              (loginRole === "Teacher" || loginRole === "Student") &&
-              "Full Calendar"
-            }
+            editButtonText="Full Calendar"
           >
             <Calendar
               plugins={[dayGridPlugin, interactionPlugin, timeGridWeekPlugin]}

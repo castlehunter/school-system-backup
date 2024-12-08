@@ -32,7 +32,6 @@ export async function getStudents() {
 export async function createStudentByUserId(UserId) {
   try {
     const defaultProgramID = "9af2aea3-0f6f-44e9-a6df-63d47f7a8e74"; // Default ProgramID
-    // Use this program id to avoid deleting program column in the student table
 
     // Proceed to insert the student with the default ProgramID
     const { data, error } = await supabase

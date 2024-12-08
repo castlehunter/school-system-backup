@@ -36,12 +36,12 @@ function ResetPasswordForm({ data }) {
         inputData.newPassword
       );
 
-      console.log("response", response);
       if (response && response.error) {
         alert("Failed to update password.");
         console.error("Failed to update password:", response.error);
       } else {
         alert("Password updated successfully!");
+        navigate("/");
         console.log("Password updated successfully!", response);
       }
     } catch (error) {
@@ -53,6 +53,7 @@ function ResetPasswordForm({ data }) {
   function handleClickCancel() {
     navigate(-1);
   }
+
   function handleUpdate(e) {
     const { name, value } = e.target;
     setInputData((prevInputData) => ({ ...prevInputData, [name]: value }));

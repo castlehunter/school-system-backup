@@ -91,7 +91,6 @@ function ViewUser() {
       <div className={styles.profileLayout}>
         <div className={styles.mainColumn}>
           <PersonalInfoForm userNo={userNo} showDeleteButton={true} />
-
           {(profileData?.Roles?.RoleName === "Teacher" ||
             profileData?.Roles?.RoleName === "Student") && (
             <EditContainer
@@ -117,17 +116,32 @@ function ViewUser() {
               )}
             </EditContainer>
           )}
-          <EditContainer title="Additional Information">
-            <div className={styles.detail}></div>
-          </EditContainer>
-          <EditContainer title="Additional Information">
-            <div className={styles.detail}></div>
+          <EditContainer title="Customizable Box">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </EditContainer>{" "}
+          <EditContainer title="Customizable Box">
+            <div className={styles.detail}>
+              {" "}
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
           </EditContainer>
         </div>
         <div className={styles.secondaryColumn}>
           <SecurityInfoForm userNo={userNo} />
           <AccountInfoForm userNo={userNo} />
-          <EditContainer title="Some charts here">
+          <EditContainer title="Customizable Box">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -136,23 +150,6 @@ function ViewUser() {
             pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
             culpa qui officia deserunt mollit anim id est laborum.
           </EditContainer>{" "}
-          <EditContainer title="Remarks">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          </EditContainer>{" "}
-          <EditContainer title="Communication">
-            123 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          </EditContainer>{" "}
-          <EditContainer title="Communication">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </EditContainer>
         </div>
       </div>
     </>
