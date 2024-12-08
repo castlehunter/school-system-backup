@@ -253,12 +253,12 @@ function App() {
               title: "Course Details",
               hideInSidebar: true,
             },
-            {
-              path: "/courses/newEnrollment/:courseNo",
-              element: <EnrollmentForm />,
-              title: "New Enrollment",
-              hideInSidebar: true,
-            },
+            // {
+            //   path: "/courses/newEnrollment/:courseNo",
+            //   element: <EnrollmentForm />,
+            //   title: "New Enrollment",
+            //   hideInSidebar: true,
+            // },
           ],
         },
         {

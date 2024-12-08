@@ -64,11 +64,11 @@ function ViewUser() {
     fetchUserCourses();
   }, [userNo]);
 
-  function getRandomColor() {
-    const colors = ["gray", "green", "blue", "purple", "yellow"];
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    return colors[randomIndex];
-  }
+  // function getRandomColor() {
+  //   const colors = ["gray", "green", "blue", "purple", "yellow"];
+  //   const randomIndex = Math.floor(Math.random() * colors.length);
+  //   return colors[randomIndex];
+  // }
 
   function handleManageCourses() {
     if (userRole) {
@@ -105,9 +105,7 @@ function ViewUser() {
                   {userCourses.map((course) => (
                     <div
                       key={course.CourseName}
-                      className={`${tableStyles.courseTag} ${
-                        tableStyles[getRandomColor()]
-                      }`}
+                      className={tableStyles.courseTag}
                     >
                       {course.CourseName}
                     </div>

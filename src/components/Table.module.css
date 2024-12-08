@@ -128,7 +128,11 @@ tr th:last-child {
 }
 
 /* Used in ViewUser.js */
-.courseTag.gray {
+
+.courseTag {
+  background-color: #83639e;
+}
+/* .courseTag.gray {
   background-color: #7a7a7a;
 }
 
@@ -145,8 +149,8 @@ tr th:last-child {
 }
 
 .courseTag.yellow {
-  background-color: #ffcc33;
-}
+  background-color: #c2a140;
+} */
 
 .getRandomColor {
   background-color: randomColor();
