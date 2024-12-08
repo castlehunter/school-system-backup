@@ -258,7 +258,6 @@ export async function CreateUser(newUser) {
     }
 
     // 2. Search School table for SchoolID
-
     const { data: schoolData, error: schoolError } = await supabase
       .from("School")
       .select("SchoolID")
@@ -277,27 +276,9 @@ export async function CreateUser(newUser) {
       return;
     }
 
-    // 3. Create a new user login
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email: newUser.email,
-      password: newUser.password,
-    });
-
-    if (authError) {
-      alert("Error creating user in Auth:", authError);
-      return;
-    }
-
-    const authUserId = authData.user?.id;
-    if (!authUserId) {
-      console.error("Failed to retrieve Auth user ID");
-      return { success: false, message: "Auth user ID not found." };
-    }
-
-    // 4. Insert User record
+    // 3. Insert User record
     const { data, error } = await supabase.from("Users").insert([
       {
-        UserID: authUserId,
         UserName: newUser.Username,
         PasswordHash: newUser.password,
         RoleID: roleID,
