@@ -8,7 +8,6 @@ function Button({
   color = "rose",
 }) {
   const handleClick = (e) => {
-    // Call the passed onClick handler (if provided)
     if (onClickBtn) {
       onClickBtn(e);
     }

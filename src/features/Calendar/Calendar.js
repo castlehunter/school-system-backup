@@ -4,7 +4,8 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import timeGridWeekPlugin from "@fullcalendar/timegrid";
 import { useUser } from "../../contexts/UserContext";
-import { getStudentEnrollments } from "../../services/apiStudent";
+// import { getStudentEnrollments } from "../../services/apiStudent";
+import { getTeacherCourses } from "../../services/apiTeacher";
 
 function Calendar() {
   const calendarRef = useRef(null);
@@ -18,8 +19,9 @@ function Calendar() {
   useEffect(() => {
     async function fetchEnrollments() {
       try {
-        const enrollmentData = await getStudentEnrollments(userNo);
+        const enrollmentData = await getTeacherCourses(userNo);
         setEnrollments(enrollmentData);
+        console.log(enrollmentData);
       } catch (error) {
         console.error("Failed to fetch enrollments:", error);
         setError("Failed to fetch enrollments.");
@@ -71,6 +73,8 @@ function Calendar() {
 
   const events = enrollments.map((item) => {
     const { startTime, endTime } = formatTime(item.Time);
+    const types = ["typeA", "typeB", "typeC"];
+    const type = types[Math.floor(Math.random() * types.length)];
 
     return {
       id: item.CourseID,
@@ -81,6 +85,7 @@ function Calendar() {
       endRecur: formatDate(item.EndDate),
       extendedProps: {
         time: item.Time,
+        type: type,
       },
     };
   });
@@ -97,7 +102,8 @@ function Calendar() {
     <FullCalendar
       ref={calendarRef}
       plugins={[dayGridPlugin, interactionPlugin, timeGridWeekPlugin]}
-      initialView="timeGridWeek"
+      initialView="dayGridMonth"
+      allDaySlot={false}
       // Defines the buttons and title at the top of the calendar.
       headerToolbar={{
         left: "prev,next today",
@@ -111,12 +117,31 @@ function Calendar() {
         day: "Day",
       }}
       events={events}
-      eventContent={(arg) => (
-        <div>
-          <b>{arg.event.title}</b>
-          <div>{arg.event.extendedProps.time}</div>
-        </div>
-      )}
+      eventContent={(arg) => {
+        const isTimeGridView = arg.view.type.includes("timeGrid");
+        const type = arg.event.extendedProps.type;
+
+        return (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundColor:
+                type === "typeA"
+                  ? "rgba(135, 206, 235, 0.5)"
+                  : type === "typeB"
+                  ? "rgba(144, 238, 144, 0.5)"
+                  : "rgba(216, 191, 216, 0.5)",
+              position: isTimeGridView ? "absolute" : "relative",
+              zIndex: -1,
+              padding: isTimeGridView ? "0" : "5px",
+            }}
+          >
+            <b>{arg.event.title}</b>
+            <div>{arg.event.extendedProps.time}</div>
+          </div>
+        );
+      }}
       eventDisplay="block"
       eventClick={handleClickEvent}
     />

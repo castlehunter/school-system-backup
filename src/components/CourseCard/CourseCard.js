@@ -31,7 +31,7 @@ const CourseCard = ({
         {" "}
         <Link to={`/course-details/${courseId}`}>
           <img
-            src="https://llcccnztkkxlkzblokbt.supabase.co/storage/v1/object/public/ProfileImage/living-with-cats-dogs-689902.jpg"
+            src="https://llcccnztkkxlkzblokbt.supabase.co/storage/v1/object/public/ProfileImage/public/bookcover1.png"
             alt="Retrieve course banner from database"
           />
         </Link>
@@ -49,7 +49,6 @@ const CourseCard = ({
         <Link>
           <h3 className={styles["card-title"]}>{CourseName}</h3>
         </Link>
-
         <div className={`${styles["border-bottom"]} ${styles.wrapper} `}>
           <div className={styles.location}>
             <RiMapPinLine className={styles.icon} />

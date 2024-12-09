@@ -20,16 +20,13 @@ import Error from "./ui/Error.js";
 import NOTFOUND from "./ui/NOTFOUND.js";
 import { getStudents } from "./services/apiStudent.js";
 import EnrollCourseForm from "./components/Form/EnrollCourseForm";
-import AddCourseForTeacher from "./components/Form/AddCourseForTeacher";
+import AddCourseForTeacher from "./features/Teacher/AddCourseForTeacher.js";
 import { getTeachers } from "./services/apiTeacher.js";
-import { getTeacherByNo } from "./services/apiTeacher.js";
-import { generateUserNo } from "./services/apiUser.js";
 import NewUser from "./features/Users/NewUser.js";
 import { getProgramList } from "./services/apiProgram.js";
 import { getUsers } from "./services/apiUser.js";
 import ProgramList from "./features/Program/ProgramList.js";
 import ViewProgram from "./features/Program/ViewProgram.js";
-import EditProgram from "./features/Program/EditProgram.js";
 import NewProgram from "./features/Program/NewProgram.js";
 import UserList from "./features/Users/UserList.js";
 import ViewUser from "./features/Users/ViewUser.js";
@@ -46,6 +43,8 @@ import Announcements from "./features/Dashboard/Announcements.js";
 import NewAnnouncement from "./features/Dashboard/NewAnnouncement.js";
 import AnnouncementDetail from "./features/Dashboard/AnnouncementDetail.js";
 import { UnreadProvider } from "./contexts/UnreadContext.js";
+import { AuthProvider } from "./contexts/AuthContext.js";
+import UpdateEnrollmentStatus from "./features/Enrollment/UpdateEnrollmentStatus.js";
 
 function App() {
   const routes = [
@@ -128,31 +127,36 @@ function App() {
           children: [
             { index: true, element: <MyCourses />, title: "My Courses" },
             {
-              path: "my-courses",
+              path: "/my-courses/my-courses",
               element: <MyCourses />,
               title: "My Courses",
-            }
-            // Moved course-details into "my-courses" to avoid error in Sidebar
-            
+              children: [
+                {
+                  path: "/my-courses/my-courses/course-details",
+                  element: <CourseDetails />,
+                  title: "Course Details",
+
+                  hideInSidebar: true,
+                  children: [
+                    {
+                      index: true,
+                      element: <CourseDetails />,
+                      title: "Course Details",
+                      hideInSidebar: true,
+                    },
+                    {
+                      path: "/my-courses/my-courses/course-details/:courseNo",
+                      element: <CourseDetails />,
+                      title: "Course Details",
+                      hideInSidebar: true,
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
-        {
-          path: "course-details",
-          element: <CourseDetails />,
-          title: "Course Details",
-          children: [
-            {
-              index: true,
-              element: <CourseDetails />,
-              title: "Course Details",
-            },
-            {
-              path: ":courseNo",
-              element: <CourseDetails />,
-              title: "Course Details",
-            },
-          ],
-        },
+
         {
           path: "my-grades",
           element: <TestGradeList />,
@@ -250,12 +254,12 @@ function App() {
               title: "Course Details",
               hideInSidebar: true,
             },
-            {
-              path: "/courses/newEnrollment/:courseNo",
-              element: <EnrollmentForm />,
-              title: "New Enrollment",
-              hideInSidebar: true,
-            },
+            // {
+            //   path: "/courses/newEnrollment/:courseNo",
+            //   element: <EnrollmentForm />,
+            //   title: "New Enrollment",
+            //   hideInSidebar: true,
+            // },
           ],
         },
         {
@@ -273,7 +277,6 @@ function App() {
             {
               path: "/teachers/teacher-list",
               element: <TeacherList />,
-              loader: getTeachers,
               title: "Teacher List",
             },
             {
@@ -339,18 +342,18 @@ function App() {
               element: <EnrollmentList />,
               title: "Enrollment List",
             },
-            {
-              path: "/enrollments/:EnrollmentID",
-              element: <NewEnrollment />,
-              title: "Update Enrollment",
-              hideInSidebar: true,
-            },
             // {
-            //   path: "/enrollments/edit/:EnrollmentID",
-            //   element: <NewEnrollment />,
+            //   path: "/enrollments/:enrollmentid",
+            //   element: <UpdateEnrollmentStatus />,
             //   title: "Update Enrollment",
             //   hideInSidebar: true,
             // },
+             {
+               path: "/enrollments/:EnrollmentID",
+               element: <NewEnrollment />,
+               title: "Update Enrollment",
+               hideInSidebar: true,
+             },
             {
               path: "/enrollments/bulk-edit",
               element: <BulkEditEnrollmentForm />,
@@ -363,7 +366,7 @@ function App() {
           path: "my-calendar",
           element: <Calendar />,
           title: "My Calendar",
-          icon: icons.MyCoursesIcon,
+          icon: icons.CalendarIcon,
           children: [
             { index: true, element: <Calendar />, title: "My Calendar" },
             {
@@ -392,11 +395,13 @@ function App() {
 
   // return <RouterProvider router={router} />;
   return (
-    <UnreadProvider>
-      <UserProvider>
-        <RouterProvider router={router} />
-      </UserProvider>
-    </UnreadProvider>
+    <AuthProvider>
+      <UnreadProvider>
+        <UserProvider>
+          <RouterProvider router={router} />
+        </UserProvider>
+      </UnreadProvider>
+    </AuthProvider>
   );
 }
 

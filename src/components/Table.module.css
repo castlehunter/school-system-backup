@@ -105,3 +105,105 @@ tr th:last-child {
     overflow-x: auto;
   }
 }
+
+.tagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.courseTag {
+  padding: 2rem;
+  border-radius: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+}
+
+.courseTag:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+/* Used in ViewUser.js */
+
+.courseTag {
+  background-color: #83639e;
+}
+/* .courseTag.gray {
+  background-color: #7a7a7a;
+}
+
+.courseTag.green {
+  background-color: #297537;
+}
+
+.courseTag.blue {
+  background-color: #3375ff;
+}
+
+.courseTag.purple {
+  background-color: #a233ff;
+}
+
+.courseTag.yellow {
+  background-color: #c2a140;
+} */
+
+.getRandomColor {
+  background-color: randomColor();
+}
+
+.toggleSwitch {
+  position: relative;
+  width: 50px;
+  height: 24px;
+}
+
+.toggleSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggleSwitch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.toggleSwitch input:checked + .slider {
+  background-color: #4caf50;
+}
+
+.toggleSwitch .slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.toggleSwitch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.toggleSwitch.editable .slider {
+  box-shadow: 0 0 8px #4caf50;
+}
+.highlight {
+  box-shadow: 0 0 12px #2b9c4d;
+  border-radius: 24px;
+}

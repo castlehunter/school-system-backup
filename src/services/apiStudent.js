@@ -28,15 +28,25 @@ export async function getStudents() {
   return data;
 }
 
-// adding a student
-export async function addStudent(student) {
-  const { data, error } = await supabase.from("Students").insert([student]);
+// Create Student By User ID
+export async function createStudentByUserId(UserId) {
+  try {
+    const defaultProgramID = "9af2aea3-0f6f-44e9-a6df-63d47f7a8e74"; // Default ProgramID
 
-  if (error) {
-    handleError(error, "Failed to add student");
+    // Proceed to insert the student with the default ProgramID
+    const { data, error } = await supabase
+      .from("Students")
+      .insert([{ UserID: UserId, ProgramID: defaultProgramID }]); // Use default ProgramID
+
+    if (error) {
+      throw new Error("Failed to add student: " + error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error creating student by UserId:", error);
+    throw error;
   }
-
-  return data;
 }
 
 // updating a student

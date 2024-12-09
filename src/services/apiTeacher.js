@@ -23,38 +23,38 @@ export async function getTeachers() {
   return data;
 }
 
-export async function getTeacherByNo(userNo) {
-  const { data, error } = await supabase
-    .from("Teachers")
-    .select(
-      `*,
-    Users (
-      UserNo,
-      UserID,
-      UserName,
-      FirstName,
-      LastName,
-      Email,
-      HomeAddress,
-      DateOfBirth,
-      PhoneNumber,
-      RoleID,
-      Roles: Roles (
-        RoleID,
-        RoleName
-      )
-    )
-  `
-    )
-    .eq("Users.UserNo", userNo)
-    .single();
+export async function getTeacherIdByUserNo(userNo) {
+  const { data: userData, error: userError } = await supabase
+    .from("Users")
+    .select("UserID")
+    .eq("UserNo", userNo);
 
-  if (error) {
-    console.error(error);
-    throw new Error("Failed to load teacher!!");
+  if (userError) {
+    console.error("Error fetching UserID by UserNo:", userError);
+    throw new Error("Failed to load user data");
   }
-  console.log("API getTeacherByNo", data);
-  return data;
+
+  if (userData && userData.length > 0) {
+    const userID = userData[0].UserID;
+
+    const { data: teacherData, error: teacherError } = await supabase
+      .from("Teachers")
+      .select("TeacherID")
+      .eq("UserID", userID);
+
+    if (teacherError) {
+      console.error("Error fetching TeacherID by UserID:", teacherError);
+      throw new Error("Failed to load teacher ID");
+    }
+
+    if (teacherData && teacherData.length > 0) {
+      return teacherData[0].TeacherID;
+    } else {
+      throw new Error("Teacher not found for the given UserID");
+    }
+  } else {
+    throw new Error("User not found for the given UserNo");
+  }
 }
 
 export async function getExistingTeacherNo() {
@@ -152,27 +152,72 @@ export async function getTeacherCourses(userNo) {
   }
 }
 
-export async function addCourseToTeacher(courseData) {
+export async function assignCourseToTeacher(courseid, teacherid) {
+  try {
+    if (!courseid || !teacherid) {
+      throw new Error("Both CourseID and TeacherID are required.");
+    }
+
+    // Update the course with the new TeacherID
+    const { data: updateData, error: updateError } = await supabase
+      .from("Courses")
+      .update({ TeacherID: teacherid }) // Set the new TeacherID
+      .eq("CourseID", courseid); // Match the course by its ID
+
+    if (updateError) {
+      console.error("Error assigning course to teacher:", updateError);
+      throw new Error("Failed to assign course to teacher.");
+    }
+
+    // If update is successful, query the course data to confirm the update
+    const { data: courseData, error: selectError } = await supabase
+      .from("Courses")
+      .select("*")
+      .eq("CourseID", courseid)
+      .single(); // Get a single course to confirm
+
+    if (selectError) {
+      console.error("Error fetching updated course:", selectError);
+      throw new Error("Failed to fetch updated course data.");
+    }
+
+    console.log("Updated course data:", courseData);
+    return { success: true, data: courseData }; // Return the updated course data
+  } catch (err) {
+    console.error(err);
+    throw new Error("An unexpected error occurred while assigning the course.");
+  }
+}
+
+export async function removeCourseFromTeacher(courseData) {
   const { CourseID, TeacherID } = courseData;
 
+  // Check if CourseID and TeacherID are provided
   if (!CourseID || !TeacherID) {
-    throw new Error('CourseID and TeacherID are required');
+    throw new Error("CourseID and TeacherID are required");
   }
 
   try {
+    // Update the Courses table to remove the TeacherID
     const { data, error } = await supabase
-      .from("TeacherCourses")
-      .insert({ CourseID, TeacherID });
+      .from("Courses")
+      .update({ TeacherID: null })
+      .eq("CourseID", CourseID)
+      .eq("TeacherID", TeacherID);
 
     if (error) {
-      console.error('Error adding teacher to course:', error);
-      throw new Error('Failed to add teacher to course');
+      console.error("Error removing teacher from course:", error);
+      throw new Error("Failed to remove teacher from course");
     }
 
-    return { success: true, message: 'Teacher added to course successfully', data };
+    return {
+      success: true,
+      message: "Teacher removed from course successfully",
+      data, // Return the updated course data
+    };
   } catch (error) {
-    console.error('Error adding teacher to course:', error);
-    throw new Error('Failed to add teacher to course');
+    console.error("Error removing teacher from course:", error);
+    throw new Error("Failed to remove teacher from course");
   }
 }
 
@@ -224,6 +269,51 @@ export async function sortTeachersBy(fieldName = "UserNo", ascending = true) {
     return data;
   } catch (error) {
     console.error("Unexpected error in sortTeachersBy:", error);
+    throw error;
+  }
+}
+
+export async function getTeacherIdByCourseId(courseId) {
+  try {
+    const { data, error } = await supabase
+      .from("Courses")
+      .select("TeacherID")
+      .eq("CourseID", courseId)
+      .single();
+
+    if (error) {
+      console.error("Error fetching TeacherID by CourseID:", error);
+      throw new Error("Failed to load TeacherID for the given CourseID");
+    }
+
+    if (data) {
+      return data.TeacherID;
+    } else {
+      throw new Error("Course not found for the given CourseID");
+    }
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    throw new Error("An unexpected error occurred while fetching TeacherID");
+  }
+}
+
+// Create Student By User ID
+export async function createTeacherByUserId(UserId) {
+  try {
+    const defaultProgramID = "9af2aea3-0f6f-44e9-a6df-63d47f7a8e74"; // Default ProgramID
+
+    // Proceed to insert the student with the default ProgramID
+    const { data, error } = await supabase
+      .from("Teachers")
+      .insert([{ UserID: UserId, ProgramID: defaultProgramID }]); // Use default ProgramID
+
+    if (error) {
+      throw new Error("Failed to add teacher: " + error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error creating teacher by UserId:", error);
     throw error;
   }
 }

@@ -5,7 +5,13 @@ import {
   CreateMultipleUsers,
   CreateUser,
   checkUsernameExists,
+  getUserIdByUsername,
 } from "../../services/apiUser.js";
+import {
+  addStudent,
+  createStudentByUserId,
+} from "../../services/apiStudent.js";
+import { createTeacherByUserId } from "../../services/apiTeacher.js";
 import EditContainer from "../../ui/Layout/EditContainer.js";
 import ModalBox from "../ModalBox/ModalBox.js";
 import * as XLSX from "xlsx";
@@ -14,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 const initialInputData = {
   UserName: "",
   PasswordHash: "",
+  ConfirmPassword: "",
   FirstName: "",
   LastName: "",
   DateOfBirth: "",
@@ -37,6 +44,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       setInputData({
         UserName: formData.Users.UserName || "",
         PasswordHash: formData.Users.PasswordHash || "",
+        ConfirmPassword: "",
         FirstName: formData.Users.FirstName || "",
         LastName: formData.Users.LastName || "",
         DateOfBirth: formData.Users.DateOfBirth || "",
@@ -144,6 +152,8 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
     if (!inputData.UserName) newErrors.UserName = "Username is required.";
     if (!inputData.PasswordHash)
       newErrors.PasswordHash = "Password is required.";
+    if (inputData.ConfirmPassword !== inputData.PasswordHash)
+      newErrors.ConfirmPassword = "Passwords do not match.";
     if (!inputData.FirstName) newErrors.FirstName = "First Name is required.";
     if (!inputData.LastName) newErrors.LastName = "Last Name is required.";
     if (!inputData.Email) newErrors.Email = "Email is required.";
@@ -212,13 +222,40 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
       SecurityAnswer: inputData.SecurityAnswer,
     };
 
-    CreateUser(newUser)
-      .then((response) => {
-        if (response === true) handleOpenModal();
-      })
-      .catch((error) => {
-        console.error("Error creating user:", error);
-      });
+    try {
+      // REVERT to no supabase authentication, do not change
+      const userResponse = await CreateUser(newUser);
+      if (userResponse === true) {
+        const userID = await getUserIdByUsername(inputData.UserName);
+        console.log("username", inputData.UserName);
+        console.log("GetUserIdByUserName", userID);
+        if (!userID) {
+          console.error("UserID not found for the created user");
+          return;
+        }
+        if (inputData.RoleName === "Student") {
+          const studentResponse = await createStudentByUserId(userID);
+          handleOpenModal();
+          if (studentResponse) {
+            console.log("Student created successfully");
+          } else {
+            console.error("Error creating student");
+          }
+        } else if (inputData.RoleName === "Teacher") {
+          const studentResponse = await createTeacherByUserId(userID);
+          handleOpenModal();
+          if (studentResponse) {
+            console.log("Teacher created successfully");
+          } else {
+            console.error("Error creating teacher.");
+          }
+        } else {
+          handleOpenModal();
+        }
+      }
+    } catch (error) {
+      console.error("Error creating user:", error);
+    }
   }
 
   function handleCancel(e) {
@@ -228,7 +265,7 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
 
   return (
     <div className={styles.profileFormLayout}>
-      <EditContainer>
+      <EditContainer title="Login Information">
         <div className={styles.formRow}>
           <div className={styles.formItem}>
             <label htmlFor="UserName" className={styles.formLabel}>
@@ -262,9 +299,25 @@ function ProfileForm({ type, formData, isEdit, onFormSubmit }) {
               <p className={styles.error}>{errors.PasswordHash}</p>
             )}
           </div>
+          <div className={styles.formItem}>
+            <label htmlFor="ConfirmPassword" className={styles.formLabel}>
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              name="ConfirmPassword"
+              className={styles.formInput}
+              value={inputData.ConfirmPassword}
+              onChange={handleChange}
+              disabled={isModalOpen}
+            />
+            {errors.ConfirmPassword && (
+              <p className={styles.error}>{errors.ConfirmPassword}</p>
+            )}
+          </div>
         </div>
       </EditContainer>
-      <EditContainer>
+      <EditContainer title="Profile Information">
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formRow}>
             <div className={styles.formItem}>

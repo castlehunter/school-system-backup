@@ -4,31 +4,40 @@ import styles from "../../components/Table.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import useCheckbox from "../../hooks/useCheckbox";
 import Button from "../../components/Button/Button";
+import Loader from "../../ui/Loader";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleDateString();
 }
 
-function TeacherTable({ data, rowsPerPage, currPage }) {
-  const {
-    selectedCheckboxes,
-    handleCheckboxes,
-    isAllSelected,
-    handleSelectAll,
-  } = useCheckbox();
+function TeacherTable({ data, isLoading, rowsPerPage, currPage }) {
+  const navigate = useNavigate();
+  // const {
+  //   selectedCheckboxes,
+  //   handleCheckboxes,
+  //   isAllSelected,
+  //   handleSelectAll,
+  // } = useCheckbox();
 
-  const currData = data.slice(
+  if (isLoading === true) {
+    return <Loader />;
+  }
+
+  if (!data || !Array.isArray(data)) {
+    return <p>No teacher data</p>;
+  }
+
+  const currData = data?.slice(
     (currPage - 1) * rowsPerPage,
     currPage * rowsPerPage
   );
 
-  const navigate = useNavigate();
   return (
     <table className={styles.table}>
       <thead>
         <tr>
-          <th>
+          {/* <th>
             <input
               type="checkbox"
               checked={isAllSelected}
@@ -36,7 +45,7 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
                 handleSelectAll(currData.map((element) => element.Users.UserNo))
               }
             />
-          </th>
+          </th> */}
           <th>S/N</th>
           <th>User No.</th>
           <th>First Name</th>
@@ -52,13 +61,13 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
       <tbody>
         {currData.map((Teacher, index) => (
           <tr key={Teacher.Users.UserNo} className={styles.tr}>
-            <td>
+            {/* <td>
               <input
                 type="checkbox"
                 checked={selectedCheckboxes.includes(Teacher.Users.UserNo)}
                 onChange={() => handleCheckboxes(Teacher.Users.UserNo)}
               />
-            </td>
+            </td> */}
             <td>{index + 1 + (currPage - 1) * rowsPerPage}</td>
             <td>{Teacher.Users.UserNo}</td>
             <td>{Teacher.Users.FirstName}</td>
@@ -83,9 +92,9 @@ function TeacherTable({ data, rowsPerPage, currPage }) {
                     navigate(`/teachers/${Teacher.Users.UserNo}/add-course`)
                   }
                   size="small"
-                  color="green"
+                  color="blue"
                 >
-                  Add Course
+                  Assign Courses
                 </Button>
               </div>
             </td>

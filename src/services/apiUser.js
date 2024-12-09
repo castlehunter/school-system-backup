@@ -1,6 +1,10 @@
 import supabase from "../config/supabaseClient.js";
+
 export async function getUsers() {
-  const { data, error } = await supabase.from("Users").select(`
+  const { data, error } = await supabase
+    .from("Users")
+    .select(
+      `
    UserNo,
    UserName,
    FirstName,
@@ -11,7 +15,9 @@ export async function getUsers() {
    DateOfBirth,
    PhoneNumber,
    Roles(RoleName)
-  `);
+  `
+    )
+    .order("UserNo", { ascending: true });
 
   if (error) {
     console.error(error);
@@ -19,6 +25,21 @@ export async function getUsers() {
   }
 
   return data;
+}
+
+export async function getLoginInfoByUsername(username) {
+  const { data: user, error: userError } = await supabase
+    .from("Users")
+    .select(`Email, Roles(RoleName), UserNo`)
+    .eq("UserName", username) // Match the username
+    .single();
+
+  if (userError) {
+    console.error("Error fetching user by username:", userError.message);
+    return { success: false, message: "Invalid username or password." };
+  }
+
+  return user;
 }
 
 export async function getUserByID(userID) {
@@ -243,7 +264,6 @@ export async function CreateUser(newUser) {
     }
 
     // 2. Search School table for SchoolID
-
     const { data: schoolData, error: schoolError } = await supabase
       .from("School")
       .select("SchoolID")
@@ -600,4 +620,39 @@ export async function searchUsers(keyword) {
     console.error("ERROR:", error.message);
     throw error;
   }
+}
+
+export async function getUserRoleByUserNo(userNo) {
+  try {
+    const { data, error } = await supabase
+      .from("Users")
+      .select(`Roles(RoleName)`)
+      .eq("UserNo", userNo)
+      .single();
+
+    if (error) {
+      console.error("Error fetching user role:", error);
+      throw new Error("Failed to load user role");
+    }
+
+    return data?.Roles?.RoleName || null;
+  } catch (error) {
+    console.error("Unexpected error fetching user role:", error);
+    throw error;
+  }
+}
+
+export async function getUserIdByUsername(username) {
+  const { data, error } = await supabase
+    .from("Users")
+    .select("UserID")
+    .eq("UserName", username)
+    .single();
+
+  if (error) {
+    console.error("Error fetching user ID:", error);
+    throw new Error("Failed to load user ID");
+  }
+
+  return data?.UserID || null; // Return UserNo or null if no user is found
 }

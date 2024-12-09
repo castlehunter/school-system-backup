@@ -50,11 +50,16 @@ function UserList() {
     }
   }
 
-  async function handleSearch(query) {
+  async function handleSearchUsers(query) {
     try {
-      const results = await searchUsers(query);
-      console.log("Search Results:", results);
-      setUserData(results);
+      if (query == null || query === "") {
+        setUserData(initialUserData);
+      }
+      if (query) {
+        const results = await searchUsers(query);
+        console.log("Search Results:", results);
+        setUserData(results);
+      }
     } catch (error) {
       console.error("Error searching users:", error);
     }
@@ -80,7 +85,7 @@ function UserList() {
         ]}
         onClickFilter={handleFilter}
         filterOptions={["All", "Admin", "Advisor", "Teacher", "Student"]}
-        onSearch={handleSearch}
+        onSearch={handleSearchUsers}
       >
         <UserTable
           data={userData}

@@ -129,3 +129,43 @@ export async function getEnrollmentDetails(id) {
   }
   return data;
 }
+
+export async function updateEnrollmentStatus(EnrollmentID, isFinished) {
+  try {
+    const { data, error } = await supabase
+      .from("Enrollments")
+      .update({
+        isFinished: isFinished,
+      })
+      .eq("EnrollmentID", EnrollmentID);
+
+    if (error) {
+      throw new Error(`Error updating enrollment status: ${error.message}`);
+    }
+
+    console.log("Updated enrollment status:", data);
+    return data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
+// Delete enrollment by StudentID and CourseID
+export async function deleteEnrollment(studentId, courseId) {
+  try {
+    const { data, error } = await supabase.from("Enrollments").delete().match({
+      StudentID: studentId,
+      CourseID: courseId,
+    });
+
+    if (error) {
+      throw new Error(`Error deleting enrollment: ${error.message}`);
+    }
+    console.log("Deleted enrollment:", data);
+    return data;
+  } catch (err) {
+    console.error("Failed to delete enrollment:", err);
+    throw err;
+  }
+}

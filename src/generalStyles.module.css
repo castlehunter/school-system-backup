@@ -18,6 +18,15 @@
   text-align: right;
 }
 
+.noStyleLink:link,
+.noStyleLink:visited,
+.noStyleLink:hover,
+.noStyleLink:active {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
 .noStyleLink {
   color: inherit;
   text-decoration: underline;

@@ -22,10 +22,10 @@ function AnnouncementTable({
   const { unreadCount, setUnreadCount } = useUnreadCount();
   const [role, setRole] = useState("");
   const navigate = useNavigate();
-  const currData = announcementData.slice(
-    (currPage - 1) * rowsPerPage,
-    currPage * rowsPerPage
-  );
+
+  const currData = announcementData
+    .sort((a, b) => new Date(b.CreatedAt) - new Date(a.CreatedAt))
+    .slice((currPage - 1) * rowsPerPage, currPage * rowsPerPage);
 
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
@@ -113,11 +113,14 @@ function AnnouncementTable({
                   ? `${announcement.Content.substring(0, 70)} ...`
                   : announcement.Content}
               </td>
-              <td>{new Date(announcement.CreatedAt).toLocaleString()}</td>
+              <td>
+                {new Date(announcement.CreatedAt).toISOString().split("T")[0]}
+              </td>
+
               <td>
                 {announcement.Users
                   ? `${announcement.Users.FirstName} ${announcement.Users.LastName}`
-                  : "Unknown Publisher"}
+                  : "Unknown Admin"}
               </td>
               <td>
                 {role === "Admin" || role === "Advisor" ? (

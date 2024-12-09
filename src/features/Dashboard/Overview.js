@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import styles from "./Overview.module.css";
 import StatCard from "../../components/StatCard/StatCard";
 import icons from "../../ui/Icons/icons";
@@ -39,6 +40,7 @@ function Overview() {
   const { unreadCount, setUnreadCount } = useUnreadCount();
 
   const navigate = useNavigate();
+
   const formattedDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
@@ -92,6 +94,7 @@ function Overview() {
   }, []);
 
   function renderStatCards() {
+    console.log("login role", loginRole);
     if (loginRole === "Admin" || loginRole === "Advisor") {
       return (
         <>
@@ -132,20 +135,36 @@ function Overview() {
             number={teacherCourses.length}
             unit="My Courses"
             icon={icons.StudentIcon(styles.largeIcon)}
-            bgcolor="bgcolor1"
+            bgcolor="bgcolor3"
             link="/my-courses"
+          />{" "}
+          <StatCard
+            number={announcements.length}
+            unit="Announcements"
+            icon={icons.DashboardIcon(styles.largeIcon)}
+            bgcolor="bgcolor1"
+            link="/dashboard/announcements"
           />
         </>
       );
     } else {
       return (
-        <StatCard
-          number={studentCourses.length}
-          unit="My Courses"
-          icon={icons.StudentIcon(styles.largeIcon)}
-          bgcolor="bgcolor1"
-          link="/my-courses"
-        />
+        <>
+          <StatCard
+            number={studentCourses.length}
+            unit="My Courses"
+            icon={icons.StudentIcon(styles.largeIcon)}
+            bgcolor="bgcolor2"
+            link="/my-courses"
+          />
+          <StatCard
+            number={announcements.length}
+            unit="Announcements"
+            icon={icons.DashboardIcon(styles.largeIcon)}
+            bgcolor="bgcolor3"
+            link="/dashboard/announcements"
+          />
+        </>
       );
     }
   }
@@ -316,15 +335,9 @@ function Overview() {
             bgColor="highlight"
             title={formattedDate}
             onClickEdit={() => {
-              if (loginRole === "Teacher" || loginRole === "Student") {
-                navigate("/my-calendar");
-              }
-              console.log(loginRole);
+              navigate("/my-calendar");
             }}
-            editButtonText={
-              (loginRole === "Teacher" || loginRole === "Student") &&
-              "Full Calendar"
-            }
+            editButtonText="Full Calendar"
           >
             <Calendar
               plugins={[dayGridPlugin, interactionPlugin, timeGridWeekPlugin]}

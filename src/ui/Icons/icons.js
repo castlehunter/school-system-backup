@@ -20,6 +20,7 @@ import {
   RiEyeOffLine,
   RiArrowDownSFill,
   RiMenuLine,
+  RiTableFill,
 } from "@remixicon/react";
 
 const icons = {
@@ -58,6 +59,9 @@ const icons = {
   ),
   EnrollmentIcon: (className = "", style = {}) => (
     <RiDraftFill className={className} style={style} />
+  ),
+  CalendarIcon: (className = "", style = {}) => (
+    <RiTableFill className={className} style={style} />
   ),
   LogoutIcon: <RiLogoutCircleLine />,
   SearchIcon: <RiSearchLine />,

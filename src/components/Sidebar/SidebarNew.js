@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import { NavLink, Link, useLoaderData } from "react-router-dom";
+import { NavLink, Link, useLoaderData, useNavigate } from "react-router-dom";
 import styles from "./SidebarNew.module.css";
 import logo from "../../assets/logo-removebg-preview.png";
 import Search from "../Search/Search";
 import icons from "../../ui/Icons/icons";
+import { getUserByID } from "../../services/apiUser";
+import supabase from "../../config/supabaseClient";
 
 function SidebarNew() {
   const routes = useLoaderData();
+  const naviagate = useNavigate();
 
   const menuItemWithChildren = routes.find((route) => route.children);
 
@@ -66,7 +69,7 @@ function SidebarNew() {
     return false;
   });
 
-  const seaerchMenuItems = filteredMenuItems
+  const searchMenuItems = filteredMenuItems
     .flatMap((item) => item.children)
     .filter((e) => !e.index);
 
@@ -76,6 +79,29 @@ function SidebarNew() {
       [menuName]: !prevState[menuName],
     }));
   }
+
+  const expandAll = () => {
+    const expandedState = Object.keys(openMenus).reduce((acc, menu) => {
+      acc[menu] = true;
+      return acc;
+    }, {});
+    setOpenMenus(expandedState);
+  };
+
+  const collapseAll = () => {
+    const collapsedState = Object.keys(openMenus).reduce((acc, menu) => {
+      acc[menu] = false;
+      return acc;
+    }, {});
+    setOpenMenus(collapsedState);
+  };
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error during logout:", error.message);
+    }
+  };
 
   return (
     <>
@@ -87,9 +113,22 @@ function SidebarNew() {
         </Link>
 
         {/* Search bar in the sidebar */}
-        <Search searchMenuItems={seaerchMenuItems} colorType="dark" />
+        {/* <Search searchMenuItems={searchMenuItems} colorType="dark" menuSearch /> */}
 
         <div className={styles.menu}>
+          {/* Buttons for Expand All / Collapse All */}
+
+          <div className={styles.expandCollapseButtons}>
+            <button onClick={expandAll} className={styles.expandCollapseButton}>
+              Expand All
+            </button>
+            <button
+              onClick={collapseAll}
+              className={styles.expandCollapseButton}
+            >
+              Collapse All
+            </button>
+          </div>
           {filteredMenuItems.map((item) => (
             <div key={item.title}>
               <div
@@ -132,7 +171,7 @@ function SidebarNew() {
             </div>
           ))}
         </div>
-        <Link to="/" className={styles.logout}>
+        <Link to={"/"} onClick={handleLogout} className={styles.logout}>
           {icons.LogoutIcon}
           <span>Logout</span>
         </Link>
