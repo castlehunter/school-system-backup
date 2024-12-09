@@ -9,7 +9,6 @@ import {
 } from "../../services/apiEnrollment";
 import { getCourseDetail } from "../../services/apiCourse.js";
 import Button from "../../components/Button/Button";
-
 import styles from "../Profile.module.css";
 import {
   getStudents,
@@ -20,8 +19,9 @@ import formStyles from "../../components/Form/Form.module.css";
 import MainTitle from "../../ui/MainTitle/MainTitle.js";
 
 function EnrollmentForm() {
-  console.log("EnrollmentForm");
+ 
   const { courseNo } = useParams();
+  
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
@@ -33,8 +33,10 @@ function EnrollmentForm() {
   const [course, setCourse] = useState(null);
   const [enrolledStudents, setEnrolledStudents] = useState([]);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [isFinished, setIsFinished] = useState(false); // New state for checkbox
 
-  console.log(courseNo);
+  const { EnrollmentID } = useParams(); 
+
   useEffect(() => {
     async function fetchStudents() {
       try {
@@ -48,25 +50,29 @@ function EnrollmentForm() {
         console.error("Failed to fetch students:", error);
       }
     }
-    if (courseNo) {
-      fetchEnrollments(courseNo);
-    }
-    async function fetchCourseDetails() {
+
+    async function fetchCourseDetails(courseNo) {
+    
       try {
         setIsLoading(true);
         setError(null);
-        const courseData = await getCourseDetail({ params: { ID: courseNo } });
-        setCourse(courseData);
-
+       
         const enrolledStudentsData = await getEnrollmentDetails({
-          params: { CourseID: courseData.CourseID },
+          params: { id: EnrollmentID },
         });
-        const preselectedStudents = enrolledStudentsData.map((student) => ({
-          value: student.StudentID,
-          label: `${student.Users.FirstName} ${student.Users.LastName}`,
-        }));
+       
+        const courseData = await getCourseDetail({ params: { ID: enrolledStudentsData.Courses.CourseNo } });   
+        setCourse(courseData);        
+        const recEnrolledStudentsData = enrolledStudentsData.Students;       
+        const preselectedStudents = { value: recEnrolledStudentsData.StudentID, 
+          label: `${recEnrolledStudentsData.Users.FirstName} 
+          ${recEnrolledStudentsData.Users.LastName}`, 
+        }; 
+        
         setSelectedStudents(preselectedStudents);
         setEnrolledStudents(enrolledStudentsData);
+        setIsFinished(enrolledStudentsData.isFinished);
+        fetchEnrollments(enrolledStudentsData.Courses.CourseNo);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -75,34 +81,34 @@ function EnrollmentForm() {
     }
 
     async function fetchEnrollments(courseNo) {
+    
       try {
-        console.log("courseNo = ", courseNo);
+        
         setIsLoading(true);
         const courseDetails = await getCourseDetail({
           params: { ID: courseNo },
         });
-        console.log("coursedetails = ", courseDetails);
         const courseID = courseDetails.CourseID;
+     
+         const enrollments = await getEnrollments();
 
-        const enrollments = await getEnrollments();
-
-        const filteredEnrollments = enrollments.filter(
-          (enrollment) => enrollment.CourseID === courseID
-        );
+         const filteredEnrollments = enrollments.filter(
+           (enrollment) => enrollment.CourseID === courseID
+         );
 
         const enrichedEnrollments = await Promise.all(
-          filteredEnrollments.map(async (enrollment) => {
-            const studentInfo = await getStudentNameForCourse(
-              enrollment.StudentID
-            );
-            return {
-              ...enrollment,
+           filteredEnrollments.map(async (enrollment) => {
+             const studentInfo = await getStudentNameForCourse(
+               enrollment.StudentID
+             );
+             return {
+               ...enrollment,
               studentName: `${studentInfo.Users.FirstName} ${studentInfo.Users.LastName}`, // Enrich with student name
-            };
-          })
-        );
+             };
+           })
+         );
 
-        setEnrolledStudents(enrichedEnrollments);
+         setEnrolledStudents(enrichedEnrollments);
       } catch (error) {
         console.error("Failed to fetch enrollments:", error);
       } finally {
@@ -111,13 +117,13 @@ function EnrollmentForm() {
     }
 
     fetchStudents();
-    fetchCourseDetails();
-    fetchEnrollments();
-  }, [courseNo]);
+    fetchCourseDetails(courseNo);
+    fetchEnrollments(courseNo);
+  }, [EnrollmentID]);
 
   const handleSave = async (event) => {
     event.preventDefault();
-  
+   
     if (!selectedStudents.length) {
       alert("Please select at least one student to enroll.");
       return;
@@ -131,6 +137,7 @@ function EnrollmentForm() {
       CourseID: course.CourseID,
       EnrollmentDate: enrollmentDate,
       StudentID: student.value,
+      isFinished: isFinished, // Add the isFinished value
     }));
   
     if (newEnrollmentData.length === 0) {
@@ -148,7 +155,6 @@ function EnrollmentForm() {
       alert("Failed to create enrollment: " + error.message);
     }
   };
-  
 
   const handleStudentChange = (selectedOptions) => {
     setSelectedStudents(selectedOptions || []);
@@ -186,6 +192,10 @@ function EnrollmentForm() {
     if (error) {
       throw new Error("Failed to unenroll student: " + error.message);
     }
+  };
+
+  const handleCheckboxChange = () => {
+    setIsFinished(!isFinished);
   };
 
   return (
@@ -226,18 +236,26 @@ function EnrollmentForm() {
                     placeholder="Select students"
                   />
                 </div>
+
+                <div className={formStyles.formItem}>
+                  <label htmlFor="isFinished" className={formStyles.formLabel}>
+                    Is Finished
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="isFinished"
+                    name="isFinished"
+                    checked={isFinished}
+                    onChange={handleCheckboxChange}
+                    className={formStyles.formInput}
+                  />
+                </div>
               </div>
 
               <div className={formStyles.bottomButtons}>
                 <Button onClickBtn={handleSave} className={styles.saveButton}>
                   Enroll
                 </Button>
-                {/* <Button
-                onClickBtn={() => navigate("/courses/course-list")}
-                className={styles.backButton}
-              >
-                Back to List
-              </Button> */}
               </div>
             </form>
           </div>

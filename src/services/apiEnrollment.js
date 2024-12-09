@@ -114,11 +114,12 @@ export async function getEnrollmentDetails(id) {
       ),
       Courses (
         CourseID,
-        CourseName
+        CourseName,
+        CourseNo
       )
     `
     )
-    .eq("EnrollmentID", id)
+    .eq("EnrollmentID", id.params.id)
     .single(); // Ensures only one record is fetched
 
   if (error) {

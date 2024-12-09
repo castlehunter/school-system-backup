@@ -30,6 +30,9 @@ export async function getTestGrades(userID) {
   return data;
 }
 
+export async function getTestGradeByID(testGrade) {
+
+}
 // Add a new test grade
 export async function addTestGrade(testGrade) {
   const { data, error } = await supabase

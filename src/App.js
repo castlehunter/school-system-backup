@@ -13,6 +13,7 @@ import AppLayout from "./ui/Layout/AppLayout.js";
 import MyCourses from "./features/MyCourses/MyCourses";
 import CourseDetails from "./features/MyCourses/CourseDetails.js";
 import TestGradeList from "./features/TestGrades/TestGradeList";
+import TestGradeForm from "./features/TestGrades/TestGradeForm";
 import TeacherList from "./features/Teacher/TeacherList.js";
 import NewEnrollment from "./features/Enrollment/NewEnrollment.js";
 import Error from "./ui/Error.js";

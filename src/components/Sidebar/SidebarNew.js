@@ -52,7 +52,8 @@ function SidebarNew() {
       return (
         menuObj.title === "Dashboard" ||
         menuObj.title === "My Courses" ||
-        menuObj.title === "My Calendar"
+        menuObj.title === "My Calendar" ||
+        menuObj.title === "My Grades" 
       );
     } else if (loginRole === "Student") {
       return (
