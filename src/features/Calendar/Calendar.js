@@ -73,6 +73,8 @@ function Calendar() {
 
   const events = enrollments.map((item) => {
     const { startTime, endTime } = formatTime(item.Time);
+    const types = ["typeA", "typeB", "typeC"];
+    const type = types[Math.floor(Math.random() * types.length)];
 
     return {
       id: item.CourseID,
@@ -83,6 +85,7 @@ function Calendar() {
       endRecur: formatDate(item.EndDate),
       extendedProps: {
         time: item.Time,
+        type: type,
       },
     };
   });
@@ -99,7 +102,7 @@ function Calendar() {
     <FullCalendar
       ref={calendarRef}
       plugins={[dayGridPlugin, interactionPlugin, timeGridWeekPlugin]}
-      initialView="timeGridWeek"
+      initialView="dayGridMonth"
       allDaySlot={false}
       // Defines the buttons and title at the top of the calendar.
       headerToolbar={{
@@ -116,15 +119,22 @@ function Calendar() {
       events={events}
       eventContent={(arg) => {
         const isTimeGridView = arg.view.type.includes("timeGrid");
+        const type = arg.event.extendedProps.type;
+
         return (
           <div
             style={{
               width: "100%",
               height: "100%",
-              backgroundColor: "rgba(135, 206, 235, 0.5)", // 不同视图使用不同颜色
+              backgroundColor:
+                type === "typeA"
+                  ? "rgba(135, 206, 235, 0.5)"
+                  : type === "typeB"
+                  ? "rgba(144, 238, 144, 0.5)"
+                  : "rgba(216, 191, 216, 0.5)",
               position: isTimeGridView ? "absolute" : "relative",
-              zIndex: -1, // 确保背景在文字下方
-              padding: isTimeGridView ? "0" : "5px", // 调整 dayGridMonth 的间距
+              zIndex: -1,
+              padding: isTimeGridView ? "0" : "5px",
             }}
           >
             <b>{arg.event.title}</b>
