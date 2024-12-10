@@ -15,6 +15,7 @@ import Loader from "../../ui/Loader";
 import { getCourseDetail } from "../../services/apiCourse";
 
 function CourseDetails() {
+  console.log('course details');
   const [currPage, setCurrPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [myCourses, setMyCourses] = useState([]);
