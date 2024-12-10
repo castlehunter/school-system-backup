@@ -29,7 +29,7 @@ const CourseCard = ({
     <div className={styles["course-card"]}>
       <div className={styles["course-banner"]}>
         {" "}
-        <Link to={`/course-details/${courseId}`}>
+        <Link to={`/my-courses/${courseId}`}>
           <img
             src="https://llcccnztkkxlkzblokbt.supabase.co/storage/v1/object/public/ProfileImage/public/bookcover1.png"
             alt="Retrieve course banner from database"

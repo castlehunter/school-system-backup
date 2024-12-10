@@ -121,42 +121,27 @@ function App() {
         },
         {
           path: "my-courses",
-          element: <MyCourses />,
+          element: <Outlet />,
           title: "My Courses",
           icon: icons.MyCoursesIcon,
           children: [
-            { index: true, element: <MyCourses />, title: "My Courses" },
+            { index: true, 
+              element: <MyCourses />, 
+              title: "My Courses" },
             {
-              path: "/my-courses/my-courses",
+              path: "my-courses",
               element: <MyCourses />,
               title: "My Courses",
-              children: [
+            },
                 {
-                  path: "/my-courses/my-courses/course-details",
+                  path: ":courseNo",
                   element: <CourseDetails />,
                   title: "Course Details",
-
-                  hideInSidebar: false,
-                  children: [
-                    {
-                      index: true,
-                      element: <CourseDetails />,
-                      title: "Course Details",
-                      hideInSidebar: false,
-                    },
-                    {
-                      path: "/my-courses/my-courses/course-details/:courseNo",
-                      element: <CourseDetails />,
-                      title: "Course Details",
-                      hideInSidebar: false,
-                    },
-                  ],
-                },
-              ],
-            },
+                  hideInSidebar: true,
+                },                     
           ],
-        },
-
+        }
+,        
         {
           path: "my-grades",
           element: <Outlet />,
@@ -179,12 +164,7 @@ function App() {
               title: "Test Grade Form",
               hideInSidebar: true,
             },
-            // {
-            //   path: "updates/:gradeId",
-            //   element: <TestGradeFormUpd />,
-            //   title: "Test Grade Form Update",
-            //   hideInSidebar: true,
-            // },
+          
           ],
         },       
       

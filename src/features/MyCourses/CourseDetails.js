@@ -91,9 +91,10 @@ function CourseDetails() {
         ) : (
           <>
             <h2>{course.CourseName}</h2>
-            <p>Course Number: {courseNo}</p>
+            <br/><br/>
+            {/* <p>Course Number: {courseNo}</p>
 
-            {/* <h3>Learning Materials</h3>
+            <h3>Learning Materials</h3>
             {course.learningMaterials && course.learningMaterials.length > 0 ? (
               <ul>
                 {course.learningMaterials.map((material) => (
