@@ -1,65 +1,46 @@
 import supabase from "../config/supabaseClient.js";
 
 export async function getTestGrades(userID) {
-
+  console.log('getTestGrade ' + userID);
   const { data, error } = await supabase
   .from("TestGrades")
     .select(`
-      TestGradeNo,
-      Quizz1,
-      Quizz2,
-      Quizz3,
-      Quizz4,
-      Quizz5,
-      Midterm,
-      Final,
-      AverageGrade,
-      isPassed,
-      Courses (CourseID, CourseName),
-      Students (
-        StudentID,
-        UserID
-      )
+     TestGradeNo, Quizz1, Quizz2, Quizz3, Quizz4, Quizz5, Midterm, Final, 
+     AverageGrade, isPassed, 
+     Courses (CourseID, CourseName),
+     Students ( StudentID, UserID, 
+     Users:UserID ( FirstName, LastName ) )
     `)
-  .eq("Students.UserID", userID);
+  //.eq("Students.UserID", userID);
 
   if (error) {
     console.error("Failed to fetch test grades:", error);
     throw new Error("Failed to fetch test grades");
   }
-
+  //console.log('@@data ' + JSON.stringify(data));
   return data;
 }
 
 export async function getTestGradeByID(gradeId) {
   const { data, error } = await supabase
-  .from("TestGrades")
+    .from("TestGrades")
     .select(`
-      TestGradeNo,
-      Quizz1,
-      Quizz2,
-      Quizz3,
-      Quizz4,
-      Quizz5,
-      Midterm,
-      Final,
-      AverageGrade,
-      isPassed,
-      Courses (CourseID, CourseName),
-      Students (
-        StudentID,
-        UserID
-      )
+     TestGradeNo, Quizz1, Quizz2, Quizz3, Quizz4, Quizz5, Midterm, Final, 
+     AverageGrade, isPassed, 
+     Courses (CourseID, CourseName),
+     Students ( StudentID, UserID, 
+     Users:UserID ( FirstName, LastName ) )
     `)
-  .eq("TestGradeNo", gradeId);
+    .eq("TestGradeNo", gradeId);
 
   if (error) {
     console.error("Failed to fetch test grades:", error);
     throw new Error("Failed to fetch test grades");
   }
-
+ // console.log('data ' + JSON.stringify(data));
   return data;
 }
+
 // Add a new test grade
 export async function addTestGrade(testGrade) {
   const { data, error } = await supabase

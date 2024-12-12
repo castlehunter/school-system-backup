@@ -63,14 +63,22 @@ function CourseDetails() {
   );
 
   const getVideoUrl = (courseName) => {
-    console.log('courseName ' + courseName);
+    //console.log('courseName ' + courseName);
     switch (courseName.toLowerCase()) {    
       case "math g8-f2024":
         return "https://www.youtube.com/embed/DL3CM_EON-0?si=YURmSPmvWjiekXZV";
-      case "biology g8-f20241":
+      case "biology g8-f2024":
         return "https://www.youtube.com/embed/3tisOnOkwzo?si=p1SVYB5r9sI7i4-t";
       case "physics g8-f20241":
         return "https://www.youtube.com/embed/ZAqIoDhornk?si=-VACM8dFlxWd8Lqu";
+      case "science g12 fall-2024":
+        return "https://www.youtube.com/embed/n1jC9BGzKfk?si=B2ErTGAz3_Q5BNRe";
+      case "english g9-w2025":
+        return "https://www.youtube.com/embed/7HUW_aukApo?si=qEAN0Mraybvyr3BQ";
+      case "japanese g9-w2025":
+        return "https://www.youtube.com/embed/8YV8KmfBbBM?si=xmQwUQAXSKlEIfL5";
+      case "drama g9-w2025":
+        return "https://www.youtube.com/embed/faaTzYkxxVE?si=VJVOG75Rw5MOfhTf";
       default:
         return "https://www.youtube.com/embed/default-video-id";
     }
@@ -91,6 +99,9 @@ function CourseDetails() {
         ) : (
           <>
             <h2>{course.CourseName}</h2>
+            <br/>
+            <h4>Course Description</h4>
+            <p>Here are some descriptions for the course. And below are some suggested learning materials.</p>
             <br/><br/>
             {/* <p>Course Number: {courseNo}</p>
 

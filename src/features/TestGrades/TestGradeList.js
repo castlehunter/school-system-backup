@@ -15,13 +15,13 @@ function TestGradeList() {
     const storedUserRole = localStorage.getItem("role");
     if (storedUserID) {
       setUserID(storedUserID);
-     // console.log('userID', JSON.stringify(storedUserID));
+      console.log('userID', JSON.stringify(storedUserID));
     } else {
       console.error("User ID is not found in local storage");
     }
     if (storedUserRole) {
       setUserRole(storedUserRole);
-      //console.log('userRole', storedUserRole);
+      console.log('userRole', storedUserRole);
     } else {
       console.error("User Role is not found in local storage");
     }

@@ -14,7 +14,9 @@ function TestGradeForm() {
     Midterm: "",
     Final: "",
     AverageGrade: "",
-    isPassed: ""
+    isPassed: "",
+    firstName: "",
+    lastName: ""
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -36,7 +38,9 @@ function TestGradeForm() {
           Midterm: data[0].Midterm,
           Final: data[0].Final,
           AverageGrade: data[0].AverageGrade,
-          isPassed: data[0].isPassed
+          isPassed: data[0].isPassed,
+          firstName: data[0].Students.Users.FirstName,
+          lastName: data[0].Students.Users.LastName
         });
       } catch (error) {
         console.error("Error fetching grade:", error);
@@ -53,7 +57,6 @@ function TestGradeForm() {
     const newValue = name === "isPassed" ? value : Number(value);
     setGrade((prevGrade) => ({ ...prevGrade, [name]: newValue }));
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,6 +76,14 @@ function TestGradeForm() {
     <form onSubmit={handleSubmit} className="generalStyles_container__RvMgt generalStyles_white__kHts0">
       <h1>Update Grade</h1>
       <br/>
+      <label>
+        First Name:
+        <input type="text" name="firstName" className="Form_formInput__xdpGx" value={grade.firstName} disabled />
+      </label>
+      <label>
+        Last Name:
+        <input type="text" name="lastName" className="Form_formInput__xdpGx" value={grade.lastName} disabled />
+      </label>
       <label>
         Quiz 1:
         <input type="number" name="Quizz1" className="Form_formInput__xdpGx" value={grade.Quizz1} onChange={handleChange} />

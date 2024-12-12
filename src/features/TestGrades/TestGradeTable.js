@@ -13,7 +13,7 @@ function TestGradeTable({ testGradeData, userRole }) {
   const navigate = useNavigate();
 
   const currData = testGradeData; // Assuming pagination is not required
- // console.log('currData ' + JSON.stringify(currData));
+//console.log('currData ' + JSON.stringify(currData));
   return (
     <div>
       <table className={styles.table}>
@@ -30,6 +30,8 @@ function TestGradeTable({ testGradeData, userRole }) {
               />
             </th>
             <th>Course Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Quiz 1</th>
             <th>Quiz 2</th>
             <th>Quiz 3</th>
@@ -54,6 +56,8 @@ function TestGradeTable({ testGradeData, userRole }) {
                 />
               </td>
               <td>{grade.Courses.CourseName}</td>
+              <td>{grade.Students.Users.FirstName}</td>
+              <td>{grade.Students.Users.LastName}</td>
               <td>{grade.Quizz1}</td>
               <td>{grade.Quizz2}</td>
               <td>{grade.Quizz3}</td>
@@ -66,7 +70,6 @@ function TestGradeTable({ testGradeData, userRole }) {
               {userRole === "Teacher" && (
                 <td>
                   <button className="Button_btn__58t-o Button_small__c9FMV Button_rose__LaWgJ" onClick={() => navigate(`/my-grades/${grade.TestGradeNo}`)}> Update </button>
-                  
                 </td>
               )}
             </tr>
