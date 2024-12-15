@@ -11,9 +11,7 @@ import { getProfileInfoByNo } from "../../services/apiUser";
 import MainTitle from "../../ui/MainTitle/MainTitle";
 import { getTeacherCourses } from "../../services/apiTeacher";
 import { getStudentEnrollments } from "../../services/apiStudent";
-import CourseCard from "../../components/CourseCard/CourseCard";
 import Loader from "../../ui/Loader";
-import TableContainer from "../../ui/Layout/TableContainer";
 
 function ViewUser() {
   const { userNo } = useParams();

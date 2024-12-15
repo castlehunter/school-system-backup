@@ -254,12 +254,12 @@ function App() {
               title: "Course Details",
               hideInSidebar: true,
             },
-            // {
-            //   path: "/courses/newEnrollment/:courseNo",
-            //   element: <EnrollmentForm />,
-            //   title: "New Enrollment",
-            //   hideInSidebar: true,
-            // },
+            {
+              path: "/courses/newEnrollment/:courseNo",
+              element: <EnrollmentForm />,
+              title: "New Enrollment",
+              hideInSidebar: true,
+            },
           ],
         },
         {
@@ -348,12 +348,12 @@ function App() {
             //   title: "Update Enrollment",
             //   hideInSidebar: true,
             // },
-             {
-               path: "/enrollments/:EnrollmentID",
-               element: <NewEnrollment />,
-               title: "Update Enrollment",
-               hideInSidebar: true,
-             },
+            {
+              path: "/enrollments/:EnrollmentID",
+              element: <NewEnrollment />,
+              title: "Update Enrollment",
+              hideInSidebar: true,
+            },
             {
               path: "/enrollments/bulk-edit",
               element: <BulkEditEnrollmentForm />,

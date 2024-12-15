@@ -180,6 +180,36 @@ function PersonalInfoForm({ userNo, hideUpload, showDeleteButton = false }) {
     }
   };
 
+  const handleImageRemove = async () => {
+    if (personalInfoData.AvatarURL === defaultAvatar) {
+      alert("You cannot remove the default avatar.");
+      return;
+    }
+
+    const confirmRemove = window.confirm(
+      "Are you sure you want to remove the profile picture?"
+    );
+
+    if (confirmRemove) {
+      try {
+        const url = await uploadImageURL(userNo, defaultAvatar);
+        if (url) {
+          setPersonalInfoData((prevData) => ({
+            ...prevData,
+            AvatarURL: defaultAvatar,
+          }));
+          alert("Profile picture removed successfully!");
+          window.location.reload();
+        } else {
+          alert("Failed to remove profile picture.");
+        }
+      } catch (error) {
+        console.error("Error removing profile picture:", error);
+        alert("An error occurred while removing the profile picture.");
+      }
+    }
+  };
+
   async function handleDelete(userNo) {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this user?"
@@ -231,7 +261,12 @@ function PersonalInfoForm({ userNo, hideUpload, showDeleteButton = false }) {
                     className={formStyles.uploadInput}
                   />
                 </div>
-                <Button onClickBtn={handleImageUpload}>Upload Picture</Button>
+                <div style={{ display: "flex", gap: "2rem" }}>
+                  <Button onClickBtn={handleImageUpload}>Upload Picture</Button>
+                  <Button onClickBtn={handleImageRemove} color="blue">
+                    Remove Picture
+                  </Button>
+                </div>
               </div>
             )}
           </div>

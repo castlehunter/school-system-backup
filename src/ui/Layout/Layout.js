@@ -102,7 +102,7 @@ function Layout({ children, breadcrumb, userNo }) {
     if (error) {
       console.error("Error during logout:", error.message);
     }
-  }
+  };
 
   return (
     <main className={styles.layout}>
@@ -115,6 +115,7 @@ function Layout({ children, breadcrumb, userNo }) {
 
       <section>
         {/* ================= The top section ===============*/}
+        <div className={styles.mobileHeader}></div>
         <div className={styles.header}>
           {/* <div className={styles.simpleLogoContainer}>
             <img src={logo} alt="logo" className={styles.simpleLogoImage} />

@@ -109,30 +109,35 @@ tr th:last-child {
 .tagContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 1.5rem;
   padding: 1rem;
 }
 
 .courseTag {
   padding: 2rem;
+  min-width: 17rem;
   border-radius: 1rem;
-  font-size: 1.2rem;
   font-weight: bold;
   color: white;
   display: inline-block;
+  text-align: center;
+  background-color: #687d86;
+
+  transform: perspective(500px) rotateX(5deg);
+  transition: all 0.3s ease;
 }
 
 .courseTag:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease;
+  transform: perspective(500px) rotateX(0deg) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
-/* Used in ViewUser.js */
+/* If using random color for course tag */
 
-.courseTag {
+/* .courseTag {
   background-color: #83639e;
 }
-/* .courseTag.gray {
+.courseTag.gray {
   background-color: #7a7a7a;
 }
 
@@ -152,9 +157,9 @@ tr th:last-child {
   background-color: #c2a140;
 } */
 
-.getRandomColor {
+/* .getRandomColor {
   background-color: randomColor();
-}
+} */
 
 .toggleSwitch {
   position: relative;

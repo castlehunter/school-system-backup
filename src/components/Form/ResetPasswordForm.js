@@ -99,7 +99,7 @@ function ResetPasswordForm({ data }) {
                 className={formStyles.eyeIcon}
                 onClick={() => setShowCurrentPassword((prev) => !prev)}
               >
-                {showCurrentPassword ? icons.EyeOff : icons.EyeOpen}
+                {showCurrentPassword ? icons.EyeOpen : icons.EyeOff}
               </span>
             </div>
           </div>
@@ -122,7 +122,7 @@ function ResetPasswordForm({ data }) {
                 className={formStyles.eyeIcon}
                 onClick={() => setShowNewPassword((prev) => !prev)}
               >
-                {showNewPassword ? icons.EyeOff : icons.EyeOpen}
+                {showCurrentPassword ? icons.EyeOpen : icons.EyeOff}
               </span>
             </div>
           </div>
@@ -145,7 +145,7 @@ function ResetPasswordForm({ data }) {
                 className={formStyles.eyeIcon}
                 onClick={() => setShowConfirmPassword((prev) => !prev)}
               >
-                {showConfirmPassword ? icons.EyeOff : icons.EyeOpen}
+                {showCurrentPassword ? icons.EyeOpen : icons.EyeOff}
               </span>
             </div>
           </div>

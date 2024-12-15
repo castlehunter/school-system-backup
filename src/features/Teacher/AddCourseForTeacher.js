@@ -82,6 +82,7 @@ function AddCourseForTeacher() {
               ? {
                   ...c,
                   Teachers: {
+                    TeacherID: teacherId,
                     Users: {
                       ...c.Teachers?.Users, // Use optional chaining to avoid error when Teachers is undefined
                       UserNo: userNo,

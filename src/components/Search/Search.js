@@ -30,6 +30,16 @@ function Search({ searchMenuItems, colorType, onSearch, menuSearch }) {
     }
   }
 
+  function handleClickSearch() {
+    onSearch(searchQuery);
+  }
+
+  function handleClickClose() {
+    setSearchQuery("");
+    onSearch("");
+    setSearchBarIcon(icons.SearchIcon);
+  }
+
   return (
     <div className={styles.searchContainer}>
       <div className={styles.searchbar}>
@@ -42,10 +52,11 @@ function Search({ searchMenuItems, colorType, onSearch, menuSearch }) {
         />
         <div
           className={styles.searchBarIconWrapper}
-          onClick={() => {
-            setSearchQuery("");
-            setSearchBarIcon(icons.SearchIcon);
-          }}
+          onClick={
+            searchBarIcon === icons.SearchIcon
+              ? handleClickSearch
+              : handleClickClose
+          }
         >
           {searchBarIcon && <>{searchBarIcon}</>}
         </div>

@@ -429,7 +429,7 @@ export async function UploadProfileImage(image) {
       .from("ProfileImage") // replace with your storage bucket name
       .upload(`public/${image.name}`, image, {
         cacheControl: "3600",
-        upsert: false,
+        upsert: true,
       });
 
     if (error) {
