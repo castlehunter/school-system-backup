@@ -4,7 +4,7 @@ import { useState } from "react";
 import TeacherTable from "./TeacherTable";
 import MainTitle from "../../ui/MainTitle/MainTitle";
 import { getTeachers, sortTeachersBy } from "../../services/apiTeacher";
-import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
+//import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
 
 function TeacherList() {
   const [teacherData, setTeacherData] = useState([]);

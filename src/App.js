@@ -13,7 +13,7 @@ import AppLayout from "./ui/Layout/AppLayout.js";
 import MyCourses from "./features/MyCourses/MyCourses";
 import CourseDetails from "./features/MyCourses/CourseDetails.js";
 import TestGradeList from "./features/TestGrades/TestGradeList";
-import TestGradeForm from "./features/TestGrades/TestGradeForm";
+import TestGradeForm from "./features/TestGrades/TestGradeForm.js";
 import TeacherList from "./features/Teacher/TeacherList.js";
 import NewEnrollment from "./features/Enrollment/NewEnrollment.js";
 import Error from "./ui/Error.js";
@@ -121,56 +121,53 @@ function App() {
         },
         {
           path: "my-courses",
-          element: <MyCourses />,
+          element: <Outlet />,
           title: "My Courses",
           icon: icons.MyCoursesIcon,
           children: [
-            { index: true, element: <MyCourses />, title: "My Courses" },
+            { index: true, 
+              element: <MyCourses />, 
+              title: "My Courses" },
             {
-              path: "/my-courses/my-courses",
+              path: "my-courses",
               element: <MyCourses />,
               title: "My Courses",
-              children: [
+            },
                 {
-                  path: "/my-courses/my-courses/course-details",
+                  path: ":courseNo",
                   element: <CourseDetails />,
                   title: "Course Details",
-
                   hideInSidebar: true,
-                  children: [
-                    {
-                      index: true,
-                      element: <CourseDetails />,
-                      title: "Course Details",
-                      hideInSidebar: true,
-                    },
-                    {
-                      path: "/my-courses/my-courses/course-details/:courseNo",
-                      element: <CourseDetails />,
-                      title: "Course Details",
-                      hideInSidebar: true,
-                    },
-                  ],
-                },
-              ],
-            },
+                },                     
           ],
-        },
-
+        }
+,        
         {
           path: "my-grades",
-          element: <TestGradeList />,
+          element: <Outlet />,
           title: "My Grades",
           icon: icons.MyCoursesIcon,
           children: [
-            { index: true, element: <TestGradeList />, title: "My Grades" },
+            { 
+              index: true, 
+              element: <TestGradeList />, 
+              title: "My Grades" 
+            },
             {
               path: "my-grades",
               element: <TestGradeList />,
               title: "My Grades",
             },
+            {
+              path: ":gradeId",
+              element: <TestGradeForm />,
+              title: "Test Grade Form",
+              hideInSidebar: true,
+            },
+          
           ],
-        },
+        },       
+      
         {
           path: "users",
           element: <Outlet />,
@@ -317,11 +314,11 @@ function App() {
               title: "View Course Category",
               hideInSidebar: true,
             },
-
             {
               path: "/programs/new-program",
               element: <NewProgram />,
               title: "New Category",
+              hideInSidebar: true,
             },
           ],
         },
